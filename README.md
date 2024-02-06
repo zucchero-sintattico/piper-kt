@@ -135,13 +135,13 @@ Project Link: [https://github.com/zucchero-sintattico/piperchat](https://github.
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [contributors-shield]: https://img.shields.io/github/contributors/zucchero-sintattico/piperchat.svg?style=flat-square
-[contributors-url]: https://github.com/zucchero-sintattico/piperchat/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/zucchero-sintattico/piperchat.svg?style=flat-square
-[forks-url]: https://github.com/zucchero-sintattico/piperchat/network/members
-[stars-shield]: https://img.shields.io/github/stars/zucchero-sintattico/piperchat.svg?style=flat-square
-[stars-url]: https://github.com/zucchero-sintattico/piperchat/stargazers
-[issues-shield]: https://img.shields.io/github/issues/zucchero-sintattico/piperchat.svg?style=flat-square
-[issues-url]: https://github.com/zucchero-sintattico/piperchat/issues
-[license-shield]: https://img.shields.io/github/license/zucchero-sintattico/piperchat.svg?style=flat-square
-[license-url]: https://github.com/zucchero-sintattico/piperchat/blob/master/LICENSE.txt
+[contributors-url]: https://github.com/zucchero-sintattico/piper-kt/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/zucchero-sintattico/piper-kt.svg?style=flat-square
+[forks-url]: https://github.com/zucchero-sintattico/piper-kt/network/members
+[stars-shield]: https://img.shields.io/github/stars/zucchero-sintattico/piper-kt.svg?style=flat-square
+[stars-url]: https://github.com/zucchero-sintattico/piper-kt/stargazers
+[issues-shield]: https://img.shields.io/github/issues/zucchero-sintattico/piper-kt.svg?style=flat-square
+[issues-url]: https://github.com/zucchero-sintattico/piper-kt/issues
+[license-shield]: https://img.shields.io/github/license/zucchero-sintattico/piper-kt.svg?style=flat-square
+[license-url]: https://github.com/zucchero-sintattico/piper-kt/blob/master/LICENSE.txt
 [product-screenshot]: images/screenshot.png
