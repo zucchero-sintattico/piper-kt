@@ -6,3 +6,14 @@
  */
 
 rootProject.name = "piper-kt"
+
+plugins {
+    id("org.danilopianini.gradle-pre-commit-git-hooks") version "2.0.1"
+}
+
+gitHooks {
+    // Configuration
+    commitMsg { conventionalCommits() }
+    createHooks() // actual hooks creation
+}
+
