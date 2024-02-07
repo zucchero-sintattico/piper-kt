@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "packageRules": [
+    {
+      "packageNames": ["*"],
+      "schedule": "every weekday" // Set to check for updates every weekday
+    }
+  ],
+  "commitMessagePrefix": "chore(deps): ",
+  "commitMessageTopic": "{{#if semanticCommits}}{{semanticCommits}}{{else}}dependencies{{/if}}",
+  "commitMessageBody": "Automatically update dependencies using Renovate",
+  "semanticCommits": true
+}
