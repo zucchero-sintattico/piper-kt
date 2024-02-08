@@ -1,15 +1,7 @@
 {
   "extends": [
-    "config:base"
-  ],
-  "packageRules": [
-    {
-      "packageNames": ["*"],
-      "schedule": "every weekday"
-    }
-  ],
-  "commitMessagePrefix": "chore(deps): ",
-  "commitMessageTopic": "{{#if semanticCommits}}{{semanticCommits}}{{else}}dependencies{{/if}}",
-  "commitMessageBody": "Automatically update dependencies using Renovate",
-  "semanticCommits": true
+      "github>DanySK/renovate-config:default.json",
+      "github>DanySK/renovate-config:docker-image.json",
+      "github>DanySK/renovate-config:kotlin.json"
+  ]
 }
