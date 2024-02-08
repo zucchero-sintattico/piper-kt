@@ -1,4 +1,4 @@
-name: Release
+name: Semantic Release
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - main
+
 jobs:
   release:
     permissions:
@@ -15,12 +16,15 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: '21'
-      - run: npm ci
-        # Put here build and test steps
-      - run: npx semantic-release
+          node-version: 'lts/*'
+      - name: Install dependencies
+        run: npm install
+      - name: Run semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npx semantic-release
