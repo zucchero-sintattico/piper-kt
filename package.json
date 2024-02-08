@@ -1,10 +1,29 @@
 {
+  "name": "piper-kt",
+  "version": "0.1.0",
+  "description": "A microservice chat app, kotlin based.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zucchero-sintattico/piper-kt.git"
+  },
+  "author": "Zucchero-Sintattico",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/zucchero-sintattico/piper-kt/issues"
+  },
+  "homepage": "https://github.com/zucchero-sintattico/piper-kt#readme",
   "devDependencies": {
     "semantic-release-preconfigured-conventional-commits": "latest"
   },
-
+  "private": true,
   "release": {
-    "branches": ["main"]
+    "branches": [
+      "main"
+    ],
+    "preset": "conventionalcommits"
   }
-
 }
