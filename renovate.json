@@ -5,7 +5,7 @@
   "packageRules": [
     {
       "packageNames": ["*"],
-      "schedule": "every weekday" // Set to check for updates every weekday
+      "schedule": "every weekday"
     }
   ],
   "commitMessagePrefix": "chore(deps): ",
