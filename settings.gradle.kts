@@ -7,13 +7,23 @@
 
 rootProject.name = "piper-kt"
 
+pluginManagement {
+    includeBuild("build-logic")
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
 plugins {
     id("org.danilopianini.gradle-pre-commit-git-hooks") version "2.0.1"
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
 }
 
 gitHooks {
     // Configuration
     commitMsg { conventionalCommits() }
-    createHooks() // actual hooks creation
+    createHooks(overwriteExisting = true) // actual hooks creation
 }
-
