@@ -25,5 +25,8 @@ plugins {
 gitHooks {
     // Configuration
     commitMsg { conventionalCommits() }
+    preCommit {
+        tasks("check", "--parallel")
+    }
     createHooks(overwriteExisting = true) // actual hooks creation
 }
