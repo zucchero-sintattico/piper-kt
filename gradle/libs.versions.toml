@@ -4,7 +4,7 @@
 [versions]
 kotlin = "1.9.22"
 ktfmt = "0.17.0"
-detekt = "1.23.3"
+detekt = "1.23.5"
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
