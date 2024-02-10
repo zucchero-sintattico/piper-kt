@@ -30,3 +30,5 @@ gitHooks {
     }
     createHooks(overwriteExisting = true) // actual hooks creation
 }
+
+include("domain")
