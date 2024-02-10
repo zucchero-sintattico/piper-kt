@@ -4,7 +4,9 @@
 [versions]
 kotlin = "1.9.22"
 ktfmt = "0.17.0"
+detekt = "1.23.3"
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
