@@ -48,6 +48,7 @@
 .idea/kotlinc.xml
 .idea/.gitignore
 .idea/vcs.xml
+.idea/ktfmt.xml
 
 # CMake
 cmake-build-*/
