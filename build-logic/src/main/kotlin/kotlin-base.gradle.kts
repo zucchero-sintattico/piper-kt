@@ -7,3 +7,17 @@ plugins {
 ktfmt {
     kotlinLangStyle()
 }
+
+val catalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+dependencies {
+    testImplementation(catalog.getLibrary("kotest"))
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+kotlin {
+    jvmToolchain(17)
+}

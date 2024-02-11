@@ -2,11 +2,15 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-kotlin = "1.9.22"
-ktfmt = "0.17.0"
 detekt = "1.23.5"
+ktfmt = "0.17.0"
+kotest = "5.8.0"
+kotlin = "1.9.22"
+
+[libraries]
+kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 
 [plugins]
-kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
