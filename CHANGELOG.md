@@ -1,3 +1,10 @@
+## [1.5.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.4.0...v1.5.0) (2024-02-11)
+
+
+### Features
+
+* **repo:** add kotest for testing ([9bcbc3f](https://github.com/zucchero-sintattico/piper-kt/commit/9bcbc3ffd1643599ff0ec3115509214775a76757))
+
 ## [1.4.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.3.0...v1.4.0) (2024-02-10)
 
 
