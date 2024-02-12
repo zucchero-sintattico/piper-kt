@@ -1,3 +1,10 @@
+## [1.7.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.6.0...v1.7.0) (2024-02-12)
+
+
+### Features
+
+* **repo:** add coverage framework ([bf4977a](https://github.com/zucchero-sintattico/piper-kt/commit/bf4977a94dde979c4301b12590fd3c831b8afb81))
+
 ## [1.6.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.5.0...v1.6.0) (2024-02-12)
 
 
