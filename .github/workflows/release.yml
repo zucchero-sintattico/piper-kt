@@ -1,30 +1,85 @@
-name: Semantic Release
+name: CI/CD
 
 on:
   push:
-    branches:
-      - main
   pull_request:
-    branches:
-      - main
+  workflow_dispatch:
+
+env:
+  JAVA_VERSION: 17
 
 jobs:
-  release:
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
+
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/checkout@v4.1.1
+      - name: Build with Gradle
+        uses: DanySK/build-check-deploy-gradle-action@2.4.0
         with:
-          node-version: 'lts/*'
-      - name: Install dependencies
-        run: npm install
-      - name: Run semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
+          java-version: ${{ env.JAVA_VERSION }}
+          should-run-codecov: false
+
+  test:
+    needs: build
+    if: ${{ needs.build.result == 'success' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-13
+          - ubuntu-22.04
+          - windows-2022
+        java-version: [ 17, 21 ]
+        java-distribution:
+          - adopt
+          - corretto
+    runs-on: ${{ matrix.os }}
+    concurrency:
+      group: build-${{ github.workflow }}-${{ matrix.os }}-${{ matrix.java-version }}-${{ matrix.java-distribution }}-${{ github.event.number || github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+      - uses: DanySK/build-check-deploy-gradle-action@2.4.0
+        with:
+          java-version: ${{ matrix.java-version }}
+          java-distribution: ${{ matrix.java-distribution }}
+          should-run-codecov: false
+
+  deploy:
+    needs:
+      - build
+      - test
+    if: ${{ needs.test.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+      - name: List
+        run: ls -alh
+      - name: coverage
+        run: |
+          ./gradlew koverXmlReport
+          cat build/reports/kover/report.xml
+
+#  release:
+#    permissions:
+#      contents: write
+#      issues: write
+#      pull-requests: write
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 'lts/*'
+#      - name: Install dependencies
+#        run: npm install
+#      - name: Run semantic-release
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: npx semantic-release
