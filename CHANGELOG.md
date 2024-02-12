@@ -1,3 +1,10 @@
+## [1.8.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.7.0...v1.8.0) (2024-02-12)
+
+
+### Features
+
+* **ci:** improve build, test and coverage ([c7861cd](https://github.com/zucchero-sintattico/piper-kt/commit/c7861cdedda46af36d864891fe0df8745e505e5e))
+
 ## [1.7.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.6.0...v1.7.0) (2024-02-12)
 
 
