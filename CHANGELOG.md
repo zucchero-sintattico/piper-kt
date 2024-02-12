@@ -1,3 +1,10 @@
+## [1.6.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.5.0...v1.6.0) (2024-02-12)
+
+
+### Features
+
+* **repo:** add architecture testing framework ([2ec8c04](https://github.com/zucchero-sintattico/piper-kt/commit/2ec8c04dfa9ffe8c97b5071d2ab9ba3971b66f21))
+
 ## [1.5.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.4.0...v1.5.0) (2024-02-11)
 
 
