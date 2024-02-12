@@ -11,6 +11,7 @@ ktfmt {
 val catalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
 dependencies {
+    testImplementation(catalog.getLibrary("konsist"))
     testImplementation(catalog.getLibrary("kotest"))
 }
 
