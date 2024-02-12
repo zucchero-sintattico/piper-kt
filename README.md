@@ -3,6 +3,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
+[![codecov](https://codecov.io/gh/zucchero-sintattico/piper-kt/graph/badge.svg?token=FIB2EZSW28)](https://codecov.io/gh/zucchero-sintattico/piper-kt)
 
 <!-- PROJECT LOGO -->
 <br />
