@@ -6,6 +6,7 @@ detekt = "1.23.5"
 konsist = "0.13.0"
 kotest = "5.8.0"
 kotlin = "1.9.22"
+kover = "0.7.5"
 ktfmt = "0.17.0"
 
 [libraries]
@@ -15,4 +16,5 @@ kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }

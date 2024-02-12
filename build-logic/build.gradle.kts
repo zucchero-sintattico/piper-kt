@@ -8,9 +8,10 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.plugins.kotlin.asDependency())
-    implementation(libs.plugins.ktfmt.asDependency())
     implementation(libs.plugins.detekt.asDependency())
+    implementation(libs.plugins.kotlin.asDependency())
+    implementation(libs.plugins.kover.asDependency())
+    implementation(libs.plugins.ktfmt.asDependency())
 }
 
 fun Provider<PluginDependency>.asDependency(): Provider<String> =
