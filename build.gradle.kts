@@ -6,11 +6,27 @@
  */
 
 plugins {
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.kotlin)
     alias(libs.plugins.kover)
+    alias(libs.plugins.gitSemVer)
+}
+
+gitSemVer {
+    // Your configuration
+    assignGitSemanticVersion()
 }
 
 dependencies {
     project.subprojects.forEach {
         kover(it)
     }
+}
+
+allprojects {
+    group = "piperchat"
+}
+
+subprojects {
+    apply(plugin = "org.jetbrains.dokka")
 }

@@ -3,11 +3,13 @@
 
 [versions]
 detekt = "1.23.5"
+dokka = "1.9.10"
 konsist = "0.13.0"
 kotest = "5.8.0"
 kotlin = "1.9.22"
 kover = "0.7.5"
 ktfmt = "0.17.0"
+gitSemVer = "3.1.1"
 
 [libraries]
 konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
@@ -15,6 +17,8 @@ kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
+gitSemVer = { id = "org.danilopianini.git-sensitive-semantic-versioning", version.ref = "gitSemVer" }

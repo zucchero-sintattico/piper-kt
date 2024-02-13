@@ -63,6 +63,7 @@ jobs:
       && !contains(needs.*.result, 'failure')
     concurrency:
       group: release-${{ github.event.number || github.ref }}
+      cancel-in-progress: true
     permissions:
       contents: write
       issues: write
@@ -76,7 +77,7 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: 'adopt'
       - name: Produce coverage report
-        run: ./gradlew koverXmlReport
+        run: ./gradlew koverXmlReport --parallel
       - name: Push coverage report
         uses: codecov/codecov-action@v4.0.1
         with:
@@ -95,3 +96,32 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Create artifacts directory
+        run: mkdir -p ./tmp-site
+      - name: Build documentation
+        run: |
+          GIT_VERSION=$(git describe --tags --exact-match HEAD | sed 's/^v//')
+          ./gradlew -PforceVersion=$GIT_VERSION dokkaHtmlMultiModule --parallel
+          cp -r ./build/dokka/htmlMultiModule ./tmp-site/docs
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          path: ./tmp-site
+
+  pages-deploy:
+    needs: deploy
+    if: needs.deploy.result == 'success'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4.0.4
