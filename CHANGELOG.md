@@ -1,3 +1,10 @@
+## [1.9.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.8.0...v1.9.0) (2024-02-13)
+
+
+### Features
+
+* **repo:** add documentation framework, built it and release on gh-pages ([90f55d2](https://github.com/zucchero-sintattico/piper-kt/commit/90f55d209af52cccf15524eb97ddc8aa7a16f396))
+
 ## [1.8.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.7.0...v1.8.0) (2024-02-12)
 
 
