@@ -7,7 +7,7 @@ dokka = "1.9.10"
 konsist = "0.13.0"
 kotest = "5.8.0"
 kotlin = "1.9.22"
-kover = "0.7.5"
+kover = "0.7.6"
 ktfmt = "0.17.0"
 gitSemVer = "3.1.1"
 
