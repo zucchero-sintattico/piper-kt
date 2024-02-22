@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/zucchero-sintattico/piper-kt/compare/v1.9.0...v1.9.1) (2024-02-22)
+
+
+### Bug Fixes
+
+* **ci:** avoid publishing pages if no release ([03001dc](https://github.com/zucchero-sintattico/piper-kt/commit/03001dc46ac23ece637fdc28090c941901212e68))
+
 ## [1.9.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.8.0...v1.9.0) (2024-02-13)
 
 
