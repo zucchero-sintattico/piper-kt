@@ -11,6 +11,8 @@ repositories {
 
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation ("io.cucumber:cucumber-java:7.15.0")
+    testImplementation ("io.cucumber:cucumber-junit:7.15.0")
 }
 
 tasks.test {
