@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
       - name: Build with Gradle
-        uses: DanySK/build-check-deploy-gradle-action@2.4.2
+        uses: DanySK/build-check-deploy-gradle-action@2.4.3
         with:
           java-version: ${{ env.JAVA_VERSION }}
           should-run-codecov: false
@@ -46,7 +46,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
-      - uses: DanySK/build-check-deploy-gradle-action@2.4.2
+      - uses: DanySK/build-check-deploy-gradle-action@2.4.3
         with:
           java-version: ${{ matrix.java-version }}
           java-distribution: ${{ matrix.java-distribution }}
