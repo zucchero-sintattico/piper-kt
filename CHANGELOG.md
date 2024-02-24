@@ -1,3 +1,13 @@
+## [1.10.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.9.1...v1.10.0) (2024-02-24)
+
+
+### Features
+
+* **ddd:** add servers and channel concept in domain ([b41b046](https://github.com/zucchero-sintattico/piper-kt/commit/b41b0461339970a08cf0dec4f127e27fd7317757))
+* **ddd:** add users concept in domain ([888983a](https://github.com/zucchero-sintattico/piper-kt/commit/888983a03de26d75bb7280a6b841f74a8b9c4213))
+* **ddd:** init with glossary ([d398107](https://github.com/zucchero-sintattico/piper-kt/commit/d398107d0df5f1a26ebf4413a55638c382795f4e))
+* **repo:** add common concept package ([97c3dda](https://github.com/zucchero-sintattico/piper-kt/commit/97c3dda8e38b99518c46fb5accc2ad85cb7009ce))
+
 ## [1.9.1](https://github.com/zucchero-sintattico/piper-kt/compare/v1.9.0...v1.9.1) (2024-02-22)
 
 
