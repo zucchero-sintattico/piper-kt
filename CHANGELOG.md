@@ -1,3 +1,17 @@
+## [1.11.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.10.0...v1.11.0) (2024-02-25)
+
+
+### Features
+
+* **bdd:** add acceptance tests ([071195c](https://github.com/zucchero-sintattico/piper-kt/commit/071195cae5aa05dcbd9ad79beac23e2c23177669))
+* **bdd:** add cucumber dependency ([45be7e6](https://github.com/zucchero-sintattico/piper-kt/commit/45be7e6130e1a7b5a0032fa1b9924d8ff1f78d80))
+* **ci:** prepare ci to deploy features report ([57c4330](https://github.com/zucchero-sintattico/piper-kt/commit/57c433087cd4e364b10cfbd904d9ae99bffa52d5))
+
+
+### Bug Fixes
+
+* **test:** try to remove deepsource antipattern warning ([66eda86](https://github.com/zucchero-sintattico/piper-kt/commit/66eda86c706eb6699bf31735a6d80ff6344370ea))
+
 ## [1.10.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.9.1...v1.10.0) (2024-02-24)
 
 
