@@ -31,6 +31,7 @@ gitHooks {
     createHooks(overwriteExisting = true) // actual hooks creation
 }
 
+include("bdd")
+include("commons")
 include("users-service")
 include("servers-service")
-include("commons")

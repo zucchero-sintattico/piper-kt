@@ -137,6 +137,8 @@ jobs:
         run: |
           ./gradlew -PforceVersion=${{ needs.release.outputs.version }} dokkaHtmlMultiModule --parallel
           cp -r ./build/dokka/htmlMultiModule ./tmp-site/docs
+#      - name: Copy features report
+#        run: cp -r ./build/reports/tests/test ./tmp-site/features
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with:
