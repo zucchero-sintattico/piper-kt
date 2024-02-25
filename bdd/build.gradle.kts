@@ -1,23 +1,15 @@
 plugins {
-    kotlin("jvm")
-}
-
-group = "org.example"
-version = "0.1.0-archeo+3994d4a"
-
-repositories {
-    mavenCentral()
+    id("kotlin-base")
 }
 
 dependencies {
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation ("io.cucumber:cucumber-java:7.15.0")
-    testImplementation ("io.cucumber:cucumber-junit:7.15.0")
+    testImplementation(platform(libs.cucumber.bom))
+    testImplementation(libs.bundles.cucumberJunit)
+    testImplementation(libs.junit.platform)
 }
 
+// https://github.com/cucumber/cucumber-jvm/tree/main/cucumber-junit-platform-engine#gradle
 tasks.test {
     useJUnitPlatform()
-}
-kotlin {
-    jvmToolchain(21)
+    systemProperty("cucumber.junit-platform.naming-strategy", "long")
 }

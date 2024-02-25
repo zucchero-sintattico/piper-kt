@@ -2,23 +2,32 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
+cucumber-bom = "7.15.0"
 detekt = "1.23.5"
 dokka = "1.9.10"
+gitSemVer = "3.1.1"
+junit-platform = "1.10.2"
 konsist = "0.13.0"
 kotest = "5.8.0"
 kotlin = "1.9.22"
 kover = "0.7.6"
 ktfmt = "0.17.0"
-gitSemVer = "3.1.1"
 
 [libraries]
+cucumber-bom = { module = "io.cucumber:cucumber-bom", version.ref = "cucumber-bom" }
+cucumber-java = { module = "io.cucumber:cucumber-java" }
+cucumber-junit = { module = "io.cucumber:cucumber-junit-platform-engine" }
+junit-platform = { module = "org.junit.platform:junit-platform-suite", version.ref = "junit-platform" }
 konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
 kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+gitSemVer = { id = "org.danilopianini.git-sensitive-semantic-versioning", version.ref = "gitSemVer" }
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
-gitSemVer = { id = "org.danilopianini.git-sensitive-semantic-versioning", version.ref = "gitSemVer" }
+
+[bundles]
+cucumberJunit = [ "cucumber-java", "cucumber-junit" ]
