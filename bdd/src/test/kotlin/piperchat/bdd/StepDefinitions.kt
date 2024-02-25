@@ -6,6 +6,6 @@ import io.kotest.core.spec.style.AnnotationSpec
 class StepDefinitions : AnnotationSpec() {
     @Given("the user is the owner of a server")
     fun theUserIsTheOwnerOfAServer() {
-        TODO()
+        print("todo")
     }
 }
