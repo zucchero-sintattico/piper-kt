@@ -5,5 +5,6 @@ import org.gradle.api.provider.Provider
 fun VersionCatalog.getLibrary(name: String): Provider<MinimalExternalModuleDependency> = findLibrary(name).get()
 
 object JavaVersion {
-    const val target: Int = 17
+    val asInt: Int = 17
+    val asVersion: org.gradle.api.JavaVersion = org.gradle.api.JavaVersion.toVersion(asInt)
 }
