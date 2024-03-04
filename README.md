@@ -9,13 +9,13 @@
 <br />
 <p align="center">
   <a href="https://github.com/zucchero-sintattico/piperchat">
-    <img src="./resources/piperchat-logo.jpg" alt="Logo" width="256" height="256" />
+    <img src="./logo.jpeg" alt="Logo" width="256" height="256" />
   </a>
 
-  <h3 align="center">Piperchat</h3>
+  <h3 align="center">Piper-kt</h3>
 
   <p align="center">
-    Piperchat
+    Piper-kt
     <br />
     <a href="https://github.com/zucchero-sintattico/piperchat"><strong>Explore the docs »</strong></a>
     <br />
