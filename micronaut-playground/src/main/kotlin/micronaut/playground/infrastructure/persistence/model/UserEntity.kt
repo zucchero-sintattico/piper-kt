@@ -6,6 +6,10 @@ import io.micronaut.data.mongodb.annotation.MongoRepository
 import io.micronaut.data.repository.CrudRepository
 import jakarta.validation.constraints.NotBlank
 
-@MappedEntity data class UserEntity(@Id val email: String, @NotBlank val password: String)
+@MappedEntity
+data class UserEntity(
+    @Id val email: String,
+    @NotBlank val password: String,
+)
 
-@MongoRepository interface UserModelRepository : CrudRepository<UserEntity, String> {}
+@MongoRepository interface UserModelRepository : CrudRepository<UserEntity, String>

@@ -11,15 +11,18 @@ import micronaut.playground.infrastructure.web.api.RegisterResponse
 
 @Controller("/users")
 class UserHTTPController(private val userService: UserService) {
-
     @Post("/login", consumes = ["application/json"], produces = ["application/json"])
-    fun login(@Body request: LoginRequest): LoginResponse {
+    fun login(
+        @Body request: LoginRequest,
+    ): LoginResponse {
         val result = userService.loginUser(request.email, request.password)
         return LoginResponse(result?.email ?: "")
     }
 
     @Post("/register")
-    fun register(@Body request: RegisterRequest): RegisterResponse {
+    fun register(
+        @Body request: RegisterRequest,
+    ): RegisterResponse {
         val result = userService.registerUser(request.email, request.password)
         return RegisterResponse(result.email)
     }
