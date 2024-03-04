@@ -6,7 +6,6 @@ import io.micronaut.websocket.annotation.ServerWebSocket
 
 @ServerWebSocket("/ws")
 class WebsocketServer {
-
     @OnOpen
     fun onOpen() {
         println("Client connected")

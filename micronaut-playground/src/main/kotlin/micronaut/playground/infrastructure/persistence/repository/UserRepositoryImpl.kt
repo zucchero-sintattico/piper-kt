@@ -10,7 +10,6 @@ import micronaut.playground.infrastructure.persistence.model.UserModelRepository
 @Singleton
 @Primary
 class UserRepositoryImpl(private val userModelRepository: UserModelRepository) : UserRepository {
-
     override fun findByEmail(email: String): User? {
         return userModelRepository.findById(email).map { User(it.email, it.password) }.orElse(null)
     }

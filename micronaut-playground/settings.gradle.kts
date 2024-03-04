@@ -1,3 +1,1 @@
-
-
-rootProject.name="micronaut-playground"
+rootProject.name = "micronaut-playground"

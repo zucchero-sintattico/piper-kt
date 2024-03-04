@@ -6,7 +6,6 @@ import micronaut.playground.domain.User
 import micronaut.playground.domain.UserRepository
 
 class UserEventsService(private val userRepository: UserRepository) : UserEventsApi {
-
     override fun onUserCreated(userCreated: UserCreated) {
         userRepository.save(User(email = userCreated.email, password = userCreated.password))
     }

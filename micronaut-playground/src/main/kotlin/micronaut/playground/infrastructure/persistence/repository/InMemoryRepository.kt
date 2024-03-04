@@ -6,7 +6,6 @@ import micronaut.playground.domain.UserRepository
 
 @Named("inMemory")
 class InMemoryRepository : UserRepository {
-
     val users = mutableListOf<User>()
 
     override fun findByEmail(email: String): User? {

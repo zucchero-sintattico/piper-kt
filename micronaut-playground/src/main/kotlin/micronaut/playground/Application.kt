@@ -2,7 +2,7 @@ package micronaut.playground
 
 import io.micronaut.runtime.Micronaut.run
 
-fun main(args: Array<String>) {
+fun main(vararg args: String) {
     run(*args)
 }
 

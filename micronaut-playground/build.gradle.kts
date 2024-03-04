@@ -1,10 +1,6 @@
-plugins {
-    id("micronaut-base")
-}
+plugins { id("micronaut-base") }
 
-application {
-    mainClass.set("micronaut.playground.ApplicationKt")
-}
+application { mainClass.set("micronaut.playground.ApplicationKt") }
 
 dependencies {
     ksp("io.micronaut.data:micronaut-data-document-processor")
