@@ -47,6 +47,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
+      - name: Set up Docker
+        uses: crazy-max/ghaction-setup-docker@v3
       - uses: DanySK/build-check-deploy-gradle-action@2.4.5
         with:
           java-version: ${{ matrix.java-version }}
@@ -139,8 +141,8 @@ jobs:
         run: |
           ./gradlew -PforceVersion=${{ needs.release.outputs.version }} dokkaHtmlMultiModule --parallel
           cp -r ./build/dokka/htmlMultiModule ./tmp-site/docs
-#      - name: Copy features report
-#        run: cp -r ./build/reports/tests/test ./tmp-site/features
+      #      - name: Copy features report
+      #        run: cp -r ./build/reports/tests/test ./tmp-site/features
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with:
