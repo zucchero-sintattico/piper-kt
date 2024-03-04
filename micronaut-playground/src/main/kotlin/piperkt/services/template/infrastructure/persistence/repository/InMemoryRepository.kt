@@ -8,9 +8,7 @@ import piperkt.services.template.domain.UserRepository
 class InMemoryRepository : UserRepository {
     val users = mutableListOf<User>()
 
-    override fun findByEmail(email: String): User? {
-        return users.find { it.email == email }
-    }
+    override fun findByEmail(email: String): User? = users.find { it.email == email }
 
     override fun save(user: User): User {
         users.add(user)

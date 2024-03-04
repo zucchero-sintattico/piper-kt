@@ -23,7 +23,5 @@ open class UserService(
     override fun loginUser(
         email: String,
         password: String,
-    ): User? {
-        return userRepository.findByEmail(email)?.takeIf { it.password == password }
-    }
+    ): User? = userRepository.findByEmail(email)?.takeIf { it.password == password }
 }

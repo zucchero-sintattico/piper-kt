@@ -17,7 +17,7 @@ class UserHTTPController(
         @Body request: LoginRequest,
     ): LoginResponse {
         val result = userService.loginUser(request.email, request.password)
-        return LoginResponse(result?.email ?: "")
+        return LoginResponse(result?.email.orEmpty())
     }
 
     @Post("/register")

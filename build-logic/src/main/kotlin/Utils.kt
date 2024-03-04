@@ -8,6 +8,6 @@ fun VersionCatalog.getLibrary(name: String): Provider<MinimalExternalModuleDepen
 fun VersionCatalog.getBundle(name: String): Provider<ExternalModuleDependencyBundle> = findBundle(name).get()
 
 object JavaVersion {
-    val asInt: Int = 17
+    const val asInt: Int = 17
     val asVersion: org.gradle.api.JavaVersion = org.gradle.api.JavaVersion.toVersion(asInt)
 }
