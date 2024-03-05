@@ -1,1 +1,1 @@
-rootProject.name = "micronaut-playground"
+rootProject.name = "piperkt"
