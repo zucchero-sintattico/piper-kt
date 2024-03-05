@@ -33,9 +33,10 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - macos-13
+#          Commented until we find a way to run containertests on macOS and Windows
+#          - macos-13
           - ubuntu-22.04
-          - windows-2022
+#          - windows-2022
         java-version: [ 17, 21 ]
         java-distribution:
           - adopt

@@ -49,6 +49,9 @@
 .idea/.gitignore
 .idea/vcs.xml
 .idea/ktfmt.xml
+.idea/codeStyles/**
+.idea/detekt.xml
+.idea/ktlint-plugin.xml
 
 # CMake
 cmake-build-*/
