@@ -1,3 +1,16 @@
+## [1.12.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.11.0...v1.12.0) (2024-03-05)
+
+
+### Features
+
+* **build:** add dependencies for micronaut ([5834bac](https://github.com/zucchero-sintattico/piper-kt/commit/5834bacd1f2bc253b002b1dea2a4e5f73c467023))
+* **build:** add java version of gradle API ([bc17fc0](https://github.com/zucchero-sintattico/piper-kt/commit/bc17fc0e06fd79f372b6f13818c658c98e13e828))
+
+
+### Bug Fixes
+
+* **style:** corrected kfmtm and detekt errors ([19d9d70](https://github.com/zucchero-sintattico/piper-kt/commit/19d9d70a45bdec4de36565caa2c8a1afae76c05e))
+
 ## [1.11.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.10.0...v1.11.0) (2024-02-25)
 
 
