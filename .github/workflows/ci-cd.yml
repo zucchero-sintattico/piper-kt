@@ -58,7 +58,7 @@ jobs:
       - build
       - test
     if: >-
-      && github.event_name != 'pull_request'
+      github.event_name != 'pull_request'
       && contains(needs.*.result, 'success')
       && !contains(needs.*.result, 'failure')
       && !github.event.repository.fork
@@ -111,7 +111,7 @@ jobs:
   pages-deploy:
     needs: release
     if: >-
-      && needs.release.result == 'success'
+      needs.release.result == 'success'
       && needs.release.outputs.version != ''
     environment:
       name: github-pages
