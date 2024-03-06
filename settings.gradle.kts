@@ -7,15 +7,9 @@
 
 rootProject.name = "piper-kt"
 
-pluginManagement {
-    includeBuild("build-logic")
-}
+pluginManagement { includeBuild("build-logic") }
 
-dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
-    }
-}
+dependencyResolutionManagement { repositories { mavenCentral() } }
 
 plugins {
     id("org.danilopianini.gradle-pre-commit-git-hooks") version "2.0.4"
@@ -36,7 +30,11 @@ gitHooks {
 }
 
 include("bdd")
+
 include("commons")
+
 include("users-service")
+
 include("servers-service")
-include("micronaut-playground")
+
+include("multimedia-service")

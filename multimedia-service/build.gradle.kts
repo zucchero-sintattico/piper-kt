@@ -1,6 +1,6 @@
 plugins { id("micronaut-base") }
 
-application { mainClass.set("piperkt.services.template.ApplicationKt") }
+application { mainClass.set("piperkt.services.multimedia.ApplicationKt") }
 
 dependencies {
     ksp("io.micronaut.data:micronaut-data-document-processor")
