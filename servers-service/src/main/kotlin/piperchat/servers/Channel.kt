@@ -1,6 +1,6 @@
 package piperchat.servers
 
-import java.util.Date
+import java.util.*
 import piperchat.commons.UserId
 
 interface ChannelId {

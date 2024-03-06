@@ -12,19 +12,19 @@ import piperkt.services.template.infrastructure.web.api.RegisterResponse
 class UserHTTPController(
     private val userService: piperkt.services.template.application.UserService,
 ) {
-    @Post("/login", consumes = ["application/json"], produces = ["application/json"])
-    fun login(
-        @Body request: LoginRequest,
-    ): LoginResponse {
-        val result = userService.loginUser(request.email, request.password)
-        return LoginResponse(result?.email.orEmpty())
-    }
+  @Post("/login", consumes = ["application/json"], produces = ["application/json"])
+  fun login(
+      @Body request: LoginRequest,
+  ): LoginResponse {
+    val result = userService.loginUser(request.email, request.password)
+    return LoginResponse(result?.email.orEmpty())
+  }
 
-    @Post("/register")
-    fun register(
-        @Body request: RegisterRequest,
-    ): RegisterResponse {
-        val result = userService.registerUser(request.email, request.password)
-        return RegisterResponse(result.email)
-    }
+  @Post("/register")
+  fun register(
+      @Body request: RegisterRequest,
+  ): RegisterResponse {
+    val result = userService.registerUser(request.email, request.password)
+    return RegisterResponse(result.email)
+  }
 }
