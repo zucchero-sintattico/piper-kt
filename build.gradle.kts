@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.kover)
     alias(libs.plugins.gitSemVer)
+    alias(libs.plugins.spotless)
 }
 
 gitSemVer {
@@ -29,4 +30,11 @@ allprojects {
 
 subprojects {
     apply(plugin = "org.jetbrains.dokka")
+}
+
+spotless {
+    yaml {
+        target("**/*.yml", "**/*.yaml")
+        prettier()
+    }
 }
