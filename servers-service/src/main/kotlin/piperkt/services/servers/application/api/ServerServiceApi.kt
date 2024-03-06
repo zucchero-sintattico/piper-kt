@@ -14,14 +14,15 @@ interface ServerServiceApi {
 
     fun deleteServer(
         serverId: String,
-    ): Server?
+    )
 
-    fun joinServer(
+
+    fun addMemberToServer(
         serverId: String,
         userId: String,
     ): Server?
 
-    fun leaveServer(
+    fun removeMemberToServer(
         serverId: String,
         userId: String,
     ): Server?
