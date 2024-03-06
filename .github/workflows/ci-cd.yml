@@ -32,10 +32,10 @@ jobs:
       fail-fast: false
       matrix:
         os:
-#          Commented until we find a way to run containertests on macOS and Windows
-#          - macos-13
+          #          Commented until we find a way to run containertests on macOS and Windows
+          #          - macos-13
           - ubuntu-22.04
-#          - windows-2022
+        #          - windows-2022
         java-version: [ 17, 21 ]
         java-distribution:
           - adopt
@@ -58,7 +58,6 @@ jobs:
       - build
       - test
     if: >-
-      always()
       && github.event_name != 'pull_request'
       && contains(needs.*.result, 'success')
       && !contains(needs.*.result, 'failure')
@@ -112,7 +111,6 @@ jobs:
   pages-deploy:
     needs: release
     if: >-
-      always()
       && needs.release.result == 'success'
       && needs.release.outputs.version != ''
     environment:
@@ -139,8 +137,8 @@ jobs:
         run: |
           ./gradlew -PforceVersion=${{ needs.release.outputs.version }} dokkaHtmlMultiModule --parallel
           cp -r ./build/dokka/htmlMultiModule ./tmp-site/docs
-#      - name: Copy features report
-#        run: cp -r ./build/reports/tests/test ./tmp-site/features
+      #      - name: Copy features report
+      #        run: cp -r ./build/reports/tests/test ./tmp-site/features
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with:
