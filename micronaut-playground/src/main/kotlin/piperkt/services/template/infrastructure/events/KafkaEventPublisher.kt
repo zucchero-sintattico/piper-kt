@@ -6,9 +6,9 @@ import piperkt.services.template.commons.events.EventPublisher
 
 @Singleton
 class KafkaEventPublisher : EventPublisher {
-    override fun publish(event: Event) {
-        println("Publishing event: $event")
-    }
+  override fun publish(event: Event) {
+    println("Publishing event: $event")
+  }
 }
 
 /**
