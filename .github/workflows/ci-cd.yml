@@ -91,6 +91,8 @@ jobs:
           node-version: "lts/*"
       - name: Install dependencies
         run: npm install
+      - name: Avoid git hooks during release
+        run: rm -rf .git/hooks
       - name: Run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

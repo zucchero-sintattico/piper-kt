@@ -37,4 +37,21 @@ spotless {
         target("**/*.yml", "**/*.yaml")
         prettier()
     }
+
+    /*
+    A problem was found with the configuration of task ':spotlessYaml' (type 'SpotlessTaskImpl').
+    - Gradle detected a problem with the following location: 'piper-kt'.
+
+    Reason: Task ':spotlessYaml' uses this output of task ':micronaut-playground:internalStartTestResourcesService' without declaring an explicit or implicit dependency. This can lead to incorrect results being produced, depending on what order the tasks are executed.
+
+    Possible solutions:
+    1. Declare task ':micronaut-playground:internalStartTestResourcesService' as an input of ':spotlessYaml'.
+    2. Declare an explicit dependency on ':micronaut-playground:internalStartTestResourcesService' from ':spotlessYaml' using Task#dependsOn.
+    3. Declare an explicit dependency on ':micronaut-playground:internalStartTestResourcesService' from ':spotlessYaml' using Task#mustRunAfter.
+
+    For more information, please refer to https://docs.gradle.org/8.6/userguide/validation_problems.html#implicit_dependency in the Gradle documentation.
+    */
+    tasks.named("spotlessYaml").configure {
+        dependsOn(":micronaut-playground:internalStartTestResourcesService")
+    }
 }
