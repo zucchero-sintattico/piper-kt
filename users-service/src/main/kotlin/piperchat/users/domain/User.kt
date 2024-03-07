@@ -1,6 +1,6 @@
 package piperchat.users.domain
 
-import piperchat.commons.UserId
+import piperkt.services.commons.domain.id.UserId
 
 interface User {
     val id: UserId
