@@ -1,8 +1,8 @@
 package piperkt.services.servers.infrastructure.events
 
 import jakarta.inject.Singleton
-import piperkt.services.servers.commons.events.Event
-import piperkt.services.servers.commons.events.EventPublisher
+import piperkt.services.commons.domain.events.Event
+import piperkt.services.commons.domain.events.EventPublisher
 
 @Singleton
 class KafkaEventPublisher : EventPublisher {

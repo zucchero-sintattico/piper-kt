@@ -1,1 +1,1 @@
-rootProject.name = "servers-service"
+rootProject.name = "micronaut-playground"
