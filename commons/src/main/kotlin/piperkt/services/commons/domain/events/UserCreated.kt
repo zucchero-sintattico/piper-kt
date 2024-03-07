@@ -1,4 +1,4 @@
-package piperkt.services.template.commons.events
+package piperkt.services.commons.domain.events
 
 data class UserCreated(
     val email: String,
