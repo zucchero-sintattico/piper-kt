@@ -1,3 +1,16 @@
+## [1.13.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.12.0...v1.13.0) (2024-03-07)
+
+
+### Features
+
+* **repo:** add spotless plugin ([#25](https://github.com/zucchero-sintattico/piper-kt/issues/25)) ([bc4569f](https://github.com/zucchero-sintattico/piper-kt/commit/bc4569f2a9675dde97276a9a515067312a4f18f1))
+
+
+### Bug Fixes
+
+* **ci:** adjust error in condition ([1d90c7e](https://github.com/zucchero-sintattico/piper-kt/commit/1d90c7e174ce8c3805c22c54c844623e6d066902))
+* **repo:** bug in unrelated tasks -- should not be there ([2e656e4](https://github.com/zucchero-sintattico/piper-kt/commit/2e656e4d04101d19e7b62e5a28b98f006332a52b))
+
 ## [1.12.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.11.0...v1.12.0) (2024-03-05)
 
 
