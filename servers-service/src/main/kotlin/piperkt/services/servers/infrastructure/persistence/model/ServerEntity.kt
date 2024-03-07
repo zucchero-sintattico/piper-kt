@@ -12,11 +12,11 @@ data class ServerEntity(
     val name: String,
     val description: String,
     val owner: String,
-    val members: List<String> = listOf(owner),
+    val users: List<String> = listOf(owner),
     val channels: List<ChannelEntity> = emptyList(),
 )
 
 @MongoRepository
 interface ServerModelRepository : CrudRepository<ServerEntity, String> {
-    fun findByMembersContains(member: String): List<ServerEntity>
+    fun findByUsersContains(member: String): List<ServerEntity>
 }

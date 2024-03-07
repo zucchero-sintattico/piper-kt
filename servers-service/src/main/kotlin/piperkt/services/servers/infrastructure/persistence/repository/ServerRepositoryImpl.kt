@@ -3,6 +3,7 @@ package piperkt.services.servers.infrastructure.persistence.repository
 import io.micronaut.context.annotation.Primary
 import jakarta.inject.Singleton
 import kotlin.jvm.optionals.getOrElse
+import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.domain.Server
 import piperkt.services.servers.domain.ServerRepository
 import piperkt.services.servers.domain.factory.ServerFactory
@@ -20,35 +21,35 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
                     name = serverName,
                     description = serverDescription,
                     owner = owner,
-                    members = listOf(owner)
+                    users = listOf(owner)
                 )
             )
             .let { ServerFactory.createServer(it.id.orEmpty(), it.name, it.description, it.owner) }
     }
 
-    override fun findByMember(memberUsername: String): List<Server> {
-        return serverModelRepository.findByMembersContains(memberUsername).map {
+    override fun findByUser(memberUsername: String): List<Server> {
+        return serverModelRepository.findByUsersContains(memberUsername).map {
             ServerFactory.createServer(it.id.orEmpty(), it.name, it.description, it.owner)
         }
     }
 
-    override fun deleteServer(serverId: String) {
-        serverModelRepository.deleteById(serverId)
+    override fun deleteServer(serverId: ServerId) {
+        serverModelRepository.deleteById(serverId.value)
     }
 
     override fun updateServer(
-        serverId: String,
+        serverId: ServerId,
         serverName: String?,
         serverDescription: String?
     ): Server? {
         val server =
-            serverModelRepository.findById(serverId).getOrElse {
+            serverModelRepository.findById(serverId.value).getOrElse {
                 return null
             }
         return serverModelRepository
             .update(
                 ServerEntity(
-                    id = serverId,
+                    id = serverId.value,
                     name = serverName ?: server.name,
                     description = serverDescription ?: server.description,
                     owner = server.owner,
@@ -57,29 +58,29 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
             .let { ServerFactory.createServer(it.id.orEmpty(), it.name, it.description, it.owner) }
     }
 
-    override fun getServerMembers(serverId: String): List<String> =
+    override fun getServerUsers(serverId: ServerId): List<String> =
         serverModelRepository
-            .findById(serverId)
+            .findById(serverId.value)
             .getOrElse {
                 return emptyList()
             }
-            .members
+            .users
 
-    override fun addServerMember(serverId: String, member: String): Server? {
+    override fun addUserToServer(serverId: ServerId, username: String): Server? {
         val server =
-            serverModelRepository.findById(serverId).getOrElse {
+            serverModelRepository.findById(serverId.value).getOrElse {
                 return null
             }
 
-        val members = server.members.toMutableList().also { it.add(member) }
+        val members = server.users.toMutableList().also { it.add(username) }
         return serverModelRepository
             .update(
                 ServerEntity(
-                    id = serverId,
+                    id = serverId.value,
                     name = server.name,
                     description = server.description,
                     owner = server.owner,
-                    members = members
+                    users = members
                 )
             )
             .let {
@@ -93,20 +94,20 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
             }
     }
 
-    override fun removeServerMember(serverId: String, member: String): Server? {
+    override fun removeUserFromServer(serverId: ServerId, username: String): Server? {
         val server =
-            serverModelRepository.findById(serverId).getOrElse {
+            serverModelRepository.findById(serverId.value).getOrElse {
                 return null
             }
-        val members = server.members.toMutableList().also { it.remove(member) }
+        val members = server.users.toMutableList().also { it.remove(username) }
         return serverModelRepository
             .update(
                 ServerEntity(
-                    id = serverId,
+                    id = serverId.value,
                     name = server.name,
                     description = server.description,
                     owner = server.owner,
-                    members = members
+                    users = members
                 )
             )
             .let {

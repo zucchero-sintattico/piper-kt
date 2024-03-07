@@ -1,38 +1,28 @@
 package piperkt.services.servers.application.api
 
-import piperkt.services.servers.application.request.AddMemberToServerRequest
-import piperkt.services.servers.application.request.CreateServerRequest
-import piperkt.services.servers.application.request.DeleteServerRequest
-import piperkt.services.servers.application.request.GetServerFromUserRequest
-import piperkt.services.servers.application.request.GetServerMembersRequest
-import piperkt.services.servers.application.request.KickUserFromServerRequest
-import piperkt.services.servers.application.request.RemoveMemberToServerRequest
+import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.domain.Server
 
 interface ServerServiceApi {
-    fun getServersFromUser(request: GetServerFromUserRequest): List<Server>
+    fun getServersFromUser(username: String): List<Server>
 
     fun createServer(
-        request: CreateServerRequest,
+        name: String,
+        description: String,
+        ownerUsername: String,
     ): Server
 
     fun deleteServer(
-        request: DeleteServerRequest,
+        serverId: ServerId,
     )
 
-    fun addMemberToServer(
-        request: AddMemberToServerRequest,
-    ): Server?
+    fun addUserToServer(serverId: ServerId, username: String): Server?
 
-    fun removeMemberToServer(
-        request: RemoveMemberToServerRequest,
-    ): Server?
+    fun removeUserFromServer(serverId: ServerId, username: String): Server?
 
-    fun kickUserFromServer(
-        request: KickUserFromServerRequest,
-    ): Server?
+    fun kickUserFromServer(serverId: ServerId, username: String): Server?
 
-    fun getServerMembers(
-        request: GetServerMembersRequest,
+    fun getServerUsers(
+        serverId: ServerId,
     ): List<String>
 }

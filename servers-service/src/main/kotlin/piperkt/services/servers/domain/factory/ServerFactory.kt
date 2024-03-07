@@ -31,7 +31,7 @@ object ServerFactory {
             name = name,
             owner = owner,
             description = description,
-            members = members
+            users = members
         )
     }
 }

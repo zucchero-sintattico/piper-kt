@@ -5,9 +5,10 @@ import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
+import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.domain.ServerRepository
 
-const val MOCK_NOT_EXISTING_SERVER_ID = "12345678901d345678901234"
+val MOCK_NOT_EXISTING_SERVER_ID = ServerId("12345678901d345678901234")
 
 @MicronautTest
 class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
@@ -18,30 +19,30 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
                 it.name shouldBe "serverName"
                 it.description shouldBe "serverDescription"
                 it.owner shouldBe "owner"
-                it.members shouldBe listOf("owner")
+                it.users shouldBe listOf("owner")
                 it.channels shouldBe emptyList()
             }
         }
 
         "should delete a server" {
             serverRepository.save("serverName", "serverDescription", "owner").also {
-                serverRepository.deleteServer(it.id.value)
+                serverRepository.deleteServer(it.id)
             }
-            serverRepository.findByMember("owner").size shouldBe 0
+            serverRepository.findByUser("owner").size shouldBe 0
         }
 
         "should update a server" {
             serverRepository.save("serverName", "serverDescription", "owner").also { serverCreated
                 ->
                 serverRepository
-                    .updateServer(serverCreated.id.value, "newServerName", "newServerDescription")
+                    .updateServer(serverCreated.id, "newServerName", "newServerDescription")
                     .should {
                         it shouldNotBe null
                         it!!.id.value shouldBe serverCreated.id.value
                         it.name shouldBe "newServerName"
                         it.description shouldBe "newServerDescription"
                         it.owner shouldBe "owner"
-                        it.members shouldBe listOf("owner")
+                        it.users shouldBe listOf("owner")
                         it.channels shouldBe emptyList()
                     }
             }
@@ -50,20 +51,20 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
         "should get server members" {
             serverRepository.save("serverName", "serverDescription", "owner").also { serverCreated
                 ->
-                serverRepository.getServerMembers(serverCreated.id.value) shouldBe listOf("owner")
+                serverRepository.getServerUsers(serverCreated.id) shouldBe listOf("owner")
             }
         }
 
         "should add server member" {
             serverRepository.save("serverName", "serverDescription", "owner").also { serverCreated
                 ->
-                serverRepository.addServerMember(serverCreated.id.value, "member").should {
+                serverRepository.addUserToServer(serverCreated.id, "member").should {
                     it shouldNotBe null
                     it!!.id.value shouldBe serverCreated.id.value
                     it.name shouldBe "serverName"
                     it.description shouldBe "serverDescription"
                     it.owner shouldBe "owner"
-                    it.members shouldBe listOf("owner", "member")
+                    it.users shouldBe listOf("owner", "member")
                     it.channels shouldBe emptyList()
                 }
             }
@@ -72,19 +73,17 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
         "should remove server member" {
             serverRepository.save("serverName", "serverDescription", "owner").also { serverCreated
                 ->
-                serverRepository.addServerMember(serverCreated.id.value, "member").also {
-                    serverWithMember ->
-                    serverRepository
-                        .removeServerMember(serverWithMember!!.id.value, "member")
-                        .should {
-                            it shouldNotBe null
-                            it!!.id.value shouldBe it.id.value
-                            it.name shouldBe "serverName"
-                            it.description shouldBe "serverDescription"
-                            it.owner shouldBe "owner"
-                            it.members shouldBe listOf("owner")
-                            it.channels shouldBe emptyList()
-                        }
+                serverRepository.addUserToServer(serverCreated.id, "member").also { serverWithMember
+                    ->
+                    serverRepository.removeUserFromServer(serverWithMember!!.id, "member").should {
+                        it shouldNotBe null
+                        it!!.id.value shouldBe it.id.value
+                        it.name shouldBe "serverName"
+                        it.description shouldBe "serverDescription"
+                        it.owner shouldBe "owner"
+                        it.users shouldBe listOf("owner")
+                        it.channels shouldBe emptyList()
+                    }
                 }
             }
         }
@@ -98,18 +97,19 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
         }
 
         "should return empty list when server not found on getServerMembers" {
-            serverRepository.getServerMembers(MOCK_NOT_EXISTING_SERVER_ID) shouldBe emptyList()
+            serverRepository.getServerUsers(MOCK_NOT_EXISTING_SERVER_ID) shouldBe emptyList()
         }
 
         "should return null when server not found on addServerMember" {
-            serverRepository.addServerMember(MOCK_NOT_EXISTING_SERVER_ID, "member") shouldBe null
+            serverRepository.addUserToServer(MOCK_NOT_EXISTING_SERVER_ID, "member") shouldBe null
         }
 
         "should return null when server not found on removeServerMember" {
-            serverRepository.removeServerMember(MOCK_NOT_EXISTING_SERVER_ID, "member") shouldBe null
+            serverRepository.removeUserFromServer(MOCK_NOT_EXISTING_SERVER_ID, "member") shouldBe
+                null
         }
 
         "should return empty list when server not found on findByMember" {
-            serverRepository.findByMember("member") shouldBe emptyList()
+            serverRepository.findByUser("member") shouldBe emptyList()
         }
     })

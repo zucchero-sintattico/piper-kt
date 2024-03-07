@@ -13,11 +13,12 @@ class ArchitectureKonsistTest {
                 // Define layers
                 val infrastructure =
                     Layer("Infrastructure", "piperkt.services.servers.infrastructure..")
+                val presentation = Layer("Presentation", "piperkt.services.servers.presentation..")
                 val application = Layer("Application", "piperkt.services.servers.application..")
                 val domain = Layer("Domain", "piperkt.services.servers.domain..")
                 // Define architecture assertions
-                infrastructure.dependsOn(application)
-                infrastructure.dependsOn(domain)
+                infrastructure.dependsOn(presentation, application, domain)
+                presentation.dependsOn(application, domain)
                 application.dependsOn(domain)
                 domain.dependsOnNothing()
             }
