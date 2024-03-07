@@ -1,13 +1,13 @@
 package piperkt.services.servers.domain
 
-import piperkt.services.servers.commons.id.ChannelId
+import piperkt.services.commons.domain.id.ChannelId
 
 enum class ChannelType {
     TEXT,
     MULTIMEDIA
 }
 
-class Channel(
+open class Channel(
     val channelId: ChannelId,
     val name: String,
     val type: ChannelType,

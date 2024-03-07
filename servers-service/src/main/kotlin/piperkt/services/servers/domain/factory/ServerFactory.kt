@@ -1,6 +1,6 @@
 package piperkt.services.servers.domain.factory
 
-import piperkt.services.servers.commons.id.ServerId
+import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.domain.Server
 
 object ServerFactory {

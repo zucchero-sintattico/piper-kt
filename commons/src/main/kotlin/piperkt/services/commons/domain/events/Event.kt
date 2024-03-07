@@ -1,4 +1,4 @@
-package piperkt.services.servers.commons.events
+package piperkt.services.template.commons.events
 
 interface Event
 

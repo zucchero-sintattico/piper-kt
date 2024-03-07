@@ -16,7 +16,6 @@ interface ServerServiceApi {
         serverId: String,
     )
 
-
     fun addMemberToServer(
         serverId: String,
         userId: String,
