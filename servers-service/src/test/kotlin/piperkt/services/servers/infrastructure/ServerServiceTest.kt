@@ -4,9 +4,16 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
+import piperkt.services.commons.domain.id.ServerId
+import piperkt.services.commons.domain.id.UserId
 import piperkt.services.servers.application.ServerService
 import piperkt.services.servers.application.exception.ServerNotFoundException
+import piperkt.services.servers.application.request.AddMemberToServerRequest
 import piperkt.services.servers.application.request.CreateServerRequest
+import piperkt.services.servers.application.request.DeleteServerRequest
+import piperkt.services.servers.application.request.GetServerFromUserRequest
+import piperkt.services.servers.application.request.KickUserFromServerRequest
+import piperkt.services.servers.application.request.RemoveMemberToServerRequest
 
 @MicronautTest
 class ServerServiceTest(private val serverService: ServerService) :
@@ -21,54 +28,81 @@ class ServerServiceTest(private val serverService: ServerService) :
 
         "should get servers from user" {
             serverService.createServer(CreateServerRequest("name", "description", "owner"))
-            serverService.getServersFromUser("owner").size shouldBe 1
+            serverService
+                .getServersFromUser(GetServerFromUserRequest(UserId("owner")))
+                .size shouldBe 1
         }
 
         "should delete server" {
             serverService.createServer(CreateServerRequest("name", "description", "owner")).also {
-                serverService.deleteServer(it.id.value)
+                serverService.deleteServer(DeleteServerRequest(it.id))
             }
-            serverService.getServersFromUser("owner").size shouldBe 0
+            serverService
+                .getServersFromUser(GetServerFromUserRequest(UserId("owner")))
+                .size shouldBe 0
         }
 
         "should let user join server" {
             serverService.createServer(CreateServerRequest("name", "description", "owner")).also {
-                serverService.addMemberToServer(it.id.value, "member")
+                serverService.addMemberToServer(AddMemberToServerRequest(it.id, UserId("member")))
             }
-            serverService.getServersFromUser("member").size shouldBe 1
+            serverService
+                .getServersFromUser(GetServerFromUserRequest(UserId("member")))
+                .size shouldBe 1
         }
 
         "should let user leave server" {
+            serverService.createServer(CreateServerRequest("name", "description", "owner")).also {
+                serverService.addMemberToServer(AddMemberToServerRequest(it.id, UserId("member")))
+                serverService.removeMemberToServer(
+                    RemoveMemberToServerRequest(it.id, UserId("member"))
+                )
+            }
             serverService
-                .createServer(CreateServerRequest("name", "description", "owner"))
-                .also { serverService.addMemberToServer(it.id.value, "member") }
-                .also { serverService.removeMemberToServer(it.id.value, "member") }
-            serverService.getServersFromUser("member").size shouldBe 0
+                .getServersFromUser(GetServerFromUserRequest(UserId("member")))
+                .size shouldBe 0
         }
 
         "should let user be kicked from server" {
+            serverService.createServer(CreateServerRequest("name", "description", "owner")).also {
+                serverService.addMemberToServer(AddMemberToServerRequest(it.id, UserId("member")))
+                serverService.kickUserFromServer(KickUserFromServerRequest(it.id, UserId("member")))
+            }
             serverService
-                .createServer(CreateServerRequest("name", "description", "owner"))
-                .also { serverService.addMemberToServer(it.id.value, "member") }
-                .also { serverService.kickUserFromServer(it.id.value, "member") }
-            serverService.getServersFromUser("member").size shouldBe 0
+                .getServersFromUser(GetServerFromUserRequest(UserId("member")))
+                .size shouldBe 0
         }
 
         "should not let user join server if server does not exist" {
             shouldThrow<ServerNotFoundException> {
-                serverService.addMemberToServer(MOCK_NOT_EXISTING_SERVER_ID, "member")
+                serverService.addMemberToServer(
+                    AddMemberToServerRequest(
+                        ServerId(MOCK_NOT_EXISTING_SERVER_ID),
+                        UserId("member")
+                    )
+                )
             }
         }
 
         "should not let user leave server if server does not exist" {
             shouldThrow<ServerNotFoundException> {
-                serverService.removeMemberToServer(MOCK_NOT_EXISTING_SERVER_ID, "member")
+                serverService.removeMemberToServer(
+                    RemoveMemberToServerRequest(
+                        ServerId(MOCK_NOT_EXISTING_SERVER_ID),
+                        UserId("member")
+                    )
+                )
             }
         }
 
         "should not let user be kicked from server if server does not exist" {
             shouldThrow<ServerNotFoundException> {
-                serverService.kickUserFromServer(MOCK_NOT_EXISTING_SERVER_ID, "member")
+                serverService.kickUserFromServer(
+                    KickUserFromServerRequest(
+                        ServerId(MOCK_NOT_EXISTING_SERVER_ID),
+                        UserId("member")
+                    )
+                )
             }
         }
     })
