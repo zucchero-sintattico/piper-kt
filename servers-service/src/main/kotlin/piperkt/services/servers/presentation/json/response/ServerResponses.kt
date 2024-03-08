@@ -1,16 +1,13 @@
 package piperkt.services.servers.presentation.json.response
 
-import org.bson.json.JsonObject
+import piperkt.services.servers.presentation.json.ServerJson
 
 data class CreateServerResponse(
-    val name: String,
-    val description: String,
+    val success: Boolean,
 )
 
 data class UpdateServerResponse(
-    val serverId: String?,
-    val name: String?,
-    val description: String?,
+    val success: Boolean,
 )
 
 data class DeleteServerResponse(
@@ -35,5 +32,5 @@ data class GetServerUsersResponse(
 )
 
 data class GetServersFromUserResponse(
-    val servers: List<JsonObject>,
+    val servers: List<ServerJson>,
 )
