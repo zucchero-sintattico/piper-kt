@@ -1,34 +1,33 @@
 package piperkt.services.servers.application.api
 
-import piperkt.services.commons.domain.id.ServerId
-import piperkt.services.servers.domain.Server
+import piperkt.services.servers.application.api.command.AddUserToServerRequest
+import piperkt.services.servers.application.api.command.CommandResponse
+import piperkt.services.servers.application.api.command.CreateServerRequest
+import piperkt.services.servers.application.api.command.DeleteServerRequest
+import piperkt.services.servers.application.api.command.KickUserFromServerRequest
+import piperkt.services.servers.application.api.command.RemoveUserFromServerRequest
+import piperkt.services.servers.application.api.command.UpdateServerRequest
+import piperkt.services.servers.application.api.query.GetServerUsersRequest
+import piperkt.services.servers.application.api.query.GetServerUsersResponse
+import piperkt.services.servers.application.api.query.GetServersFromUserRequest
+import piperkt.services.servers.application.api.query.GetServersFromUserResponse
 
 interface ServerServiceApi {
-    fun getServersFromUser(username: String): List<Server>
-
-    fun createServer(
-        name: String,
-        description: String,
-        ownerUsername: String,
-    ): Server
+    fun createServer(request: CreateServerRequest): CommandResponse
 
     fun deleteServer(
-        serverId: ServerId,
-    ): Boolean
+        request: DeleteServerRequest,
+    ): CommandResponse
 
-    fun updateServer(
-        serverId: ServerId,
-        name: String?,
-        description: String?,
-    ): Server?
+    fun updateServer(request: UpdateServerRequest): CommandResponse
 
-    fun addUserToServer(serverId: ServerId, username: String): Server?
+    fun addUserToServer(request: AddUserToServerRequest): CommandResponse
 
-    fun removeUserFromServer(serverId: ServerId, username: String): Server?
+    fun removeUserFromServer(request: RemoveUserFromServerRequest): CommandResponse
 
-    fun kickUserFromServer(serverId: ServerId, username: String): Server?
+    fun kickUserFromServer(request: KickUserFromServerRequest): CommandResponse
 
-    fun getServerUsers(
-        serverId: ServerId,
-    ): List<String>
+    fun getServerUsers(request: GetServerUsersRequest): GetServerUsersResponse
+
+    fun getServersFromUser(request: GetServersFromUserRequest): GetServersFromUserResponse
 }
