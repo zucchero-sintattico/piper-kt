@@ -26,7 +26,11 @@ gitHooks {
     // Configuration
     commitMsg { conventionalCommits() }
     preCommit {
-        tasks("check", "--parallel")
+        tasks("classes",
+            "ktfmtCheck",
+            "detekt",
+            "spotlessCheck",
+            "--parallel")
     }
     createHooks(overwriteExisting = true) // actual hooks creation
 }
