@@ -11,14 +11,18 @@ open class ServerService(
     // private val eventPublisher: EventPublisher,
 ) : ServerServiceApi {
     override fun getServersFromUser(username: String): List<Server> =
-        serverRepository.findByUser(username)
+        serverRepository.getServersFromUser(username)
 
     override fun createServer(name: String, description: String, ownerUsername: String): Server {
         return serverRepository.save(name, description, ownerUsername)
     }
 
-    override fun deleteServer(serverId: ServerId) {
+    override fun deleteServer(serverId: ServerId): Boolean {
         return serverRepository.deleteServer(serverId)
+    }
+
+    override fun updateServer(serverId: ServerId, name: String?, description: String?): Server? {
+        return serverRepository.updateServer(serverId, name, description)
     }
 
     override fun addUserToServer(serverId: ServerId, username: String): Server? {

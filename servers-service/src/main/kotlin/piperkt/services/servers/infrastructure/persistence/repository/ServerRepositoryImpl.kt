@@ -27,14 +27,18 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
             .let { ServerFactory.createServer(it.id.orEmpty(), it.name, it.description, it.owner) }
     }
 
-    override fun findByUser(memberUsername: String): List<Server> {
+    override fun getServersFromUser(memberUsername: String): List<Server> {
         return serverModelRepository.findByUsersContains(memberUsername).map {
             ServerFactory.createServer(it.id.orEmpty(), it.name, it.description, it.owner)
         }
     }
 
-    override fun deleteServer(serverId: ServerId) {
+    override fun deleteServer(serverId: ServerId): Boolean {
+        serverModelRepository.findById(serverId.value).getOrElse {
+            return false
+        }
         serverModelRepository.deleteById(serverId.value)
+        return true
     }
 
     override fun updateServer(

@@ -28,7 +28,7 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
             serverRepository.save("serverName", "serverDescription", "owner").also {
                 serverRepository.deleteServer(it.id)
             }
-            serverRepository.findByUser("owner").size shouldBe 0
+            serverRepository.getServersFromUser("owner").size shouldBe 0
         }
 
         "should update a server" {
@@ -110,6 +110,6 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
         }
 
         "should return empty list when server not found on findByMember" {
-            serverRepository.findByUser("member") shouldBe emptyList()
+            serverRepository.getServersFromUser("member") shouldBe emptyList()
         }
     })

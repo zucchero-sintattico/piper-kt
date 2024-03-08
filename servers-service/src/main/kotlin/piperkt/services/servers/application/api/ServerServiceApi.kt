@@ -14,7 +14,13 @@ interface ServerServiceApi {
 
     fun deleteServer(
         serverId: ServerId,
-    )
+    ): Boolean
+
+    fun updateServer(
+        serverId: ServerId,
+        name: String?,
+        description: String?,
+    ): Server?
 
     fun addUserToServer(serverId: ServerId, username: String): Server?
 

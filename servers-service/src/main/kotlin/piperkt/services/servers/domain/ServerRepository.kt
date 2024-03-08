@@ -5,9 +5,9 @@ import piperkt.services.commons.domain.id.ServerId
 interface ServerRepository {
     fun save(serverName: String, serverDescription: String, owner: String): Server
 
-    fun findByUser(memberUsername: String): List<Server>
+    fun getServersFromUser(memberUsername: String): List<Server>
 
-    fun deleteServer(serverId: ServerId)
+    fun deleteServer(serverId: ServerId): Boolean
 
     fun updateServer(serverId: ServerId, serverName: String?, serverDescription: String?): Server?
 
