@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.presentation.web.api
+package piperkt.services.multimedia.interfaces.web.api
 
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.validation.constraints.NotBlank
