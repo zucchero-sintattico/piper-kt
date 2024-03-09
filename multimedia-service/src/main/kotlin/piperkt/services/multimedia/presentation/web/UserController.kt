@@ -10,7 +10,7 @@ import piperkt.services.multimedia.presentation.web.api.RegisterRequest
 import piperkt.services.multimedia.presentation.web.api.RegisterResponse
 
 @Controller("/users")
-class UserHTTPController(
+class UserController(
     private val userService: UserService,
 ) {
     @Post("/login", consumes = ["application/json"], produces = ["application/json"])

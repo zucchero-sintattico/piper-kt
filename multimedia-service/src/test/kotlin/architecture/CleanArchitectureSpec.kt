@@ -7,7 +7,8 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 
 @MicronautTest
-class ArchitectureTest : AnnotationSpec() {
+class CleanArchitectureSpec : AnnotationSpec() {
+
     @Test
     fun `architecture is Clean`() {
         Konsist.scopeFromProject().assertArchitecture {
@@ -16,11 +17,10 @@ class ArchitectureTest : AnnotationSpec() {
             val applicationLayer = Layer("application", "$packagePrefix.application..")
             val presentationLayer = Layer("presentation", "$packagePrefix.presentation..")
             val infrastructureLayer = Layer("infrastructure", "$packagePrefix.infrastructure..")
-
             domainLayer.dependsOnNothing()
             applicationLayer.dependsOn(domainLayer)
-            presentationLayer.dependsOn(applicationLayer) // + micronaut
-            infrastructureLayer.dependsOn(applicationLayer, domainLayer) // + micronaut
+            presentationLayer.dependsOn(applicationLayer)
+            infrastructureLayer.dependsOn(applicationLayer, domainLayer)
         }
     }
 }
