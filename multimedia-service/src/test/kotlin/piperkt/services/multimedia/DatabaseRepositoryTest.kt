@@ -3,8 +3,8 @@ package piperkt.services.multimedia
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
+import piperkt.services.multimedia.application.UserRepository
 import piperkt.services.multimedia.domain.User
-import piperkt.services.multimedia.domain.UserRepository
 
 @MicronautTest
 class DatabaseRepositoryTest(private val userRepository: UserRepository) : AnnotationSpec() {
