@@ -7,10 +7,10 @@ import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 class CleanArchitectureSpec : AnnotationSpec(), ArchitectureSpec {
     override val prefix = "piperkt.services.multimedia"
 
-    private val domainLayer = asserLayer("domain")
-    private val applicationLayer = asserLayer("application")
-    private val interfacesLayer = asserLayer("interfaces")
-    private val infrastructureLayer = asserLayer("infrastructure")
+    private val domainLayer = assertLayer("domain")
+    private val applicationLayer = assertLayer("application")
+    private val interfacesLayer = assertLayer("interfaces")
+    private val infrastructureLayer = assertLayer("infrastructure")
 
     @Test
     fun `architecture is Clean`() {

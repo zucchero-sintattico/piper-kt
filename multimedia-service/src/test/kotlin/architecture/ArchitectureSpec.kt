@@ -9,7 +9,7 @@ interface ArchitectureSpec {
 
     val prefix: String
 
-    fun asserLayer(name: String): Layer {
+    fun assertLayer(name: String): Layer {
         return Layer(name, "$prefix.$name..")
     }
 
