@@ -1,6 +1,7 @@
-package piperkt.services.servers.domain
+package piperkt.services.servers.application
 
 import piperkt.services.commons.domain.id.ServerId
+import piperkt.services.servers.domain.Channel
 
 interface ChannelRepository {
     fun findById(id: String): Channel?

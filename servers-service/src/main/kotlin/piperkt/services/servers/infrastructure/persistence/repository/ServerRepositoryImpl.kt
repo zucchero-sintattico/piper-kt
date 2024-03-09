@@ -4,8 +4,8 @@ import io.micronaut.context.annotation.Primary
 import jakarta.inject.Singleton
 import kotlin.jvm.optionals.getOrElse
 import piperkt.services.commons.domain.id.ServerId
+import piperkt.services.servers.application.ServerRepository
 import piperkt.services.servers.domain.Server
-import piperkt.services.servers.domain.ServerRepository
 import piperkt.services.servers.domain.factory.ServerFactory
 import piperkt.services.servers.infrastructure.persistence.model.ServerEntity
 import piperkt.services.servers.infrastructure.persistence.model.ServerModelRepository

@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import piperkt.services.commons.domain.id.ServerId
-import piperkt.services.servers.domain.ServerRepository
+import piperkt.services.servers.application.ServerRepository
 
 val MOCK_NOT_EXISTING_SERVER_ID = ServerId("12345678901d345678901234")
 

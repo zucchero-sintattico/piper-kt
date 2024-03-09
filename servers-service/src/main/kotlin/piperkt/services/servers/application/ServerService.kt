@@ -12,7 +12,6 @@ import piperkt.services.servers.application.api.query.GetServerUsersRequest
 import piperkt.services.servers.application.api.query.GetServerUsersResponse
 import piperkt.services.servers.application.api.query.GetServersFromUserRequest
 import piperkt.services.servers.application.api.query.GetServersFromUserResponse
-import piperkt.services.servers.domain.ServerRepository
 
 open class ServerService(
     private val serverRepository: ServerRepository,

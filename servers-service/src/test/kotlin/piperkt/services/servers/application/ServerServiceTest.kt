@@ -16,7 +16,6 @@ import piperkt.services.servers.application.api.command.RemoveUserFromServerRequ
 import piperkt.services.servers.application.api.command.UpdateServerRequest
 import piperkt.services.servers.application.api.query.GetServersFromUserRequest
 import piperkt.services.servers.application.api.query.GetServersFromUserResponse
-import piperkt.services.servers.domain.ServerRepository
 import piperkt.services.servers.domain.factory.ServerFactory
 
 class ServerServiceTest : AnnotationSpec() {
