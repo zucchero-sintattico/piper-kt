@@ -13,11 +13,11 @@ import piperkt.services.servers.application.api.query.GetServersFromUserRequest
 import piperkt.services.servers.application.api.query.GetServersFromUserResponse
 
 interface ServerServiceApi {
+    // Commands
+
     fun createServer(request: CreateServerRequest): CommandResponse
 
-    fun deleteServer(
-        request: DeleteServerRequest,
-    ): CommandResponse
+    fun deleteServer(request: DeleteServerRequest): CommandResponse
 
     fun updateServer(request: UpdateServerRequest): CommandResponse
 
@@ -26,6 +26,8 @@ interface ServerServiceApi {
     fun removeUserFromServer(request: RemoveUserFromServerRequest): CommandResponse
 
     fun kickUserFromServer(request: KickUserFromServerRequest): CommandResponse
+
+    // Queries
 
     fun getServerUsers(request: GetServerUsersRequest): GetServerUsersResponse
 
