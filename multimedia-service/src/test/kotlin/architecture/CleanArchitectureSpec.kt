@@ -15,11 +15,11 @@ class CleanArchitectureSpec : AnnotationSpec() {
             val packagePrefix = "piperkt.services.multimedia"
             val domainLayer = Layer("domain", "$packagePrefix.domain..")
             val applicationLayer = Layer("application", "$packagePrefix.application..")
-            val presentationLayer = Layer("presentation", "$packagePrefix.presentation..")
+            val interfacesLayer = Layer("interfaces", "$packagePrefix.interfaces..")
             val infrastructureLayer = Layer("infrastructure", "$packagePrefix.infrastructure..")
             domainLayer.dependsOnNothing()
             applicationLayer.dependsOn(domainLayer)
-            presentationLayer.dependsOn(applicationLayer)
+            interfacesLayer.dependsOn(applicationLayer)
             infrastructureLayer.dependsOn(applicationLayer, domainLayer)
         }
     }
