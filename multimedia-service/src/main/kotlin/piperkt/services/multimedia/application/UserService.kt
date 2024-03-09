@@ -4,7 +4,6 @@ import piperkt.services.multimedia.application.api.UserServiceApi
 import piperkt.services.multimedia.commons.events.EventPublisher
 import piperkt.services.multimedia.commons.events.UserCreated
 import piperkt.services.multimedia.domain.User
-import piperkt.services.multimedia.domain.UserRepository
 
 open class UserService(
     private val userRepository: UserRepository,

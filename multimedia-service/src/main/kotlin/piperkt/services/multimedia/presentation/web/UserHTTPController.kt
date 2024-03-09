@@ -1,13 +1,13 @@
-package piperkt.services.multimedia.infrastructure.web
+package piperkt.services.multimedia.presentation.web
 
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
 import piperkt.services.multimedia.application.UserService
-import piperkt.services.multimedia.infrastructure.web.api.LoginRequest
-import piperkt.services.multimedia.infrastructure.web.api.LoginResponse
-import piperkt.services.multimedia.infrastructure.web.api.RegisterRequest
-import piperkt.services.multimedia.infrastructure.web.api.RegisterResponse
+import piperkt.services.multimedia.presentation.web.api.LoginRequest
+import piperkt.services.multimedia.presentation.web.api.LoginResponse
+import piperkt.services.multimedia.presentation.web.api.RegisterRequest
+import piperkt.services.multimedia.presentation.web.api.RegisterResponse
 
 @Controller("/users")
 class UserHTTPController(

@@ -1,8 +1,8 @@
 package piperkt.services.multimedia.infrastructure.persistence.repository
 
 import jakarta.inject.Named
+import piperkt.services.multimedia.application.UserRepository
 import piperkt.services.multimedia.domain.User
-import piperkt.services.multimedia.domain.UserRepository
 
 @Named("inMemory")
 class InMemoryRepository : UserRepository {

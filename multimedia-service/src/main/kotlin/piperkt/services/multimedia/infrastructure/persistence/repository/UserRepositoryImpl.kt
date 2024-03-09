@@ -2,8 +2,8 @@ package piperkt.services.multimedia.infrastructure.persistence.repository
 
 import io.micronaut.context.annotation.Primary
 import jakarta.inject.Singleton
+import piperkt.services.multimedia.application.UserRepository
 import piperkt.services.multimedia.domain.User
-import piperkt.services.multimedia.domain.UserRepository
 import piperkt.services.multimedia.infrastructure.persistence.model.UserEntity
 import piperkt.services.multimedia.infrastructure.persistence.model.UserModelRepository
 
