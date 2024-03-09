@@ -1,22 +1,18 @@
 package architecture
 
-import com.lemonappdev.konsist.api.Konsist
-import com.lemonappdev.konsist.api.architecture.KoArchitectureCreator.assertArchitecture
-import com.lemonappdev.konsist.api.architecture.Layer
-import io.kotest.core.spec.style.AnnotationSpec
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 
 @MicronautTest
-class CleanArchitectureSpec : AnnotationSpec() {
+class CleanArchitectureSpec : ArchitectureSpec("piperkt.services.multimedia") {
+
+    private val domainLayer = asserLayer("domain")
+    private val applicationLayer = asserLayer("application")
+    private val interfacesLayer = asserLayer("interfaces")
+    private val infrastructureLayer = asserLayer("infrastructure")
 
     @Test
     fun `architecture is Clean`() {
-        Konsist.scopeFromProject().assertArchitecture {
-            val packagePrefix = "piperkt.services.multimedia"
-            val domainLayer = Layer("domain", "$packagePrefix.domain..")
-            val applicationLayer = Layer("application", "$packagePrefix.application..")
-            val interfacesLayer = Layer("interfaces", "$packagePrefix.interfaces..")
-            val infrastructureLayer = Layer("infrastructure", "$packagePrefix.infrastructure..")
+        assertArchitecture {
             domainLayer.dependsOnNothing()
             applicationLayer.dependsOn(domainLayer)
             interfacesLayer.dependsOn(applicationLayer)
