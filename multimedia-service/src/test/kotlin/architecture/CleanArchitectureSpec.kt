@@ -1,9 +1,11 @@
 package architecture
 
+import io.kotest.core.spec.style.AnnotationSpec
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 
 @MicronautTest
-class CleanArchitectureSpec : ArchitectureSpec("piperkt.services.multimedia") {
+class CleanArchitectureSpec : AnnotationSpec(), ArchitectureSpec {
+    override val prefix = "piperkt.services.multimedia"
 
     private val domainLayer = asserLayer("domain")
     private val applicationLayer = asserLayer("application")
