@@ -13,11 +13,11 @@ class ArchitectureTest {
                 val packagePrefix = "piperkt.services.servers"
                 val domain = Layer("Domain", "$packagePrefix.domain..")
                 val application = Layer("Application", "$packagePrefix.application..")
-                val presentation = Layer("Presentation", "$packagePrefix.presentation..")
+                val interfaces = Layer("Interfaces", "$packagePrefix.interfaces..")
                 val infrastructure = Layer("Infrastructure", "$packagePrefix.infrastructure..")
                 domain.dependsOnNothing()
                 application.dependsOn(domain)
-                presentation.dependsOn(application)
+                interfaces.dependsOn(application)
                 infrastructure.dependsOn(application, domain)
             }
     }

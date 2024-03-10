@@ -1,4 +1,4 @@
-package piperkt.services.servers.presentation.web
+package piperkt.services.servers.interfaces.web
 
 class ServerHttpController {
     fun todo() {
