@@ -1,17 +1,17 @@
 package piperkt.services.servers.application
 
 import piperkt.services.servers.application.api.ServerServiceApi
-import piperkt.services.servers.application.api.command.AddUserToServerRequest
 import piperkt.services.servers.application.api.command.CommandResponse
-import piperkt.services.servers.application.api.command.CreateServerRequest
-import piperkt.services.servers.application.api.command.DeleteServerRequest
-import piperkt.services.servers.application.api.command.KickUserFromServerRequest
-import piperkt.services.servers.application.api.command.RemoveUserFromServerRequest
-import piperkt.services.servers.application.api.command.UpdateServerRequest
-import piperkt.services.servers.application.api.query.GetServerUsersRequest
-import piperkt.services.servers.application.api.query.GetServerUsersResponse
-import piperkt.services.servers.application.api.query.GetServersFromUserRequest
-import piperkt.services.servers.application.api.query.GetServersFromUserResponse
+import piperkt.services.servers.application.api.command.servers.AddUserToServerRequest
+import piperkt.services.servers.application.api.command.servers.CreateServerRequest
+import piperkt.services.servers.application.api.command.servers.DeleteServerRequest
+import piperkt.services.servers.application.api.command.servers.KickUserFromServerRequest
+import piperkt.services.servers.application.api.command.servers.RemoveUserFromServerRequest
+import piperkt.services.servers.application.api.command.servers.UpdateServerRequest
+import piperkt.services.servers.application.api.query.servers.GetServerUsersRequest
+import piperkt.services.servers.application.api.query.servers.GetServerUsersResponse
+import piperkt.services.servers.application.api.query.servers.GetServersFromUserRequest
+import piperkt.services.servers.application.api.query.servers.GetServersFromUserResponse
 
 open class ServerService(
     private val serverRepository: ServerRepository,
@@ -58,10 +58,7 @@ open class ServerService(
     }
 
     override fun getServerUsers(request: GetServerUsersRequest): GetServerUsersResponse {
-        return GetServerUsersResponse(
-            success = true,
-            users = serverRepository.getServerUsers(request.serverId)
-        )
+        return GetServerUsersResponse(users = serverRepository.getServerUsers(request.serverId))
     }
 
     override fun getServersFromUser(

@@ -1,4 +1,4 @@
-package piperkt.services.servers.application.api.command
+package piperkt.services.servers.application.api.command.servers
 
 import piperkt.services.commons.domain.id.ServerId
 

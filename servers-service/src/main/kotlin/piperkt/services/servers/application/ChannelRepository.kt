@@ -8,6 +8,8 @@ interface ChannelRepository {
 
     fun save(serverId: ServerId, channel: Channel): Channel
 
+    fun update(serverId: ServerId, channel: Channel): Channel
+
     fun delete(serverId: ServerId, channel: Channel)
 
     fun findByServerId(serverId: ServerId): List<Channel>

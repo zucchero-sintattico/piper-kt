@@ -11,5 +11,6 @@ open class Channel(
     val channelId: ChannelId,
     val name: String,
     val type: ChannelType,
-    val description: String
+    val description: String,
+    val messages: MutableList<Message> = mutableListOf()
 )
