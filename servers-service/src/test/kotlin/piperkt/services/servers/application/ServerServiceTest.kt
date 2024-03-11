@@ -7,15 +7,15 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import piperkt.services.commons.domain.id.ServerId
-import piperkt.services.servers.application.api.command.AddUserToServerRequest
 import piperkt.services.servers.application.api.command.CommandResponse
-import piperkt.services.servers.application.api.command.CreateServerRequest
-import piperkt.services.servers.application.api.command.DeleteServerRequest
-import piperkt.services.servers.application.api.command.KickUserFromServerRequest
-import piperkt.services.servers.application.api.command.RemoveUserFromServerRequest
-import piperkt.services.servers.application.api.command.UpdateServerRequest
-import piperkt.services.servers.application.api.query.GetServersFromUserRequest
-import piperkt.services.servers.application.api.query.GetServersFromUserResponse
+import piperkt.services.servers.application.api.command.servers.AddUserToServerRequest
+import piperkt.services.servers.application.api.command.servers.CreateServerRequest
+import piperkt.services.servers.application.api.command.servers.DeleteServerRequest
+import piperkt.services.servers.application.api.command.servers.KickUserFromServerRequest
+import piperkt.services.servers.application.api.command.servers.RemoveUserFromServerRequest
+import piperkt.services.servers.application.api.command.servers.UpdateServerRequest
+import piperkt.services.servers.application.api.query.servers.GetServersFromUserRequest
+import piperkt.services.servers.application.api.query.servers.GetServersFromUserResponse
 import piperkt.services.servers.domain.factory.ServerFactory
 
 class ServerServiceTest : AnnotationSpec() {
