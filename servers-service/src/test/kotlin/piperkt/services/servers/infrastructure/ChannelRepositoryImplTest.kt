@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
+import piperkt.services.commons.domain.id.ChannelId
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.ChannelRepository
 import piperkt.services.servers.application.ServerRepository
@@ -16,6 +17,7 @@ class ChannelRepositoryImplTest(
 ) : AnnotationSpec() {
     private var serverId: ServerId? = null
     private val fakeServerId: ServerId = ServerId("12345678901d345678901234")
+    private val fakeChannelId: ChannelId = ChannelId("12345678901d345678901234")
 
     @BeforeEach
     fun setUp() {
@@ -89,11 +91,37 @@ class ChannelRepositoryImplTest(
     }
 
     @Test
+    fun `should not update a channel if channel doesn't exist`() {
+        val updatedChannel =
+            channelRepository.updateChannel(
+                serverId!!,
+                fakeChannelId,
+                "newChannelName",
+                "newChannelDescription"
+            )
+        updatedChannel shouldBe null
+    }
+
+    @Test
     fun `should delete a channel`() {
         val channel =
             channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
         val deleted = channelRepository.delete(serverId!!, channel!!.channelId)
         deleted shouldBe true
         channelRepository.findByServerId(serverId!!).size shouldBe 0
+    }
+
+    @Test
+    fun `should not delete a channel if server doesn't exist`() {
+        val channel =
+            channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
+        val deleted = channelRepository.delete(fakeServerId, channel!!.channelId)
+        deleted shouldBe false
+    }
+
+    @Test
+    fun `should not delete a channel if channel doesn't exist`() {
+        val deleted = channelRepository.delete(serverId!!, fakeChannelId)
+        deleted shouldBe false
     }
 }
