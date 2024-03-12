@@ -3,6 +3,7 @@ package piperkt.services.servers.infrastructure.persistence.model
 import io.micronaut.data.annotation.GeneratedValue
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
+import io.micronaut.data.annotation.Relation
 import io.micronaut.data.mongodb.annotation.MongoRepository
 import io.micronaut.data.repository.CrudRepository
 
@@ -13,6 +14,7 @@ data class ServerEntity(
     val description: String,
     val owner: String,
     val users: List<String> = listOf(owner),
+    @Relation(value = Relation.Kind.ONE_TO_MANY, mappedBy = "server")
     val channels: List<ChannelEntity> = emptyList(),
 )
 

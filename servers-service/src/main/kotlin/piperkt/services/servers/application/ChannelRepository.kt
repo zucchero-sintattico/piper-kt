@@ -12,9 +12,14 @@ interface ChannelRepository {
         channelName: String,
         channelDescription: String,
         channelType: String
-    ): Channel
+    ): Channel?
 
-    fun update(serverId: ServerId, channelName: String?, channelDescription: String?): Channel?
+    fun updateChannel(
+        serverId: ServerId,
+        channelId: ChannelId,
+        channelName: String?,
+        channelDescription: String?
+    ): Channel?
 
     fun delete(serverId: ServerId, channelId: ChannelId): Boolean
 }
