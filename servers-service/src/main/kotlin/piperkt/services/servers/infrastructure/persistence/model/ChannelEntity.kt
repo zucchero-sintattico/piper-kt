@@ -11,7 +11,8 @@ data class ChannelEntity(
     @Id @GeneratedValue val id: String? = null,
     val name: String,
     val description: String,
-    val channelType: String
+    val channelType: String,
+    val messages: List<MessageEntity> = emptyList()
 )
 
 @MongoRepository

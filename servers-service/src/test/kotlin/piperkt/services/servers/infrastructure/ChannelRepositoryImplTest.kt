@@ -124,4 +124,32 @@ class ChannelRepositoryImplTest(
         val deleted = channelRepository.delete(serverId!!, fakeChannelId)
         deleted shouldBe false
     }
+
+    @Test
+    fun `should get messages from a channel`() {
+        val channel =
+            channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
+        val messages =
+            channelRepository.getMessagesFromServerIdAndChannelId(channel!!.channelId, 0, 10)
+        messages.size shouldBe 0
+    }
+
+    @Test
+    fun `should add a message in a channel`() {
+        val channel =
+            channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
+        val added =
+            channelRepository.addMessageInChannel(
+                serverId!!,
+                channel!!.channelId,
+                "message",
+                "sender"
+            )
+        added shouldBe true
+        val messages =
+            channelRepository.getMessagesFromServerIdAndChannelId(channel.channelId, 0, 10)
+        messages.size shouldBe 1
+        messages[0].content shouldBe "message"
+        messages[0].sender shouldBe "sender"
+    }
 }

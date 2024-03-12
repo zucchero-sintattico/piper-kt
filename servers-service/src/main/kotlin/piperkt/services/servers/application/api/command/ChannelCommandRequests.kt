@@ -19,3 +19,10 @@ data class UpdateChannelInServerRequest(
 )
 
 data class DeleteChannelInServerRequest(val serverId: ServerId, val channelId: ChannelId)
+
+data class AddMessageInChannelRequest(
+    val serverId: ServerId,
+    val channelId: ChannelId,
+    val content: String,
+    val sender: String
+)

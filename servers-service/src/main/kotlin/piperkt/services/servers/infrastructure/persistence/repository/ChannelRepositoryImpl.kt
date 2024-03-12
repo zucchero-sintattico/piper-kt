@@ -7,9 +7,13 @@ import piperkt.services.commons.domain.id.ChannelId
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.ChannelRepository
 import piperkt.services.servers.domain.Channel
+import piperkt.services.servers.domain.Message
 import piperkt.services.servers.domain.factory.ChannelFactory
+import piperkt.services.servers.domain.factory.MessageFactory
 import piperkt.services.servers.infrastructure.persistence.model.ChannelEntity
 import piperkt.services.servers.infrastructure.persistence.model.ChannelModelRepository
+import piperkt.services.servers.infrastructure.persistence.model.MessageEntity
+import piperkt.services.servers.infrastructure.persistence.model.MessageModelRepository
 import piperkt.services.servers.infrastructure.persistence.model.ServerEntity
 import piperkt.services.servers.infrastructure.persistence.model.ServerModelRepository
 
@@ -24,6 +28,7 @@ import piperkt.services.servers.infrastructure.persistence.model.ServerModelRepo
 @Singleton
 class ChannelRepositoryImpl(
     private val channelModelRepository: ChannelModelRepository,
+    private val messageModelRepository: MessageModelRepository,
     private val serverModelRepository: ServerModelRepository
 ) : ChannelRepository {
     override fun findByServerId(serverId: ServerId): List<Channel> {
@@ -137,5 +142,62 @@ class ChannelRepositoryImpl(
 
     private fun isServerOrChannelNull(server: ServerEntity?, channel: ChannelEntity?): Boolean {
         return server == null || channel == null
+    }
+
+    override fun getMessagesFromServerIdAndChannelId(
+        channelId: ChannelId,
+        from: Int,
+        to: Int
+    ): List<Message> {
+        val channel = channelModelRepository.findById(channelId.value).getOrNull()
+        return channel?.messages?.map {
+            MessageFactory.createMessage(it.id.orEmpty(), it.content, it.sender, it.timestamp)
+        } ?: emptyList()
+    }
+
+    override fun addMessageInChannel(
+        serverId: ServerId,
+        channelId: ChannelId,
+        content: String,
+        sender: String
+    ): Boolean {
+        val server = serverModelRepository.findById(serverId.value).getOrNull()
+        val channel = channelModelRepository.findById(channelId.value).getOrNull()
+        if (isServerOrChannelNull(server, channel) || !isAMessageChannel(channel)) {
+            return false
+        }
+        val messageEntity =
+            messageModelRepository.save(MessageEntity(null, content = content, sender = sender))
+        val messages = channel!!.messages.toMutableList().also { it.add(messageEntity) }
+        // Update Channel Collection
+        val channelUpdated =
+            channelModelRepository.update(
+                ChannelEntity(
+                    channel.id,
+                    channel.name,
+                    channel.description,
+                    channel.channelType,
+                    messages
+                )
+            )
+        // Update Server Collection
+        serverModelRepository.update(
+            ServerEntity(
+                server!!.id,
+                server.name,
+                server.description,
+                server.owner,
+                server.users,
+                server.channels.toMutableList().also {
+                    it.remove(channel)
+                    it.add(channelUpdated)
+                }
+            )
+        )
+        return true
+    }
+
+    private fun isAMessageChannel(channel: ChannelEntity?): Boolean {
+        return channel?.channelType == "TEXT"
     }
 }
