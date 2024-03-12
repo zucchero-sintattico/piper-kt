@@ -26,7 +26,7 @@ class ChannelService(private val channelRepository: ChannelRepository) : Channel
                 request.channelDescription,
                 request.channelType
             )
-        return CommandResponse(true)
+        return CommandResponse(commandResult != null)
     }
 
     override fun updateChannelInServer(request: UpdateChannelInServerRequest): CommandResponse {

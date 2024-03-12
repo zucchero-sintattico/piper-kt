@@ -4,7 +4,6 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.api.command.AddUserToServerRequest
@@ -32,9 +31,9 @@ class ServerServiceTest : AnnotationSpec() {
 
     @Test
     fun `should allow to create a server`() {
+        whenever(mockedRepository.save(any(), any(), any())).thenReturn(fakeServer)
         val request = CreateServerRequest("serverName", "serverDescription", "serverOwner")
         serverService.createServer(request) shouldBe CommandResponse(true)
-        verify(mockedRepository).save(any(), any(), any())
     }
 
     @Test
