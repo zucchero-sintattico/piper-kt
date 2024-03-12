@@ -152,4 +152,31 @@ class ChannelRepositoryImplTest(
         messages[0].content shouldBe "message"
         messages[0].sender shouldBe "sender"
     }
+
+    @Test
+    fun `should not add a message in a channel if server or channel don't exist`() {
+        val channel =
+            channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
+        val added =
+            channelRepository.addMessageInChannel(
+                fakeServerId,
+                channel!!.channelId,
+                "message",
+                "sender"
+            )
+        added shouldBe false
+    }
+
+    @Test
+    fun `should get messages ordered`() {
+        val channel =
+            channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
+        channelRepository.addMessageInChannel(serverId!!, channel!!.channelId, "message1", "sender")
+        channelRepository.addMessageInChannel(serverId!!, channel.channelId, "message2", "sender")
+        val messages =
+            channelRepository.getMessagesFromServerIdAndChannelId(channel.channelId, 0, 10)
+        messages.size shouldBe 2
+        messages[0].content shouldBe "message1"
+        messages[1].content shouldBe "message2"
+    }
 }

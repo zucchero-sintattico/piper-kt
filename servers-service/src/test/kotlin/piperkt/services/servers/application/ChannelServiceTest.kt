@@ -7,11 +7,14 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import piperkt.services.commons.domain.id.ChannelId
 import piperkt.services.commons.domain.id.ServerId
+import piperkt.services.servers.application.api.command.AddMessageInChannelRequest
 import piperkt.services.servers.application.api.command.CommandResponse
 import piperkt.services.servers.application.api.command.CreateNewChannelInServerRequest
 import piperkt.services.servers.application.api.command.DeleteChannelInServerRequest
 import piperkt.services.servers.application.api.command.UpdateChannelInServerRequest
+import piperkt.services.servers.application.api.query.channels.GetMessagesFromChannelIdRequest
 import piperkt.services.servers.domain.factory.ChannelFactory
+import piperkt.services.servers.domain.factory.MessageFactory
 
 class ChannelServiceTest : AnnotationSpec() {
     private val channelRepository = mock<ChannelRepository>()
@@ -95,5 +98,28 @@ class ChannelServiceTest : AnnotationSpec() {
         serverService.deleteChannelInServer(
             DeleteChannelInServerRequest(fakeServerId, fakeChannelId)
         ) shouldBe CommandResponse(false)
+    }
+
+    @Test
+    fun `should get messages from channel`() {
+        val fakeMessages =
+            listOf(MessageFactory.createMessage("000000000000000000000000", "content", "sender"))
+        whenever(channelRepository.getMessagesFromServerIdAndChannelId(any(), any(), any()))
+            .thenReturn(fakeMessages)
+        val response =
+            serverService.getMessagesFromChannelId(
+                GetMessagesFromChannelIdRequest(fakeChannelId, 0, 10)
+            )
+        response.messages shouldBe fakeMessages
+    }
+
+    @Test
+    fun `should allow to add a message in a channel`() {
+        whenever(channelRepository.addMessageInChannel(any(), any(), any(), any())).thenReturn(true)
+        val response =
+            serverService.addMessageInChannel(
+                AddMessageInChannelRequest(fakeServerId, fakeChannelId, "content", "sender")
+            )
+        response shouldBe CommandResponse(true)
     }
 }

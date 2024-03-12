@@ -26,7 +26,11 @@ interface ChannelRepository {
     fun delete(serverId: ServerId, channelId: ChannelId): Boolean
 
     // Messages
-    fun getMessagesFromServerIdAndChannelId(channelId: ChannelId, from: Int, to: Int): List<Message>
+    fun getMessagesFromServerIdAndChannelId(
+        channelId: ChannelId,
+        from: Int,
+        limit: Int
+    ): List<Message>
 
     fun addMessageInChannel(
         serverId: ServerId,

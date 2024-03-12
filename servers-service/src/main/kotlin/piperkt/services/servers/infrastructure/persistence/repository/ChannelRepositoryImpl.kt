@@ -147,7 +147,7 @@ class ChannelRepositoryImpl(
     override fun getMessagesFromServerIdAndChannelId(
         channelId: ChannelId,
         from: Int,
-        to: Int
+        limit: Int
     ): List<Message> {
         val channel = channelModelRepository.findById(channelId.value).getOrNull()
         return channel?.messages?.map {

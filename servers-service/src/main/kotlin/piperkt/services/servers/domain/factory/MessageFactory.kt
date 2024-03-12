@@ -6,7 +6,12 @@ import piperkt.services.servers.domain.Message
 
 object MessageFactory {
 
-    fun createMessage(messageId: String, content: String, sender: String, timeStamp: String?) =
+    fun createMessage(
+        messageId: String,
+        content: String,
+        sender: String,
+        timeStamp: String? = Instant.now().toString()
+    ) =
         Message(
             messageId = MessageId(messageId),
             sender = sender,
