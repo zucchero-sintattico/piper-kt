@@ -17,7 +17,7 @@ class CleanArchitectureSpec : AnnotationSpec(), ArchitectureSpec {
         assertArchitecture {
             domainLayer.dependsOnNothing()
             applicationLayer.dependsOn(domainLayer)
-            interfacesLayer.dependsOn(applicationLayer)
+            interfacesLayer.dependsOn(applicationLayer, domainLayer)
             infrastructureLayer.dependsOn(applicationLayer, domainLayer)
         }
     }

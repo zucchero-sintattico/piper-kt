@@ -4,12 +4,8 @@ import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.data.mongodb.annotation.MongoRepository
 import io.micronaut.data.repository.CrudRepository
-import jakarta.validation.constraints.NotBlank
+import org.bson.types.ObjectId
 
-@MappedEntity
-data class UserEntity(
-    @Id val email: String,
-    @NotBlank val password: String,
-)
+@MappedEntity data class ChannelEntity(@Id val id: ObjectId? = null)
 
-@MongoRepository interface UserModelRepository : CrudRepository<UserEntity, String>
+@MongoRepository interface ChannelEntityRepository : CrudRepository<ChannelEntity, ObjectId>
