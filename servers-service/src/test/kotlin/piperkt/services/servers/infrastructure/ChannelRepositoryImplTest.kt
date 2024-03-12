@@ -21,7 +21,7 @@ class ChannelRepositoryImplTest(
 
     @BeforeEach
     fun setUp() {
-        serverId = serverRepository.save("serverName", "serverDescription", "serverOwner")?.id
+        serverId = serverRepository.save("serverName", "serverDescription", "serverOwner").id
     }
 
     @Test

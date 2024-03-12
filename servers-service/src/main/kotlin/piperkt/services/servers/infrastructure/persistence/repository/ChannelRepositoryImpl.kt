@@ -13,17 +13,25 @@ import piperkt.services.servers.infrastructure.persistence.model.ChannelModelRep
 import piperkt.services.servers.infrastructure.persistence.model.ServerEntity
 import piperkt.services.servers.infrastructure.persistence.model.ServerModelRepository
 
+/**
+ * Implementation of [ChannelRepository] using Micronaut Data.
+ *
+ * @property channelModelRepository The repository for [ChannelEntity].
+ * @property serverModelRepository The repository for [ServerEntity]. It uses
+ *   [ServerModelRepository] to update the server when a channel is added, updated or deleted. And
+ *   it uses [ChannelModelRepository] to perform the operations on the channel collection.
+ */
 @Singleton
 class ChannelRepositoryImpl(
     private val channelModelRepository: ChannelModelRepository,
     private val serverModelRepository: ServerModelRepository
 ) : ChannelRepository {
     override fun findByServerId(serverId: ServerId): List<Channel> {
-        val server =
+        val serverEntity =
             serverModelRepository.findById(serverId.value).getOrElse {
                 return emptyList()
             }
-        return server.channels.map {
+        return serverEntity.channels.map {
             ChannelFactory.createFromType(it.id.orEmpty(), it.name, it.description, it.channelType)
         }
     }
@@ -34,34 +42,32 @@ class ChannelRepositoryImpl(
         channelDescription: String,
         channelType: String
     ): Channel? {
-        val server =
+        val serverEntity =
             serverModelRepository.findById(serverId.value).getOrElse {
                 return null
             }
-        val channel =
+        val channelEntity =
             channelModelRepository.save(
                 ChannelEntity(null, channelName, channelDescription, channelType)
             )
-        val channels = server.channels.toMutableList().also { it.add(channel) }
-        return serverModelRepository
-            .update(
-                ServerEntity(
-                    server.id,
-                    server.name,
-                    server.description,
-                    server.owner,
-                    server.users,
-                    channels
-                )
+        val channelListUpdated =
+            serverEntity.channels.toMutableList().also { it.add(channelEntity) }
+        serverModelRepository.update(
+            ServerEntity(
+                serverEntity.id,
+                serverEntity.name,
+                serverEntity.description,
+                serverEntity.owner,
+                serverEntity.users,
+                channelListUpdated
             )
-            .let {
-                ChannelFactory.createFromType(
-                    channel.id.orEmpty(),
-                    channelName,
-                    channelDescription,
-                    channelType
-                )
-            }
+        )
+        return ChannelFactory.createFromType(
+            channelEntity.id.orEmpty(),
+            channelName,
+            channelDescription,
+            channelType
+        )
     }
 
     override fun updateChannel(
@@ -70,44 +76,43 @@ class ChannelRepositoryImpl(
         channelName: String?,
         channelDescription: String?
     ): Channel? {
-        val server = serverModelRepository.findById(serverId.value).getOrNull()
-        val channel = channelModelRepository.findById(channelId.value).getOrNull()
-        if (isServerOrChannelNull(server, channel)) {
+        val serverEntity = serverModelRepository.findById(serverId.value).getOrNull()
+        var channelEntity = channelModelRepository.findById(channelId.value).getOrNull()
+        if (isServerOrChannelNull(serverEntity, channelEntity)) {
             return null
         }
+        // I'm sure that serverEntity and channelEntity are not null
+        channelEntity = channelEntity!!
         val updatedChannel =
             channelModelRepository.update(
                 ChannelEntity(
                     channelId.value,
-                    channelName ?: channel!!.name,
-                    channelDescription ?: channel!!.description,
-                    channel!!.channelType
+                    channelName ?: channelEntity.name,
+                    channelDescription ?: channelEntity.description,
+                    channelEntity.channelType
                 )
             )
         val channelListUpdated =
-            server!!.channels.toMutableList().also {
-                it.remove(channel)
+            serverEntity!!.channels.toMutableList().also {
+                it.remove(channelEntity)
                 it.add(updatedChannel)
             }
-        return serverModelRepository
-            .update(
-                ServerEntity(
-                    server.id,
-                    server.name,
-                    server.description,
-                    server.owner,
-                    server.users,
-                    channelListUpdated
-                )
+        serverModelRepository.update(
+            ServerEntity(
+                serverEntity.id,
+                serverEntity.name,
+                serverEntity.description,
+                serverEntity.owner,
+                serverEntity.users,
+                channelListUpdated
             )
-            .let {
-                ChannelFactory.createFromType(
-                    updatedChannel.id.orEmpty(),
-                    updatedChannel.name,
-                    updatedChannel.description,
-                    updatedChannel.channelType
-                )
-            }
+        )
+        return ChannelFactory.createFromType(
+            updatedChannel.id.orEmpty(),
+            updatedChannel.name,
+            updatedChannel.description,
+            updatedChannel.channelType
+        )
     }
 
     override fun delete(serverId: ServerId, channelId: ChannelId): Boolean {
@@ -117,18 +122,17 @@ class ChannelRepositoryImpl(
             return false
         }
         val channels = server!!.channels.toMutableList().also { it.remove(channel) }
-        return serverModelRepository
-            .update(
-                ServerEntity(
-                    server.id,
-                    server.name,
-                    server.description,
-                    server.owner,
-                    server.users,
-                    channels
-                )
+        serverModelRepository.update(
+            ServerEntity(
+                server.id,
+                server.name,
+                server.description,
+                server.owner,
+                server.users,
+                channels
             )
-            .let { true }
+        )
+        return true
     }
 
     private fun isServerOrChannelNull(server: ServerEntity?, channel: ChannelEntity?): Boolean {
