@@ -1,14 +1,12 @@
 package piperkt.services.multimedia.application.servers
 
+import piperkt.services.multimedia.application.servers.events.ServerCreated
+import piperkt.services.multimedia.application.servers.events.ServerDeleted
 import piperkt.services.multimedia.domain.servers.Server
 import piperkt.services.multimedia.domain.servers.ServerId
 import piperkt.services.multimedia.domain.servers.ServerRepository
 import piperkt.services.multimedia.domain.users.User
 import piperkt.services.multimedia.domain.users.UserId
-
-data class ServerCreated(val serverId: String, val owner: String)
-
-data class ServerDeleted(val serverId: String)
 
 open class ServersEventsListener(private val serverRepository: ServerRepository) {
     fun onServerCreated(event: ServerCreated) {
