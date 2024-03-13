@@ -14,6 +14,7 @@ import piperkt.services.servers.application.api.command.UpdateChannelInServerReq
 import piperkt.services.servers.application.api.query.channels.GetMessagesFromChannelIdRequest
 import piperkt.services.servers.application.api.query.channels.GetMessagesFromChannelIdResponse
 import piperkt.services.servers.application.exceptions.ServerOrChannelNotFoundException
+import piperkt.services.servers.application.exceptions.UserNotHasPermissionsException
 import piperkt.services.servers.application.exceptions.UserNotInServerException
 import piperkt.services.servers.domain.factory.ChannelFactory
 import piperkt.services.servers.domain.factory.MessageFactory
@@ -44,7 +45,8 @@ class ChannelServiceTest : AnnotationSpec() {
                 fakeServerId,
                 "channelName",
                 "channelDescription",
-                "TEXT"
+                "TEXT",
+                "owner"
             )
         channelService.createNewChannelInServer(request) shouldBe Result.success(Unit)
     }
@@ -57,10 +59,27 @@ class ChannelServiceTest : AnnotationSpec() {
                 fakeServerId,
                 "channelName",
                 "channelDescription",
-                "TEXT"
+                "TEXT",
+                "owner"
             )
         channelService.createNewChannelInServer(request) shouldBe
             Result.failure(ServerOrChannelNotFoundException())
+    }
+
+    @Test
+    fun `should not allow to create a channel if user isn't the owner`() {
+        whenever(channelRepository.save(any(), any(), any(), any())).thenReturn(fakeChannel)
+        whenever(serverRepository.findById(any())).thenReturn(fakeServer)
+        val request =
+            CreateNewChannelInServerRequest(
+                fakeServerId,
+                "channelName",
+                "channelDescription",
+                "TEXT",
+                "notOwner"
+            )
+        channelService.createNewChannelInServer(request) shouldBe
+            Result.failure(UserNotHasPermissionsException())
     }
 
     @Test
@@ -73,7 +92,8 @@ class ChannelServiceTest : AnnotationSpec() {
                 fakeChannelId,
                 "channelName",
                 "channelDescription",
-                "TEXT"
+                "TEXT",
+                "owner"
             )
         ) shouldBe Result.success(Unit)
     }
@@ -87,16 +107,33 @@ class ChannelServiceTest : AnnotationSpec() {
                 fakeChannelId,
                 "channelName",
                 "channelDescription",
-                "TEXT"
+                "TEXT",
+                "owner"
             )
         ) shouldBe Result.failure(ServerOrChannelNotFoundException("Server or Channel not found"))
+    }
+
+    @Test
+    fun `should not allow to update a channel if user isn't the owner`() {
+        whenever(channelRepository.updateChannel(any(), any(), any(), any()))
+            .thenReturn(fakeChannel)
+        channelService.updateChannelInServer(
+            UpdateChannelInServerRequest(
+                fakeServerId,
+                fakeChannelId,
+                "channelName",
+                "channelDescription",
+                "TEXT",
+                "notOwner"
+            )
+        ) shouldBe Result.failure(UserNotHasPermissionsException())
     }
 
     @Test
     fun `should allow to delete a channel`() {
         whenever(channelRepository.delete(any(), any())).thenReturn(true)
         channelService.deleteChannelInServer(
-            DeleteChannelInServerRequest(fakeServerId, fakeChannelId)
+            DeleteChannelInServerRequest(fakeServerId, fakeChannelId, "owner")
         ) shouldBe Result.success(Unit)
     }
 
@@ -104,8 +141,16 @@ class ChannelServiceTest : AnnotationSpec() {
     fun `should not allow to delete a channel if server or channel don't exist`() {
         whenever(channelRepository.delete(any(), any())).thenReturn(false)
         channelService.deleteChannelInServer(
-            DeleteChannelInServerRequest(fakeServerId, fakeChannelId)
+            DeleteChannelInServerRequest(fakeServerId, fakeChannelId, "owner")
         ) shouldBe Result.failure(ServerOrChannelNotFoundException("Server or Channel not found"))
+    }
+
+    @Test
+    fun `should not allow to delete a channel if user isn't the owner`() {
+        whenever(channelRepository.delete(any(), any())).thenReturn(true)
+        channelService.deleteChannelInServer(
+            DeleteChannelInServerRequest(fakeServerId, fakeChannelId, "notOwner")
+        ) shouldBe Result.failure(UserNotHasPermissionsException())
     }
 
     @Test

@@ -6,3 +6,7 @@ data class UserNotInServerException(override val message: String = "User not in 
 data class ServerOrChannelNotFoundException(
     override val message: String = "Server or Channel not found"
 ) : Exception()
+
+data class UserNotHasPermissionsException(
+    override val message: String = "User not has permissions to perform this action"
+) : Exception()
