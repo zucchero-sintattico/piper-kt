@@ -4,8 +4,7 @@ import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.data.mongodb.annotation.MongoRepository
 import io.micronaut.data.repository.CrudRepository
-import org.bson.types.ObjectId
 
-@MappedEntity data class ChannelEntity(@Id val id: ObjectId? = null)
+@MappedEntity data class ChannelEntity(@Id val id: String? = null)
 
-@MongoRepository interface ChannelEntityRepository : CrudRepository<ChannelEntity, ObjectId>
+@MongoRepository interface ChannelEntityRepository : CrudRepository<ChannelEntity, String>
