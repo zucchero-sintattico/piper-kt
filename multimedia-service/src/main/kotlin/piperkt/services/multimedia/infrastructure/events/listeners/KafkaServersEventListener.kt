@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.infrastructure.events
+package piperkt.services.multimedia.infrastructure.events.listeners
 
 import io.micronaut.configuration.kafka.annotation.KafkaListener
 import io.micronaut.configuration.kafka.annotation.Topic
