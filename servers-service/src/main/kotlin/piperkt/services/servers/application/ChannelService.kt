@@ -2,7 +2,6 @@ package piperkt.services.servers.application
 
 import piperkt.services.servers.application.api.ChannelServiceApi
 import piperkt.services.servers.application.api.command.AddMessageInChannelRequest
-import piperkt.services.servers.application.api.command.CommandResponse
 import piperkt.services.servers.application.api.command.CreateNewChannelInServerRequest
 import piperkt.services.servers.application.api.command.DeleteChannelInServerRequest
 import piperkt.services.servers.application.api.command.UpdateChannelInServerRequest
@@ -10,12 +9,15 @@ import piperkt.services.servers.application.api.query.channels.GetChannelByServe
 import piperkt.services.servers.application.api.query.channels.GetChannelByServerIdResponse
 import piperkt.services.servers.application.api.query.channels.GetMessagesFromChannelIdRequest
 import piperkt.services.servers.application.api.query.channels.GetMessagesFromChannelIdResponse
+import piperkt.services.servers.application.exceptions.ServerOrChannelNotFoundException
+import piperkt.services.servers.application.exceptions.UserNotInServerException
 
-class ChannelService(private val channelRepository: ChannelRepository) : ChannelServiceApi {
+class ChannelService(
+    private val channelRepository: ChannelRepository,
+    private val serverRepository: ServerRepository
+) : ChannelServiceApi {
 
-    override fun createNewChannelInServer(
-        request: CreateNewChannelInServerRequest
-    ): CommandResponse {
+    override fun createNewChannelInServer(request: CreateNewChannelInServerRequest): Result<Unit> {
         val commandResult =
             channelRepository.save(
                 request.serverId,
@@ -23,10 +25,13 @@ class ChannelService(private val channelRepository: ChannelRepository) : Channel
                 request.channelDescription,
                 request.channelType
             )
-        return CommandResponse(commandResult != null)
+        if (commandResult == null) {
+            return Result.failure(ServerOrChannelNotFoundException())
+        }
+        return Result.success(Unit)
     }
 
-    override fun updateChannelInServer(request: UpdateChannelInServerRequest): CommandResponse {
+    override fun updateChannelInServer(request: UpdateChannelInServerRequest): Result<Unit> {
         val commandResult =
             channelRepository.updateChannel(
                 request.serverId,
@@ -34,41 +39,57 @@ class ChannelService(private val channelRepository: ChannelRepository) : Channel
                 request.channelName,
                 request.channelDescription
             )
-        return CommandResponse(commandResult != null)
+        if (commandResult == null) {
+            return Result.failure(ServerOrChannelNotFoundException())
+        }
+        return Result.success(Unit)
     }
 
-    override fun deleteChannelInServer(request: DeleteChannelInServerRequest): CommandResponse {
-        val commandResult = channelRepository.delete(request.serverId, request.channelId)
-        return CommandResponse(commandResult)
+    override fun deleteChannelInServer(request: DeleteChannelInServerRequest): Result<Unit> {
+        val commandResult: Boolean = channelRepository.delete(request.serverId, request.channelId)
+        if (!commandResult) {
+            return Result.failure(ServerOrChannelNotFoundException())
+        }
+        return Result.success(Unit)
     }
 
     override fun getChannelsByServerId(
         request: GetChannelByServerIdRequest
-    ): GetChannelByServerIdResponse {
+    ): Result<GetChannelByServerIdResponse> {
         val channels = channelRepository.findByServerId(request.serverId)
-        return GetChannelByServerIdResponse(channels)
+        return Result.success(GetChannelByServerIdResponse(channels))
     }
 
     override fun getMessagesFromChannelId(
         request: GetMessagesFromChannelIdRequest
-    ): GetMessagesFromChannelIdResponse {
+    ): Result<GetMessagesFromChannelIdResponse> {
         val messages =
             channelRepository.getMessagesFromServerIdAndChannelId(
                 request.channelId,
                 request.from,
                 request.to
             )
-        return GetMessagesFromChannelIdResponse(messages)
+        return Result.success(GetMessagesFromChannelIdResponse(messages))
     }
 
-    override fun addMessageInChannel(request: AddMessageInChannelRequest): CommandResponse {
-        val commandResult =
+    @Suppress("ReturnCount")
+    override fun addMessageInChannel(request: AddMessageInChannelRequest): Result<Unit> {
+        val isUserInServer: Boolean =
+            serverRepository.isUserInServer(request.serverId, request.sender)
+        if (!isUserInServer) {
+            return Result.failure(UserNotInServerException())
+        }
+
+        val commandSuccess: Boolean =
             channelRepository.addMessageInChannel(
                 request.serverId,
                 request.channelId,
                 request.content,
                 request.sender
             )
-        return CommandResponse(commandResult)
+        if (!commandSuccess) {
+            return Result.failure(ServerOrChannelNotFoundException())
+        }
+        return Result.success(Unit)
     }
 }

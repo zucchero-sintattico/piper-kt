@@ -34,6 +34,7 @@ class ChannelRepositoryImplTest(
         channel.name shouldBe "channelName"
         channel.description shouldBe "channelDescription"
         channel.type shouldBe ChannelType.TEXT
+        channel.messages shouldBe emptyList()
     }
 
     @Test

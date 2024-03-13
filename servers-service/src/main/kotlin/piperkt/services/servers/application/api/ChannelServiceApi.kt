@@ -1,7 +1,6 @@
 package piperkt.services.servers.application.api
 
 import piperkt.services.servers.application.api.command.AddMessageInChannelRequest
-import piperkt.services.servers.application.api.command.CommandResponse
 import piperkt.services.servers.application.api.command.CreateNewChannelInServerRequest
 import piperkt.services.servers.application.api.command.DeleteChannelInServerRequest
 import piperkt.services.servers.application.api.command.UpdateChannelInServerRequest
@@ -12,17 +11,19 @@ import piperkt.services.servers.application.api.query.channels.GetMessagesFromCh
 
 interface ChannelServiceApi {
 
-    fun getChannelsByServerId(request: GetChannelByServerIdRequest): GetChannelByServerIdResponse
+    fun getChannelsByServerId(
+        request: GetChannelByServerIdRequest
+    ): Result<GetChannelByServerIdResponse>
 
-    fun createNewChannelInServer(request: CreateNewChannelInServerRequest): CommandResponse
+    fun createNewChannelInServer(request: CreateNewChannelInServerRequest): Result<Unit>
 
-    fun updateChannelInServer(request: UpdateChannelInServerRequest): CommandResponse
+    fun updateChannelInServer(request: UpdateChannelInServerRequest): Result<Unit>
 
-    fun deleteChannelInServer(request: DeleteChannelInServerRequest): CommandResponse
+    fun deleteChannelInServer(request: DeleteChannelInServerRequest): Result<Unit>
 
     fun getMessagesFromChannelId(
         request: GetMessagesFromChannelIdRequest
-    ): GetMessagesFromChannelIdResponse
+    ): Result<GetMessagesFromChannelIdResponse>
 
-    fun addMessageInChannel(request: AddMessageInChannelRequest): CommandResponse
+    fun addMessageInChannel(request: AddMessageInChannelRequest): Result<Unit>
 }

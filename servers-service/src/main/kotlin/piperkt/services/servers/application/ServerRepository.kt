@@ -17,4 +17,8 @@ interface ServerRepository {
     fun addUserToServer(serverId: ServerId, username: String): Server?
 
     fun removeUserFromServer(serverId: ServerId, username: String): Server?
+
+    fun isUserInServer(serverId: ServerId, username: String): Boolean
+
+    fun findById(serverId: ServerId): Server?
 }
