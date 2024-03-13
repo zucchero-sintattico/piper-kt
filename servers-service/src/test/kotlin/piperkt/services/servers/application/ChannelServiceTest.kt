@@ -109,17 +109,28 @@ class ChannelServiceTest : AnnotationSpec() {
     }
 
     @Test
-    fun `should get messages from channel`() {
+    fun `should get messages from channel if user is in server`() {
         val fakeMessages =
             listOf(MessageFactory.createMessage("000000000000000000000000", "content", "sender"))
         whenever(channelRepository.getMessagesFromServerIdAndChannelId(any(), any(), any()))
             .thenReturn(fakeMessages)
+        whenever(serverRepository.isUserInServer(any(), any())).thenReturn(true)
         val response =
             channelService.getMessagesFromChannelId(
-                GetMessagesFromChannelIdRequest(fakeChannelId, 0, 10)
+                GetMessagesFromChannelIdRequest(fakeServerId, fakeChannelId, 0, 10, "requestFrom")
             )
         response shouldBe Result.success(GetMessagesFromChannelIdResponse(fakeMessages))
         response.getOrNull()?.messages shouldBe fakeMessages
+    }
+
+    @Test
+    fun `should not get messages from channel if user is not in server`() {
+        whenever(serverRepository.isUserInServer(any(), any())).thenReturn(false)
+        val response =
+            channelService.getMessagesFromChannelId(
+                GetMessagesFromChannelIdRequest(fakeServerId, fakeChannelId, 0, 10, "requestFrom")
+            )
+        response shouldBe Result.failure(UserNotInServerException())
     }
 
     @Test

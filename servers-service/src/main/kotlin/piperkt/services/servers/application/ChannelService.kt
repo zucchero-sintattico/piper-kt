@@ -46,8 +46,8 @@ class ChannelService(
     }
 
     override fun deleteChannelInServer(request: DeleteChannelInServerRequest): Result<Unit> {
-        val commandResult: Boolean = channelRepository.delete(request.serverId, request.channelId)
-        if (!commandResult) {
+        val commandSuccess: Boolean = channelRepository.delete(request.serverId, request.channelId)
+        if (!commandSuccess) {
             return Result.failure(ServerOrChannelNotFoundException())
         }
         return Result.success(Unit)
@@ -63,6 +63,9 @@ class ChannelService(
     override fun getMessagesFromChannelId(
         request: GetMessagesFromChannelIdRequest
     ): Result<GetMessagesFromChannelIdResponse> {
+        if (!serverRepository.isUserInServer(request.serverId, request.requestFrom)) {
+            return Result.failure(UserNotInServerException())
+        }
         val messages =
             channelRepository.getMessagesFromServerIdAndChannelId(
                 request.channelId,
