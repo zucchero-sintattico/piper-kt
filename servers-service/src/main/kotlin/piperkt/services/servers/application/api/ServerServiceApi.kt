@@ -1,7 +1,6 @@
 package piperkt.services.servers.application.api
 
 import piperkt.services.servers.application.api.command.AddUserToServerRequest
-import piperkt.services.servers.application.api.command.CommandResponse
 import piperkt.services.servers.application.api.command.CreateServerRequest
 import piperkt.services.servers.application.api.command.DeleteServerRequest
 import piperkt.services.servers.application.api.command.KickUserFromServerRequest
@@ -15,21 +14,21 @@ import piperkt.services.servers.application.api.query.servers.GetServersFromUser
 interface ServerServiceApi {
     // Commands
 
-    fun createServer(request: CreateServerRequest): CommandResponse
+    fun createServer(request: CreateServerRequest): Result<Unit>
 
-    fun deleteServer(request: DeleteServerRequest): CommandResponse
+    fun deleteServer(request: DeleteServerRequest): Result<Unit>
 
-    fun updateServer(request: UpdateServerRequest): CommandResponse
+    fun updateServer(request: UpdateServerRequest): Result<Unit>
 
-    fun addUserToServer(request: AddUserToServerRequest): CommandResponse
+    fun addUserToServer(request: AddUserToServerRequest): Result<Unit>
 
-    fun removeUserFromServer(request: RemoveUserFromServerRequest): CommandResponse
+    fun removeUserFromServer(request: RemoveUserFromServerRequest): Result<Unit>
 
-    fun kickUserFromServer(request: KickUserFromServerRequest): CommandResponse
+    fun kickUserFromServer(request: KickUserFromServerRequest): Result<Unit>
 
     // Queries
 
-    fun getServerUsers(request: GetServerUsersRequest): GetServerUsersResponse
+    fun getServerUsers(request: GetServerUsersRequest): Result<GetServerUsersResponse>
 
-    fun getServersFromUser(request: GetServersFromUserRequest): GetServersFromUserResponse
+    fun getServersFromUser(request: GetServersFromUserRequest): Result<GetServersFromUserResponse>
 }
