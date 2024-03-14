@@ -25,10 +25,10 @@ open class MultimediaService(
     ): Result<GetUserInSessionQuery.Response, GetUserInSessionQuery.Errors> {
         val users = sessionRepository.getUsersInSession(SessionId(query.sessionId))
         if (users.isEmpty()) {
-            return GetUserInSessionQuery.Errors.SessionNotFound(query.sessionId).toFailureResult()
+            return GetUserInSessionQuery.Errors.SessionNotFound(query.sessionId).asError()
         }
         return GetUserInSessionQuery.Response(users.map { UserDTO.fromUser(it) }.toSet())
-            .toSuccessResult()
+            .asSuccess()
     }
 
     override fun getDirectSession(
@@ -36,9 +36,7 @@ open class MultimediaService(
     ): Result<GetDirectSessionQuery.Response, GetDirectSessionQuery.Error> {
         val direct =
             directRepository.getSessionInDirect(DirectId(query.users.map { it.username }.toSet()))
-        return direct.let {
-            GetDirectSessionQuery.Response(SessionDTO.fromSession(it)).toSuccessResult()
-        }
+        return direct.let { GetDirectSessionQuery.Response(SessionDTO.fromSession(it)).asSuccess() }
     }
 
     override fun getChannelSession(
@@ -46,7 +44,7 @@ open class MultimediaService(
     ): Result<GetChannelSessionQuery.Response, GetChannelSessionQuery.Error> {
         val session = channelRepository.getSessionInChannel(ChannelId(query.channelId))
         return session.let {
-            GetChannelSessionQuery.Response(SessionDTO.fromSession(it)).toSuccessResult()
+            GetChannelSessionQuery.Response(SessionDTO.fromSession(it)).asSuccess()
         }
     }
 }
