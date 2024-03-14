@@ -1,10 +1,10 @@
 package piperkt.services.multimedia.application
 
-fun <R, E> R.toSuccessResult(): Result<R, E> {
+fun <R, E> R.asSuccess(): Result<R, E> {
     return Result.success(this)
 }
 
-fun <R, E> E.toFailureResult(): Result<R, E> {
+fun <R, E> E.asError(): Result<R, E> {
     return Result.error(this)
 }
 
