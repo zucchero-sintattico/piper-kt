@@ -9,6 +9,8 @@ interface ChannelRepository {
     // Channels
     fun findByServerId(serverId: ServerId): List<Channel>
 
+    fun findByChannelId(channelId: ChannelId): Channel?
+
     fun save(
         serverId: ServerId,
         channelName: String,

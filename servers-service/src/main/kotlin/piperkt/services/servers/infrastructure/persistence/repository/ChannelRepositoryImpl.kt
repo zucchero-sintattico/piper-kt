@@ -41,6 +41,12 @@ class ChannelRepositoryImpl(
         }
     }
 
+    override fun findByChannelId(channelId: ChannelId): Channel? {
+        return channelModelRepository.findById(channelId.value).getOrNull()?.let {
+            ChannelFactory.createFromType(it.id.orEmpty(), it.name, it.description, it.channelType)
+        }
+    }
+
     override fun save(
         serverId: ServerId,
         channelName: String,

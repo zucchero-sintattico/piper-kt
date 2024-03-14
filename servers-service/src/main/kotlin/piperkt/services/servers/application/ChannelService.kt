@@ -14,14 +14,13 @@ import piperkt.services.servers.application.exceptions.ServerOrChannelNotFoundEx
 import piperkt.services.servers.application.exceptions.UserNotHasPermissionsException
 import piperkt.services.servers.application.exceptions.UserNotInServerException
 
-@Suppress("ReturnCount")
 class ChannelService(
     private val channelRepository: ChannelRepository,
     private val serverRepository: ServerRepository
 ) : ChannelServiceApi {
 
     override fun createNewChannelInServer(request: CreateNewChannelInServerRequest): Result<Unit> {
-        if (!checkUserPermissions(request.serverId, request.requestFrom)) {
+        if (!hasUserPermissions(request.serverId, request.requestFrom)) {
             return Result.failure(UserNotHasPermissionsException())
         }
         val commandResult =
@@ -31,14 +30,14 @@ class ChannelService(
                 request.channelDescription,
                 request.channelType
             )
-        if (commandResult == null) {
-            return Result.failure(ServerOrChannelNotFoundException())
+        return when (commandResult != null) {
+            true -> Result.success(Unit)
+            false -> Result.failure(ServerOrChannelNotFoundException())
         }
-        return Result.success(Unit)
     }
 
     override fun updateChannelInServer(request: UpdateChannelInServerRequest): Result<Unit> {
-        if (!checkUserPermissions(request.serverId, request.requestFrom)) {
+        if (!hasUserPermissions(request.serverId, request.requestFrom)) {
             return Result.failure(UserNotHasPermissionsException())
         }
         val commandResult =
@@ -48,26 +47,29 @@ class ChannelService(
                 request.channelName,
                 request.channelDescription
             )
-        if (commandResult == null) {
-            return Result.failure(ServerOrChannelNotFoundException())
+        return when (commandResult != null) {
+            true -> Result.success(Unit)
+            false -> Result.failure(ServerOrChannelNotFoundException())
         }
-        return Result.success(Unit)
     }
 
     override fun deleteChannelInServer(request: DeleteChannelInServerRequest): Result<Unit> {
-        if (!checkUserPermissions(request.serverId, request.requestFrom)) {
+        if (!hasUserPermissions(request.serverId, request.requestFrom)) {
             return Result.failure(UserNotHasPermissionsException())
         }
         val commandSuccess: Boolean = channelRepository.delete(request.serverId, request.channelId)
-        if (!commandSuccess) {
-            return Result.failure(ServerOrChannelNotFoundException())
+        return when (commandSuccess) {
+            true -> Result.success(Unit)
+            false -> Result.failure(ServerOrChannelNotFoundException())
         }
-        return Result.success(Unit)
     }
 
     override fun getChannelsByServerId(
         request: GetChannelByServerIdRequest
     ): Result<GetChannelByServerIdResponse> {
+        if (serverRepository.findById(request.serverId) == null) {
+            return Result.failure(ServerOrChannelNotFoundException())
+        }
         val channels = channelRepository.findByServerId(request.serverId)
         return Result.success(GetChannelByServerIdResponse(channels))
     }
@@ -78,22 +80,19 @@ class ChannelService(
         if (!serverRepository.isUserInServer(request.serverId, request.requestFrom)) {
             return Result.failure(UserNotInServerException())
         }
-        val messages =
-            channelRepository.getMessagesFromServerIdAndChannelId(
-                request.channelId,
-                request.from,
-                request.to
-            )
-        return Result.success(GetMessagesFromChannelIdResponse(messages))
+        return if (channelRepository.findByChannelId(request.channelId) != null) {
+            channelRepository
+                .getMessagesFromServerIdAndChannelId(request.channelId, request.from, request.to)
+                .let { Result.success(GetMessagesFromChannelIdResponse(it)) }
+        } else {
+            Result.failure(ServerOrChannelNotFoundException())
+        }
     }
 
     override fun addMessageInChannel(request: AddMessageInChannelRequest): Result<Unit> {
-        val isUserInServer: Boolean =
-            serverRepository.isUserInServer(request.serverId, request.sender)
-        if (!isUserInServer) {
+        if (!serverRepository.isUserInServer(request.serverId, request.sender)) {
             return Result.failure(UserNotInServerException())
         }
-
         val commandSuccess: Boolean =
             channelRepository.addMessageInChannel(
                 request.serverId,
@@ -101,13 +100,13 @@ class ChannelService(
                 request.content,
                 request.sender
             )
-        if (!commandSuccess) {
-            return Result.failure(ServerOrChannelNotFoundException())
+        return when (commandSuccess) {
+            true -> Result.success(Unit)
+            false -> Result.failure(ServerOrChannelNotFoundException())
         }
-        return Result.success(Unit)
     }
 
-    private fun checkUserPermissions(serverId: ServerId, username: String): Boolean {
+    private fun hasUserPermissions(serverId: ServerId, username: String): Boolean {
         serverRepository.findById(serverId)?.let {
             return it.owner == username
         }

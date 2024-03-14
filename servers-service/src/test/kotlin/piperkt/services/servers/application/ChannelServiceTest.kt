@@ -160,6 +160,7 @@ class ChannelServiceTest : AnnotationSpec() {
         whenever(channelRepository.getMessagesFromServerIdAndChannelId(any(), any(), any()))
             .thenReturn(fakeMessages)
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(true)
+        whenever(channelRepository.findByChannelId(any())).thenReturn(fakeChannel)
         val response =
             channelService.getMessagesFromChannelId(
                 GetMessagesFromChannelIdRequest(fakeServerId, fakeChannelId, 0, 10, "requestFrom")
