@@ -38,7 +38,8 @@ class ChannelServiceTest : AnnotationSpec() {
 
     @Test
     fun `should allow to create a channel if server exist`() {
-        whenever(channelRepository.save(any(), any(), any(), any())).thenReturn(fakeChannel)
+        whenever(channelRepository.createChannelInServer(any(), any(), any(), any()))
+            .thenReturn(fakeChannel)
         whenever(serverRepository.findById(any())).thenReturn(fakeServer)
         val request =
             CreateNewChannelInServerRequest(
@@ -53,7 +54,8 @@ class ChannelServiceTest : AnnotationSpec() {
 
     @Test
     fun `should not allow to create a channel if server doesn't exist`() {
-        whenever(channelRepository.save(any(), any(), any(), any())).thenReturn(null)
+        whenever(channelRepository.createChannelInServer(any(), any(), any(), any()))
+            .thenReturn(null)
         val request =
             CreateNewChannelInServerRequest(
                 fakeServerId,
@@ -68,7 +70,8 @@ class ChannelServiceTest : AnnotationSpec() {
 
     @Test
     fun `should not allow to create a channel if user isn't the owner`() {
-        whenever(channelRepository.save(any(), any(), any(), any())).thenReturn(fakeChannel)
+        whenever(channelRepository.createChannelInServer(any(), any(), any(), any()))
+            .thenReturn(fakeChannel)
         whenever(serverRepository.findById(any())).thenReturn(fakeServer)
         val request =
             CreateNewChannelInServerRequest(
@@ -131,7 +134,7 @@ class ChannelServiceTest : AnnotationSpec() {
 
     @Test
     fun `should allow to delete a channel`() {
-        whenever(channelRepository.delete(any(), any())).thenReturn(true)
+        whenever(channelRepository.deleteChannel(any(), any())).thenReturn(true)
         channelService.deleteChannelInServer(
             DeleteChannelInServerRequest(fakeServerId, fakeChannelId, "owner")
         ) shouldBe Result.success(Unit)
@@ -139,7 +142,7 @@ class ChannelServiceTest : AnnotationSpec() {
 
     @Test
     fun `should not allow to delete a channel if server or channel don't exist`() {
-        whenever(channelRepository.delete(any(), any())).thenReturn(false)
+        whenever(channelRepository.deleteChannel(any(), any())).thenReturn(false)
         channelService.deleteChannelInServer(
             DeleteChannelInServerRequest(fakeServerId, fakeChannelId, "owner")
         ) shouldBe Result.failure(ServerOrChannelNotFoundException("Server or Channel not found"))
@@ -147,7 +150,7 @@ class ChannelServiceTest : AnnotationSpec() {
 
     @Test
     fun `should not allow to delete a channel if user isn't the owner`() {
-        whenever(channelRepository.delete(any(), any())).thenReturn(true)
+        whenever(channelRepository.deleteChannel(any(), any())).thenReturn(true)
         channelService.deleteChannelInServer(
             DeleteChannelInServerRequest(fakeServerId, fakeChannelId, "notOwner")
         ) shouldBe Result.failure(UserNotHasPermissionsException())
@@ -160,7 +163,7 @@ class ChannelServiceTest : AnnotationSpec() {
         whenever(channelRepository.getMessagesFromServerIdAndChannelId(any(), any(), any()))
             .thenReturn(fakeMessages)
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(true)
-        whenever(channelRepository.findByChannelId(any())).thenReturn(fakeChannel)
+        whenever(channelRepository.findChannelById(any())).thenReturn(fakeChannel)
         val response =
             channelService.getMessagesFromChannelId(
                 GetMessagesFromChannelIdRequest(fakeServerId, fakeChannelId, 0, 10, "requestFrom")
@@ -172,31 +175,25 @@ class ChannelServiceTest : AnnotationSpec() {
     @Test
     fun `should not get messages from channel if user is not in server`() {
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(false)
-        val response =
-            channelService.getMessagesFromChannelId(
-                GetMessagesFromChannelIdRequest(fakeServerId, fakeChannelId, 0, 10, "requestFrom")
-            )
-        response shouldBe Result.failure(UserNotInServerException())
+        channelService.getMessagesFromChannelId(
+            GetMessagesFromChannelIdRequest(fakeServerId, fakeChannelId, 0, 10, "requestFrom")
+        ) shouldBe Result.failure(UserNotInServerException())
     }
 
     @Test
     fun `should allow to add a message in a channel`() {
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(true)
         whenever(channelRepository.addMessageInChannel(any(), any(), any(), any())).thenReturn(true)
-        val response =
-            channelService.addMessageInChannel(
-                AddMessageInChannelRequest(fakeServerId, fakeChannelId, "content", "sender")
-            )
-        response shouldBe Result.success(Unit)
+        channelService.addMessageInChannel(
+            AddMessageInChannelRequest(fakeServerId, fakeChannelId, "content", "sender")
+        ) shouldBe Result.success(Unit)
     }
 
     @Test
     fun `should not allow to add a message in a channel if user is not in server`() {
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(false)
-        val response =
-            channelService.addMessageInChannel(
-                AddMessageInChannelRequest(fakeServerId, fakeChannelId, "content", "sender")
-            )
-        response shouldBe Result.failure(UserNotInServerException())
+        channelService.addMessageInChannel(
+            AddMessageInChannelRequest(fakeServerId, fakeChannelId, "content", "sender")
+        ) shouldBe Result.failure(UserNotInServerException())
     }
 }

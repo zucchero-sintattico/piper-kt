@@ -7,11 +7,11 @@ import piperkt.services.servers.domain.Message
 
 interface ChannelRepository {
     // Channels
-    fun findByServerId(serverId: ServerId): List<Channel>
+    fun findChannelByServerId(serverId: ServerId): List<Channel>
 
-    fun findByChannelId(channelId: ChannelId): Channel?
+    fun findChannelById(channelId: ChannelId): Channel?
 
-    fun save(
+    fun createChannelInServer(
         serverId: ServerId,
         channelName: String,
         channelDescription: String,
@@ -25,7 +25,7 @@ interface ChannelRepository {
         channelDescription: String?
     ): Channel?
 
-    fun delete(serverId: ServerId, channelId: ChannelId): Boolean
+    fun deleteChannel(serverId: ServerId, channelId: ChannelId): Boolean
 
     // Messages
     fun getMessagesFromServerIdAndChannelId(

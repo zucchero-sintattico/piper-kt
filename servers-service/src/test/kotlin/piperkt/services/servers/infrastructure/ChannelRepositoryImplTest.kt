@@ -27,7 +27,12 @@ class ChannelRepositoryImplTest(
     @Test
     fun `should create a new channel`() {
         val channel =
-            channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
+            channelRepository.createChannelInServer(
+                serverId!!,
+                "channelName",
+                "channelDescription",
+                "TEXT"
+            )
         channel shouldNotBe null
         channel!!.channelId.value shouldNotBe ""
         println(channel.channelId)
@@ -40,29 +45,44 @@ class ChannelRepositoryImplTest(
     @Test
     fun `should not create a channel if server doesn't exist`() {
         val channel =
-            channelRepository.save(fakeServerId, "channelName", "channelDescription", "TEXT")
+            channelRepository.createChannelInServer(
+                fakeServerId,
+                "channelName",
+                "channelDescription",
+                "TEXT"
+            )
         channel shouldBe null
     }
 
     @Test
     fun `should find channels by server id`() {
         val channel =
-            channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
-        val channels = channelRepository.findByServerId(serverId!!)
+            channelRepository.createChannelInServer(
+                serverId!!,
+                "channelName",
+                "channelDescription",
+                "TEXT"
+            )
+        val channels = channelRepository.findChannelByServerId(serverId!!)
         channels.size shouldBe 1
         channels[0].channelId shouldBe channel!!.channelId
     }
 
     @Test
     fun `should not find channels if server doesn't exist`() {
-        val channels = channelRepository.findByServerId(fakeServerId)
+        val channels = channelRepository.findChannelByServerId(fakeServerId)
         channels.size shouldBe 0
     }
 
     @Test
     fun `should update a channel`() {
         val channel =
-            channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
+            channelRepository.createChannelInServer(
+                serverId!!,
+                "channelName",
+                "channelDescription",
+                "TEXT"
+            )
         val updatedChannel =
             channelRepository.updateChannel(
                 serverId!!,
@@ -80,7 +100,12 @@ class ChannelRepositoryImplTest(
     @Test
     fun `should not update a channel if server doesn't exist`() {
         val channel =
-            channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
+            channelRepository.createChannelInServer(
+                serverId!!,
+                "channelName",
+                "channelDescription",
+                "TEXT"
+            )
         val updatedChannel =
             channelRepository.updateChannel(
                 fakeServerId,
@@ -106,30 +131,45 @@ class ChannelRepositoryImplTest(
     @Test
     fun `should delete a channel`() {
         val channel =
-            channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
-        val deleted = channelRepository.delete(serverId!!, channel!!.channelId)
+            channelRepository.createChannelInServer(
+                serverId!!,
+                "channelName",
+                "channelDescription",
+                "TEXT"
+            )
+        val deleted = channelRepository.deleteChannel(serverId!!, channel!!.channelId)
         deleted shouldBe true
-        channelRepository.findByServerId(serverId!!).size shouldBe 0
+        channelRepository.findChannelByServerId(serverId!!).size shouldBe 0
     }
 
     @Test
     fun `should not delete a channel if server doesn't exist`() {
         val channel =
-            channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
-        val deleted = channelRepository.delete(fakeServerId, channel!!.channelId)
+            channelRepository.createChannelInServer(
+                serverId!!,
+                "channelName",
+                "channelDescription",
+                "TEXT"
+            )
+        val deleted = channelRepository.deleteChannel(fakeServerId, channel!!.channelId)
         deleted shouldBe false
     }
 
     @Test
     fun `should not delete a channel if channel doesn't exist`() {
-        val deleted = channelRepository.delete(serverId!!, fakeChannelId)
+        val deleted = channelRepository.deleteChannel(serverId!!, fakeChannelId)
         deleted shouldBe false
     }
 
     @Test
     fun `should get messages from a channel`() {
         val channel =
-            channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
+            channelRepository.createChannelInServer(
+                serverId!!,
+                "channelName",
+                "channelDescription",
+                "TEXT"
+            )
         val messages =
             channelRepository.getMessagesFromServerIdAndChannelId(channel!!.channelId, 0, 10)
         messages.size shouldBe 0
@@ -138,7 +178,12 @@ class ChannelRepositoryImplTest(
     @Test
     fun `should add a message in a channel`() {
         val channel =
-            channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
+            channelRepository.createChannelInServer(
+                serverId!!,
+                "channelName",
+                "channelDescription",
+                "TEXT"
+            )
         val added =
             channelRepository.addMessageInChannel(
                 serverId!!,
@@ -157,7 +202,12 @@ class ChannelRepositoryImplTest(
     @Test
     fun `should not add a message in a channel if server or channel don't exist`() {
         val channel =
-            channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
+            channelRepository.createChannelInServer(
+                serverId!!,
+                "channelName",
+                "channelDescription",
+                "TEXT"
+            )
         val added =
             channelRepository.addMessageInChannel(
                 fakeServerId,
@@ -171,7 +221,12 @@ class ChannelRepositoryImplTest(
     @Test
     fun `should get messages ordered`() {
         val channel =
-            channelRepository.save(serverId!!, "channelName", "channelDescription", "TEXT")
+            channelRepository.createChannelInServer(
+                serverId!!,
+                "channelName",
+                "channelDescription",
+                "TEXT"
+            )
         channelRepository.addMessageInChannel(serverId!!, channel!!.channelId, "message1", "sender")
         channelRepository.addMessageInChannel(serverId!!, channel.channelId, "message2", "sender")
         val messages =

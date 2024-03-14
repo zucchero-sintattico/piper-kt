@@ -24,7 +24,7 @@ class ChannelService(
             return Result.failure(UserNotHasPermissionsException())
         }
         val commandResult =
-            channelRepository.save(
+            channelRepository.createChannelInServer(
                 request.serverId,
                 request.channelName,
                 request.channelDescription,
@@ -57,7 +57,8 @@ class ChannelService(
         if (!hasUserPermissions(request.serverId, request.requestFrom)) {
             return Result.failure(UserNotHasPermissionsException())
         }
-        val commandSuccess: Boolean = channelRepository.delete(request.serverId, request.channelId)
+        val commandSuccess: Boolean =
+            channelRepository.deleteChannel(request.serverId, request.channelId)
         return when (commandSuccess) {
             true -> Result.success(Unit)
             false -> Result.failure(ServerOrChannelNotFoundException())
@@ -70,7 +71,7 @@ class ChannelService(
         if (serverRepository.findById(request.serverId) == null) {
             return Result.failure(ServerOrChannelNotFoundException())
         }
-        val channels = channelRepository.findByServerId(request.serverId)
+        val channels = channelRepository.findChannelByServerId(request.serverId)
         return Result.success(GetChannelByServerIdResponse(channels))
     }
 
@@ -80,7 +81,7 @@ class ChannelService(
         if (!serverRepository.isUserInServer(request.serverId, request.requestFrom)) {
             return Result.failure(UserNotInServerException())
         }
-        return if (channelRepository.findByChannelId(request.channelId) != null) {
+        return if (channelRepository.findChannelById(request.channelId) != null) {
             channelRepository
                 .getMessagesFromServerIdAndChannelId(request.channelId, request.from, request.to)
                 .let { Result.success(GetMessagesFromChannelIdResponse(it)) }

@@ -31,7 +31,7 @@ class ChannelRepositoryImpl(
     private val messageModelRepository: MessageModelRepository,
     private val serverModelRepository: ServerModelRepository
 ) : ChannelRepository {
-    override fun findByServerId(serverId: ServerId): List<Channel> {
+    override fun findChannelByServerId(serverId: ServerId): List<Channel> {
         val serverEntity =
             serverModelRepository.findById(serverId.value).getOrElse {
                 return emptyList()
@@ -41,13 +41,13 @@ class ChannelRepositoryImpl(
         }
     }
 
-    override fun findByChannelId(channelId: ChannelId): Channel? {
+    override fun findChannelById(channelId: ChannelId): Channel? {
         return channelModelRepository.findById(channelId.value).getOrNull()?.let {
             ChannelFactory.createFromType(it.id.orEmpty(), it.name, it.description, it.channelType)
         }
     }
 
-    override fun save(
+    override fun createChannelInServer(
         serverId: ServerId,
         channelName: String,
         channelDescription: String,
@@ -126,28 +126,31 @@ class ChannelRepositoryImpl(
         )
     }
 
-    override fun delete(serverId: ServerId, channelId: ChannelId): Boolean {
-        val server = serverModelRepository.findById(serverId.value).getOrNull()
-        val channel = channelModelRepository.findById(channelId.value).getOrNull()
-        if (isServerOrChannelNull(server, channel)) {
+    override fun deleteChannel(serverId: ServerId, channelId: ChannelId): Boolean {
+        val serverEntity = serverModelRepository.findById(serverId.value).getOrNull()
+        val channelEntity = channelModelRepository.findById(channelId.value).getOrNull()
+        if (isServerOrChannelNull(serverEntity, channelEntity)) {
             return false
         }
-        val channels = server!!.channels.toMutableList().also { it.remove(channel) }
+        val channels = serverEntity!!.channels.toMutableList().also { it.remove(channelEntity) }
         serverModelRepository.update(
             ServerEntity(
-                server.id,
-                server.name,
-                server.description,
-                server.owner,
-                server.users,
+                serverEntity.id,
+                serverEntity.name,
+                serverEntity.description,
+                serverEntity.owner,
+                serverEntity.users,
                 channels
             )
         )
         return true
     }
 
-    private fun isServerOrChannelNull(server: ServerEntity?, channel: ChannelEntity?): Boolean {
-        return server == null || channel == null
+    private fun isServerOrChannelNull(
+        serverEntity: ServerEntity?,
+        channelEntity: ChannelEntity?
+    ): Boolean {
+        return serverEntity == null || channelEntity == null
     }
 
     override fun getMessagesFromServerIdAndChannelId(
@@ -155,8 +158,8 @@ class ChannelRepositoryImpl(
         from: Int,
         limit: Int
     ): List<Message> {
-        val channel = channelModelRepository.findById(channelId.value).getOrNull()
-        return channel?.messages?.map {
+        val channelEntity = channelModelRepository.findById(channelId.value).getOrNull()
+        return channelEntity?.messages?.map {
             MessageFactory.createMessage(it.id.orEmpty(), it.content, it.sender, it.timestamp)
         } ?: emptyList()
     }
@@ -167,35 +170,37 @@ class ChannelRepositoryImpl(
         content: String,
         sender: String
     ): Boolean {
-        val server = serverModelRepository.findById(serverId.value).getOrNull()
-        val channel = channelModelRepository.findById(channelId.value).getOrNull()
-        if (isServerOrChannelNull(server, channel) || !isAMessageChannel(channel)) {
+        val serverEntity = serverModelRepository.findById(serverId.value).getOrNull()
+        val channelEntity = channelModelRepository.findById(channelId.value).getOrNull()
+        if (
+            isServerOrChannelNull(serverEntity, channelEntity) || !isAMessageChannel(channelEntity)
+        ) {
             return false
         }
         val messageEntity =
             messageModelRepository.save(MessageEntity(null, content = content, sender = sender))
-        val messages = channel!!.messages.toMutableList().also { it.add(messageEntity) }
+        val messages = channelEntity!!.messages.toMutableList().also { it.add(messageEntity) }
         // Update Channel Collection
         val channelUpdated =
             channelModelRepository.update(
                 ChannelEntity(
-                    channel.id,
-                    channel.name,
-                    channel.description,
-                    channel.channelType,
+                    channelEntity.id,
+                    channelEntity.name,
+                    channelEntity.description,
+                    channelEntity.channelType,
                     messages
                 )
             )
         // Update Server Collection
         serverModelRepository.update(
             ServerEntity(
-                server!!.id,
-                server.name,
-                server.description,
-                server.owner,
-                server.users,
-                server.channels.toMutableList().also {
-                    it.remove(channel)
+                serverEntity!!.id,
+                serverEntity.name,
+                serverEntity.description,
+                serverEntity.owner,
+                serverEntity.users,
+                serverEntity.channels.toMutableList().also {
+                    it.remove(channelEntity)
                     it.add(channelUpdated)
                 }
             )
