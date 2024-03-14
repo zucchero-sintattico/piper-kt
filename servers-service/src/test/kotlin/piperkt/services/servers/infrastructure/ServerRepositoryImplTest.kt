@@ -8,7 +8,7 @@ import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.ServerRepository
 
-val MOCK_NOT_EXISTING_SERVER_ID = ServerId("12345678901d345678901234")
+val NOT_EXISTING_SERVER_ID = ServerId("12345678901d345678901234")
 
 @MicronautTest
 class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
@@ -90,23 +90,22 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
 
         "should return null when server not found on updateServer" {
             serverRepository.updateServer(
-                MOCK_NOT_EXISTING_SERVER_ID,
+                NOT_EXISTING_SERVER_ID,
                 "newServerName",
                 "newServerDescription"
             ) shouldBe null
         }
 
         "should return empty list when server not found on getServerMembers" {
-            serverRepository.getServerUsers(MOCK_NOT_EXISTING_SERVER_ID) shouldBe emptyList()
+            serverRepository.getServerUsers(NOT_EXISTING_SERVER_ID) shouldBe emptyList()
         }
 
         "should return null when server not found on addServerMember" {
-            serverRepository.addUserToServer(MOCK_NOT_EXISTING_SERVER_ID, "member") shouldBe null
+            serverRepository.addUserToServer(NOT_EXISTING_SERVER_ID, "member") shouldBe null
         }
 
         "should return null when server not found on removeServerMember" {
-            serverRepository.removeUserFromServer(MOCK_NOT_EXISTING_SERVER_ID, "member") shouldBe
-                null
+            serverRepository.removeUserFromServer(NOT_EXISTING_SERVER_ID, "member") shouldBe null
         }
 
         "should return empty list when server not found on findByMember" {
