@@ -1,35 +1,33 @@
 package piperkt.services.multimedia.interfaces.web.api
 
-import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Error
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.PathVariable
+import io.micronaut.http.annotation.Status
 import io.micronaut.serde.annotation.Serdeable
-import piperkt.services.multimedia.application.api.query.GetUserInSessionQuery
+import piperkt.services.multimedia.application.GetUsersInSessionUseCase
+import piperkt.services.multimedia.application.MultimediaService
 
-object GetUserInSessionApi {
+@Controller("/sessions/{sessionId}/users")
+class GetUserInSessionApi(private val multimediaService: MultimediaService) {
 
-    const val PATH = "/sessions/{sessionId}/users"
+    @Serdeable data class Response(val users: Set<String>)
 
-    @Serdeable
-    data class Request(val sessionId: String) {
-        fun toQuery() = GetUserInSessionQuery(sessionId)
+    @Serdeable data class NotFound(val sessionId: String)
+
+    @Get
+    @Status(HttpStatus.OK)
+    fun getUsersInSession(@PathVariable sessionId: String): Response {
+        val query = GetUsersInSessionUseCase.Query(sessionId)
+        val result = multimediaService.getUsersInSession(query).getOrThrow()
+        return Response(result.users)
     }
 
-    @Serdeable
-    sealed class Response {
-        @Serdeable data class Success(val users: Set<String>) : Response()
-
-        @Serdeable data object NotFound : Response()
-
-        companion object {
-
-            fun fromSuccess(result: GetUserInSessionQuery.Response): HttpResponse<Response> =
-                HttpResponse.ok(Success(result.users.map { it.username }.toSet()))
-
-            fun fromError(error: GetUserInSessionQuery.Errors): HttpResponse<Response> =
-                when (error) {
-                    is GetUserInSessionQuery.Errors.SessionNotFound ->
-                        HttpResponse.notFound(NotFound)
-                    is GetUserInSessionQuery.Errors.UserNotAuthorized -> HttpResponse.unauthorized()
-                }
-        }
+    @Error(GetUsersInSessionUseCase.Errors.SessionNotFound::class)
+    @Status(HttpStatus.NOT_FOUND)
+    fun onUserNotFound(exception: GetUsersInSessionUseCase.Errors.SessionNotFound): NotFound {
+        return NotFound(exception.sessionId)
     }
 }
