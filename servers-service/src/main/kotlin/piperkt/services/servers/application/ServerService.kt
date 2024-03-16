@@ -8,11 +8,11 @@ import piperkt.services.servers.application.api.command.DeleteServerRequest
 import piperkt.services.servers.application.api.command.KickUserFromServerRequest
 import piperkt.services.servers.application.api.command.RemoveUserFromServerRequest
 import piperkt.services.servers.application.api.command.UpdateServerRequest
-import piperkt.services.servers.application.api.query.servers.GetServerUsersRequest
-import piperkt.services.servers.application.api.query.servers.GetServerUsersResponse
+import piperkt.services.servers.application.api.query.servers.GetServerUsersQuery
+import piperkt.services.servers.application.api.query.servers.GetServerUsersQueryResponse
 import piperkt.services.servers.application.api.query.servers.GetServersFromUserRequest
 import piperkt.services.servers.application.api.query.servers.GetServersFromUserResponse
-import piperkt.services.servers.application.exceptions.ServerOrChannelNotFoundException
+import piperkt.services.servers.application.exceptions.ServerNotFoundException
 import piperkt.services.servers.application.exceptions.UserNotHasPermissionsException
 
 open class ServerService(
@@ -29,7 +29,7 @@ open class ServerService(
             val success = serverRepository.deleteServer(request.serverId)
             return when (success) {
                 true -> Result.success(Unit)
-                false -> Result.failure(ServerOrChannelNotFoundException())
+                false -> Result.failure(ServerNotFoundException())
             }
         } else {
             return Result.failure(UserNotHasPermissionsException())
@@ -42,7 +42,7 @@ open class ServerService(
                 serverRepository.updateServer(request.serverId, request.name, request.description)
             return when (server != null) {
                 true -> Result.success(Unit)
-                false -> Result.failure(ServerOrChannelNotFoundException())
+                false -> Result.failure(ServerNotFoundException())
             }
         } else {
             return Result.failure(UserNotHasPermissionsException())
@@ -53,7 +53,7 @@ open class ServerService(
         val server = serverRepository.addUserToServer(request.serverId, request.username)
         return when (server != null) {
             true -> Result.success(Unit)
-            false -> Result.failure(ServerOrChannelNotFoundException())
+            false -> Result.failure(ServerNotFoundException())
         }
     }
 
@@ -61,7 +61,7 @@ open class ServerService(
         val server = serverRepository.removeUserFromServer(request.serverId, request.username)
         return when (server != null) {
             true -> Result.success(Unit)
-            false -> Result.failure(ServerOrChannelNotFoundException())
+            false -> Result.failure(ServerNotFoundException())
         }
     }
 
@@ -70,21 +70,21 @@ open class ServerService(
             val server = serverRepository.removeUserFromServer(request.serverId, request.username)
             return when (server != null) {
                 true -> Result.success(Unit)
-                false -> Result.failure(ServerOrChannelNotFoundException())
+                false -> Result.failure(ServerNotFoundException())
             }
         }
         return Result.failure(UserNotHasPermissionsException())
     }
 
-    override fun getServerUsers(request: GetServerUsersRequest): Result<GetServerUsersResponse> {
+    override fun getServerUsers(request: GetServerUsersQuery): Result<GetServerUsersQueryResponse> {
         if (isUserInServer(request.serverId, request.requestFrom)) {
             val users: List<String> = serverRepository.getServerUsers(request.serverId)
             return when (users.isNotEmpty()) {
-                true -> Result.success(GetServerUsersResponse(users))
-                false -> Result.failure(ServerOrChannelNotFoundException())
+                true -> Result.success(GetServerUsersQueryResponse(users))
+                false -> Result.failure(ServerNotFoundException())
             }
         }
-        return Result.failure(ServerOrChannelNotFoundException())
+        return Result.failure(ServerNotFoundException())
     }
 
     override fun getServersFromUser(

@@ -14,7 +14,7 @@ import piperkt.services.servers.application.api.command.RemoveUserFromServerRequ
 import piperkt.services.servers.application.api.command.UpdateServerRequest
 import piperkt.services.servers.application.api.query.servers.GetServersFromUserRequest
 import piperkt.services.servers.application.api.query.servers.GetServersFromUserResponse
-import piperkt.services.servers.application.exceptions.ServerOrChannelNotFoundException
+import piperkt.services.servers.application.exceptions.ServerNotFoundException
 import piperkt.services.servers.application.exceptions.UserNotHasPermissionsException
 import piperkt.services.servers.domain.factory.ServerFactory
 
@@ -58,7 +58,7 @@ class ServerServiceTest : AnnotationSpec() {
     fun `should not allow to delete a server that does not exist`() {
         whenever(serverRepository.deleteServer(any())).thenReturn(false)
         serverService.deleteServer(DeleteServerRequest(fakeServerId, "serverOwner")) shouldBe
-            Result.failure(ServerOrChannelNotFoundException())
+            Result.failure(ServerNotFoundException())
     }
 
     @Test
@@ -74,7 +74,7 @@ class ServerServiceTest : AnnotationSpec() {
         whenever(serverRepository.updateServer(any(), any(), any())).thenReturn(null)
         serverService.updateServer(
             UpdateServerRequest(fakeServerId, "serverName", "serverDescription", "serverOwner")
-        ) shouldBe Result.failure(ServerOrChannelNotFoundException())
+        ) shouldBe Result.failure(ServerNotFoundException())
     }
 
     @Test
@@ -106,7 +106,7 @@ class ServerServiceTest : AnnotationSpec() {
         whenever(serverRepository.addUserToServer(any(), any())).thenReturn(null)
         serverService.addUserToServer(
             AddUserToServerRequest(fakeServerId, "member", "member")
-        ) shouldBe Result.failure(ServerOrChannelNotFoundException())
+        ) shouldBe Result.failure(ServerNotFoundException())
     }
 
     @Test
