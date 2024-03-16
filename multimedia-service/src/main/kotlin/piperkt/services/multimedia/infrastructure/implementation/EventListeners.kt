@@ -1,11 +1,11 @@
 package piperkt.services.multimedia.infrastructure.implementation
 
 import jakarta.inject.Singleton
-import piperkt.services.multimedia.application.servers.ServerCreatedEventListener
-import piperkt.services.multimedia.application.servers.ServerDeletedEventListener
-import piperkt.services.multimedia.application.users.UserJoinedServerEventListener
-import piperkt.services.multimedia.application.users.UserKickedFromServerEventListener
-import piperkt.services.multimedia.application.users.UserLeftServerEventListener
+import piperkt.services.multimedia.application.servers.listeners.ServerCreatedEventListener
+import piperkt.services.multimedia.application.servers.listeners.ServerDeletedEventListener
+import piperkt.services.multimedia.application.users.listeners.UserJoinedServerEventListener
+import piperkt.services.multimedia.application.users.listeners.UserKickedFromServerEventListener
+import piperkt.services.multimedia.application.users.listeners.UserLeftServerEventListener
 import piperkt.services.multimedia.domain.servers.ServerRepository
 
 object EventListeners {

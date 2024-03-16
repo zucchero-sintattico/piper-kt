@@ -14,11 +14,14 @@ interface GetUsersInSessionApi {
 
     @Serdeable data class Response(val users: Set<String>)
 
-    @Serdeable data class NotFound(val sessionId: String)
+    @Serdeable
+    sealed interface Errors {
+        @Serdeable data class SessionNotFound(val sessionId: String) : Errors
+    }
 
     @Get @Status(HttpStatus.OK) fun handle(@PathVariable sessionId: String): Response
 
     @Error(GetUsersInSessionUseCase.Errors.SessionNotFound::class)
     @Status(HttpStatus.NOT_FOUND)
-    fun onUserNotFound(exception: GetUsersInSessionUseCase.Errors.SessionNotFound): NotFound
+    fun onError(exception: GetUsersInSessionUseCase.Errors, @PathVariable sessionId: String): Errors
 }

@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.application.users
+package piperkt.services.multimedia.application.users.listeners
 
 import piperkt.services.multimedia.application.EventListener
 import piperkt.services.multimedia.application.users.events.UserJoinedServer

@@ -2,8 +2,8 @@ package piperkt.services.multimedia.infrastructure.events.listeners
 
 import io.micronaut.configuration.kafka.annotation.KafkaListener
 import io.micronaut.configuration.kafka.annotation.Topic
-import piperkt.services.multimedia.application.users.UserJoinedServerEventListener
 import piperkt.services.multimedia.application.users.events.UserJoinedServer
+import piperkt.services.multimedia.application.users.listeners.UserJoinedServerEventListener
 
 @KafkaListener
 class UserJoinedServerKafkaListener(

@@ -9,6 +9,7 @@ import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.asSuccess
 import piperkt.services.multimedia.application.sessions.GetUsersInSessionUseCase
 import piperkt.services.multimedia.domain.sessions.SessionId
+import piperkt.services.multimedia.interfaces.web.controllers.GetUserInSessionController
 
 class GetUserInSessionControllerTest :
     MicronautTest({
