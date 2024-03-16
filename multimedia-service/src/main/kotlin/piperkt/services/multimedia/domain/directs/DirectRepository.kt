@@ -5,5 +5,5 @@ import piperkt.services.multimedia.domain.sessions.Session
 interface DirectRepository {
     fun getDirectById(directId: DirectId): Direct?
 
-    fun getSessionInDirect(directId: DirectId): Session
+    fun getSessionInDirect(directId: DirectId): Session?
 }
