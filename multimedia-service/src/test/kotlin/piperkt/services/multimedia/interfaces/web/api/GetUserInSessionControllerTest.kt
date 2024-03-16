@@ -1,6 +1,6 @@
 package piperkt.services.multimedia.interfaces.web.api
 
-import base.BaseTest
+import base.MicronautTest
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.assertThrows
 import org.mockito.kotlin.mock
@@ -10,8 +10,8 @@ import piperkt.services.multimedia.application.asSuccess
 import piperkt.services.multimedia.application.sessions.GetUsersInSessionUseCase
 import piperkt.services.multimedia.domain.sessions.SessionId
 
-class GetUserInSessionApiTest :
-    BaseTest({
+class GetUserInSessionControllerTest :
+    MicronautTest({
         val getUserInSessionUseCase: GetUsersInSessionUseCase = mock()
         val getUserInSessionApi = GetUserInSessionController(getUserInSessionUseCase)
 
