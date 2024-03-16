@@ -1,6 +1,6 @@
 package piperkt.services.servers.interfaces.web
 
-import io.kotest.core.spec.style.FunSpec
+import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
@@ -17,12 +17,20 @@ interface ServerClient {
 }
 
 @MicronautTest
-class SessionControllerTest(private val client: ServerClient) :
-    FunSpec({
-        val fakeServerId = "000000000000000000000000"
+class SessionControllerTest(private val client: ServerClient) : AnnotationSpec() {
 
-        test("getUsers with a fake id should return a 404") {
-            val response = client.getUserInServer(fakeServerId)
-            response.status shouldBe HttpStatus.NOT_FOUND
-        }
-    })
+    @Test
+    fun `should return server not found if server doesn't exist`() {
+        val notExistingServerId = "000000000000000000000000"
+        val response = client.getUserInServer(notExistingServerId)
+        response.status shouldBe HttpStatus.NOT_FOUND
+    }
+
+    @Test
+    fun `should return server users`() {
+        val fakeServerId = "000000000000000000000000"
+        val response = client.getUserInServer(fakeServerId)
+        response.status shouldBe HttpStatus.OK
+        response.body() shouldBe GetServerUsersHttpResponse(listOf("serverOwner"))
+    }
+}

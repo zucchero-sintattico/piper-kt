@@ -6,7 +6,7 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Status
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.ServerService
-import piperkt.services.servers.application.api.query.servers.GetServerUsersQuery
+import piperkt.services.servers.application.api.query.servers.GetServerUsersRequest
 import piperkt.services.servers.interfaces.web.api.ServerHttpControllerApi
 import piperkt.services.servers.interfaces.web.api.responses.GetServerUsersHttpResponse
 
@@ -17,7 +17,7 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
     override fun getServerUsers(serverId: String): GetServerUsersHttpResponse {
         val response =
             serverService
-                .getServerUsers(GetServerUsersQuery(ServerId(serverId), "owner"))
+                .getServerUsers(GetServerUsersRequest(ServerId(serverId), "owner"))
                 .getOrThrow()
         return GetServerUsersHttpResponse.fromResponse(response)
     }

@@ -6,13 +6,12 @@ import piperkt.services.servers.application.api.command.DeleteServerRequest
 import piperkt.services.servers.application.api.command.KickUserFromServerRequest
 import piperkt.services.servers.application.api.command.RemoveUserFromServerRequest
 import piperkt.services.servers.application.api.command.UpdateServerRequest
-import piperkt.services.servers.application.api.query.servers.GetServerUsersQuery
 import piperkt.services.servers.application.api.query.servers.GetServerUsersQueryResponse
+import piperkt.services.servers.application.api.query.servers.GetServerUsersRequest
 import piperkt.services.servers.application.api.query.servers.GetServersFromUserRequest
 import piperkt.services.servers.application.api.query.servers.GetServersFromUserResponse
 
 interface ServerServiceApi {
-    // Commands
 
     fun createServer(request: CreateServerRequest): Result<Unit>
 
@@ -26,9 +25,7 @@ interface ServerServiceApi {
 
     fun kickUserFromServer(request: KickUserFromServerRequest): Result<Unit>
 
-    // Queries
-
-    fun getServerUsers(request: GetServerUsersQuery): Result<GetServerUsersQueryResponse>
+    fun getServerUsers(request: GetServerUsersRequest): Result<GetServerUsersQueryResponse>
 
     fun getServersFromUser(request: GetServersFromUserRequest): Result<GetServersFromUserResponse>
 }

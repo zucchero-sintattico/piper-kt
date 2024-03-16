@@ -8,8 +8,8 @@ import piperkt.services.servers.application.api.command.DeleteServerRequest
 import piperkt.services.servers.application.api.command.KickUserFromServerRequest
 import piperkt.services.servers.application.api.command.RemoveUserFromServerRequest
 import piperkt.services.servers.application.api.command.UpdateServerRequest
-import piperkt.services.servers.application.api.query.servers.GetServerUsersQuery
 import piperkt.services.servers.application.api.query.servers.GetServerUsersQueryResponse
+import piperkt.services.servers.application.api.query.servers.GetServerUsersRequest
 import piperkt.services.servers.application.api.query.servers.GetServersFromUserRequest
 import piperkt.services.servers.application.api.query.servers.GetServersFromUserResponse
 import piperkt.services.servers.application.exceptions.ServerNotFoundException
@@ -27,9 +27,10 @@ open class ServerService(
     override fun deleteServer(request: DeleteServerRequest): Result<Unit> {
         if (isUserAdmin(request.serverId, request.requestFrom)) {
             val success = serverRepository.deleteServer(request.serverId)
-            return when (success) {
-                true -> Result.success(Unit)
-                false -> Result.failure(ServerNotFoundException())
+            return if (success) {
+                Result.success(Unit)
+            } else {
+                Result.failure(ServerNotFoundException())
             }
         } else {
             return Result.failure(UserNotHasPermissionsException())
@@ -40,9 +41,10 @@ open class ServerService(
         if (isUserAdmin(request.serverId, request.requestFrom)) {
             val server =
                 serverRepository.updateServer(request.serverId, request.name, request.description)
-            return when (server != null) {
-                true -> Result.success(Unit)
-                false -> Result.failure(ServerNotFoundException())
+            return if (server != null) {
+                Result.success(Unit)
+            } else {
+                Result.failure(ServerNotFoundException())
             }
         } else {
             return Result.failure(UserNotHasPermissionsException())
@@ -51,37 +53,43 @@ open class ServerService(
 
     override fun addUserToServer(request: AddUserToServerRequest): Result<Unit> {
         val server = serverRepository.addUserToServer(request.serverId, request.username)
-        return when (server != null) {
-            true -> Result.success(Unit)
-            false -> Result.failure(ServerNotFoundException())
+        return if (server != null) {
+            Result.success(Unit)
+        } else {
+            Result.failure(ServerNotFoundException())
         }
     }
 
     override fun removeUserFromServer(request: RemoveUserFromServerRequest): Result<Unit> {
         val server = serverRepository.removeUserFromServer(request.serverId, request.username)
-        return when (server != null) {
-            true -> Result.success(Unit)
-            false -> Result.failure(ServerNotFoundException())
+        return if (server != null) {
+            Result.success(Unit)
+        } else {
+            Result.failure(ServerNotFoundException())
         }
     }
 
     override fun kickUserFromServer(request: KickUserFromServerRequest): Result<Unit> {
         if (isUserAdmin(request.serverId, request.requestFrom)) {
             val server = serverRepository.removeUserFromServer(request.serverId, request.username)
-            return when (server != null) {
-                true -> Result.success(Unit)
-                false -> Result.failure(ServerNotFoundException())
+            return if (server != null) {
+                Result.success(Unit)
+            } else {
+                Result.failure(ServerNotFoundException())
             }
         }
         return Result.failure(UserNotHasPermissionsException())
     }
 
-    override fun getServerUsers(request: GetServerUsersQuery): Result<GetServerUsersQueryResponse> {
+    override fun getServerUsers(
+        request: GetServerUsersRequest
+    ): Result<GetServerUsersQueryResponse> {
         if (isUserInServer(request.serverId, request.requestFrom)) {
             val users: List<String> = serverRepository.getServerUsers(request.serverId)
-            return when (users.isNotEmpty()) {
-                true -> Result.success(GetServerUsersQueryResponse(users))
-                false -> Result.failure(ServerNotFoundException())
+            return if (users.isNotEmpty()) {
+                Result.success(GetServerUsersQueryResponse(users))
+            } else {
+                Result.failure(ServerNotFoundException())
             }
         }
         return Result.failure(ServerNotFoundException())
