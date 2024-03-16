@@ -2,6 +2,7 @@ package piperkt.services.servers.application.api
 
 import piperkt.services.servers.application.api.command.AddUserToServerRequest
 import piperkt.services.servers.application.api.command.CreateServerRequest
+import piperkt.services.servers.application.api.command.CreateServerResponse
 import piperkt.services.servers.application.api.command.DeleteServerRequest
 import piperkt.services.servers.application.api.command.KickUserFromServerRequest
 import piperkt.services.servers.application.api.command.RemoveUserFromServerRequest
@@ -13,7 +14,7 @@ import piperkt.services.servers.application.api.query.servers.GetServersFromUser
 
 interface ServerServiceApi {
 
-    fun createServer(request: CreateServerRequest): Result<Unit>
+    fun createServer(request: CreateServerRequest): Result<CreateServerResponse>
 
     fun deleteServer(request: DeleteServerRequest): Result<Unit>
 

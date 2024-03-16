@@ -4,6 +4,7 @@ import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.api.ServerServiceApi
 import piperkt.services.servers.application.api.command.AddUserToServerRequest
 import piperkt.services.servers.application.api.command.CreateServerRequest
+import piperkt.services.servers.application.api.command.CreateServerResponse
 import piperkt.services.servers.application.api.command.DeleteServerRequest
 import piperkt.services.servers.application.api.command.KickUserFromServerRequest
 import piperkt.services.servers.application.api.command.RemoveUserFromServerRequest
@@ -19,9 +20,9 @@ open class ServerService(
     private val serverRepository: ServerRepository,
     // private val eventPublisher: EventPublisher,
 ) : ServerServiceApi {
-    override fun createServer(request: CreateServerRequest): Result<Unit> {
-        serverRepository.save(request.name, request.description, request.owner)
-        return Result.success(Unit)
+    override fun createServer(request: CreateServerRequest): Result<CreateServerResponse> {
+        val server = serverRepository.save(request.name, request.description, request.owner)
+        return Result.success(CreateServerResponse(server.id))
     }
 
     override fun deleteServer(request: DeleteServerRequest): Result<Unit> {

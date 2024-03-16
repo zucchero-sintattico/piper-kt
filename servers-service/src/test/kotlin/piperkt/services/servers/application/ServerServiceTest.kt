@@ -8,6 +8,7 @@ import org.mockito.kotlin.whenever
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.api.command.AddUserToServerRequest
 import piperkt.services.servers.application.api.command.CreateServerRequest
+import piperkt.services.servers.application.api.command.CreateServerResponse
 import piperkt.services.servers.application.api.command.DeleteServerRequest
 import piperkt.services.servers.application.api.command.KickUserFromServerRequest
 import piperkt.services.servers.application.api.command.RemoveUserFromServerRequest
@@ -35,7 +36,8 @@ class ServerServiceTest : AnnotationSpec() {
         whenever(serverRepository.save(any(), any(), any())).thenReturn(fakeServer)
         val request =
             CreateServerRequest("serverName", "serverDescription", "serverOwner", "serverOwner")
-        serverService.createServer(request) shouldBe Result.success(Unit)
+        serverService.createServer(request) shouldBe
+            Result.success(CreateServerResponse(fakeServerId))
     }
 
     @Test

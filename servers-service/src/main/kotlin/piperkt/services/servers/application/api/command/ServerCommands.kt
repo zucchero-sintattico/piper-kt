@@ -10,6 +10,8 @@ data class CreateServerRequest(
     override val requestFrom: String
 ) : ServiceRequest
 
+data class CreateServerResponse(val serverId: ServerId)
+
 data class UpdateServerRequest(
     val serverId: ServerId,
     val name: String?,
