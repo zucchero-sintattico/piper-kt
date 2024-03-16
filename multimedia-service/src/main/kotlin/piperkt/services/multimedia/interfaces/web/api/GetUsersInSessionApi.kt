@@ -10,23 +10,15 @@ import io.micronaut.serde.annotation.Serdeable
 import piperkt.services.multimedia.application.sessions.GetUsersInSessionUseCase
 
 @Controller("/sessions/{sessionId}/users")
-class GetUserInSessionApi(private val useCase: GetUsersInSessionUseCase) {
+interface GetUsersInSessionApi {
 
     @Serdeable data class Response(val users: Set<String>)
 
     @Serdeable data class NotFound(val sessionId: String)
 
-    @Get
-    @Status(HttpStatus.OK)
-    fun getUsersInSession(@PathVariable sessionId: String): Response {
-        val query = GetUsersInSessionUseCase.Query(sessionId)
-        val result = useCase.handle(query).getOrThrow()
-        return Response(result.users)
-    }
+    @Get @Status(HttpStatus.OK) fun handle(@PathVariable sessionId: String): Response
 
     @Error(GetUsersInSessionUseCase.Errors.SessionNotFound::class)
     @Status(HttpStatus.NOT_FOUND)
-    fun onUserNotFound(exception: GetUsersInSessionUseCase.Errors.SessionNotFound): NotFound {
-        return NotFound(exception.sessionId)
-    }
+    fun onUserNotFound(exception: GetUsersInSessionUseCase.Errors.SessionNotFound): NotFound
 }
