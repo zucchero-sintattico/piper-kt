@@ -4,12 +4,13 @@ import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.data.mongodb.annotation.MongoRepository
 import io.micronaut.data.repository.CrudRepository
-import jakarta.validation.constraints.NotBlank
 
 @MappedEntity
-data class UserEntity(
-    @Id val email: String,
-    @NotBlank val password: String,
+data class FriendEntity(
+    @Id val userId: String,
+    val friends: List<String>,
+    val friendRequests: List<String>,
+    val pendingFriendRequests: List<String>
 )
 
-@MongoRepository interface UserModelRepository : CrudRepository<UserEntity, String>
+@MongoRepository interface FriensModelRepository : CrudRepository<FriendEntity, String>
