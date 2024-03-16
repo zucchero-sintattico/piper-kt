@@ -8,14 +8,14 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
-import piperkt.services.multimedia.interfaces.web.api.GetUserInSessionApi
+import piperkt.services.multimedia.interfaces.web.api.GetUsersInSessionApi
 
 @Client("/sessions")
 interface SessionClient {
     @Get("/{sessionId}/users")
     fun getUsersInSession(
         @PathVariable sessionId: String
-    ): HttpResponse<GetUserInSessionApi.Response>
+    ): HttpResponse<GetUsersInSessionApi.Response>
 }
 
 @MicronautTest
