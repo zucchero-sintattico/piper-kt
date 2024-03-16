@@ -2,7 +2,7 @@ package piperkt.services.multimedia.application
 
 import piperkt.services.multimedia.domain.sessions.SessionId
 
-interface GetUsersInSessionUseCase : SessionRepositoryProvider {
+interface GetUsersInSessionUseCase : RequireSessionRepository {
     class Query(val sessionId: String)
 
     class Response(val users: Set<String>)
