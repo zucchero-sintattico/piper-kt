@@ -1,0 +1,4 @@
+application:
+  name: "Friendship service"
+  version: "1.0.0"
+  description: "Friendship service, a service to manage friendships between users, and the direct messaging between friends."
