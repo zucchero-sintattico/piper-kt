@@ -1,6 +1,6 @@
 package piperkt.services.multimedia.application.sessions
 
-import base.BaseTest
+import base.MicronautTest
 import io.kotest.matchers.shouldBe
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
@@ -11,7 +11,7 @@ import piperkt.services.multimedia.domain.users.User
 import piperkt.services.multimedia.domain.users.UserId
 
 class GetUsersInSessionUseCaseTest :
-    BaseTest({
+    MicronautTest({
         val sessionRepository: SessionRepository = mock()
         val getUsersInSessionUseCase = GetUsersInSessionUseCase(sessionRepository)
 
