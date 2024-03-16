@@ -1,5 +1,3 @@
 package piperkt.services.multimedia.domain.sessions
 
-import piperkt.services.multimedia.domain.Id
-
-typealias SessionId = Id<String>
+data class SessionId(val value: String)

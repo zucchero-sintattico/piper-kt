@@ -1,8 +1,11 @@
-package piperkt.services.multimedia.application
+package piperkt.services.multimedia.application.sessions
 
+import piperkt.services.multimedia.application.asFailure
+import piperkt.services.multimedia.application.asSuccess
 import piperkt.services.multimedia.domain.sessions.SessionId
+import piperkt.services.multimedia.domain.sessions.SessionRepository
 
-interface GetUsersInSessionUseCase : RequireSessionRepository {
+class GetUsersInSessionUseCase(private val sessionRepository: SessionRepository) {
     class Query(val sessionId: String)
 
     class Response(val users: Set<String>)
@@ -11,7 +14,7 @@ interface GetUsersInSessionUseCase : RequireSessionRepository {
         data class SessionNotFound(val sessionId: String) : Errors()
     }
 
-    fun getUsersInSession(query: Query): Result<Response> {
+    fun handle(query: Query): Result<Response> {
         val session =
             sessionRepository.findById(SessionId(query.sessionId))
                 ?: return Errors.SessionNotFound(query.sessionId).asFailure()
