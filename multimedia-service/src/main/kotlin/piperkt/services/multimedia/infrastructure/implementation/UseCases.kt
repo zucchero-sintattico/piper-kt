@@ -6,6 +6,6 @@ import piperkt.services.multimedia.domain.sessions.SessionRepository
 
 object UseCases {
     @Singleton
-    class GetUsersInSessionUseCaseImpl(sessionRepository: SessionRepository) :
+    class GetUsersInSessionUseCaseService(sessionRepository: SessionRepository) :
         GetUsersInSessionUseCase(sessionRepository)
 }
