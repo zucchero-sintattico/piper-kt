@@ -8,4 +8,5 @@ dependencies {
     runtimeOnly("org.mongodb:mongodb-driver-sync")
     // Kafka
     implementation("io.micronaut.kafka:micronaut-kafka")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
 }

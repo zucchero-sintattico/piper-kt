@@ -7,11 +7,10 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.Status
 import io.micronaut.serde.annotation.Serdeable
-import piperkt.services.multimedia.application.GetUsersInSessionUseCase
-import piperkt.services.multimedia.application.MultimediaService
+import piperkt.services.multimedia.application.sessions.GetUsersInSessionUseCase
 
 @Controller("/sessions/{sessionId}/users")
-class GetUserInSessionApi(private val multimediaService: MultimediaService) {
+class GetUserInSessionApi(private val useCase: GetUsersInSessionUseCase) {
 
     @Serdeable data class Response(val users: Set<String>)
 
@@ -21,7 +20,7 @@ class GetUserInSessionApi(private val multimediaService: MultimediaService) {
     @Status(HttpStatus.OK)
     fun getUsersInSession(@PathVariable sessionId: String): Response {
         val query = GetUsersInSessionUseCase.Query(sessionId)
-        val result = multimediaService.getUsersInSession(query).getOrThrow()
+        val result = useCase.handle(query).getOrThrow()
         return Response(result.users)
     }
 
