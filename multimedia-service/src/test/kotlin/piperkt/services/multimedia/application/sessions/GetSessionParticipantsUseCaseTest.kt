@@ -1,13 +1,13 @@
 package piperkt.services.multimedia.application.sessions
 
-import base.MicronautTest
+import base.Test
 import data.SessionsData
 import io.kotest.matchers.shouldBe
 import mocks.repositories.SessionRepositoryMocks
 import piperkt.services.multimedia.domain.sessions.SessionId
 
 class GetSessionParticipantsUseCaseTest :
-    MicronautTest({
+    Test.Offline({
         val session = SessionsData.simpleSession()
         val sessionRepository = SessionRepositoryMocks.fromSessions(session)
         val getSessionParticipantsUseCase = GetSessionParticipantsUseCase(sessionRepository)
