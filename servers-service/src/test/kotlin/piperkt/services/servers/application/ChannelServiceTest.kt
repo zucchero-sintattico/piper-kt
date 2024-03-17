@@ -8,8 +8,7 @@ import org.mockito.kotlin.whenever
 import piperkt.services.commons.domain.id.ChannelId
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.api.command.ChannelCommand
-import piperkt.services.servers.application.api.query.channels.GetMessagesFromChannelIdRequest
-import piperkt.services.servers.application.api.query.channels.GetMessagesFromChannelIdResponse
+import piperkt.services.servers.application.api.query.ChannelQuery
 import piperkt.services.servers.application.exceptions.ServerOrChannelNotFoundException
 import piperkt.services.servers.application.exceptions.UserNotHasPermissionsException
 import piperkt.services.servers.application.exceptions.UserNotInServerException
@@ -163,9 +162,16 @@ class ChannelServiceTest : AnnotationSpec() {
         whenever(channelRepository.findChannelById(any())).thenReturn(fakeChannel)
         val response =
             channelService.getMessagesFromChannelId(
-                GetMessagesFromChannelIdRequest(fakeServerId, fakeChannelId, 0, 10, "requestFrom")
+                ChannelQuery.GetMessagesFromChannelId.Request(
+                    fakeServerId,
+                    fakeChannelId,
+                    0,
+                    10,
+                    "requestFrom"
+                )
             )
-        response shouldBe Result.success(GetMessagesFromChannelIdResponse(fakeMessages))
+        response shouldBe
+            Result.success(ChannelQuery.GetMessagesFromChannelId.Response(fakeMessages))
         response.getOrNull()?.messages shouldBe fakeMessages
     }
 
@@ -173,7 +179,13 @@ class ChannelServiceTest : AnnotationSpec() {
     fun `should not get messages from channel if user is not in server`() {
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(false)
         channelService.getMessagesFromChannelId(
-            GetMessagesFromChannelIdRequest(fakeServerId, fakeChannelId, 0, 10, "requestFrom")
+            ChannelQuery.GetMessagesFromChannelId.Request(
+                fakeServerId,
+                fakeChannelId,
+                0,
+                10,
+                "requestFrom"
+            )
         ) shouldBe Result.failure(UserNotInServerException())
     }
 

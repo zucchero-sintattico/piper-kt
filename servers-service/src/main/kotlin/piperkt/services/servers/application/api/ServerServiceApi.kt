@@ -1,10 +1,7 @@
 package piperkt.services.servers.application.api
 
 import piperkt.services.servers.application.api.command.ServerCommand
-import piperkt.services.servers.application.api.query.servers.GetServerUsersQueryResponse
-import piperkt.services.servers.application.api.query.servers.GetServerUsersRequest
-import piperkt.services.servers.application.api.query.servers.GetServersFromUserRequest
-import piperkt.services.servers.application.api.query.servers.GetServersFromUserResponse
+import piperkt.services.servers.application.api.query.ServerQuery
 
 interface ServerServiceApi {
 
@@ -22,7 +19,11 @@ interface ServerServiceApi {
 
     fun kickUserFromServer(request: ServerCommand.KickUserFromServer.Request): Result<Unit>
 
-    fun getServerUsers(request: GetServerUsersRequest): Result<GetServerUsersQueryResponse>
+    fun getServerUsers(
+        request: ServerQuery.GetServerUsers.Request
+    ): Result<ServerQuery.GetServerUsers.Response>
 
-    fun getServersFromUser(request: GetServersFromUserRequest): Result<GetServersFromUserResponse>
+    fun getServersFromUser(
+        request: ServerQuery.GetServersFromUser.Request
+    ): Result<ServerQuery.GetServersFromUser.Response>
 }

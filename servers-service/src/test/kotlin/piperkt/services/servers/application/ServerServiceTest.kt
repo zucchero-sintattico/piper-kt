@@ -7,8 +7,7 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.api.command.ServerCommand
-import piperkt.services.servers.application.api.query.servers.GetServersFromUserRequest
-import piperkt.services.servers.application.api.query.servers.GetServersFromUserResponse
+import piperkt.services.servers.application.api.query.ServerQuery
 import piperkt.services.servers.application.exceptions.ServerNotFoundException
 import piperkt.services.servers.application.exceptions.UserNotHasPermissionsException
 import piperkt.services.servers.domain.factory.ServerFactory
@@ -161,20 +160,23 @@ class ServerServiceTest : AnnotationSpec() {
     @Test
     fun `should allow to get servers from user without servers`() {
         whenever(serverRepository.getServersFromUser(any())).thenReturn(emptyList())
-        serverService.getServersFromUser(GetServersFromUserRequest("username", "username")) shouldBe
-            Result.success(GetServersFromUserResponse(emptyList()))
+        serverService.getServersFromUser(
+            ServerQuery.GetServersFromUser.Request("username", "username")
+        ) shouldBe Result.success(ServerQuery.GetServersFromUser.Response(emptyList()))
     }
 
     @Test
     fun `should allow to get servers from user with servers`() {
         whenever(serverRepository.getServersFromUser(any())).thenReturn(listOf(fakeServer))
-        serverService.getServersFromUser(GetServersFromUserRequest("username", "username")) shouldBe
-            Result.success(GetServersFromUserResponse(listOf(fakeServer)))
+        serverService.getServersFromUser(
+            ServerQuery.GetServersFromUser.Request("username", "username")
+        ) shouldBe Result.success(ServerQuery.GetServersFromUser.Response(listOf(fakeServer)))
     }
 
     @Test
     fun `should not allow to get servers from a user that isn't making the request`() {
-        serverService.getServersFromUser(GetServersFromUserRequest("username", "member")) shouldBe
-            Result.failure(UserNotHasPermissionsException())
+        serverService.getServersFromUser(
+            ServerQuery.GetServersFromUser.Request("username", "member")
+        ) shouldBe Result.failure(UserNotHasPermissionsException())
     }
 }

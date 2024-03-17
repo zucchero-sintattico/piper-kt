@@ -3,10 +3,7 @@ package piperkt.services.servers.application
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.api.ChannelServiceApi
 import piperkt.services.servers.application.api.command.ChannelCommand
-import piperkt.services.servers.application.api.query.channels.GetChannelByServerIdRequest
-import piperkt.services.servers.application.api.query.channels.GetChannelByServerIdResponse
-import piperkt.services.servers.application.api.query.channels.GetMessagesFromChannelIdRequest
-import piperkt.services.servers.application.api.query.channels.GetMessagesFromChannelIdResponse
+import piperkt.services.servers.application.api.query.ChannelQuery
 import piperkt.services.servers.application.exceptions.ServerOrChannelNotFoundException
 import piperkt.services.servers.application.exceptions.UserNotHasPermissionsException
 import piperkt.services.servers.application.exceptions.UserNotInServerException
@@ -69,25 +66,25 @@ class ChannelService(
     }
 
     override fun getChannelsByServerId(
-        request: GetChannelByServerIdRequest
-    ): Result<GetChannelByServerIdResponse> {
+        request: ChannelQuery.GetChannelByServerId.Request
+    ): Result<ChannelQuery.GetChannelByServerId.Response> {
         if (serverRepository.findById(request.serverId) == null) {
             return Result.failure(ServerOrChannelNotFoundException())
         }
         val channels = channelRepository.findChannelByServerId(request.serverId)
-        return Result.success(GetChannelByServerIdResponse(channels))
+        return Result.success(ChannelQuery.GetChannelByServerId.Response(channels))
     }
 
     override fun getMessagesFromChannelId(
-        request: GetMessagesFromChannelIdRequest
-    ): Result<GetMessagesFromChannelIdResponse> {
+        request: ChannelQuery.GetMessagesFromChannelId.Request
+    ): Result<ChannelQuery.GetMessagesFromChannelId.Response> {
         if (!serverRepository.isUserInServer(request.serverId, request.requestFrom)) {
             return Result.failure(UserNotInServerException())
         }
         return if (channelRepository.findChannelById(request.channelId) != null) {
             channelRepository
                 .getMessagesFromServerIdAndChannelId(request.channelId, request.from, request.to)
-                .let { Result.success(GetMessagesFromChannelIdResponse(it)) }
+                .let { Result.success(ChannelQuery.GetMessagesFromChannelId.Response(it)) }
         } else {
             Result.failure(ServerOrChannelNotFoundException())
         }

@@ -3,10 +3,7 @@ package piperkt.services.servers.application
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.api.ServerServiceApi
 import piperkt.services.servers.application.api.command.ServerCommand
-import piperkt.services.servers.application.api.query.servers.GetServerUsersQueryResponse
-import piperkt.services.servers.application.api.query.servers.GetServerUsersRequest
-import piperkt.services.servers.application.api.query.servers.GetServersFromUserRequest
-import piperkt.services.servers.application.api.query.servers.GetServersFromUserResponse
+import piperkt.services.servers.application.api.query.ServerQuery
 import piperkt.services.servers.application.exceptions.ServerNotFoundException
 import piperkt.services.servers.application.exceptions.UserNotHasPermissionsException
 
@@ -83,12 +80,12 @@ open class ServerService(
     }
 
     override fun getServerUsers(
-        request: GetServerUsersRequest
-    ): Result<GetServerUsersQueryResponse> {
+        request: ServerQuery.GetServerUsers.Request
+    ): Result<ServerQuery.GetServerUsers.Response> {
         if (isUserInServer(request.serverId, request.requestFrom)) {
             val users: List<String> = serverRepository.getServerUsers(request.serverId)
             return if (users.isNotEmpty()) {
-                Result.success(GetServerUsersQueryResponse(users))
+                Result.success(ServerQuery.GetServerUsers.Response(users))
             } else {
                 Result.failure(ServerNotFoundException())
             }
@@ -97,11 +94,11 @@ open class ServerService(
     }
 
     override fun getServersFromUser(
-        request: GetServersFromUserRequest
-    ): Result<GetServersFromUserResponse> {
+        request: ServerQuery.GetServersFromUser.Request
+    ): Result<ServerQuery.GetServersFromUser.Response> {
         if (request.username == request.requestFrom) {
             val servers = serverRepository.getServersFromUser(request.username)
-            return Result.success(GetServersFromUserResponse(servers))
+            return Result.success(ServerQuery.GetServersFromUser.Response(servers))
         }
         return Result.failure(UserNotHasPermissionsException())
     }
