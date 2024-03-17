@@ -1,15 +1,21 @@
 package piperkt.services.friendship
 
-import io.micronaut.http.client.HttpClient
+import io.kotest.core.spec.style.AnnotationSpec
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.annotation.Client
+import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 
-class FriendsControllerTest {
+@Client("/friend")
+interface ServerClient {
+    @Get("/") fun getFriend(): String
+}
 
-    // @Inject
-    private lateinit var client: HttpClient
+@MicronautTest
+class FriendsControllerTest(private val client: ServerClient) : AnnotationSpec() {
 
-    // @Test getFriends, force 3 friend in the database and assert the response
+    @Test
     fun testGetEmptyFriends() {
-        val response = client.toBlocking().retrieve("/friend")
+        val response = client.getFriend()
         assert(response == "[]")
     }
 }
