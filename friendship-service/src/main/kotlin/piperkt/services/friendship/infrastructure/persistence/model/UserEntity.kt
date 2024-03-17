@@ -6,11 +6,11 @@ import io.micronaut.data.mongodb.annotation.MongoRepository
 import io.micronaut.data.repository.CrudRepository
 
 @MappedEntity
-data class FriendEntity(
+data class UserEntity(
     @Id val username: String,
     val friends: List<String>,
     val friendRequests: List<String>,
     val pendingFriendRequests: List<String>
 )
 
-@MongoRepository interface FriensModelRepository : CrudRepository<FriendEntity, String>
+@MongoRepository interface FriendsModelRepository : CrudRepository<UserEntity, String>

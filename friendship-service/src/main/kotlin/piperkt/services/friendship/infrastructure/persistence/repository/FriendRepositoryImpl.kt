@@ -1,19 +1,19 @@
 package piperkt.services.friendship.infrastructure.persistence.repository
 
-import io.micronaut.context.annotation.Primary
 import jakarta.inject.Singleton
-import piperkt.services.friendship.domain.Friend
 import piperkt.services.friendship.domain.FriendRepository
+import piperkt.services.friendship.infrastructure.persistence.model.FriendsModelRepository
 
 @Singleton
-@Primary
-class FriendRepositoryImpl : FriendRepository {
+class FriendRepositoryImpl(private val friendsModelRepository: FriendsModelRepository) :
+    FriendRepository {
 
-    override fun getFriends(username: String): List<Friend> {
-        TODO()
+    override fun getFriends(username: String): List<String> {
+        val user = friendsModelRepository.findById(username).orElse(null)
+        return user?.friends ?: emptyList()
     }
 
-    override fun getFriendRequests(username: String): List<Friend> {
+    override fun getFriendRequests(username: String): List<String> {
         TODO()
     }
 

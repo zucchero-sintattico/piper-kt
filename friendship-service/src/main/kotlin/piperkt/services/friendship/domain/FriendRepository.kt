@@ -1,9 +1,9 @@
 package piperkt.services.friendship.domain
 
 interface FriendRepository {
-    fun getFriends(username: String): List<Friend>
+    fun getFriends(username: String): List<String>
 
-    fun getFriendRequests(username: String): List<Friend>
+    fun getFriendRequests(username: String): List<String>
 
     fun sendFriendRequest(username: String, friendUsername: String)
 
