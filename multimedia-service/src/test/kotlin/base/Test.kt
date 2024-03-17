@@ -11,5 +11,5 @@ sealed interface Test {
 
     @MicronautTest abstract class IntegrationFunSpec(body: FunSpec.() -> Unit) : FunSpec(body)
 
-    @MicronautTest abstract class IntegrationAnnotionSpec : AnnotationSpec()
+    @MicronautTest abstract class IntegrationAnnotationSpec : AnnotationSpec()
 }
