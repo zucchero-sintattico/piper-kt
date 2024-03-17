@@ -1,13 +1,13 @@
 package piperkt.services.multimedia.application.sessions
 
-import piperkt.services.multimedia.application.UseCase
+import piperkt.services.multimedia.application.QueryUseCase
 import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.asSuccess
 import piperkt.services.multimedia.domain.sessions.SessionId
 import piperkt.services.multimedia.domain.sessions.SessionRepository
 
 open class GetSessionParticipantsUseCase(private val sessionRepository: SessionRepository) :
-    UseCase<GetSessionParticipantsUseCase.Query, GetSessionParticipantsUseCase.Response> {
+    QueryUseCase<GetSessionParticipantsUseCase.Query, GetSessionParticipantsUseCase.Response> {
     data class Query(val sessionId: String)
 
     data class Response(val users: Set<String>)

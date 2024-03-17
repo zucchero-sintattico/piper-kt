@@ -17,6 +17,26 @@ class SessionRepositoryMocks(
         return sessions[sessionId]?.participants ?: emptyList()
     }
 
+    override fun createSession(allowedUsers: List<String>): Session {
+        TODO("Not yet implemented")
+    }
+
+    override fun addParticipant(sessionId: SessionId, username: String): Any {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeParticipant(sessionId: SessionId, username: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun addAllowedUser(sessionId: SessionId, username: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeAllowedUser(sessionId: SessionId, username: String) {
+        TODO("Not yet implemented")
+    }
+
     companion object {
         fun fromSessions(vararg sessions: Session): SessionRepositoryMocks {
             return SessionRepositoryMocks(sessions.associateBy { it.id }.toMutableMap())
