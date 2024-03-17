@@ -13,13 +13,10 @@ class GetSessionParticipantsController(private val useCase: GetSessionParticipan
         return GetSessionParticipantsApi.Response(response.users)
     }
 
-    override fun onError(
-        exception: GetSessionParticipantsUseCase.Errors,
+    override fun onSessionNotFound(
+        exception: GetSessionParticipantsUseCase.Errors.SessionNotFound,
         sessionId: String
     ): GetSessionParticipantsApi.Errors {
-        return when (exception) {
-            is GetSessionParticipantsUseCase.Errors.SessionNotFound ->
-                GetSessionParticipantsApi.Errors.SessionNotFound(sessionId)
-        }
+        return GetSessionParticipantsApi.Errors.SessionNotFound(sessionId)
     }
 }
