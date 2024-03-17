@@ -2,7 +2,7 @@ package architecture
 
 import base.Test
 
-class FrameworkIndependenceTest : ArchitectureSpec, Test.OfflineAnnotation() {
+class FrameworkIndependenceTest : ArchitectureSpec, Test.UnitAnnotationSpec() {
     override val prefix = "piperkt.services.multimedia"
 
     private val frameworks = listOf("io.micronaut", "jakarta")

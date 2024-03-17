@@ -5,11 +5,11 @@ import io.kotest.core.spec.style.FunSpec
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 
 sealed interface Test {
-    abstract class Offline(body: FunSpec.() -> Unit) : FunSpec(body)
+    abstract class UnitFunSpec(body: FunSpec.() -> Unit) : FunSpec(body)
 
-    abstract class OfflineAnnotation : AnnotationSpec()
+    abstract class UnitAnnotationSpec : AnnotationSpec()
 
-    @MicronautTest abstract class Online(body: FunSpec.() -> Unit) : FunSpec(body)
+    @MicronautTest abstract class IntegrationFunSpec(body: FunSpec.() -> Unit) : FunSpec(body)
 
-    @MicronautTest abstract class OnlineAnnotation : AnnotationSpec()
+    @MicronautTest abstract class IntegrationAnnotionSpec : AnnotationSpec()
 }

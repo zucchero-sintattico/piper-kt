@@ -7,7 +7,7 @@ import mocks.repositories.SessionRepositoryMocks
 import piperkt.services.multimedia.domain.sessions.SessionId
 
 class GetSessionParticipantsUseCaseTest :
-    Test.Offline({
+    Test.UnitFunSpec({
         val session = SessionsData.simpleSession()
         val sessionRepository = SessionRepositoryMocks.fromSessions(session)
         val getSessionParticipantsUseCase = GetSessionParticipantsUseCase(sessionRepository)

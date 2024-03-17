@@ -10,7 +10,7 @@ import piperkt.services.multimedia.domain.sessions.SessionId
 import piperkt.services.multimedia.interfaces.web.controllers.GetSessionParticipantsController
 
 class GetSessionParticipantsControllerTest :
-    Test.Offline({
+    Test.UnitFunSpec({
         val session = SessionsData.simpleSession()
         val sessionRepository = SessionRepositoryMocks.fromSessions(session)
         val getUserInSessionUseCase = GetSessionParticipantsUseCase(sessionRepository)
