@@ -2,39 +2,32 @@ package piperkt.services.multimedia.interfaces.web.api
 
 import base.MicronautTest
 import io.kotest.matchers.shouldBe
+import mocks.repositories.SessionRepositoryMocks
 import org.junit.jupiter.api.assertThrows
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
-import piperkt.services.multimedia.application.asFailure
-import piperkt.services.multimedia.application.asSuccess
 import piperkt.services.multimedia.application.sessions.GetUsersInSessionUseCase
+import piperkt.services.multimedia.domain.sessions.Session
 import piperkt.services.multimedia.domain.sessions.SessionId
+import piperkt.services.multimedia.domain.users.User
+import piperkt.services.multimedia.domain.users.UserId
 import piperkt.services.multimedia.interfaces.web.controllers.GetUserInSessionController
 
 class GetUserInSessionControllerTest :
     MicronautTest({
-        val getUserInSessionUseCase: GetUsersInSessionUseCase = mock()
-        val getUserInSessionApi = GetUserInSessionController(getUserInSessionUseCase)
+        val users = setOf(User(UserId("user1")), User(UserId("user2")))
+        val session = Session.create(SessionId("sessionId"), users.toList(), users.toList())
+        val sessionRepository = SessionRepositoryMocks.fromSessions(session)
+        val getUserInSessionApi =
+            GetUserInSessionController(GetUsersInSessionUseCase(sessionRepository))
 
         test("should return users when session exists") {
-            val sessionId = SessionId("sessionId")
-            val users = setOf("user1", "user2")
-            whenever(
-                    getUserInSessionUseCase.handle(GetUsersInSessionUseCase.Query(sessionId.value))
-                )
-                .thenReturn(GetUsersInSessionUseCase.Response(users).asSuccess())
-
-            val result = getUserInSessionApi.handle(sessionId.value)
-            result shouldBe GetUsersInSessionApi.Response(users)
+            val result = getUserInSessionApi.handle(session.id.value)
+            result shouldBe GetUsersInSessionApi.Response(users.map { it.username.value }.toSet())
         }
 
         test("should return NotFound when session does not exist") {
-            val sessionId = "nonExistingSessionId"
-            whenever(getUserInSessionUseCase.handle(GetUsersInSessionUseCase.Query(sessionId)))
-                .thenReturn(GetUsersInSessionUseCase.Errors.SessionNotFound(sessionId).asFailure())
-
+            val fakeSessionId = SessionId("nonExistingSessionId")
             assertThrows<GetUsersInSessionUseCase.Errors.SessionNotFound> {
-                getUserInSessionApi.handle(sessionId)
+                getUserInSessionApi.handle(fakeSessionId.value)
             }
         }
     })

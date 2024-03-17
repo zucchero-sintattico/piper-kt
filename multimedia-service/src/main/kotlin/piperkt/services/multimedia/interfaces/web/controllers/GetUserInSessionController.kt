@@ -9,7 +9,6 @@ class GetUserInSessionController(private val useCase: GetUsersInSessionUseCase) 
     GetUsersInSessionApi {
 
     override fun handle(sessionId: String): GetUsersInSessionApi.Response {
-        println("sessionId: $sessionId")
         val response = useCase.handle(GetUsersInSessionUseCase.Query(sessionId)).getOrThrow()
         return GetUsersInSessionApi.Response(response.users)
     }
@@ -18,7 +17,6 @@ class GetUserInSessionController(private val useCase: GetUsersInSessionUseCase) 
         exception: GetUsersInSessionUseCase.Errors,
         sessionId: String
     ): GetUsersInSessionApi.Errors {
-        println("exception: $exception")
         return when (exception) {
             is GetUsersInSessionUseCase.Errors.SessionNotFound ->
                 GetUsersInSessionApi.Errors.SessionNotFound(sessionId)
