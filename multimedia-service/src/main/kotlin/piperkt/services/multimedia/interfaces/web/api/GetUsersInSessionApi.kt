@@ -22,7 +22,7 @@ interface GetUsersInSessionApi {
     @Status(HttpStatus.OK)
     fun handle(@PathVariable sessionId: String): Response
 
-    @Error(GetUsersInSessionUseCase.Errors.SessionNotFound::class)
+    @Error(GetUsersInSessionUseCase.Errors::class)
     @Status(HttpStatus.NOT_FOUND)
     fun onError(exception: GetUsersInSessionUseCase.Errors, @PathVariable sessionId: String): Errors
 }
