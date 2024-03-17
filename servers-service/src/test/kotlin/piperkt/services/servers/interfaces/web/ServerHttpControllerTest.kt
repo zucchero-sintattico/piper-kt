@@ -8,12 +8,12 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
-import piperkt.services.servers.interfaces.web.api.responses.GetServerUsersHttpResponse
+import piperkt.services.servers.interfaces.web.api.query.GetServerUsers
 
 @Client("/servers")
 interface ServerClient {
     @Get("/{serverId}/users")
-    fun getUserInServer(@PathVariable serverId: String): HttpResponse<GetServerUsersHttpResponse>
+    fun getUserInServer(@PathVariable serverId: String): HttpResponse<GetServerUsers.HttpResponse>
 }
 
 @MicronautTest

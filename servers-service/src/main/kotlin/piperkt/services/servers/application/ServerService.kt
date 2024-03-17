@@ -2,13 +2,7 @@ package piperkt.services.servers.application
 
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.api.ServerServiceApi
-import piperkt.services.servers.application.api.command.AddUserToServerRequest
-import piperkt.services.servers.application.api.command.CreateServerRequest
-import piperkt.services.servers.application.api.command.CreateServerResponse
-import piperkt.services.servers.application.api.command.DeleteServerRequest
-import piperkt.services.servers.application.api.command.KickUserFromServerRequest
-import piperkt.services.servers.application.api.command.RemoveUserFromServerRequest
-import piperkt.services.servers.application.api.command.UpdateServerRequest
+import piperkt.services.servers.application.api.command.ServerCommand
 import piperkt.services.servers.application.api.query.servers.GetServerUsersQueryResponse
 import piperkt.services.servers.application.api.query.servers.GetServerUsersRequest
 import piperkt.services.servers.application.api.query.servers.GetServersFromUserRequest
@@ -20,12 +14,14 @@ open class ServerService(
     private val serverRepository: ServerRepository,
     // private val eventPublisher: EventPublisher,
 ) : ServerServiceApi {
-    override fun createServer(request: CreateServerRequest): Result<CreateServerResponse> {
+    override fun createServer(
+        request: ServerCommand.CreateServer.Request
+    ): Result<ServerCommand.CreateServer.Response> {
         val server = serverRepository.save(request.name, request.description, request.owner)
-        return Result.success(CreateServerResponse(server.id))
+        return Result.success(ServerCommand.CreateServer.Response(server.id))
     }
 
-    override fun deleteServer(request: DeleteServerRequest): Result<Unit> {
+    override fun deleteServer(request: ServerCommand.DeleteServer.Request): Result<Unit> {
         if (isUserAdmin(request.serverId, request.requestFrom)) {
             val success = serverRepository.deleteServer(request.serverId)
             return if (success) {
@@ -38,7 +34,7 @@ open class ServerService(
         }
     }
 
-    override fun updateServer(request: UpdateServerRequest): Result<Unit> {
+    override fun updateServer(request: ServerCommand.UpdateServer.Request): Result<Unit> {
         if (isUserAdmin(request.serverId, request.requestFrom)) {
             val server =
                 serverRepository.updateServer(request.serverId, request.name, request.description)
@@ -52,7 +48,7 @@ open class ServerService(
         }
     }
 
-    override fun addUserToServer(request: AddUserToServerRequest): Result<Unit> {
+    override fun addUserToServer(request: ServerCommand.AddUserToServer.Request): Result<Unit> {
         val server = serverRepository.addUserToServer(request.serverId, request.username)
         return if (server != null) {
             Result.success(Unit)
@@ -61,7 +57,9 @@ open class ServerService(
         }
     }
 
-    override fun removeUserFromServer(request: RemoveUserFromServerRequest): Result<Unit> {
+    override fun removeUserFromServer(
+        request: ServerCommand.RemoveUserFromServer.Request
+    ): Result<Unit> {
         val server = serverRepository.removeUserFromServer(request.serverId, request.username)
         return if (server != null) {
             Result.success(Unit)
@@ -70,7 +68,9 @@ open class ServerService(
         }
     }
 
-    override fun kickUserFromServer(request: KickUserFromServerRequest): Result<Unit> {
+    override fun kickUserFromServer(
+        request: ServerCommand.KickUserFromServer.Request
+    ): Result<Unit> {
         if (isUserAdmin(request.serverId, request.requestFrom)) {
             val server = serverRepository.removeUserFromServer(request.serverId, request.username)
             return if (server != null) {

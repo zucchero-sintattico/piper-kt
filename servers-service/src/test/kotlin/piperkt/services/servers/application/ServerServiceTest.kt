@@ -6,13 +6,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import piperkt.services.commons.domain.id.ServerId
-import piperkt.services.servers.application.api.command.AddUserToServerRequest
-import piperkt.services.servers.application.api.command.CreateServerRequest
-import piperkt.services.servers.application.api.command.CreateServerResponse
-import piperkt.services.servers.application.api.command.DeleteServerRequest
-import piperkt.services.servers.application.api.command.KickUserFromServerRequest
-import piperkt.services.servers.application.api.command.RemoveUserFromServerRequest
-import piperkt.services.servers.application.api.command.UpdateServerRequest
+import piperkt.services.servers.application.api.command.ServerCommand
 import piperkt.services.servers.application.api.query.servers.GetServersFromUserRequest
 import piperkt.services.servers.application.api.query.servers.GetServersFromUserResponse
 import piperkt.services.servers.application.exceptions.ServerNotFoundException
@@ -35,16 +29,26 @@ class ServerServiceTest : AnnotationSpec() {
     fun `should allow to create a server`() {
         whenever(serverRepository.save(any(), any(), any())).thenReturn(fakeServer)
         val request =
-            CreateServerRequest("serverName", "serverDescription", "serverOwner", "serverOwner")
+            ServerCommand.CreateServer.Request(
+                "serverName",
+                "serverDescription",
+                "serverOwner",
+                "serverOwner"
+            )
         serverService.createServer(request) shouldBe
-            Result.success(CreateServerResponse(fakeServerId))
+            Result.success(ServerCommand.CreateServer.Response(fakeServerId))
     }
 
     @Test
     fun `should not allow to update a server if is not the admin`() {
         whenever(serverRepository.updateServer(any(), any(), any())).thenReturn(fakeServer)
         serverService.updateServer(
-            UpdateServerRequest(fakeServerId, "serverName", "serverDescription", "member")
+            ServerCommand.UpdateServer.Request(
+                fakeServerId,
+                "serverName",
+                "serverDescription",
+                "member"
+            )
         ) shouldBe Result.failure(UserNotHasPermissionsException())
     }
 
@@ -52,30 +56,38 @@ class ServerServiceTest : AnnotationSpec() {
     fun `should allow to delete a server`() {
         whenever(serverRepository.deleteServer(any())).thenReturn(true)
         whenever(serverRepository.findById(any())).thenReturn(fakeServer)
-        serverService.deleteServer(DeleteServerRequest(fakeServerId, "serverOwner")) shouldBe
-            Result.success(Unit)
+        serverService.deleteServer(
+            ServerCommand.DeleteServer.Request(fakeServerId, "serverOwner")
+        ) shouldBe Result.success(Unit)
     }
 
     @Test
     fun `should not allow to delete a server that does not exist`() {
         whenever(serverRepository.deleteServer(any())).thenReturn(false)
-        serverService.deleteServer(DeleteServerRequest(fakeServerId, "serverOwner")) shouldBe
-            Result.failure(ServerNotFoundException())
+        serverService.deleteServer(
+            ServerCommand.DeleteServer.Request(fakeServerId, "serverOwner")
+        ) shouldBe Result.failure(ServerNotFoundException())
     }
 
     @Test
     fun `should not allow to delete a server if user doesn't have permission`() {
         whenever(serverRepository.deleteServer(any())).thenReturn(true)
         whenever(serverRepository.findById(any())).thenReturn(fakeServer)
-        serverService.deleteServer(DeleteServerRequest(fakeServerId, "member")) shouldBe
-            Result.failure(UserNotHasPermissionsException())
+        serverService.deleteServer(
+            ServerCommand.DeleteServer.Request(fakeServerId, "member")
+        ) shouldBe Result.failure(UserNotHasPermissionsException())
     }
 
     @Test
     fun `should not allow to update a server that does not exist`() {
         whenever(serverRepository.updateServer(any(), any(), any())).thenReturn(null)
         serverService.updateServer(
-            UpdateServerRequest(fakeServerId, "serverName", "serverDescription", "serverOwner")
+            ServerCommand.UpdateServer.Request(
+                fakeServerId,
+                "serverName",
+                "serverDescription",
+                "serverOwner"
+            )
         ) shouldBe Result.failure(ServerNotFoundException())
     }
 
@@ -83,7 +95,12 @@ class ServerServiceTest : AnnotationSpec() {
     fun `should not allow to update a server if user doesn't have permission`() {
         whenever(serverRepository.updateServer(any(), any(), any())).thenReturn(fakeServer)
         serverService.updateServer(
-            UpdateServerRequest(fakeServerId, "serverName", "serverDescription", "member")
+            ServerCommand.UpdateServer.Request(
+                fakeServerId,
+                "serverName",
+                "serverDescription",
+                "member"
+            )
         ) shouldBe Result.failure(UserNotHasPermissionsException())
     }
 
@@ -91,7 +108,12 @@ class ServerServiceTest : AnnotationSpec() {
     fun `should allow to update a server`() {
         whenever(serverRepository.updateServer(any(), any(), any())).thenReturn(fakeServer)
         serverService.updateServer(
-            UpdateServerRequest(fakeServerId, "serverName", "serverDescription", "serverOwner")
+            ServerCommand.UpdateServer.Request(
+                fakeServerId,
+                "serverName",
+                "serverDescription",
+                "serverOwner"
+            )
         ) shouldBe Result.success(Unit)
     }
 
@@ -99,7 +121,7 @@ class ServerServiceTest : AnnotationSpec() {
     fun `should allow user to join the server`() {
         whenever(serverRepository.addUserToServer(any(), any())).thenReturn(fakeServer)
         serverService.addUserToServer(
-            AddUserToServerRequest(fakeServerId, "member", "member")
+            ServerCommand.AddUserToServer.Request(fakeServerId, "member", "member")
         ) shouldBe Result.success(Unit)
     }
 
@@ -107,7 +129,7 @@ class ServerServiceTest : AnnotationSpec() {
     fun `should not allow to join a server that does not exist`() {
         whenever(serverRepository.addUserToServer(any(), any())).thenReturn(null)
         serverService.addUserToServer(
-            AddUserToServerRequest(fakeServerId, "member", "member")
+            ServerCommand.AddUserToServer.Request(fakeServerId, "member", "member")
         ) shouldBe Result.failure(ServerNotFoundException())
     }
 
@@ -115,7 +137,7 @@ class ServerServiceTest : AnnotationSpec() {
     fun `should allow user to leave the server`() {
         whenever(serverRepository.removeUserFromServer(any(), any())).thenReturn(fakeServer)
         serverService.removeUserFromServer(
-            RemoveUserFromServerRequest(fakeServerId, "member", "member")
+            ServerCommand.RemoveUserFromServer.Request(fakeServerId, "member", "member")
         ) shouldBe Result.success(Unit)
     }
 
@@ -124,7 +146,7 @@ class ServerServiceTest : AnnotationSpec() {
         whenever(serverRepository.removeUserFromServer(any(), any())).thenReturn(fakeServer)
         whenever(serverRepository.findById(any())).thenReturn(fakeServer)
         serverService.kickUserFromServer(
-            KickUserFromServerRequest(fakeServerId, "member", "serverOwner")
+            ServerCommand.KickUserFromServer.Request(fakeServerId, "member", "serverOwner")
         ) shouldBe Result.success(Unit)
     }
 
@@ -132,7 +154,7 @@ class ServerServiceTest : AnnotationSpec() {
     fun `should not allow non-admin to kick a user`() {
         whenever(serverRepository.removeUserFromServer(any(), any())).thenReturn(fakeServer)
         serverService.kickUserFromServer(
-            KickUserFromServerRequest(fakeServerId, "member", "member")
+            ServerCommand.KickUserFromServer.Request(fakeServerId, "member", "member")
         ) shouldBe Result.failure(UserNotHasPermissionsException())
     }
 

@@ -7,10 +7,7 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import piperkt.services.commons.domain.id.ChannelId
 import piperkt.services.commons.domain.id.ServerId
-import piperkt.services.servers.application.api.command.AddMessageInChannelRequest
-import piperkt.services.servers.application.api.command.CreateNewChannelInServerRequest
-import piperkt.services.servers.application.api.command.DeleteChannelInServerRequest
-import piperkt.services.servers.application.api.command.UpdateChannelInServerRequest
+import piperkt.services.servers.application.api.command.ChannelCommand
 import piperkt.services.servers.application.api.query.channels.GetMessagesFromChannelIdRequest
 import piperkt.services.servers.application.api.query.channels.GetMessagesFromChannelIdResponse
 import piperkt.services.servers.application.exceptions.ServerOrChannelNotFoundException
@@ -42,7 +39,7 @@ class ChannelServiceTest : AnnotationSpec() {
             .thenReturn(fakeChannel)
         whenever(serverRepository.findById(any())).thenReturn(fakeServer)
         val request =
-            CreateNewChannelInServerRequest(
+            ChannelCommand.CreateNewChannelInServer.Request(
                 fakeServerId,
                 "channelName",
                 "channelDescription",
@@ -57,7 +54,7 @@ class ChannelServiceTest : AnnotationSpec() {
         whenever(channelRepository.createChannelInServer(any(), any(), any(), any()))
             .thenReturn(null)
         val request =
-            CreateNewChannelInServerRequest(
+            ChannelCommand.CreateNewChannelInServer.Request(
                 fakeServerId,
                 "channelName",
                 "channelDescription",
@@ -74,7 +71,7 @@ class ChannelServiceTest : AnnotationSpec() {
             .thenReturn(fakeChannel)
         whenever(serverRepository.findById(any())).thenReturn(fakeServer)
         val request =
-            CreateNewChannelInServerRequest(
+            ChannelCommand.CreateNewChannelInServer.Request(
                 fakeServerId,
                 "channelName",
                 "channelDescription",
@@ -90,7 +87,7 @@ class ChannelServiceTest : AnnotationSpec() {
         whenever(channelRepository.updateChannel(any(), any(), any(), any()))
             .thenReturn(fakeChannel)
         channelService.updateChannelInServer(
-            UpdateChannelInServerRequest(
+            ChannelCommand.UpdateChannelInServer.Request(
                 fakeServerId,
                 fakeChannelId,
                 "channelName",
@@ -105,7 +102,7 @@ class ChannelServiceTest : AnnotationSpec() {
     fun `should not allow to update a channel if server or channel don't exist`() {
         whenever(channelRepository.updateChannel(any(), any(), any(), any())).thenReturn(null)
         channelService.updateChannelInServer(
-            UpdateChannelInServerRequest(
+            ChannelCommand.UpdateChannelInServer.Request(
                 fakeServerId,
                 fakeChannelId,
                 "channelName",
@@ -121,7 +118,7 @@ class ChannelServiceTest : AnnotationSpec() {
         whenever(channelRepository.updateChannel(any(), any(), any(), any()))
             .thenReturn(fakeChannel)
         channelService.updateChannelInServer(
-            UpdateChannelInServerRequest(
+            ChannelCommand.UpdateChannelInServer.Request(
                 fakeServerId,
                 fakeChannelId,
                 "channelName",
@@ -136,7 +133,7 @@ class ChannelServiceTest : AnnotationSpec() {
     fun `should allow to delete a channel`() {
         whenever(channelRepository.deleteChannel(any(), any())).thenReturn(true)
         channelService.deleteChannelInServer(
-            DeleteChannelInServerRequest(fakeServerId, fakeChannelId, "owner")
+            ChannelCommand.DeleteChannelInServer.Request(fakeServerId, fakeChannelId, "owner")
         ) shouldBe Result.success(Unit)
     }
 
@@ -144,7 +141,7 @@ class ChannelServiceTest : AnnotationSpec() {
     fun `should not allow to delete a channel if server or channel don't exist`() {
         whenever(channelRepository.deleteChannel(any(), any())).thenReturn(false)
         channelService.deleteChannelInServer(
-            DeleteChannelInServerRequest(fakeServerId, fakeChannelId, "owner")
+            ChannelCommand.DeleteChannelInServer.Request(fakeServerId, fakeChannelId, "owner")
         ) shouldBe Result.failure(ServerOrChannelNotFoundException("Server or Channel not found"))
     }
 
@@ -152,7 +149,7 @@ class ChannelServiceTest : AnnotationSpec() {
     fun `should not allow to delete a channel if user isn't the owner`() {
         whenever(channelRepository.deleteChannel(any(), any())).thenReturn(true)
         channelService.deleteChannelInServer(
-            DeleteChannelInServerRequest(fakeServerId, fakeChannelId, "notOwner")
+            ChannelCommand.DeleteChannelInServer.Request(fakeServerId, fakeChannelId, "notOwner")
         ) shouldBe Result.failure(UserNotHasPermissionsException())
     }
 
@@ -185,7 +182,12 @@ class ChannelServiceTest : AnnotationSpec() {
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(true)
         whenever(channelRepository.addMessageInChannel(any(), any(), any(), any())).thenReturn(true)
         channelService.addMessageInChannel(
-            AddMessageInChannelRequest(fakeServerId, fakeChannelId, "content", "sender")
+            ChannelCommand.AddMessageInChannel.Request(
+                fakeServerId,
+                fakeChannelId,
+                "content",
+                "sender"
+            )
         ) shouldBe Result.success(Unit)
     }
 
@@ -193,7 +195,12 @@ class ChannelServiceTest : AnnotationSpec() {
     fun `should not allow to add a message in a channel if user is not in server`() {
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(false)
         channelService.addMessageInChannel(
-            AddMessageInChannelRequest(fakeServerId, fakeChannelId, "content", "sender")
+            ChannelCommand.AddMessageInChannel.Request(
+                fakeServerId,
+                fakeChannelId,
+                "content",
+                "sender"
+            )
         ) shouldBe Result.failure(UserNotInServerException())
     }
 }

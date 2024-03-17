@@ -2,10 +2,7 @@ package piperkt.services.servers.application
 
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.api.ChannelServiceApi
-import piperkt.services.servers.application.api.command.AddMessageInChannelRequest
-import piperkt.services.servers.application.api.command.CreateNewChannelInServerRequest
-import piperkt.services.servers.application.api.command.DeleteChannelInServerRequest
-import piperkt.services.servers.application.api.command.UpdateChannelInServerRequest
+import piperkt.services.servers.application.api.command.ChannelCommand
 import piperkt.services.servers.application.api.query.channels.GetChannelByServerIdRequest
 import piperkt.services.servers.application.api.query.channels.GetChannelByServerIdResponse
 import piperkt.services.servers.application.api.query.channels.GetMessagesFromChannelIdRequest
@@ -19,7 +16,9 @@ class ChannelService(
     private val serverRepository: ServerRepository
 ) : ChannelServiceApi {
 
-    override fun createNewChannelInServer(request: CreateNewChannelInServerRequest): Result<Unit> {
+    override fun createNewChannelInServer(
+        request: ChannelCommand.CreateNewChannelInServer.Request
+    ): Result<Unit> {
         if (!hasUserPermissions(request.serverId, request.requestFrom)) {
             return Result.failure(UserNotHasPermissionsException())
         }
@@ -36,7 +35,9 @@ class ChannelService(
         }
     }
 
-    override fun updateChannelInServer(request: UpdateChannelInServerRequest): Result<Unit> {
+    override fun updateChannelInServer(
+        request: ChannelCommand.UpdateChannelInServer.Request
+    ): Result<Unit> {
         if (!hasUserPermissions(request.serverId, request.requestFrom)) {
             return Result.failure(UserNotHasPermissionsException())
         }
@@ -53,7 +54,9 @@ class ChannelService(
         }
     }
 
-    override fun deleteChannelInServer(request: DeleteChannelInServerRequest): Result<Unit> {
+    override fun deleteChannelInServer(
+        request: ChannelCommand.DeleteChannelInServer.Request
+    ): Result<Unit> {
         if (!hasUserPermissions(request.serverId, request.requestFrom)) {
             return Result.failure(UserNotHasPermissionsException())
         }
@@ -90,7 +93,9 @@ class ChannelService(
         }
     }
 
-    override fun addMessageInChannel(request: AddMessageInChannelRequest): Result<Unit> {
+    override fun addMessageInChannel(
+        request: ChannelCommand.AddMessageInChannel.Request
+    ): Result<Unit> {
         if (!serverRepository.isUserInServer(request.serverId, request.sender)) {
             return Result.failure(UserNotInServerException())
         }

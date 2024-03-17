@@ -8,17 +8,17 @@ import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.ServerService
 import piperkt.services.servers.application.api.query.servers.GetServerUsersRequest
 import piperkt.services.servers.interfaces.web.api.ServerHttpControllerApi
-import piperkt.services.servers.interfaces.web.api.responses.GetServerUsersHttpResponse
+import piperkt.services.servers.interfaces.web.api.query.GetServerUsers
 
 @Controller("/servers")
 class ServerHttpController(private val serverService: ServerService) : ServerHttpControllerApi {
     @Get("/{serverId}/users")
     @Status(HttpStatus.OK)
-    override fun getServerUsers(serverId: String): GetServerUsersHttpResponse {
+    override fun getServerUsers(serverId: String): GetServerUsers.HttpResponse {
         val response =
             serverService
                 .getServerUsers(GetServerUsersRequest(ServerId(serverId), "owner"))
                 .getOrThrow()
-        return GetServerUsersHttpResponse.fromResponse(response)
+        return GetServerUsers.HttpResponse(response.users)
     }
 }

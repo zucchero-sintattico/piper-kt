@@ -1,4 +1,4 @@
-package piperkt.services.servers.interfaces.web.api.responses
+package piperkt.services.servers.interfaces.web.api.errors
 
 import io.micronaut.context.annotation.Requires
 import io.micronaut.http.HttpRequest

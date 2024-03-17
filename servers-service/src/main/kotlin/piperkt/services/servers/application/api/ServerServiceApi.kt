@@ -1,12 +1,6 @@
 package piperkt.services.servers.application.api
 
-import piperkt.services.servers.application.api.command.AddUserToServerRequest
-import piperkt.services.servers.application.api.command.CreateServerRequest
-import piperkt.services.servers.application.api.command.CreateServerResponse
-import piperkt.services.servers.application.api.command.DeleteServerRequest
-import piperkt.services.servers.application.api.command.KickUserFromServerRequest
-import piperkt.services.servers.application.api.command.RemoveUserFromServerRequest
-import piperkt.services.servers.application.api.command.UpdateServerRequest
+import piperkt.services.servers.application.api.command.ServerCommand
 import piperkt.services.servers.application.api.query.servers.GetServerUsersQueryResponse
 import piperkt.services.servers.application.api.query.servers.GetServerUsersRequest
 import piperkt.services.servers.application.api.query.servers.GetServersFromUserRequest
@@ -14,17 +8,19 @@ import piperkt.services.servers.application.api.query.servers.GetServersFromUser
 
 interface ServerServiceApi {
 
-    fun createServer(request: CreateServerRequest): Result<CreateServerResponse>
+    fun createServer(
+        request: ServerCommand.CreateServer.Request
+    ): Result<ServerCommand.CreateServer.Response>
 
-    fun deleteServer(request: DeleteServerRequest): Result<Unit>
+    fun deleteServer(request: ServerCommand.DeleteServer.Request): Result<Unit>
 
-    fun updateServer(request: UpdateServerRequest): Result<Unit>
+    fun updateServer(request: ServerCommand.UpdateServer.Request): Result<Unit>
 
-    fun addUserToServer(request: AddUserToServerRequest): Result<Unit>
+    fun addUserToServer(request: ServerCommand.AddUserToServer.Request): Result<Unit>
 
-    fun removeUserFromServer(request: RemoveUserFromServerRequest): Result<Unit>
+    fun removeUserFromServer(request: ServerCommand.RemoveUserFromServer.Request): Result<Unit>
 
-    fun kickUserFromServer(request: KickUserFromServerRequest): Result<Unit>
+    fun kickUserFromServer(request: ServerCommand.KickUserFromServer.Request): Result<Unit>
 
     fun getServerUsers(request: GetServerUsersRequest): Result<GetServerUsersQueryResponse>
 
