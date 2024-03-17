@@ -1,15 +1,22 @@
 package base
 
-import io.kotest.core.spec.style.AnnotationSpec
-import io.kotest.core.spec.style.FunSpec
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 
 sealed interface Test {
-    abstract class UnitFunSpec(body: FunSpec.() -> Unit) : FunSpec(body)
 
-    abstract class UnitAnnotationSpec : AnnotationSpec()
+    sealed interface Unit : Test {
+        abstract class FunSpec(body: io.kotest.core.spec.style.FunSpec.() -> kotlin.Unit) :
+            io.kotest.core.spec.style.FunSpec(body)
 
-    @MicronautTest abstract class IntegrationFunSpec(body: FunSpec.() -> Unit) : FunSpec(body)
+        abstract class AnnotationSpec : io.kotest.core.spec.style.AnnotationSpec(), Unit
+    }
 
-    @MicronautTest abstract class IntegrationAnnotationSpec : AnnotationSpec()
+    sealed interface Integration : Test {
+        @MicronautTest
+        abstract class FunSpec(body: io.kotest.core.spec.style.FunSpec.() -> kotlin.Unit) :
+            io.kotest.core.spec.style.FunSpec(body), Integration
+
+        @MicronautTest
+        abstract class AnnotationSpec : io.kotest.core.spec.style.AnnotationSpec(), Integration
+    }
 }

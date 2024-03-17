@@ -2,7 +2,7 @@ package architecture
 
 import base.Test
 
-class CleanArchitectureSpec : ArchitectureSpec, Test.UnitAnnotationSpec() {
+class CleanArchitectureSpec : ArchitectureSpec, Test.Unit.AnnotationSpec() {
     override val prefix: String = "piperkt.services.multimedia"
     private val domainLayer = super.assertLayer("domain")
     private val applicationLayer = assertLayer("application")

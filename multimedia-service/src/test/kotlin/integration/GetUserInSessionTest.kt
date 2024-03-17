@@ -15,7 +15,7 @@ interface GetUserInSessionClient {
 }
 
 class GetUserInSessionTest(private val getUserInSessionClient: GetUserInSessionClient) :
-    Test.IntegrationFunSpec({
+    Test.Integration.FunSpec({
         test("should return Not Found when session does not exist") {
             val sessionId = "000000000000000000000000"
             val exception = getUserInSessionClient.get(sessionId)
