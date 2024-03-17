@@ -1,6 +1,8 @@
-package piperkt.services.friendship.domain
+package piperkt.services.friendship.application.api
 
-interface FriendRepository {
+import piperkt.services.friendship.domain.Friend
+
+interface FriendServiceApi {
     fun getFriends(username: String): List<Friend>
 
     fun getFriendRequests(username: String): List<Friend>

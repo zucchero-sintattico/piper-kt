@@ -7,7 +7,7 @@ import io.micronaut.data.repository.CrudRepository
 
 @MappedEntity
 data class FriendEntity(
-    @Id val userId: String,
+    @Id val username: String,
     val friends: List<String>,
     val friendRequests: List<String>,
     val pendingFriendRequests: List<String>

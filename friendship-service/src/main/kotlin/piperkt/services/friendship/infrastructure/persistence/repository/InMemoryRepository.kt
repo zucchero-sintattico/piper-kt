@@ -8,11 +8,11 @@ import piperkt.services.friendship.domain.FriendRepository
 class InMemoryRepository : FriendRepository {
     val friends = mutableListOf<Friend>()
 
-    override fun getFriends(username: String): List<String> {
+    override fun getFriends(username: String): List<Friend> {
         TODO()
     }
 
-    override fun getFriendRequests(username: String): List<String> {
+    override fun getFriendRequests(username: String): List<Friend> {
         TODO()
     }
 
