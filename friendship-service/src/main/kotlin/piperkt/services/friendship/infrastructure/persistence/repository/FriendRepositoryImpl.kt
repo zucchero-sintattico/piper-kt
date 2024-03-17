@@ -7,7 +7,7 @@ import piperkt.services.friendship.domain.FriendRepository
 
 @Singleton
 @Primary
-class FreindRepositoryImpl : FriendRepository {
+class FriendRepositoryImpl : FriendRepository {
 
     override fun getFriends(username: String): List<Friend> {
         TODO()
