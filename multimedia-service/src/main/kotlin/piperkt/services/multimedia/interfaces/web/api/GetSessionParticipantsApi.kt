@@ -22,10 +22,10 @@ interface GetSessionParticipantsApi {
     @Status(HttpStatus.OK)
     fun handle(@PathVariable sessionId: String): Response
 
-    @Error(GetSessionParticipantsUseCase.Errors::class)
+    @Error(GetSessionParticipantsUseCase.Errors.SessionNotFound::class)
     @Status(HttpStatus.NOT_FOUND)
-    fun onError(
-        exception: GetSessionParticipantsUseCase.Errors,
+    fun onSessionNotFound(
+        exception: GetSessionParticipantsUseCase.Errors.SessionNotFound,
         @PathVariable sessionId: String
     ): Errors
 }
