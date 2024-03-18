@@ -7,9 +7,11 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.Status
 import io.micronaut.serde.annotation.Serdeable
-import piperkt.services.multimedia.application.sessions.GetSessionParticipantsUseCase
+import piperkt.services.multimedia.application.sessions.usecases.GetSessionParticipantsUseCase
 
 interface GetSessionParticipantsApi {
+
+    @Serdeable data class Request(val sessionId: String)
 
     @Serdeable data class Response(val users: Set<String>)
 

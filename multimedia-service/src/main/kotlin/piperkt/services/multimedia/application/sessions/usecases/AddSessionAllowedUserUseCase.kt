@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.application.sessions
+package piperkt.services.multimedia.application.sessions.usecases
 
 import piperkt.services.multimedia.application.CommandUseCase
 import piperkt.services.multimedia.application.DomainEvent
@@ -9,15 +9,15 @@ import piperkt.services.multimedia.application.success
 import piperkt.services.multimedia.domain.sessions.SessionId
 import piperkt.services.multimedia.domain.sessions.SessionRepository
 
-open class RemoveSessionAllowedUserUseCase(
+open class AddSessionAllowedUserUseCase(
     private val sessionRepository: SessionRepository,
     private val eventPublisher: EventPublisher
-) : CommandUseCase<RemoveSessionAllowedUserUseCase.Command> {
+) : CommandUseCase<AddSessionAllowedUserUseCase.Command> {
 
     data class Command(val sessionId: String, val username: String)
 
     sealed class Events : DomainEvent {
-        data class AllowedUserRemoved(val sessionId: String, val username: String) : Events()
+        data class AllowedUserAdded(val sessionId: String, val username: String) : Events()
     }
 
     sealed class Errors : Exception() {
@@ -27,8 +27,8 @@ open class RemoveSessionAllowedUserUseCase(
     override fun handle(command: Command): Result<Unit> {
         if (sessionRepository.findById(SessionId(command.sessionId)).isNull())
             return failure(Errors.SessionNotFound(command.sessionId))
-        sessionRepository.removeAllowedUser(SessionId(command.sessionId), command.username)
-        eventPublisher.publish(Events.AllowedUserRemoved(command.sessionId, command.username))
+        sessionRepository.addAllowedUser(SessionId(command.sessionId), command.username)
+        eventPublisher.publish(Events.AllowedUserAdded(command.sessionId, command.username))
         return success()
     }
 }

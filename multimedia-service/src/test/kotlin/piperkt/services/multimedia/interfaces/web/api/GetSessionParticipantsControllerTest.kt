@@ -8,7 +8,7 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.asSuccess
-import piperkt.services.multimedia.application.sessions.GetSessionParticipantsUseCase
+import piperkt.services.multimedia.application.sessions.usecases.GetSessionParticipantsUseCase
 import piperkt.services.multimedia.domain.sessions.SessionId
 import piperkt.services.multimedia.interfaces.web.controllers.GetSessionParticipantsController
 
