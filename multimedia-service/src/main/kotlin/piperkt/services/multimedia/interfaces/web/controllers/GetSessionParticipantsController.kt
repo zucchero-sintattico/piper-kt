@@ -1,7 +1,7 @@
 package piperkt.services.multimedia.interfaces.web.controllers
 
 import io.micronaut.http.annotation.Controller
-import piperkt.services.multimedia.application.sessions.GetSessionParticipantsUseCase
+import piperkt.services.multimedia.application.sessions.usecases.GetSessionParticipantsUseCase
 import piperkt.services.multimedia.interfaces.web.api.GetSessionParticipantsApi
 
 @Controller

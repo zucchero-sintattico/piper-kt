@@ -7,6 +7,7 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import piperkt.services.multimedia.application.EventPublisher
+import piperkt.services.multimedia.application.sessions.usecases.CreateSessionUseCase
 import piperkt.services.multimedia.domain.sessions.SessionRepository
 import piperkt.services.multimedia.domain.users.User
 import piperkt.services.multimedia.domain.users.Username

@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.application.sessions
+package piperkt.services.multimedia.application.sessions.usecases
 
 import piperkt.services.multimedia.application.QueryUseCase
 import piperkt.services.multimedia.application.asFailure

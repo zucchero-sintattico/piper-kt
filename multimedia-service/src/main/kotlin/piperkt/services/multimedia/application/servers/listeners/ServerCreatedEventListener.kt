@@ -1,10 +1,10 @@
 package piperkt.services.multimedia.application.servers.listeners
 
 import piperkt.services.multimedia.application.EventListener
-import piperkt.services.multimedia.application.servers.events.ServerCreated
 import piperkt.services.multimedia.domain.servers.Server
 import piperkt.services.multimedia.domain.servers.ServerId
 import piperkt.services.multimedia.domain.servers.ServerRepository
+import piperkt.services.multimedia.domain.servers.events.ServerCreated
 import piperkt.services.multimedia.domain.users.User
 import piperkt.services.multimedia.domain.users.Username
 

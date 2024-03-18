@@ -7,6 +7,7 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import piperkt.services.multimedia.application.EventPublisher
 import piperkt.services.multimedia.application.asFailure
+import piperkt.services.multimedia.application.sessions.usecases.DeleteSessionUseCase
 import piperkt.services.multimedia.application.success
 import piperkt.services.multimedia.domain.sessions.SessionRepository
 
