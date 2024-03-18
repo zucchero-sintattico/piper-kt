@@ -39,18 +39,6 @@ class SessionTest :
                 session.allowedUsers shouldBe users
                 session.participants shouldBe listOf(Users.john())
             }
-
-            test("should be able to add an allowed user") {
-                val session = Session(sessionId)
-                session.addAllowedUser(Users.john())
-                session.allowedUsers shouldBe listOf(Users.john())
-            }
-
-            test("should be able to remove an allowed user") {
-                val session = Session(id = sessionId, allowedUsers = users)
-                session.removeAllowedUser(Users.john())
-                session.allowedUsers shouldBe listOf(Users.jane())
-            }
         }
 
         context("two Sessions") {

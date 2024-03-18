@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import piperkt.services.multimedia.application.EventPublisher
+import piperkt.services.multimedia.application.TestEventPublisher
 import piperkt.services.multimedia.application.sessions.usecases.CreateSessionUseCase
 import piperkt.services.multimedia.domain.sessions.SessionRepository
 import piperkt.services.multimedia.domain.users.User
@@ -15,7 +15,7 @@ import piperkt.services.multimedia.domain.users.Username
 class CreateSessionUseCaseTest :
     Test.Unit.FunSpec({
         val sessionRepository = mock<SessionRepository>()
-        val eventPublisher = mock<EventPublisher>()
+        val eventPublisher = TestEventPublisher()
         val createSessionUseCase = CreateSessionUseCase(sessionRepository, eventPublisher)
 
         val session =
@@ -27,6 +27,7 @@ class CreateSessionUseCaseTest :
             val result = createSessionUseCase.handle(CreateSessionUseCase.Command(users))
             result.isSuccess shouldBe true
             verify(sessionRepository).createSession(users)
-            verify(eventPublisher).publish(CreateSessionUseCase.Events.SessionCreated(session))
+            eventPublisher.publishedEvents shouldBe
+                listOf(CreateSessionUseCase.Events.SessionCreated(session))
         }
     })

@@ -15,7 +15,7 @@ class UserTest :
                 user.username shouldBe username
             }
 
-            test("should be able to create a user given a string") {
+            test("should be able to create a user given a string username") {
                 val user = User.fromUsername(username.value)
                 user.username shouldBe username
             }
