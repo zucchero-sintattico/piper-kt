@@ -1,7 +1,5 @@
 package piperkt.services.multimedia.domain.users
 
-import piperkt.services.multimedia.domain.Id
-
-typealias UserId = Id<String>
+data class UserId(val value: String)
 
 fun String.toUserId() = UserId(this)

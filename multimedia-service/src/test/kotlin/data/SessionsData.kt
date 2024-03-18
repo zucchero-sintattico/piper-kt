@@ -9,10 +9,10 @@ object SessionsData {
 
     fun simpleSession(): Session {
         val users = setOf(User(UserId("user1")), User(UserId("user2")))
-        return Session.create(SessionId("randomId"), users.toList(), users.toList())
+        return Session(SessionId("randomId"), users.toList(), users.toList())
     }
 
     fun fromUsers(users: Set<User>): Session {
-        return Session.create(SessionId("randomId"), users.toList(), users.toList())
+        return Session(SessionId("randomId"), users.toList(), users.toList())
     }
 }
