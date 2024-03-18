@@ -11,8 +11,4 @@ dependencies {
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
 }
 
-detekt {
-    version = "1.18.1"
-    // add config file
-    config.from(files("detekt-config.yml"))
-}
+detekt { config.from(files("detekt-config.yml")) }
