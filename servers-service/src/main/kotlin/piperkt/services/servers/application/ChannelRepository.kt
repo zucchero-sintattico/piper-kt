@@ -39,5 +39,5 @@ interface ChannelRepository {
         channelId: ChannelId,
         content: String,
         sender: String
-    ): Boolean
+    ): Message?
 }

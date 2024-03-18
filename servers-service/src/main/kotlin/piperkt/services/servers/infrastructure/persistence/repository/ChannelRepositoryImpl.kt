@@ -169,13 +169,13 @@ class ChannelRepositoryImpl(
         channelId: ChannelId,
         content: String,
         sender: String
-    ): Boolean {
+    ): Message? {
         val serverEntity = serverModelRepository.findById(serverId.value).getOrNull()
         val channelEntity = channelModelRepository.findById(channelId.value).getOrNull()
         if (
             isServerOrChannelNull(serverEntity, channelEntity) || !isAMessageChannel(channelEntity)
         ) {
-            return false
+            return null
         }
         val messageEntity =
             messageModelRepository.save(MessageEntity(null, content = content, sender = sender))
@@ -205,7 +205,12 @@ class ChannelRepositoryImpl(
                 }
             )
         )
-        return true
+        return MessageFactory.createMessage(
+            messageEntity.id.orEmpty(),
+            messageEntity.content,
+            messageEntity.sender,
+            messageEntity.timestamp
+        )
     }
 
     private fun isAMessageChannel(channel: ChannelEntity?): Boolean {

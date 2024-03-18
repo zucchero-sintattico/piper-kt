@@ -1,5 +1,7 @@
 package piperkt.services.servers.application
 
+import piperkt.services.commons.domain.events.ChannelEvent
+import piperkt.services.commons.domain.events.DomainEventPublisher
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.api.ChannelServiceApi
 import piperkt.services.servers.application.api.command.ChannelCommand
@@ -7,10 +9,12 @@ import piperkt.services.servers.application.api.query.ChannelQuery
 import piperkt.services.servers.application.exceptions.ServerOrChannelNotFoundException
 import piperkt.services.servers.application.exceptions.UserNotHasPermissionsException
 import piperkt.services.servers.application.exceptions.UserNotInServerException
+import piperkt.services.servers.domain.Message
 
-class ChannelService(
+open class ChannelService(
     private val channelRepository: ChannelRepository,
-    private val serverRepository: ServerRepository
+    private val serverRepository: ServerRepository,
+    private val eventPublisher: DomainEventPublisher
 ) : ChannelServiceApi {
 
     override fun createNewChannelInServer(
@@ -27,6 +31,7 @@ class ChannelService(
                 request.channelType
             )
         return if (commandResult != null) {
+            eventPublisher.publish(ChannelEvent.ChannelCreatedEvent(commandResult.channelId))
             Result.success(
                 ChannelCommand.CreateNewChannelInServer.Response(commandResult.channelId)
             )
@@ -49,6 +54,7 @@ class ChannelService(
                 request.channelDescription
             )
         return if (commandResult != null) {
+            eventPublisher.publish(ChannelEvent.ChannelUpdatedEvent(commandResult.channelId))
             Result.success(ChannelCommand.UpdateChannelInServer.Response)
         } else {
             Result.failure(ServerOrChannelNotFoundException())
@@ -64,6 +70,7 @@ class ChannelService(
         val commandSuccess: Boolean =
             channelRepository.deleteChannel(request.serverId, request.channelId)
         return if (commandSuccess) {
+            eventPublisher.publish(ChannelEvent.ChannelDeletedEvent(request.channelId))
             Result.success(ChannelCommand.DeleteChannelInServer.Response)
         } else {
             Result.failure(ServerOrChannelNotFoundException())
@@ -101,14 +108,17 @@ class ChannelService(
         if (!serverRepository.isUserInServer(request.serverId, request.sender)) {
             return Result.failure(UserNotInServerException())
         }
-        val commandSuccess: Boolean =
+        val messageCreated: Message? =
             channelRepository.addMessageInChannel(
                 request.serverId,
                 request.channelId,
                 request.content,
                 request.sender
             )
-        return if (commandSuccess) {
+        return if (messageCreated != null) {
+            eventPublisher.publish(
+                ChannelEvent.MessageInChannelEvent(request.channelId, messageCreated.messageId)
+            )
             Result.success(ChannelCommand.AddMessageInChannel.Response)
         } else {
             Result.failure(ServerOrChannelNotFoundException())
