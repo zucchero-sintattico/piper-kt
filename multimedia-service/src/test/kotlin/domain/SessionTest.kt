@@ -1,7 +1,7 @@
 package domain
 
 import base.Test
-import data.Users
+import data.UsersData
 import io.kotest.matchers.shouldBe
 import piperkt.services.multimedia.domain.sessions.Session
 import piperkt.services.multimedia.domain.sessions.SessionId
@@ -9,7 +9,7 @@ import piperkt.services.multimedia.domain.sessions.SessionId
 class SessionTest :
     Test.Unit.FunSpec({
         context("a Session") {
-            val users = listOf(Users.john(), Users.jane())
+            val users = listOf(UsersData.john(), UsersData.jane())
             val sessionId = SessionId("SessionId")
 
             test("should be able to create a session given an Id") {
@@ -33,18 +33,18 @@ class SessionTest :
                     Session(
                         id = sessionId,
                         allowedUsers = users,
-                        participants = listOf(Users.john())
+                        participants = listOf(UsersData.john())
                     )
                 session.id shouldBe sessionId
                 session.allowedUsers shouldBe users
-                session.participants shouldBe listOf(Users.john())
+                session.participants shouldBe listOf(UsersData.john())
             }
         }
 
         context("two Sessions") {
             val sessionId = SessionId("SessionId")
             val session1 = Session(sessionId)
-            val session2 = Session(sessionId, allowedUsers = listOf(Users.john()))
+            val session2 = Session(sessionId, allowedUsers = listOf(UsersData.john()))
 
             test("should be equal if their ids are equal") { session1 shouldBe session2 }
         }

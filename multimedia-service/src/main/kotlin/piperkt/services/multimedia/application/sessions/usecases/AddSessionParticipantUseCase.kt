@@ -8,6 +8,7 @@ import piperkt.services.multimedia.application.isNull
 import piperkt.services.multimedia.application.success
 import piperkt.services.multimedia.domain.sessions.SessionId
 import piperkt.services.multimedia.domain.sessions.SessionRepository
+import piperkt.services.multimedia.domain.users.User
 
 open class AddSessionParticipantUseCase(
     private val sessionRepository: SessionRepository,
@@ -17,18 +18,30 @@ open class AddSessionParticipantUseCase(
     data class Command(val sessionId: String, val username: String)
 
     sealed class Events : DomainEvent {
-        data class ParticipantAdded(val sessionId: String, val username: String) : Events()
+        data class ParticipantAdded(val sessionId: SessionId, val user: User) : Events()
     }
 
     sealed class Errors : Exception() {
         data class SessionNotFound(val sessionId: String) : Errors()
+
+        data class UserAlreadyParticipant(val sessionId: String, val username: String) : Errors()
     }
 
     override fun handle(command: Command): Result<Unit> {
         if (sessionRepository.findById(SessionId(command.sessionId)).isNull())
             return failure(Errors.SessionNotFound(command.sessionId))
-        sessionRepository.addParticipant(SessionId(command.sessionId), command.username)
-        eventPublisher.publish(Events.ParticipantAdded(command.sessionId, command.username))
+        val added =
+            sessionRepository.addParticipant(
+                SessionId(command.sessionId),
+                User.fromUsername(command.username)
+            )
+        if (!added) return failure(Errors.SessionNotFound(command.sessionId))
+        eventPublisher.publish(
+            Events.ParticipantAdded(
+                SessionId(command.sessionId),
+                User.fromUsername(command.username)
+            )
+        )
         return success()
     }
 }

@@ -7,6 +7,8 @@ import piperkt.services.multimedia.domain.users.Username
 
 object SessionsData {
 
+    fun empty() = Session()
+
     fun simpleSession(): Session {
         val users = setOf(User(Username("user1")), User(Username("user2")))
         return Session(SessionId("randomId"), users.toList(), users.toList())

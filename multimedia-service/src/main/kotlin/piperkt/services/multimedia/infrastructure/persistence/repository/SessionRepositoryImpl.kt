@@ -27,23 +27,23 @@ class SessionRepositoryImpl(private val sessionEntityRepository: SessionEntityRe
         TODO("Not yet implemented")
     }
 
-    override fun addParticipant(sessionId: SessionId, username: String): Any {
-        TODO("Not yet implemented")
-    }
-
-    override fun removeParticipant(sessionId: SessionId, username: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun addAllowedUser(sessionId: SessionId, username: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun removeAllowedUser(sessionId: SessionId, username: String) {
-        TODO("Not yet implemented")
-    }
-
     override fun deleteSession(sessionId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun addParticipant(sessionId: SessionId, user: User): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeParticipant(sessionId: SessionId, user: User): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun addAllowedUser(sessionId: SessionId, user: User): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeAllowedUser(sessionId: SessionId, user: User): Boolean {
         TODO("Not yet implemented")
     }
 
