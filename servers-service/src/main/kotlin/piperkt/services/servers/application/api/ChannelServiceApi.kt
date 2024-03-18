@@ -11,7 +11,7 @@ interface ChannelServiceApi {
 
     fun createNewChannelInServer(
         request: ChannelCommand.CreateNewChannelInServer.Request
-    ): Result<Unit>
+    ): Result<ChannelCommand.CreateNewChannelInServer.Response>
 
     fun updateChannelInServer(request: ChannelCommand.UpdateChannelInServer.Request): Result<Unit>
 

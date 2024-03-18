@@ -15,7 +15,7 @@ class ChannelService(
 
     override fun createNewChannelInServer(
         request: ChannelCommand.CreateNewChannelInServer.Request
-    ): Result<Unit> {
+    ): Result<ChannelCommand.CreateNewChannelInServer.Response> {
         if (!hasUserPermissions(request.serverId, request.requestFrom)) {
             return Result.failure(UserNotHasPermissionsException())
         }
@@ -26,9 +26,12 @@ class ChannelService(
                 request.channelDescription,
                 request.channelType
             )
-        return when (commandResult != null) {
-            true -> Result.success(Unit)
-            false -> Result.failure(ServerOrChannelNotFoundException())
+        return if (commandResult != null) {
+            Result.success(
+                ChannelCommand.CreateNewChannelInServer.Response(commandResult.channelId)
+            )
+        } else {
+            Result.failure(ServerOrChannelNotFoundException())
         }
     }
 
@@ -45,9 +48,10 @@ class ChannelService(
                 request.channelName,
                 request.channelDescription
             )
-        return when (commandResult != null) {
-            true -> Result.success(Unit)
-            false -> Result.failure(ServerOrChannelNotFoundException())
+        return if (commandResult != null) {
+            Result.success(Unit)
+        } else {
+            Result.failure(ServerOrChannelNotFoundException())
         }
     }
 
@@ -59,9 +63,10 @@ class ChannelService(
         }
         val commandSuccess: Boolean =
             channelRepository.deleteChannel(request.serverId, request.channelId)
-        return when (commandSuccess) {
-            true -> Result.success(Unit)
-            false -> Result.failure(ServerOrChannelNotFoundException())
+        return if (commandSuccess) {
+            Result.success(Unit)
+        } else {
+            Result.failure(ServerOrChannelNotFoundException())
         }
     }
 
@@ -103,9 +108,10 @@ class ChannelService(
                 request.content,
                 request.sender
             )
-        return when (commandSuccess) {
-            true -> Result.success(Unit)
-            false -> Result.failure(ServerOrChannelNotFoundException())
+        return if (commandSuccess) {
+            Result.success(Unit)
+        } else {
+            Result.failure(ServerOrChannelNotFoundException())
         }
     }
 

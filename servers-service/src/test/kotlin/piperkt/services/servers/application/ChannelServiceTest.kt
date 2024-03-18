@@ -45,7 +45,8 @@ class ChannelServiceTest : AnnotationSpec() {
                 "TEXT",
                 "owner"
             )
-        channelService.createNewChannelInServer(request) shouldBe Result.success(Unit)
+        channelService.createNewChannelInServer(request) shouldBe
+            Result.success(ChannelCommand.CreateNewChannelInServer.Response(fakeChannelId))
     }
 
     @Test
