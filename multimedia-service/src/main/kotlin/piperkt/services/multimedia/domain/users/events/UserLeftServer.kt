@@ -1,3 +1,3 @@
-package piperkt.services.multimedia.application.users.events
+package piperkt.services.multimedia.domain.users.events
 
 data class UserLeftServer(val userId: String, val serverId: String)
