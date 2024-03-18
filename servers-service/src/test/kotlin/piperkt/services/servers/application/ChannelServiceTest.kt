@@ -95,7 +95,7 @@ class ChannelServiceTest : AnnotationSpec() {
                 "TEXT",
                 "owner"
             )
-        ) shouldBe Result.success(Unit)
+        ) shouldBe Result.success(ChannelCommand.UpdateChannelInServer.Response)
     }
 
     @Test
@@ -134,7 +134,7 @@ class ChannelServiceTest : AnnotationSpec() {
         whenever(channelRepository.deleteChannel(any(), any())).thenReturn(true)
         channelService.deleteChannelInServer(
             ChannelCommand.DeleteChannelInServer.Request(fakeServerId, fakeChannelId, "owner")
-        ) shouldBe Result.success(Unit)
+        ) shouldBe Result.success(ChannelCommand.DeleteChannelInServer.Response)
     }
 
     @Test
@@ -201,7 +201,7 @@ class ChannelServiceTest : AnnotationSpec() {
                 "content",
                 "sender"
             )
-        ) shouldBe Result.success(Unit)
+        ) shouldBe Result.success(ChannelCommand.AddMessageInChannel.Response)
     }
 
     @Test

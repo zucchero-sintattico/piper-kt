@@ -28,7 +28,7 @@ sealed interface ChannelCommand {
             override val requestFrom: String
         ) : UpdateChannelInServer, ServiceRequest
 
-        data class Response(val channelId: ChannelId) : UpdateChannelInServer
+        data object Response : UpdateChannelInServer
     }
 
     sealed interface DeleteChannelInServer : ChannelCommand {
@@ -38,7 +38,7 @@ sealed interface ChannelCommand {
             override val requestFrom: String
         ) : DeleteChannelInServer, ServiceRequest
 
-        data class Response(val channelId: ChannelId) : DeleteChannelInServer
+        data object Response : DeleteChannelInServer
     }
 
     sealed interface AddMessageInChannel : ChannelCommand {
@@ -49,36 +49,7 @@ sealed interface ChannelCommand {
             val sender: String,
             override val requestFrom: String = sender
         ) : AddMessageInChannel, ServiceRequest
+
+        data object Response : AddMessageInChannel
     }
 }
-
-// data class CreateNewChannelInServerRequest(
-//    val serverId: ServerId,
-//    val channelName: String,
-//    val channelDescription: String,
-//    val channelType: String,
-//    override val requestFrom: String
-// ) : ServiceRequest
-//
-// data class UpdateChannelInServerRequest(
-//    val serverId: ServerId,
-//    val channelId: ChannelId,
-//    val channelName: String?,
-//    val channelDescription: String?,
-//    val channelType: String,
-//    override val requestFrom: String
-// ) : ServiceRequest
-//
-// data class DeleteChannelInServerRequest(
-//    val serverId: ServerId,
-//    val channelId: ChannelId,
-//    override val requestFrom: String
-// ) : ServiceRequest
-//
-// data class AddMessageInChannelRequest(
-//    val serverId: ServerId,
-//    val channelId: ChannelId,
-//    val content: String,
-//    val sender: String,
-//    override val requestFrom: String = sender
-// ) : ServiceRequest

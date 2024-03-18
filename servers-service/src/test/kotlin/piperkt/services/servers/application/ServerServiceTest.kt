@@ -57,7 +57,7 @@ class ServerServiceTest : AnnotationSpec() {
         whenever(serverRepository.findById(any())).thenReturn(fakeServer)
         serverService.deleteServer(
             ServerCommand.DeleteServer.Request(fakeServerId, "serverOwner")
-        ) shouldBe Result.success(Unit)
+        ) shouldBe Result.success(ServerCommand.DeleteServer.Response)
     }
 
     @Test
@@ -113,7 +113,7 @@ class ServerServiceTest : AnnotationSpec() {
                 "serverDescription",
                 "serverOwner"
             )
-        ) shouldBe Result.success(Unit)
+        ) shouldBe Result.success(ServerCommand.UpdateServer.Response)
     }
 
     @Test
@@ -121,7 +121,7 @@ class ServerServiceTest : AnnotationSpec() {
         whenever(serverRepository.addUserToServer(any(), any())).thenReturn(fakeServer)
         serverService.addUserToServer(
             ServerCommand.AddUserToServer.Request(fakeServerId, "member", "member")
-        ) shouldBe Result.success(Unit)
+        ) shouldBe Result.success(ServerCommand.AddUserToServer.Response)
     }
 
     @Test
@@ -137,7 +137,7 @@ class ServerServiceTest : AnnotationSpec() {
         whenever(serverRepository.removeUserFromServer(any(), any())).thenReturn(fakeServer)
         serverService.removeUserFromServer(
             ServerCommand.RemoveUserFromServer.Request(fakeServerId, "member", "member")
-        ) shouldBe Result.success(Unit)
+        ) shouldBe Result.success(ServerCommand.RemoveUserFromServer.Response)
     }
 
     @Test
@@ -146,7 +146,7 @@ class ServerServiceTest : AnnotationSpec() {
         whenever(serverRepository.findById(any())).thenReturn(fakeServer)
         serverService.kickUserFromServer(
             ServerCommand.KickUserFromServer.Request(fakeServerId, "member", "serverOwner")
-        ) shouldBe Result.success(Unit)
+        ) shouldBe Result.success(ServerCommand.KickUserFromServer.Response)
     }
 
     @Test

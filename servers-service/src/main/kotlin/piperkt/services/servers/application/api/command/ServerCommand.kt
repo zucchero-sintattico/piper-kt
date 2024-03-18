@@ -23,14 +23,14 @@ sealed interface ServerCommand {
             override val requestFrom: String
         ) : UpdateServer, ServiceRequest
 
-        data class Response(val serverId: ServerId) : UpdateServer
+        data object Response : UpdateServer
     }
 
     sealed interface DeleteServer : ServerCommand {
         data class Request(val serverId: ServerId, override val requestFrom: String) :
             DeleteServer, ServiceRequest
 
-        data class Response(val serverId: ServerId) : DeleteServer
+        data object Response : DeleteServer
     }
 
     sealed interface AddUserToServer : ServerCommand {
@@ -40,7 +40,7 @@ sealed interface ServerCommand {
             override val requestFrom: String
         ) : AddUserToServer, ServiceRequest
 
-        data class Response(val serverId: ServerId) : AddUserToServer
+        data object Response : AddUserToServer
     }
 
     sealed interface RemoveUserFromServer : ServerCommand {
@@ -50,7 +50,7 @@ sealed interface ServerCommand {
             override val requestFrom: String
         ) : RemoveUserFromServer, ServiceRequest
 
-        data class Response(val serverId: ServerId) : RemoveUserFromServer
+        data object Response : RemoveUserFromServer
     }
 
     sealed interface KickUserFromServer : ServerCommand {
@@ -60,34 +60,6 @@ sealed interface ServerCommand {
             override val requestFrom: String
         ) : KickUserFromServer, ServiceRequest
 
-        data class Response(val serverId: ServerId) : KickUserFromServer
+        data object Response : KickUserFromServer
     }
 }
-
-// data class UpdateServerRequest(
-//    val serverId: ServerId,
-//    val name: String?,
-//    val description: String?,
-//    override val requestFrom: String
-// ) : ServiceRequest
-//
-// data class DeleteServerRequest(val serverId: ServerId, override val requestFrom: String) :
-//    ServiceRequest
-//
-// data class AddUserToServerRequest(
-//    val serverId: ServerId,
-//    val username: String,
-//    override val requestFrom: String
-// ) : ServiceRequest
-//
-// data class RemoveUserFromServerRequest(
-//    val serverId: ServerId,
-//    val username: String,
-//    override val requestFrom: String
-// ) : ServiceRequest
-//
-// data class KickUserFromServerRequest(
-//    val serverId: ServerId,
-//    val username: String,
-//    override val requestFrom: String
-// ) : ServiceRequest

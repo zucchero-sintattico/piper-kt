@@ -18,11 +18,13 @@ open class ServerService(
         return Result.success(ServerCommand.CreateServer.Response(server.id))
     }
 
-    override fun deleteServer(request: ServerCommand.DeleteServer.Request): Result<Unit> {
+    override fun deleteServer(
+        request: ServerCommand.DeleteServer.Request
+    ): Result<ServerCommand.DeleteServer.Response> {
         if (isUserAdmin(request.serverId, request.requestFrom)) {
             val success = serverRepository.deleteServer(request.serverId)
             return if (success) {
-                Result.success(Unit)
+                Result.success(ServerCommand.DeleteServer.Response)
             } else {
                 Result.failure(ServerNotFoundException())
             }
@@ -31,12 +33,14 @@ open class ServerService(
         }
     }
 
-    override fun updateServer(request: ServerCommand.UpdateServer.Request): Result<Unit> {
+    override fun updateServer(
+        request: ServerCommand.UpdateServer.Request
+    ): Result<ServerCommand.UpdateServer.Response> {
         if (isUserAdmin(request.serverId, request.requestFrom)) {
             val server =
                 serverRepository.updateServer(request.serverId, request.name, request.description)
             return if (server != null) {
-                Result.success(Unit)
+                Result.success(ServerCommand.UpdateServer.Response)
             } else {
                 Result.failure(ServerNotFoundException())
             }
@@ -45,10 +49,12 @@ open class ServerService(
         }
     }
 
-    override fun addUserToServer(request: ServerCommand.AddUserToServer.Request): Result<Unit> {
+    override fun addUserToServer(
+        request: ServerCommand.AddUserToServer.Request
+    ): Result<ServerCommand.AddUserToServer.Response> {
         val server = serverRepository.addUserToServer(request.serverId, request.username)
         return if (server != null) {
-            Result.success(Unit)
+            Result.success(ServerCommand.AddUserToServer.Response)
         } else {
             Result.failure(ServerNotFoundException())
         }
@@ -56,10 +62,10 @@ open class ServerService(
 
     override fun removeUserFromServer(
         request: ServerCommand.RemoveUserFromServer.Request
-    ): Result<Unit> {
+    ): Result<ServerCommand.RemoveUserFromServer.Response> {
         val server = serverRepository.removeUserFromServer(request.serverId, request.username)
         return if (server != null) {
-            Result.success(Unit)
+            Result.success(ServerCommand.RemoveUserFromServer.Response)
         } else {
             Result.failure(ServerNotFoundException())
         }
@@ -67,11 +73,11 @@ open class ServerService(
 
     override fun kickUserFromServer(
         request: ServerCommand.KickUserFromServer.Request
-    ): Result<Unit> {
+    ): Result<ServerCommand.KickUserFromServer.Response> {
         if (isUserAdmin(request.serverId, request.requestFrom)) {
             val server = serverRepository.removeUserFromServer(request.serverId, request.username)
             return if (server != null) {
-                Result.success(Unit)
+                Result.success(ServerCommand.KickUserFromServer.Response)
             } else {
                 Result.failure(ServerNotFoundException())
             }

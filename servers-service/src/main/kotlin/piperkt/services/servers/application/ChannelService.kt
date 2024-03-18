@@ -37,7 +37,7 @@ class ChannelService(
 
     override fun updateChannelInServer(
         request: ChannelCommand.UpdateChannelInServer.Request
-    ): Result<Unit> {
+    ): Result<ChannelCommand.UpdateChannelInServer.Response> {
         if (!hasUserPermissions(request.serverId, request.requestFrom)) {
             return Result.failure(UserNotHasPermissionsException())
         }
@@ -49,7 +49,7 @@ class ChannelService(
                 request.channelDescription
             )
         return if (commandResult != null) {
-            Result.success(Unit)
+            Result.success(ChannelCommand.UpdateChannelInServer.Response)
         } else {
             Result.failure(ServerOrChannelNotFoundException())
         }
@@ -57,14 +57,14 @@ class ChannelService(
 
     override fun deleteChannelInServer(
         request: ChannelCommand.DeleteChannelInServer.Request
-    ): Result<Unit> {
+    ): Result<ChannelCommand.DeleteChannelInServer.Response> {
         if (!hasUserPermissions(request.serverId, request.requestFrom)) {
             return Result.failure(UserNotHasPermissionsException())
         }
         val commandSuccess: Boolean =
             channelRepository.deleteChannel(request.serverId, request.channelId)
         return if (commandSuccess) {
-            Result.success(Unit)
+            Result.success(ChannelCommand.DeleteChannelInServer.Response)
         } else {
             Result.failure(ServerOrChannelNotFoundException())
         }
@@ -97,7 +97,7 @@ class ChannelService(
 
     override fun addMessageInChannel(
         request: ChannelCommand.AddMessageInChannel.Request
-    ): Result<Unit> {
+    ): Result<ChannelCommand.AddMessageInChannel.Response> {
         if (!serverRepository.isUserInServer(request.serverId, request.sender)) {
             return Result.failure(UserNotInServerException())
         }
@@ -109,7 +109,7 @@ class ChannelService(
                 request.sender
             )
         return if (commandSuccess) {
-            Result.success(Unit)
+            Result.success(ChannelCommand.AddMessageInChannel.Response)
         } else {
             Result.failure(ServerOrChannelNotFoundException())
         }
