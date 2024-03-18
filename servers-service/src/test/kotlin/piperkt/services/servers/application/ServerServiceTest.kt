@@ -4,7 +4,12 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.reset
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
+import piperkt.services.commons.domain.events.DomainEventPublisher
+import piperkt.services.commons.domain.events.ServerEvent
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.api.command.ServerCommand
 import piperkt.services.servers.application.api.query.ServerQuery
@@ -14,7 +19,8 @@ import piperkt.services.servers.domain.factory.ServerFactory
 
 class ServerServiceTest : AnnotationSpec() {
     private val serverRepository = mock<ServerRepository>()
-    private val serverService = ServerService(serverRepository)
+    private val eventPublisher = mock<DomainEventPublisher>()
+    private val serverService = ServerService(serverRepository, eventPublisher)
     private val fakeServerId = ServerId("000000000000000000000000")
     private val fakeServer =
         ServerFactory.createServer(
@@ -23,6 +29,11 @@ class ServerServiceTest : AnnotationSpec() {
             "serverDescription",
             "serverOwner"
         )
+
+    @BeforeEach
+    fun setUp() {
+        reset(serverRepository, eventPublisher)
+    }
 
     @Test
     fun `should allow to create a server`() {
@@ -36,6 +47,7 @@ class ServerServiceTest : AnnotationSpec() {
             )
         serverService.createServer(request) shouldBe
             Result.success(ServerCommand.CreateServer.Response(fakeServerId))
+        verify(eventPublisher).publish(ServerEvent.ServerCreatedEvent(fakeServerId))
     }
 
     @Test
@@ -49,6 +61,7 @@ class ServerServiceTest : AnnotationSpec() {
                 "member"
             )
         ) shouldBe Result.failure(UserNotHasPermissionsException())
+        verifyNoInteractions(eventPublisher)
     }
 
     @Test
@@ -58,14 +71,18 @@ class ServerServiceTest : AnnotationSpec() {
         serverService.deleteServer(
             ServerCommand.DeleteServer.Request(fakeServerId, "serverOwner")
         ) shouldBe Result.success(ServerCommand.DeleteServer.Response)
+
+        verify(eventPublisher).publish(ServerEvent.ServerDeletedEvent(fakeServerId))
     }
 
     @Test
     fun `should not allow to delete a server that does not exist`() {
         whenever(serverRepository.deleteServer(any())).thenReturn(false)
+        whenever(serverRepository.findById(any())).thenReturn(fakeServer)
         serverService.deleteServer(
             ServerCommand.DeleteServer.Request(fakeServerId, "serverOwner")
         ) shouldBe Result.failure(ServerNotFoundException())
+        verifyNoInteractions(eventPublisher)
     }
 
     @Test
@@ -75,11 +92,13 @@ class ServerServiceTest : AnnotationSpec() {
         serverService.deleteServer(
             ServerCommand.DeleteServer.Request(fakeServerId, "member")
         ) shouldBe Result.failure(UserNotHasPermissionsException())
+        verifyNoInteractions(eventPublisher)
     }
 
     @Test
     fun `should not allow to update a server that does not exist`() {
         whenever(serverRepository.updateServer(any(), any(), any())).thenReturn(null)
+        whenever(serverRepository.findById(any())).thenReturn(fakeServer)
         serverService.updateServer(
             ServerCommand.UpdateServer.Request(
                 fakeServerId,
@@ -88,6 +107,7 @@ class ServerServiceTest : AnnotationSpec() {
                 "serverOwner"
             )
         ) shouldBe Result.failure(ServerNotFoundException())
+        verifyNoInteractions(eventPublisher)
     }
 
     @Test
@@ -101,19 +121,22 @@ class ServerServiceTest : AnnotationSpec() {
                 "member"
             )
         ) shouldBe Result.failure(UserNotHasPermissionsException())
+        verifyNoInteractions(eventPublisher)
     }
 
     @Test
     fun `should allow to update a server`() {
         whenever(serverRepository.updateServer(any(), any(), any())).thenReturn(fakeServer)
+        whenever(serverRepository.findById(any())).thenReturn(fakeServer)
         serverService.updateServer(
             ServerCommand.UpdateServer.Request(
                 fakeServerId,
                 "serverName",
                 "serverDescription",
-                "serverOwner"
+                fakeServer.owner
             )
         ) shouldBe Result.success(ServerCommand.UpdateServer.Response)
+        verify(eventPublisher).publish(ServerEvent.ServerUpdatedEvent(fakeServerId))
     }
 
     @Test
@@ -122,6 +145,7 @@ class ServerServiceTest : AnnotationSpec() {
         serverService.addUserToServer(
             ServerCommand.AddUserToServer.Request(fakeServerId, "member", "member")
         ) shouldBe Result.success(ServerCommand.AddUserToServer.Response)
+        verify(eventPublisher).publish(ServerEvent.ServerUserAddedEvent(fakeServerId, "member"))
     }
 
     @Test
@@ -130,6 +154,7 @@ class ServerServiceTest : AnnotationSpec() {
         serverService.addUserToServer(
             ServerCommand.AddUserToServer.Request(fakeServerId, "member", "member")
         ) shouldBe Result.failure(ServerNotFoundException())
+        verifyNoInteractions(eventPublisher)
     }
 
     @Test
@@ -138,6 +163,7 @@ class ServerServiceTest : AnnotationSpec() {
         serverService.removeUserFromServer(
             ServerCommand.RemoveUserFromServer.Request(fakeServerId, "member", "member")
         ) shouldBe Result.success(ServerCommand.RemoveUserFromServer.Response)
+        verify(eventPublisher).publish(ServerEvent.ServerUserRemovedEvent(fakeServerId, "member"))
     }
 
     @Test
@@ -147,6 +173,7 @@ class ServerServiceTest : AnnotationSpec() {
         serverService.kickUserFromServer(
             ServerCommand.KickUserFromServer.Request(fakeServerId, "member", "serverOwner")
         ) shouldBe Result.success(ServerCommand.KickUserFromServer.Response)
+        verify(eventPublisher).publish(ServerEvent.ServerUserRemovedEvent(fakeServerId, "member"))
     }
 
     @Test
@@ -155,6 +182,7 @@ class ServerServiceTest : AnnotationSpec() {
         serverService.kickUserFromServer(
             ServerCommand.KickUserFromServer.Request(fakeServerId, "member", "member")
         ) shouldBe Result.failure(UserNotHasPermissionsException())
+        verifyNoInteractions(eventPublisher)
     }
 
     @Test

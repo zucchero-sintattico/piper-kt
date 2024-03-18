@@ -1,12 +1,12 @@
 package piperkt.services.servers.infrastructure.events
 
 import jakarta.inject.Singleton
-import piperkt.services.commons.domain.events.Event
-import piperkt.services.commons.domain.events.EventPublisher
+import piperkt.services.commons.domain.events.DomainEvent
+import piperkt.services.commons.domain.events.DomainEventPublisher
 
 @Singleton
-class KafkaEventPublisher : EventPublisher {
-    override fun publish(event: Event) {
+class KafkaEventPublisher : DomainEventPublisher {
+    override fun publish(event: DomainEvent) {
         println("Publishing event: $event")
     }
 }

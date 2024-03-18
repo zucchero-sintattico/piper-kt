@@ -1,5 +1,7 @@
 package piperkt.services.servers.application
 
+import piperkt.services.commons.domain.events.DomainEventPublisher
+import piperkt.services.commons.domain.events.ServerEvent
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.api.ServerServiceApi
 import piperkt.services.servers.application.api.command.ServerCommand
@@ -9,12 +11,13 @@ import piperkt.services.servers.application.exceptions.UserNotHasPermissionsExce
 
 open class ServerService(
     private val serverRepository: ServerRepository,
-    // private val eventPublisher: EventPublisher,
+    private val eventPublisher: DomainEventPublisher,
 ) : ServerServiceApi {
     override fun createServer(
         request: ServerCommand.CreateServer.Request
     ): Result<ServerCommand.CreateServer.Response> {
         val server = serverRepository.save(request.name, request.description, request.owner)
+        eventPublisher.publish(ServerEvent.ServerCreatedEvent(server.id))
         return Result.success(ServerCommand.CreateServer.Response(server.id))
     }
 
@@ -24,6 +27,7 @@ open class ServerService(
         if (isUserAdmin(request.serverId, request.requestFrom)) {
             val success = serverRepository.deleteServer(request.serverId)
             return if (success) {
+                eventPublisher.publish(ServerEvent.ServerDeletedEvent(request.serverId))
                 Result.success(ServerCommand.DeleteServer.Response)
             } else {
                 Result.failure(ServerNotFoundException())
@@ -40,6 +44,7 @@ open class ServerService(
             val server =
                 serverRepository.updateServer(request.serverId, request.name, request.description)
             return if (server != null) {
+                eventPublisher.publish(ServerEvent.ServerUpdatedEvent(server.id))
                 Result.success(ServerCommand.UpdateServer.Response)
             } else {
                 Result.failure(ServerNotFoundException())
@@ -54,6 +59,7 @@ open class ServerService(
     ): Result<ServerCommand.AddUserToServer.Response> {
         val server = serverRepository.addUserToServer(request.serverId, request.username)
         return if (server != null) {
+            eventPublisher.publish(ServerEvent.ServerUserAddedEvent(server.id, request.username))
             Result.success(ServerCommand.AddUserToServer.Response)
         } else {
             Result.failure(ServerNotFoundException())
@@ -65,6 +71,7 @@ open class ServerService(
     ): Result<ServerCommand.RemoveUserFromServer.Response> {
         val server = serverRepository.removeUserFromServer(request.serverId, request.username)
         return if (server != null) {
+            eventPublisher.publish(ServerEvent.ServerUserRemovedEvent(server.id, request.username))
             Result.success(ServerCommand.RemoveUserFromServer.Response)
         } else {
             Result.failure(ServerNotFoundException())
@@ -77,6 +84,9 @@ open class ServerService(
         if (isUserAdmin(request.serverId, request.requestFrom)) {
             val server = serverRepository.removeUserFromServer(request.serverId, request.username)
             return if (server != null) {
+                eventPublisher.publish(
+                    ServerEvent.ServerUserRemovedEvent(server.id, request.username)
+                )
                 Result.success(ServerCommand.KickUserFromServer.Response)
             } else {
                 Result.failure(ServerNotFoundException())
