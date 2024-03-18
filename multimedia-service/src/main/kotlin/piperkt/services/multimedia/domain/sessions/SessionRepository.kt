@@ -5,7 +5,7 @@ import piperkt.services.multimedia.domain.users.User
 interface SessionRepository {
     fun findById(id: SessionId): Session?
 
-    fun getUsersInSession(sessionId: SessionId): List<User>
+    fun getSessionParticipants(sessionId: SessionId): List<User>
 
     fun createSession(allowedUsers: List<String>): Session
 
@@ -16,4 +16,8 @@ interface SessionRepository {
     fun addAllowedUser(sessionId: SessionId, username: String)
 
     fun removeAllowedUser(sessionId: SessionId, username: String)
+
+    fun deleteSession(sessionId: String)
+
+    fun exists(sessionId: String): Boolean
 }
