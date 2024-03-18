@@ -6,13 +6,13 @@ import piperkt.services.multimedia.domain.servers.Server
 import piperkt.services.multimedia.domain.servers.ServerId
 import piperkt.services.multimedia.domain.servers.ServerRepository
 import piperkt.services.multimedia.domain.users.User
-import piperkt.services.multimedia.domain.users.UserId
+import piperkt.services.multimedia.domain.users.Username
 
 open class ServerCreatedEventListener(private val serverRepository: ServerRepository) :
     EventListener<ServerCreated> {
     override fun handle(event: ServerCreated) {
         serverRepository.save(
-            Server(ServerId(event.serverId), emptyList(), listOf(User(UserId(event.owner))))
+            Server(ServerId(event.serverId), emptyList(), listOf(User(Username(event.owner))))
         )
     }
 }

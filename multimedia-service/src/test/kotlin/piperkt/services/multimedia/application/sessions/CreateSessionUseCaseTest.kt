@@ -9,7 +9,7 @@ import org.mockito.kotlin.whenever
 import piperkt.services.multimedia.application.EventPublisher
 import piperkt.services.multimedia.domain.sessions.SessionRepository
 import piperkt.services.multimedia.domain.users.User
-import piperkt.services.multimedia.domain.users.UserId
+import piperkt.services.multimedia.domain.users.Username
 
 class CreateSessionUseCaseTest :
     Test.Unit.FunSpec({
@@ -17,7 +17,8 @@ class CreateSessionUseCaseTest :
         val eventPublisher = mock<EventPublisher>()
         val createSessionUseCase = CreateSessionUseCase(sessionRepository, eventPublisher)
 
-        val session = SessionsData.fromUsers(setOf(User(UserId("user1")), User(UserId("user2"))))
+        val session =
+            SessionsData.fromUsers(setOf(User(Username("user1")), User(Username("user2"))))
         val users = session.allowedUsers.map { it.username.value }
 
         test("should create session and publish SessionCreated event") {

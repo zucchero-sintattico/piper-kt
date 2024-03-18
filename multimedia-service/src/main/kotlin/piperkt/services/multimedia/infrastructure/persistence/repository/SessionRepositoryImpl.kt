@@ -5,7 +5,7 @@ import piperkt.services.multimedia.domain.sessions.Session
 import piperkt.services.multimedia.domain.sessions.SessionId
 import piperkt.services.multimedia.domain.sessions.SessionRepository
 import piperkt.services.multimedia.domain.users.User
-import piperkt.services.multimedia.domain.users.UserId
+import piperkt.services.multimedia.domain.users.Username
 import piperkt.services.multimedia.infrastructure.Utils.asNullable
 import piperkt.services.multimedia.infrastructure.persistence.model.SessionEntityRepository
 
@@ -20,7 +20,7 @@ class SessionRepositoryImpl(private val sessionEntityRepository: SessionEntityRe
 
     override fun getSessionParticipants(sessionId: SessionId): List<User> {
         val session = sessionEntityRepository.findById(sessionId.value)
-        return session.map { s -> s.participants.map { User(UserId(it)) } }.orElse(emptyList())
+        return session.map { s -> s.participants.map { User(Username(it)) } }.orElse(emptyList())
     }
 
     override fun createSession(allowedUsers: List<String>): Session {

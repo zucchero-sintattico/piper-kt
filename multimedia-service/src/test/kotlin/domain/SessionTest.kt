@@ -8,7 +8,7 @@ import piperkt.services.multimedia.domain.sessions.SessionId
 
 class SessionTest :
     Test.Unit.FunSpec({
-        context("Session") {
+        context("a Session") {
             val users = listOf(Users.john(), Users.jane())
             val sessionId = SessionId("SessionId")
 
@@ -51,5 +51,13 @@ class SessionTest :
                 session.removeAllowedUser(Users.john())
                 session.allowedUsers shouldBe listOf(Users.jane())
             }
+        }
+
+        context("two Sessions") {
+            val sessionId = SessionId("SessionId")
+            val session1 = Session(sessionId)
+            val session2 = Session(sessionId, allowedUsers = listOf(Users.john()))
+
+            test("should be equal if their ids are equal") { session1 shouldBe session2 }
         }
     })

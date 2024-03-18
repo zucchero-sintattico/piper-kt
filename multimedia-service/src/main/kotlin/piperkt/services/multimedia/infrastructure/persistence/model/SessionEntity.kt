@@ -8,7 +8,7 @@ import io.micronaut.data.repository.CrudRepository
 import piperkt.services.multimedia.domain.sessions.Session
 import piperkt.services.multimedia.domain.sessions.SessionId
 import piperkt.services.multimedia.domain.users.User
-import piperkt.services.multimedia.domain.users.UserId
+import piperkt.services.multimedia.domain.users.Username
 
 @MappedEntity
 data class SessionEntity(
@@ -19,8 +19,8 @@ data class SessionEntity(
     fun toDomain() =
         Session(
             SessionId(id!!),
-            allowedUsers.map { User(UserId(it)) },
-            participants.map { User(UserId(it)) }
+            allowedUsers.map { User(Username(it)) },
+            participants.map { User(Username(it)) }
         )
 }
 
