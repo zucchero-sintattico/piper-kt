@@ -4,7 +4,6 @@ import piperkt.services.multimedia.application.CommandUseCase
 import piperkt.services.multimedia.application.DomainEvent
 import piperkt.services.multimedia.application.EventPublisher
 import piperkt.services.multimedia.application.failure
-import piperkt.services.multimedia.application.isNull
 import piperkt.services.multimedia.application.success
 import piperkt.services.multimedia.domain.sessions.SessionId
 import piperkt.services.multimedia.domain.sessions.SessionRepository
@@ -28,26 +27,14 @@ open class AddSessionAllowedUserUseCase(
     }
 
     override fun handle(command: Command): Result<Unit> {
-        if (sessionRepository.findById(SessionId(command.sessionId)).isNull())
-            return failure(Errors.SessionNotFound(command.sessionId))
-        val added =
-            sessionRepository.addAllowedUser(
-                SessionId(command.sessionId),
-                User.fromUsername(command.username)
-            )
-        if (!added)
-            return failure(
-                Errors.UserAlreadyAllowed(
-                    SessionId(command.sessionId),
-                    User.fromUsername(command.username)
-                )
-            )
-        eventPublisher.publish(
-            Events.AllowedUserAdded(
-                SessionId(command.sessionId),
-                User.fromUsername(command.username)
-            )
-        )
+        val user = User.fromUsername(command.username)
+        val session =
+            sessionRepository.findById(SessionId(command.sessionId))
+                ?: return failure(Errors.SessionNotFound(command.sessionId))
+        if (session.allowedUsers.contains(user))
+            return failure(Errors.UserAlreadyAllowed(session.id, user))
+        sessionRepository.addAllowedUser(session.id, user)
+        eventPublisher.publish(Events.AllowedUserAdded(session.id, user))
         return success()
     }
 }

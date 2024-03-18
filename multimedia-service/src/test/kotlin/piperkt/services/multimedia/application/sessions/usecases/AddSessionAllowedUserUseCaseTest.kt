@@ -48,16 +48,20 @@ class AddSessionAllowedUserUseCaseTest :
             }
 
             test("should return UserAlreadyAllowed error if user is already allowed") {
-                val user = User.fromUsername("user")
                 whenever(sessionRepository.findById(session.id)).thenReturn(session)
-                whenever(sessionRepository.addAllowedUser(session.id, user)).thenReturn(false)
                 val result =
                     addSessionAllowedUserUseCase.handle(
-                        AddSessionAllowedUserUseCase.Command(session.id.value, user.username.value)
+                        AddSessionAllowedUserUseCase.Command(
+                            session.id.value,
+                            session.allowedUsers.first().username.value
+                        )
                     )
                 result.isFailure shouldBe true
                 result.exceptionOrNull() shouldBe
-                    AddSessionAllowedUserUseCase.Errors.UserAlreadyAllowed(session.id, user)
+                    AddSessionAllowedUserUseCase.Errors.UserAlreadyAllowed(
+                        session.id,
+                        session.allowedUsers.first()
+                    )
             }
         }
     })
