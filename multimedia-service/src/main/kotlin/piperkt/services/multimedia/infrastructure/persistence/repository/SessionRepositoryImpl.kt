@@ -18,7 +18,7 @@ class SessionRepositoryImpl(private val sessionEntityRepository: SessionEntityRe
         return session.map { it.toDomain() }.asNullable()
     }
 
-    override fun getUsersInSession(sessionId: SessionId): List<User> {
+    override fun getSessionParticipants(sessionId: SessionId): List<User> {
         val session = sessionEntityRepository.findById(sessionId.value)
         return session.map { s -> s.participants.map { User(UserId(it)) } }.orElse(emptyList())
     }
@@ -40,6 +40,14 @@ class SessionRepositoryImpl(private val sessionEntityRepository: SessionEntityRe
     }
 
     override fun removeAllowedUser(sessionId: SessionId, username: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteSession(sessionId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun exists(sessionId: String): Boolean {
         TODO("Not yet implemented")
     }
 }
