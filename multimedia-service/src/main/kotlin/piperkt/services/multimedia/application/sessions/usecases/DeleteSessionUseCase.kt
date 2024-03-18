@@ -5,6 +5,7 @@ import piperkt.services.multimedia.application.DomainEvent
 import piperkt.services.multimedia.application.EventPublisher
 import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.success
+import piperkt.services.multimedia.domain.sessions.SessionId
 import piperkt.services.multimedia.domain.sessions.SessionRepository
 
 open class DeleteSessionUseCase(
@@ -15,7 +16,7 @@ open class DeleteSessionUseCase(
     data class Command(val sessionId: String)
 
     sealed class Events : DomainEvent {
-        data class SessionDeleted(val sessionId: String) : Events()
+        data class SessionDeleted(val sessionId: SessionId) : Events()
     }
 
     sealed class Errors : Exception() {
@@ -27,7 +28,7 @@ open class DeleteSessionUseCase(
             return Errors.SessionNotFound(command.sessionId).asFailure()
         }
         sessionRepository.deleteSession(command.sessionId)
-        eventPublisher.publish(Events.SessionDeleted(command.sessionId))
+        eventPublisher.publish(Events.SessionDeleted(SessionId(command.sessionId)))
         return success()
     }
 }

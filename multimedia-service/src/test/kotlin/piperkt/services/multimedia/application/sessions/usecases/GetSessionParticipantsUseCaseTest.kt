@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.application.sessions
+package piperkt.services.multimedia.application.sessions.usecases
 
 import base.Test
 import data.SessionsData
@@ -6,7 +6,6 @@ import io.kotest.matchers.shouldBe
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import piperkt.services.multimedia.application.sessions.usecases.GetSessionParticipantsUseCase
 import piperkt.services.multimedia.domain.sessions.SessionId
 import piperkt.services.multimedia.domain.sessions.SessionRepository
 
