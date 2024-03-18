@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 class ArchitectureTest {
     @Test
-    fun `architecture layers have dependencies correct`() {
+    fun `architecture dependencies respect clean architecture principles`() {
         Konsist.scopeFromProject() // Define the scope containing all Kotlin files present i
             .assertArchitecture {
                 val packagePrefix = "piperkt.services.servers"
