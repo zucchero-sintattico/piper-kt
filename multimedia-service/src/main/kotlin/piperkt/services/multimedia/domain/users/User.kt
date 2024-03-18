@@ -1,7 +1,7 @@
 package piperkt.services.multimedia.domain.users
 
 class User(
-    val username: UserId,
+    val username: Username,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -14,5 +14,11 @@ class User(
 
     override fun hashCode(): Int {
         return username.hashCode()
+    }
+
+    companion object {
+        fun fromUsername(value: String): User {
+            return User(Username(value))
+        }
     }
 }
