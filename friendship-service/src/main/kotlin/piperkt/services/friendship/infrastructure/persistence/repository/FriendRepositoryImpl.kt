@@ -14,7 +14,8 @@ class FriendRepositoryImpl(private val friendsModelRepository: FriendsModelRepos
     }
 
     override fun getFriendRequests(username: String): List<String> {
-        TODO()
+        val user = friendsModelRepository.findById(username).orElse(null)
+        return user?.friendRequests ?: emptyList()
     }
 
     override fun sendFriendRequest(username: String, friendUsername: String) {
