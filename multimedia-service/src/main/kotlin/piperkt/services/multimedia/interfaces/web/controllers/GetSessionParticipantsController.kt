@@ -8,8 +8,8 @@ import piperkt.services.multimedia.interfaces.web.api.GetSessionParticipantsApi
 class GetSessionParticipantsController(private val useCase: GetSessionParticipantsUseCase) :
     GetSessionParticipantsApi {
 
-    override fun handle(sessionId: String): GetSessionParticipantsApi.Response {
-        val response = useCase.handle(GetSessionParticipantsUseCase.Query(sessionId)).getOrThrow()
+    override fun invoke(sessionId: String): GetSessionParticipantsApi.Response {
+        val response = useCase.invoke(GetSessionParticipantsUseCase.Query(sessionId)).getOrThrow()
         return GetSessionParticipantsApi.Response(response.users)
     }
 

@@ -18,7 +18,7 @@ open class CreateSessionUseCase(
         data class SessionCreated(val session: Session) : Events()
     }
 
-    override fun handle(command: Command): Result<Unit> {
+    override fun invoke(command: Command): Result<Unit> {
         val session = sessionRepository.createSession(command.allowedUsers)
         eventPublisher.publish(Events.SessionCreated(session))
         return success()

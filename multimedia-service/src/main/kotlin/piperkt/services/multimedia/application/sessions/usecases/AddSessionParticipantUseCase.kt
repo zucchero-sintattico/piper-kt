@@ -28,7 +28,7 @@ open class AddSessionParticipantUseCase(
         data class UserAlreadyParticipant(val sessionId: String, val username: String) : Errors()
     }
 
-    override fun handle(command: Command): Result<Unit> {
+    override fun invoke(command: Command): Result<Unit> {
         val session =
             sessionRepository.findById(SessionId(command.sessionId))
                 ?: return failure(Errors.SessionNotFound(command.sessionId))

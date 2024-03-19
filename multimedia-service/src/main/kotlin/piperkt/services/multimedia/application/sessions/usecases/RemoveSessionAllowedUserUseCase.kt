@@ -27,7 +27,7 @@ open class RemoveSessionAllowedUserUseCase(
         data class UserNotInSession(val sessionId: String, val username: String) : Errors()
     }
 
-    override fun handle(command: Command): Result<Unit> {
+    override operator fun invoke(command: Command): Result<Unit> {
         if (sessionRepository.findById(SessionId(command.sessionId)).isNull())
             return failure(Errors.SessionNotFound(command.sessionId))
         val removed =

@@ -22,7 +22,7 @@ interface GetSessionParticipantsApi {
 
     @Get("/sessions/{sessionId}/users", produces = [MediaType.APPLICATION_JSON])
     @Status(HttpStatus.OK)
-    fun handle(@PathVariable sessionId: String): Response
+    operator fun invoke(@PathVariable sessionId: String): Response
 
     @Error(GetSessionParticipantsUseCase.Errors.SessionNotFound::class)
     @Status(HttpStatus.NOT_FOUND)

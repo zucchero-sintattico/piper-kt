@@ -5,7 +5,11 @@ import data.UsersData
 import io.kotest.matchers.shouldBe
 import mocks.MockedEventPublisher
 import mocks.repositories.InMemorySessionRepository
-import piperkt.services.multimedia.application.failure
+import piperkt.services.multimedia.application.asFailure
+import piperkt.services.multimedia.application.sessions.usecases.RemoveSessionAllowedUserUseCase.Command
+import piperkt.services.multimedia.application.sessions.usecases.RemoveSessionAllowedUserUseCase.Errors.SessionNotFound
+import piperkt.services.multimedia.application.sessions.usecases.RemoveSessionAllowedUserUseCase.Errors.UserNotInSession
+import piperkt.services.multimedia.application.sessions.usecases.RemoveSessionAllowedUserUseCase.Events.AllowedUserRemoved
 import piperkt.services.multimedia.application.success
 
 class RemoveSessionAllowedUserUseCaseTest :
@@ -26,31 +30,19 @@ class RemoveSessionAllowedUserUseCaseTest :
                 val userToRemove = users[0]
                 val session = sessionRepository.createSession(users.map { it.username.value })
                 val result =
-                    removeSessionAllowedUserUseCase.handle(
-                        RemoveSessionAllowedUserUseCase.Command(
-                            session.id.value,
-                            userToRemove.username.value
-                        )
+                    removeSessionAllowedUserUseCase(
+                        Command(session.id.value, userToRemove.username.value)
                     )
                 result shouldBe success()
                 eventPublisher.publishedEvents shouldBe
-                    listOf(
-                        RemoveSessionAllowedUserUseCase.Events.AllowedUserRemoved(
-                            session.id,
-                            userToRemove
-                        )
-                    )
+                    listOf(AllowedUserRemoved(session.id, userToRemove))
             }
 
             test("should return SessionNotFound error if session does not exist") {
                 val fakeSessionId = "fakeSessionId"
                 val fakeUser = "fakeUser"
-                val result =
-                    removeSessionAllowedUserUseCase.handle(
-                        RemoveSessionAllowedUserUseCase.Command(fakeSessionId, fakeUser)
-                    )
-                result shouldBe
-                    failure(RemoveSessionAllowedUserUseCase.Errors.SessionNotFound(fakeSessionId))
+                val result = removeSessionAllowedUserUseCase(Command(fakeSessionId, fakeUser))
+                result shouldBe SessionNotFound(fakeSessionId).asFailure()
             }
 
             test("should return UserNotInSession error if user is not in the session") {
@@ -58,19 +50,11 @@ class RemoveSessionAllowedUserUseCaseTest :
                 val userToRemove = UsersData.jane()
                 val session = sessionRepository.createSession(users.map { it.username.value })
                 val result =
-                    removeSessionAllowedUserUseCase.handle(
-                        RemoveSessionAllowedUserUseCase.Command(
-                            session.id.value,
-                            userToRemove.username.value
-                        )
+                    removeSessionAllowedUserUseCase(
+                        Command(session.id.value, userToRemove.username.value)
                     )
                 result shouldBe
-                    failure(
-                        RemoveSessionAllowedUserUseCase.Errors.UserNotInSession(
-                            session.id.value,
-                            userToRemove.username.value
-                        )
-                    )
+                    UserNotInSession(session.id.value, userToRemove.username.value).asFailure()
             }
         }
     })

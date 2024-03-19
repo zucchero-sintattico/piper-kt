@@ -23,7 +23,7 @@ open class DeleteSessionUseCase(
         data class SessionNotFound(val sessionId: String) : Errors()
     }
 
-    override fun handle(command: Command): Result<Unit> {
+    override fun invoke(command: Command): Result<Unit> {
         if (!sessionRepository.exists(command.sessionId)) {
             return Errors.SessionNotFound(command.sessionId).asFailure()
         }

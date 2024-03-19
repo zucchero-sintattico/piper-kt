@@ -26,7 +26,7 @@ open class AddSessionAllowedUserUseCase(
         data class UserAlreadyAllowed(val sessionId: SessionId, val user: User) : Errors()
     }
 
-    override fun handle(command: Command): Result<Unit> {
+    override fun invoke(command: Command): Result<Unit> {
         val user = User.fromUsername(command.username)
         val session =
             sessionRepository.findById(SessionId(command.sessionId))
