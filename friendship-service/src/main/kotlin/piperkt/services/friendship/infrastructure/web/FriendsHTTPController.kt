@@ -12,7 +12,12 @@ class FriendsHTTPController(private val friendService: FriendService) {
     @Get("/")
     fun getFriends(): List<String> {
         val result = friendService.getFriends(testUserName)
-        // if user does not exist, return empty list
+        return result
+    }
+
+    @Get("/request")
+    fun getFriendRequests(): List<String> {
+        val result = friendService.getFriendRequests(testUserName)
         return result
     }
 }
