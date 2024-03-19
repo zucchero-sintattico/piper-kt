@@ -5,6 +5,8 @@ import data.UsersData
 import io.kotest.matchers.shouldBe
 import mocks.MockedEventPublisher
 import mocks.repositories.InMemorySessionRepository
+import piperkt.services.multimedia.application.sessions.usecases.CreateSessionUseCase.Command
+import piperkt.services.multimedia.application.sessions.usecases.CreateSessionUseCase.Events.SessionCreated
 import piperkt.services.multimedia.application.success
 
 class CreateSessionUseCaseTest :
@@ -20,16 +22,9 @@ class CreateSessionUseCaseTest :
 
         test("should create session and publish SessionCreated event") {
             val users = listOf(UsersData.john())
-            val result =
-                createSessionUseCase.handle(
-                    CreateSessionUseCase.Command(users.map { it.username.value })
-                )
+            val result = createSessionUseCase(Command(users.map { it.username.value }))
             result shouldBe success()
             eventPublisher.publishedEvents shouldBe
-                listOf(
-                    CreateSessionUseCase.Events.SessionCreated(
-                        sessionRepository.sessions.values.first()
-                    )
-                )
+                listOf(SessionCreated(sessionRepository.sessions.values.first()))
         }
     })

@@ -16,7 +16,7 @@ open class GetSessionParticipantsUseCase(private val sessionRepository: SessionR
         data class SessionNotFound(val sessionId: String) : Errors()
     }
 
-    override fun handle(query: Query): Result<Response> {
+    override fun invoke(query: Query): Result<Response> {
         val session =
             sessionRepository.findById(SessionId(query.sessionId))
                 ?: return Errors.SessionNotFound(query.sessionId).asFailure()
