@@ -8,9 +8,9 @@ import io.micronaut.data.repository.CrudRepository
 @MappedEntity
 data class UserEntity(
     @Id val username: String,
-    val friends: List<String>,
-    val friendRequests: List<String>,
-    val pendingFriendRequests: List<String>
+    val friends: MutableList<String>,
+    val friendRequests: MutableList<String>,
+    val pendingFriendRequests: MutableList<String>
 )
 
 @MongoRepository interface FriendsModelRepository : CrudRepository<UserEntity, String>

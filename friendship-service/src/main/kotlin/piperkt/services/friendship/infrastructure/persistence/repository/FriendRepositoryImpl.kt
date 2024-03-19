@@ -19,14 +19,26 @@ class FriendRepositoryImpl(private val friendsModelRepository: FriendsModelRepos
     }
 
     override fun sendFriendRequest(username: String, friendUsername: String) {
-        TODO()
+        val user = friendsModelRepository.findById(username).orElse(null)
+        user?.friendRequests?.add(friendUsername)
+        friendsModelRepository.save(user)
     }
 
     override fun acceptFriendRequest(username: String, friendUsername: String) {
-        TODO()
+        val user = friendsModelRepository.findById(username).orElse(null)
+        user?.friends?.add(friendUsername)
+        friendsModelRepository.save(user)
+
+        val friend = friendsModelRepository.findById(friendUsername).orElse(null)
+        friend?.friends?.add(username)
+        friendsModelRepository.save(friend)
+
+        friend?.friendRequests?.remove(username)
     }
 
     override fun denyFriendRequest(username: String, friendUsername: String) {
-        TODO()
+        val user = friendsModelRepository.findById(username).orElse(null)
+        user?.friendRequests?.remove(friendUsername)
+        friendsModelRepository.save(user)
     }
 }
