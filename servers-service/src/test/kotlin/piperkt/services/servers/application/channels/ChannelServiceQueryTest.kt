@@ -4,10 +4,10 @@ import io.kotest.matchers.shouldBe
 import org.mockito.kotlin.any
 import org.mockito.kotlin.reset
 import org.mockito.kotlin.whenever
-import piperkt.services.servers.application.SimpleClasses.fakeChannel
-import piperkt.services.servers.application.SimpleClasses.fakeChannelId
-import piperkt.services.servers.application.SimpleClasses.fakeMessage
-import piperkt.services.servers.application.SimpleClasses.fakeServerId
+import piperkt.services.servers.application.SimpleClasses.simpleChannel
+import piperkt.services.servers.application.SimpleClasses.simpleChannelId
+import piperkt.services.servers.application.SimpleClasses.simpleMessage
+import piperkt.services.servers.application.SimpleClasses.simpleServerId
 import piperkt.services.servers.application.api.query.ChannelQuery
 import piperkt.services.servers.application.exceptions.UserNotInServerException
 
@@ -20,16 +20,16 @@ class ChannelServiceQueryTest : BasicChannelServiceTest() {
 
     @Test
     fun `should get messages from channel if user is in server`() {
-        val fakeMessages = listOf(fakeMessage())
+        val fakeMessages = listOf(simpleMessage())
         whenever(channelRepository.getMessagesFromServerIdAndChannelId(any(), any(), any()))
             .thenReturn(fakeMessages)
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(true)
-        whenever(channelRepository.findChannelById(any())).thenReturn(fakeChannel())
+        whenever(channelRepository.findChannelById(any())).thenReturn(simpleChannel())
         val response =
             channelService.getMessagesFromChannelId(
                 ChannelQuery.GetMessagesFromChannelId.Request(
-                    fakeServerId(),
-                    fakeChannelId(),
+                    simpleServerId(),
+                    simpleChannelId(),
                     0,
                     10,
                     "requestFrom"
@@ -45,8 +45,8 @@ class ChannelServiceQueryTest : BasicChannelServiceTest() {
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(false)
         channelService.getMessagesFromChannelId(
             ChannelQuery.GetMessagesFromChannelId.Request(
-                fakeServerId(),
-                fakeChannelId(),
+                simpleServerId(),
+                simpleChannelId(),
                 0,
                 10,
                 "requestFrom"

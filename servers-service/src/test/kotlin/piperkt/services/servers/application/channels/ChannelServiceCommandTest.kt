@@ -7,11 +7,11 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 import piperkt.services.commons.domain.events.ChannelEvent
-import piperkt.services.servers.application.SimpleClasses.fakeChannel
-import piperkt.services.servers.application.SimpleClasses.fakeChannelId
-import piperkt.services.servers.application.SimpleClasses.fakeMessage
-import piperkt.services.servers.application.SimpleClasses.fakeServer
-import piperkt.services.servers.application.SimpleClasses.fakeServerId
+import piperkt.services.servers.application.SimpleClasses.simpleChannel
+import piperkt.services.servers.application.SimpleClasses.simpleChannelId
+import piperkt.services.servers.application.SimpleClasses.simpleMessage
+import piperkt.services.servers.application.SimpleClasses.simpleServer
+import piperkt.services.servers.application.SimpleClasses.simpleServerId
 import piperkt.services.servers.application.api.command.ChannelCommand
 import piperkt.services.servers.application.exceptions.ServerOrChannelNotFoundException
 import piperkt.services.servers.application.exceptions.UserNotHasPermissionsException
@@ -27,29 +27,29 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
     @Test
     fun `should allow to create a channel if server exist`() {
         whenever(channelRepository.createChannelInServer(any(), any(), any(), any()))
-            .thenReturn(fakeChannel())
-        whenever(serverRepository.findById(any())).thenReturn(fakeServer())
+            .thenReturn(simpleChannel())
+        whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         val request =
             ChannelCommand.CreateNewChannelInServer.Request(
-                fakeServerId(),
+                simpleServerId(),
                 "channelName",
                 "channelDescription",
                 "TEXT",
                 "owner"
             )
         channelService.createNewChannelInServer(request) shouldBe
-            Result.success(ChannelCommand.CreateNewChannelInServer.Response(fakeChannelId()))
-        verify(eventPublisher).publish(ChannelEvent.ChannelCreatedEvent(fakeChannelId()))
+            Result.success(ChannelCommand.CreateNewChannelInServer.Response(simpleChannelId()))
+        verify(eventPublisher).publish(ChannelEvent.ChannelCreatedEvent(simpleChannelId()))
     }
 
     @Test
     fun `should not allow to create a channel if server doesn't exist`() {
         whenever(channelRepository.createChannelInServer(any(), any(), any(), any()))
             .thenReturn(null)
-        whenever(serverRepository.findById(any())).thenReturn(fakeServer())
+        whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         val request =
             ChannelCommand.CreateNewChannelInServer.Request(
-                fakeServerId(),
+                simpleServerId(),
                 "channelName",
                 "channelDescription",
                 "TEXT",
@@ -63,11 +63,11 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
     @Test
     fun `should not allow to create a channel if user isn't the owner`() {
         whenever(channelRepository.createChannelInServer(any(), any(), any(), any()))
-            .thenReturn(fakeChannel())
-        whenever(serverRepository.findById(any())).thenReturn(fakeServer())
+            .thenReturn(simpleChannel())
+        whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         val request =
             ChannelCommand.CreateNewChannelInServer.Request(
-                fakeServerId(),
+                simpleServerId(),
                 "channelName",
                 "channelDescription",
                 "TEXT",
@@ -81,29 +81,29 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
     @Test
     fun `should allow to update a channel`() {
         whenever(channelRepository.updateChannel(any(), any(), any(), any()))
-            .thenReturn(fakeChannel())
-        whenever(serverRepository.findById(any())).thenReturn(fakeServer())
+            .thenReturn(simpleChannel())
+        whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         channelService.updateChannelInServer(
             ChannelCommand.UpdateChannelInServer.Request(
-                fakeServerId(),
-                fakeChannelId(),
+                simpleServerId(),
+                simpleChannelId(),
                 "channelName",
                 "channelDescription",
                 "TEXT",
                 "owner"
             )
         ) shouldBe Result.success(ChannelCommand.UpdateChannelInServer.Response)
-        verify(eventPublisher).publish(ChannelEvent.ChannelUpdatedEvent(fakeChannelId()))
+        verify(eventPublisher).publish(ChannelEvent.ChannelUpdatedEvent(simpleChannelId()))
     }
 
     @Test
     fun `should not allow to update a channel if server or channel don't exist`() {
         whenever(channelRepository.updateChannel(any(), any(), any(), any())).thenReturn(null)
-        whenever(serverRepository.findById(any())).thenReturn(fakeServer())
+        whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         channelService.updateChannelInServer(
             ChannelCommand.UpdateChannelInServer.Request(
-                fakeServerId(),
-                fakeChannelId(),
+                simpleServerId(),
+                simpleChannelId(),
                 "channelName",
                 "channelDescription",
                 "TEXT",
@@ -116,11 +116,11 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
     @Test
     fun `should not allow to update a channel if user isn't the owner`() {
         whenever(channelRepository.updateChannel(any(), any(), any(), any()))
-            .thenReturn(fakeChannel())
+            .thenReturn(simpleChannel())
         channelService.updateChannelInServer(
             ChannelCommand.UpdateChannelInServer.Request(
-                fakeServerId(),
-                fakeChannelId(),
+                simpleServerId(),
+                simpleChannelId(),
                 "channelName",
                 "channelDescription",
                 "TEXT",
@@ -133,19 +133,27 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
     @Test
     fun `should allow to delete a channel`() {
         whenever(channelRepository.deleteChannel(any(), any())).thenReturn(true)
-        whenever(serverRepository.findById(any())).thenReturn(fakeServer())
+        whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         channelService.deleteChannelInServer(
-            ChannelCommand.DeleteChannelInServer.Request(fakeServerId(), fakeChannelId(), "owner")
+            ChannelCommand.DeleteChannelInServer.Request(
+                simpleServerId(),
+                simpleChannelId(),
+                "owner"
+            )
         ) shouldBe Result.success(ChannelCommand.DeleteChannelInServer.Response)
-        verify(eventPublisher).publish(ChannelEvent.ChannelDeletedEvent(fakeChannelId()))
+        verify(eventPublisher).publish(ChannelEvent.ChannelDeletedEvent(simpleChannelId()))
     }
 
     @Test
     fun `should not allow to delete a channel if server or channel don't exist`() {
         whenever(channelRepository.deleteChannel(any(), any())).thenReturn(false)
-        whenever(serverRepository.findById(any())).thenReturn(fakeServer())
+        whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         channelService.deleteChannelInServer(
-            ChannelCommand.DeleteChannelInServer.Request(fakeServerId(), fakeChannelId(), "owner")
+            ChannelCommand.DeleteChannelInServer.Request(
+                simpleServerId(),
+                simpleChannelId(),
+                "owner"
+            )
         ) shouldBe Result.failure(ServerOrChannelNotFoundException("Server or Channel not found"))
         verifyNoInteractions(eventPublisher)
     }
@@ -155,8 +163,8 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         whenever(channelRepository.deleteChannel(any(), any())).thenReturn(true)
         channelService.deleteChannelInServer(
             ChannelCommand.DeleteChannelInServer.Request(
-                fakeServerId(),
-                fakeChannelId(),
+                simpleServerId(),
+                simpleChannelId(),
                 "notOwner"
             )
         ) shouldBe Result.failure(UserNotHasPermissionsException())
@@ -168,17 +176,19 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
     fun `should allow to add a message in a channel`() {
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(true)
         whenever(channelRepository.addMessageInChannel(any(), any(), any(), any()))
-            .thenReturn(fakeMessage())
+            .thenReturn(simpleMessage())
         channelService.addMessageInChannel(
             ChannelCommand.AddMessageInChannel.Request(
-                fakeServerId(),
-                fakeChannelId(),
+                simpleServerId(),
+                simpleChannelId(),
                 "content",
                 "sender"
             )
         ) shouldBe Result.success(ChannelCommand.AddMessageInChannel.Response)
         verify(eventPublisher)
-            .publish(ChannelEvent.MessageInChannelEvent(fakeChannelId(), fakeMessage().messageId))
+            .publish(
+                ChannelEvent.MessageInChannelEvent(simpleChannelId(), simpleMessage().messageId)
+            )
     }
 
     @Test
@@ -186,8 +196,8 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(false)
         channelService.addMessageInChannel(
             ChannelCommand.AddMessageInChannel.Request(
-                fakeServerId(),
-                fakeChannelId(),
+                simpleServerId(),
+                simpleChannelId(),
                 "content",
                 "sender"
             )

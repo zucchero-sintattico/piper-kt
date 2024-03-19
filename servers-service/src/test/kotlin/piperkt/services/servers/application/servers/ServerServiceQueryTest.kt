@@ -25,12 +25,12 @@ class ServerServiceQueryTest : BasicServerServiceTest() {
     @Test
     fun `should allow to get servers from user with servers`() {
         whenever(serverRepository.getServersFromUser(any()))
-            .thenReturn(listOf(SimpleClasses.fakeServer()))
+            .thenReturn(listOf(SimpleClasses.simpleServer()))
         serverService.getServersFromUser(
             ServerQuery.GetServersFromUser.Request("username", "username")
         ) shouldBe
             Result.success(
-                ServerQuery.GetServersFromUser.Response(listOf(SimpleClasses.fakeServer()))
+                ServerQuery.GetServersFromUser.Response(listOf(SimpleClasses.simpleServer()))
             )
     }
 

@@ -8,21 +8,26 @@ import piperkt.services.servers.domain.factory.ServerFactory
 
 object SimpleClasses {
 
-    fun fakeServerId() = ServerId("000000000000000000000000")
+    fun simpleServerId() = ServerId("000000000000000000000000")
 
-    fun fakeChannelId() = ChannelId("000000000000000000000000")
+    fun simpleChannelId() = ChannelId("000000000000000000000000")
 
-    fun fakeServer() =
-        ServerFactory.createServer(fakeServerId().value, "serverName", "serverDescription", "owner")
+    fun simpleServer() =
+        ServerFactory.createServer(
+            simpleServerId().value,
+            "serverName",
+            "serverDescription",
+            "owner"
+        )
 
-    fun fakeChannel() =
+    fun simpleChannel() =
         ChannelFactory.createFromType(
-            fakeChannelId().value,
+            simpleChannelId().value,
             "channelName",
             "channelDescription",
             "TEXT"
         )
 
-    fun fakeMessage() =
+    fun simpleMessage() =
         MessageFactory.createMessage("000000000000000000000000", "content", "sender")
 }
