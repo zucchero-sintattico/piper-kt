@@ -1,34 +1,35 @@
 package piperkt.services.multimedia.application.sessions.usecases
 
 import base.Test
-import data.SessionsData
+import data.UsersData
 import io.kotest.matchers.shouldBe
 import mocks.MockedEventPublisher
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
-import piperkt.services.multimedia.domain.sessions.SessionRepository
-import piperkt.services.multimedia.domain.users.User
-import piperkt.services.multimedia.domain.users.Username
+import mocks.repositories.InMemorySessionRepository
+import piperkt.services.multimedia.application.success
 
 class CreateSessionUseCaseTest :
     Test.Unit.FunSpec({
-        val sessionRepository = mock<SessionRepository>()
+        val sessionRepository = InMemorySessionRepository()
         val eventPublisher = MockedEventPublisher()
         val createSessionUseCase = CreateSessionUseCase(sessionRepository, eventPublisher)
 
-        val session =
-            SessionsData.fromUsers(setOf(User(Username("user1")), User(Username("user2"))))
-        val users = session.allowedUsers.map { it.username.value }
-
-        beforeEach { eventPublisher.clear() }
+        beforeEach {
+            eventPublisher.clear()
+            sessionRepository.clear()
+        }
 
         test("should create session and publish SessionCreated event") {
-            whenever(sessionRepository.createSession(users)).thenReturn(session)
-            val result = createSessionUseCase.handle(CreateSessionUseCase.Command(users))
-            result.isSuccess shouldBe true
-            verify(sessionRepository).createSession(users)
+            val users = listOf(UsersData.john())
+            val result =
+                createSessionUseCase.handle(
+                    CreateSessionUseCase.Command(users.map { it.username.value })
+                )
+            result shouldBe success()
             eventPublisher.publishedEvents shouldBe
-                listOf(CreateSessionUseCase.Events.SessionCreated(session))
+                listOf(
+                    CreateSessionUseCase.Events.SessionCreated(
+                        sessionRepository.sessions.values.first()
+                    )
+                )
         }
     })

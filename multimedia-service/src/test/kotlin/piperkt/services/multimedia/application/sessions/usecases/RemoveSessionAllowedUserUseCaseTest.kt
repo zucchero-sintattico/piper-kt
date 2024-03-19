@@ -1,76 +1,75 @@
 package piperkt.services.multimedia.application.sessions.usecases
 
 import base.Test
-import data.SessionsData
+import data.UsersData
 import io.kotest.matchers.shouldBe
 import mocks.MockedEventPublisher
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
-import piperkt.services.multimedia.domain.sessions.SessionRepository
-import piperkt.services.multimedia.domain.users.User
+import mocks.repositories.InMemorySessionRepository
+import piperkt.services.multimedia.application.failure
+import piperkt.services.multimedia.application.success
 
 class RemoveSessionAllowedUserUseCaseTest :
     Test.Unit.FunSpec({
         context("a session") {
-            val session = SessionsData.simpleSession()
-            val sessionRepository = mock<SessionRepository>()
+            val sessionRepository = InMemorySessionRepository()
             val eventPublisher = MockedEventPublisher()
             val removeSessionAllowedUserUseCase =
                 RemoveSessionAllowedUserUseCase(sessionRepository, eventPublisher)
 
-            beforeEach { eventPublisher.clear() }
+            beforeEach {
+                sessionRepository.clear()
+                eventPublisher.clear()
+            }
 
             test("should allow to remove an allowed user from the session") {
-                val user = User.fromUsername("user")
-                whenever(sessionRepository.findById(session.id)).thenReturn(session)
-                whenever(sessionRepository.removeAllowedUser(session.id, user)).thenReturn(true)
+                val users = listOf(UsersData.john(), UsersData.jane())
+                val userToRemove = users[0]
+                val session = sessionRepository.createSession(users.map { it.username.value })
                 val result =
                     removeSessionAllowedUserUseCase.handle(
                         RemoveSessionAllowedUserUseCase.Command(
                             session.id.value,
-                            user.username.value
+                            userToRemove.username.value
                         )
                     )
-                result.isSuccess shouldBe true
-                verify(sessionRepository).removeAllowedUser(session.id, user)
+                result shouldBe success()
                 eventPublisher.publishedEvents shouldBe
                     listOf(
-                        RemoveSessionAllowedUserUseCase.Events.AllowedUserRemoved(session.id, user)
+                        RemoveSessionAllowedUserUseCase.Events.AllowedUserRemoved(
+                            session.id,
+                            userToRemove
+                        )
                     )
             }
 
             test("should return SessionNotFound error if session does not exist") {
-                val user = User.fromUsername("user")
-                whenever(sessionRepository.findById(session.id)).thenReturn(null)
+                val fakeSessionId = "fakeSessionId"
+                val fakeUser = "fakeUser"
                 val result =
                     removeSessionAllowedUserUseCase.handle(
-                        RemoveSessionAllowedUserUseCase.Command(
-                            session.id.value,
-                            user.username.value
-                        )
+                        RemoveSessionAllowedUserUseCase.Command(fakeSessionId, fakeUser)
                     )
-                result.isFailure shouldBe true
-                result.exceptionOrNull() shouldBe
-                    RemoveSessionAllowedUserUseCase.Errors.SessionNotFound(session.id.value)
+                result shouldBe
+                    failure(RemoveSessionAllowedUserUseCase.Errors.SessionNotFound(fakeSessionId))
             }
 
             test("should return UserNotInSession error if user is not in the session") {
-                val user = User.fromUsername("user")
-                whenever(sessionRepository.findById(session.id)).thenReturn(session)
-                whenever(sessionRepository.removeAllowedUser(session.id, user)).thenReturn(false)
+                val users = listOf(UsersData.john())
+                val userToRemove = UsersData.jane()
+                val session = sessionRepository.createSession(users.map { it.username.value })
                 val result =
                     removeSessionAllowedUserUseCase.handle(
                         RemoveSessionAllowedUserUseCase.Command(
                             session.id.value,
-                            user.username.value
+                            userToRemove.username.value
                         )
                     )
-                result.isFailure shouldBe true
-                result.exceptionOrNull() shouldBe
-                    RemoveSessionAllowedUserUseCase.Errors.UserNotInSession(
-                        session.id.value,
-                        user.username.value
+                result shouldBe
+                    failure(
+                        RemoveSessionAllowedUserUseCase.Errors.UserNotInSession(
+                            session.id.value,
+                            userToRemove.username.value
+                        )
                     )
             }
         }
