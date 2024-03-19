@@ -1,7 +1,7 @@
 package piperkt.services.servers.application
 
-import piperkt.services.commons.domain.events.DomainEventPublisher
 import piperkt.services.commons.domain.events.ServerEvent
+import piperkt.services.commons.domain.events.ServerEventPublisher
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.api.ServerServiceApi
 import piperkt.services.servers.application.api.command.ServerCommand
@@ -11,7 +11,7 @@ import piperkt.services.servers.application.exceptions.UserNotHasPermissionsExce
 
 open class ServerService(
     private val serverRepository: ServerRepository,
-    private val eventPublisher: DomainEventPublisher,
+    private val eventPublisher: ServerEventPublisher,
 ) : ServerServiceApi {
     override fun createServer(
         request: ServerCommand.CreateServer.Request

@@ -1,7 +1,7 @@
 package piperkt.services.servers.application
 
 import piperkt.services.commons.domain.events.ChannelEvent
-import piperkt.services.commons.domain.events.DomainEventPublisher
+import piperkt.services.commons.domain.events.ChannelEventPublisher
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.api.ChannelServiceApi
 import piperkt.services.servers.application.api.command.ChannelCommand
@@ -14,7 +14,7 @@ import piperkt.services.servers.domain.Message
 open class ChannelService(
     private val channelRepository: ChannelRepository,
     private val serverRepository: ServerRepository,
-    private val eventPublisher: DomainEventPublisher
+    private val eventPublisher: ChannelEventPublisher
 ) : ChannelServiceApi {
 
     override fun createNewChannelInServer(
