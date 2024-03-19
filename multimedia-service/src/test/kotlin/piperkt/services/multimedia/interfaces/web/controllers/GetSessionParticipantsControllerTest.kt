@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.interfaces.web.api
+package piperkt.services.multimedia.interfaces.web.controllers
 
 import base.Test
 import data.UsersData.jane
@@ -10,7 +10,6 @@ import piperkt.services.multimedia.application.sessions.usecases.GetSessionParti
 import piperkt.services.multimedia.application.sessions.usecases.GetSessionParticipantsUseCase.Errors.SessionNotFound
 import piperkt.services.multimedia.domain.sessions.SessionId
 import piperkt.services.multimedia.interfaces.web.api.GetSessionParticipantsApi.Response
-import piperkt.services.multimedia.interfaces.web.controllers.GetSessionParticipantsController
 
 class GetSessionParticipantsControllerTest :
     Test.Unit.FunSpec({
