@@ -3,7 +3,7 @@ package piperkt.services.multimedia.application.sessions.usecases
 import piperkt.services.multimedia.application.CommandUseCase
 import piperkt.services.multimedia.application.DomainEvent
 import piperkt.services.multimedia.application.EventPublisher
-import piperkt.services.multimedia.application.asSuccess
+import piperkt.services.multimedia.application.success
 import piperkt.services.multimedia.domain.sessions.Session
 import piperkt.services.multimedia.domain.sessions.SessionRepository
 
@@ -21,6 +21,6 @@ open class CreateSessionUseCase(
     override fun handle(command: Command): Result<Unit> {
         val session = sessionRepository.createSession(command.allowedUsers)
         eventPublisher.publish(Events.SessionCreated(session))
-        return Unit.asSuccess()
+        return success()
     }
 }

@@ -1,50 +1,105 @@
 package piperkt.services.multimedia.application.sessions.usecases
 
 import base.Test
-import data.SessionsData
+import data.UsersData
 import io.kotest.matchers.shouldBe
 import mocks.MockedEventPublisher
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
-import piperkt.services.multimedia.domain.sessions.SessionRepository
-import piperkt.services.multimedia.domain.users.User
+import mocks.repositories.InMemorySessionRepository
 
 class AddSessionParticipantUseCaseTest :
     Test.Unit.FunSpec({
         context("a session") {
-            val session = SessionsData.simpleSession()
-            val sessionRepository = mock<SessionRepository>()
+            val sessionRepository = InMemorySessionRepository()
             val eventPublisher = MockedEventPublisher()
             val addSessionParticipantUseCase =
                 AddSessionParticipantUseCase(sessionRepository, eventPublisher)
 
-            beforeEach { eventPublisher.clear() }
+            beforeEach {
+                eventPublisher.clear()
+                sessionRepository.clear()
+            }
 
-            test("should allow to add a participant to the session") {
-                val user = User.fromUsername("user")
-                whenever(sessionRepository.findById(session.id)).thenReturn(session)
-                whenever(sessionRepository.addParticipant(session.id, user)).thenReturn(true)
+            test(
+                "should allow to add a participant to the session if user is allowed to join the session"
+            ) {
+                val allowedUsers = listOf(UsersData.john())
+                val session =
+                    sessionRepository.createSession(allowedUsers.map { it.username.value })
                 val result =
                     addSessionParticipantUseCase.handle(
-                        AddSessionParticipantUseCase.Command(session.id.value, user.username.value)
+                        AddSessionParticipantUseCase.Command(
+                            session.id.value,
+                            allowedUsers[0].username.value
+                        )
                     )
                 result.isSuccess shouldBe true
-                verify(sessionRepository).addParticipant(session.id, user)
                 eventPublisher.publishedEvents shouldBe
-                    listOf(AddSessionParticipantUseCase.Events.ParticipantAdded(session.id, user))
+                    listOf(
+                        AddSessionParticipantUseCase.Events.ParticipantAdded(
+                            session.id,
+                            allowedUsers[0]
+                        )
+                    )
             }
 
             test("should return SessionNotFound error if session does not exist") {
-                val user = User.fromUsername("user")
-                whenever(sessionRepository.findById(session.id)).thenReturn(null)
+                val fakeSessionId = "fakeSessionId"
                 val result =
                     addSessionParticipantUseCase.handle(
-                        AddSessionParticipantUseCase.Command(session.id.value, user.username.value)
+                        AddSessionParticipantUseCase.Command(
+                            fakeSessionId,
+                            UsersData.john().username.value
+                        )
                     )
                 result.isFailure shouldBe true
                 result.exceptionOrNull() shouldBe
-                    AddSessionParticipantUseCase.Errors.SessionNotFound(session.id.value)
+                    AddSessionParticipantUseCase.Errors.SessionNotFound(fakeSessionId)
+            }
+
+            test("should return UserNotAllowed error if user is not allowed to join the session") {
+                val allowedUsers = listOf(UsersData.john())
+                val session =
+                    sessionRepository.createSession(allowedUsers.map { it.username.value })
+                val result =
+                    addSessionParticipantUseCase.handle(
+                        AddSessionParticipantUseCase.Command(
+                            session.id.value,
+                            UsersData.jane().username.value
+                        )
+                    )
+                result.isFailure shouldBe true
+                result.exceptionOrNull() shouldBe
+                    AddSessionParticipantUseCase.Errors.UserNotAllowed(
+                        session.id.value,
+                        UsersData.jane().username.value
+                    )
+            }
+
+            test("should return UserAlreadyParticipant error if user is already a participant") {
+                val allowedUsers = listOf(UsersData.john())
+                val session =
+                    sessionRepository.createSession(
+                        allowedUsers = allowedUsers.map { it.username.value }
+                    )
+                addSessionParticipantUseCase.handle(
+                    AddSessionParticipantUseCase.Command(
+                        session.id.value,
+                        allowedUsers[0].username.value
+                    )
+                )
+                val result =
+                    addSessionParticipantUseCase.handle(
+                        AddSessionParticipantUseCase.Command(
+                            session.id.value,
+                            allowedUsers[0].username.value
+                        )
+                    )
+                result.isFailure shouldBe true
+                result.exceptionOrNull() shouldBe
+                    AddSessionParticipantUseCase.Errors.UserAlreadyParticipant(
+                        session.id.value,
+                        allowedUsers[0].username.value
+                    )
             }
         }
     })

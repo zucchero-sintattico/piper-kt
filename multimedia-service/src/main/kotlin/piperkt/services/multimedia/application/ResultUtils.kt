@@ -1,6 +1,8 @@
 package piperkt.services.multimedia.application
 
-fun success() = Result.success(Unit)
+fun success() = success(Unit)
+
+fun <T> success(value: T) = Result.success(value)
 
 fun failure(e: Exception) = Result.failure<Unit>(e)
 

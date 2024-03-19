@@ -1,5 +1,6 @@
 package piperkt.services.multimedia.infrastructure.persistence.repository
 
+import io.micronaut.context.annotation.Primary
 import jakarta.inject.Singleton
 import piperkt.services.multimedia.domain.sessions.Session
 import piperkt.services.multimedia.domain.sessions.SessionId
@@ -9,6 +10,7 @@ import piperkt.services.multimedia.domain.users.Username
 import piperkt.services.multimedia.infrastructure.Utils.asNullable
 import piperkt.services.multimedia.infrastructure.persistence.model.SessionEntityRepository
 
+@Primary
 @Singleton
 class SessionRepositoryImpl(private val sessionEntityRepository: SessionEntityRepository) :
     SessionRepository {

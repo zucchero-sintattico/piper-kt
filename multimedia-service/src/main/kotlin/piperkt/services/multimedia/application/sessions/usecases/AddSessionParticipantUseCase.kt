@@ -4,7 +4,6 @@ import piperkt.services.multimedia.application.CommandUseCase
 import piperkt.services.multimedia.application.DomainEvent
 import piperkt.services.multimedia.application.EventPublisher
 import piperkt.services.multimedia.application.failure
-import piperkt.services.multimedia.application.isNull
 import piperkt.services.multimedia.application.success
 import piperkt.services.multimedia.domain.sessions.SessionId
 import piperkt.services.multimedia.domain.sessions.SessionRepository
@@ -24,18 +23,23 @@ open class AddSessionParticipantUseCase(
     sealed class Errors : Exception() {
         data class SessionNotFound(val sessionId: String) : Errors()
 
+        data class UserNotAllowed(val sessionId: String, val username: String) : Errors()
+
         data class UserAlreadyParticipant(val sessionId: String, val username: String) : Errors()
     }
 
     override fun handle(command: Command): Result<Unit> {
-        if (sessionRepository.findById(SessionId(command.sessionId)).isNull())
-            return failure(Errors.SessionNotFound(command.sessionId))
-        val added =
-            sessionRepository.addParticipant(
-                SessionId(command.sessionId),
-                User.fromUsername(command.username)
-            )
-        if (!added) return failure(Errors.SessionNotFound(command.sessionId))
+        val session =
+            sessionRepository.findById(SessionId(command.sessionId))
+                ?: return failure(Errors.SessionNotFound(command.sessionId))
+        if (!session.allowedUsers.contains(User.fromUsername(command.username)))
+            return failure(Errors.UserNotAllowed(command.sessionId, command.username))
+        if (session.participants.contains(User.fromUsername(command.username)))
+            return failure(Errors.UserAlreadyParticipant(command.sessionId, command.username))
+        sessionRepository.addParticipant(
+            SessionId(command.sessionId),
+            User.fromUsername(command.username)
+        )
         eventPublisher.publish(
             Events.ParticipantAdded(
                 SessionId(command.sessionId),

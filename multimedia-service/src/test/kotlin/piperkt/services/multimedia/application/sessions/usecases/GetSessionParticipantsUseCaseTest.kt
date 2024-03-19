@@ -1,42 +1,42 @@
 package piperkt.services.multimedia.application.sessions.usecases
 
 import base.Test
-import data.SessionsData
+import data.UsersData
 import io.kotest.matchers.shouldBe
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
+import mocks.repositories.InMemorySessionRepository
+import piperkt.services.multimedia.application.failure
+import piperkt.services.multimedia.application.success
 import piperkt.services.multimedia.domain.sessions.SessionId
-import piperkt.services.multimedia.domain.sessions.SessionRepository
 
 class GetSessionParticipantsUseCaseTest :
     Test.Unit.FunSpec({
-        val session = SessionsData.simpleSession()
-        val sessionRepository = mock<SessionRepository>()
+        val sessionRepository = InMemorySessionRepository()
         val getSessionParticipantsUseCase = GetSessionParticipantsUseCase(sessionRepository)
 
+        beforeEach { sessionRepository.clear() }
+
         test("should return users when session exists") {
-            whenever(sessionRepository.findById(session.id)).thenReturn(session)
+            val users = listOf(UsersData.john(), UsersData.jane())
+            val session = sessionRepository.createSession(users.map { it.username.value })
+            sessionRepository.addParticipant(session.id, users[0])
+            sessionRepository.addParticipant(session.id, users[1])
             val result =
                 getSessionParticipantsUseCase.handle(
                     GetSessionParticipantsUseCase.Query(session.id.value)
                 )
-            verify(sessionRepository).findById(session.id)
-            result.isSuccess shouldBe true
-            result.getOrNull()?.users shouldBe
-                session.participants.map { it.username.value }.toSet()
+            result shouldBe
+                success(
+                    GetSessionParticipantsUseCase.Response(users.map { it.username.value }.toSet())
+                )
         }
 
         test("should return SessionNotFound error when session does not exist") {
             val fakeSessionId = SessionId("fakeSessionId")
-            whenever(sessionRepository.findById(fakeSessionId)).thenReturn(null)
             val result =
                 getSessionParticipantsUseCase.handle(
                     GetSessionParticipantsUseCase.Query(fakeSessionId.value)
                 )
-            verify(sessionRepository).findById(fakeSessionId)
-            result.isFailure shouldBe true
-            result.exceptionOrNull() shouldBe
-                GetSessionParticipantsUseCase.Errors.SessionNotFound(fakeSessionId.value)
+            result shouldBe
+                failure(GetSessionParticipantsUseCase.Errors.SessionNotFound(fakeSessionId.value))
         }
     })
