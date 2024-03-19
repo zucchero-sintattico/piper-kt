@@ -11,8 +11,6 @@ import piperkt.services.multimedia.application.sessions.usecases.GetSessionParti
 
 interface GetSessionParticipantsApi {
 
-    @Serdeable data class Request(val sessionId: String)
-
     @Serdeable data class Response(val users: Set<String>)
 
     @Serdeable
