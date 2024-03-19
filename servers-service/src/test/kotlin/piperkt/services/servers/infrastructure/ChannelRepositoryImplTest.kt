@@ -184,14 +184,14 @@ class ChannelRepositoryImplTest(
                 "channelDescription",
                 "TEXT"
             )
-        val added =
+        val messageSended =
             channelRepository.addMessageInChannel(
                 serverId!!,
                 channel!!.channelId,
                 "message",
                 "sender"
             )
-        added shouldBe true
+        messageSended shouldNotBe null
         val messages =
             channelRepository.getMessagesFromServerIdAndChannelId(channel.channelId, 0, 10)
         messages.size shouldBe 1
@@ -215,7 +215,7 @@ class ChannelRepositoryImplTest(
                 "message",
                 "sender"
             )
-        added shouldBe false
+        added shouldBe null
     }
 
     @Test

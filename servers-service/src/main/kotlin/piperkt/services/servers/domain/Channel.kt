@@ -13,4 +13,17 @@ open class Channel(
     val type: ChannelType,
     val description: String,
     val messages: MutableList<Message> = mutableListOf()
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Channel) return false
+
+        if (channelId != other.channelId) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return channelId.hashCode()
+    }
+}
