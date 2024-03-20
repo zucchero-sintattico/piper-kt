@@ -1,17 +1,26 @@
 package piperkt.services.servers.infrastructure.events
 
-import jakarta.inject.Singleton
+import io.micronaut.configuration.kafka.annotation.KafkaClient
+import io.micronaut.configuration.kafka.annotation.Topic
 import piperkt.services.commons.domain.events.ChannelEvent
 import piperkt.services.commons.domain.events.ChannelEventPublisher
 
-@Singleton
-class KafkaChannelEventPublisher : ChannelEventPublisher {
+@KafkaClient
+interface KafkaChannelEventPublisher : ChannelEventPublisher {
     override fun publish(event: ChannelEvent) {
         when (event) {
-            is ChannelEvent.ChannelCreatedEvent -> println("todo")
-            is ChannelEvent.ChannelDeletedEvent -> println("todo")
-            is ChannelEvent.ChannelUpdatedEvent -> println("todo")
-            is ChannelEvent.MessageInChannelEvent -> println("todo")
+            is ChannelEvent.ChannelCreatedEvent -> publish(event)
+            is ChannelEvent.ChannelDeletedEvent -> publish(event)
+            is ChannelEvent.ChannelUpdatedEvent -> publish(event)
+            is ChannelEvent.MessageInChannelEvent -> publish(event)
         }
     }
+
+    @Topic("channel-events") fun publish(event: ChannelEvent.ChannelCreatedEvent)
+
+    @Topic("channel-events") fun publish(event: ChannelEvent.ChannelDeletedEvent)
+
+    @Topic("channel-events") fun publish(event: ChannelEvent.ChannelUpdatedEvent)
+
+    @Topic("channel-events") fun publish(event: ChannelEvent.MessageInChannelEvent)
 }

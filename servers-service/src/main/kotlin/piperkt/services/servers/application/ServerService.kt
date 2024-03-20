@@ -85,7 +85,7 @@ open class ServerService(
             val server = serverRepository.removeUserFromServer(request.serverId, request.username)
             return if (server != null) {
                 eventPublisher.publish(
-                    ServerEvent.ServerUserRemovedEvent(server.id, request.username)
+                    ServerEvent.ServerUserKickedEvent(server.id, request.username)
                 )
                 Result.success(ServerCommand.KickUserFromServer.Response)
             } else {

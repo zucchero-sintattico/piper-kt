@@ -1,34 +1,32 @@
 package piperkt.services.servers.infrastructure.events
 
-import jakarta.inject.Singleton
+import io.micronaut.configuration.kafka.annotation.KafkaClient
+import io.micronaut.configuration.kafka.annotation.Topic
 import piperkt.services.commons.domain.events.ServerEvent
 import piperkt.services.commons.domain.events.ServerEventPublisher
 
-@Singleton
-class KafkaServerEventPublisher : ServerEventPublisher {
+@KafkaClient
+interface KafkaServerEventPublisher : ServerEventPublisher {
     override fun publish(event: ServerEvent) {
         when (event) {
-            is ServerEvent.ServerCreatedEvent -> println("todo")
-            is ServerEvent.ServerDeletedEvent -> println("todo")
-            is ServerEvent.ServerUpdatedEvent -> println("todo")
-            is ServerEvent.ServerUserAddedEvent -> println("todo")
-            is ServerEvent.ServerUserRemovedEvent -> println("todo")
+            is ServerEvent.ServerCreatedEvent -> publish(event)
+            is ServerEvent.ServerDeletedEvent -> publish(event)
+            is ServerEvent.ServerUpdatedEvent -> publish(event)
+            is ServerEvent.ServerUserAddedEvent -> publish(event)
+            is ServerEvent.ServerUserRemovedEvent -> publish(event)
+            is ServerEvent.ServerUserKickedEvent -> publish(event)
         }
     }
-}
 
-/**
- * @Singleton class KafkaEventPublisher(): EventPublisher {
- *
- * override fun publish(any: Any) {
- *
- * }
- *
- * }
- *
- * @KafkaListener class KafkaListener(userEventsService: UserEventsService): UserEventsApi {
- * @Topic("user-created") override fun onUserCreated(userCreated: UserCreated) {
- *   userEventsService.onUserCreated(userCreated) }
- *
- * }
- */
+    @Topic("server-events") fun publish(event: ServerEvent.ServerCreatedEvent)
+
+    @Topic("server-events") fun publish(event: ServerEvent.ServerDeletedEvent)
+
+    @Topic("server-events") fun publish(event: ServerEvent.ServerUpdatedEvent)
+
+    @Topic("server-events") fun publish(event: ServerEvent.ServerUserAddedEvent)
+
+    @Topic("server-events") fun publish(event: ServerEvent.ServerUserRemovedEvent)
+
+    @Topic("server-events") fun publish(event: ServerEvent.ServerUserKickedEvent)
+}

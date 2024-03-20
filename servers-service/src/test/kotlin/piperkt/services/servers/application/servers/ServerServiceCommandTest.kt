@@ -160,7 +160,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
             ServerCommand.KickUserFromServer.Request(simpleServerId(), "member", "owner")
         ) shouldBe Result.success(ServerCommand.KickUserFromServer.Response)
         verify(eventPublisher)
-            .publish(ServerEvent.ServerUserRemovedEvent(simpleServerId(), "member"))
+            .publish(ServerEvent.ServerUserKickedEvent(simpleServerId(), "member"))
     }
 
     @Test
