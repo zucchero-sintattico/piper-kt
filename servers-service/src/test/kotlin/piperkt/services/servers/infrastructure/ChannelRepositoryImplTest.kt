@@ -34,12 +34,14 @@ class ChannelRepositoryImplTest(
                 "TEXT"
             )
         channel shouldNotBe null
-        channel!!.channelId.value shouldNotBe ""
-        println(channel.channelId)
-        channel.name shouldBe "channelName"
-        channel.description shouldBe "channelDescription"
-        channel.type shouldBe ChannelType.TEXT
-        channel.messages shouldBe emptyList()
+        channel?.let {
+            it.channelId.value shouldNotBe ""
+            println(it.channelId)
+            it.name shouldBe "channelName"
+            it.description shouldBe "channelDescription"
+            it.type shouldBe ChannelType.TEXT
+            it.messages shouldBe emptyList()
+        }
     }
 
     @Test
@@ -65,7 +67,7 @@ class ChannelRepositoryImplTest(
             )
         val channels = channelRepository.findChannelByServerId(serverId)
         channels.size shouldBe 1
-        channels[0].channelId shouldBe channel!!.channelId
+        channel?.let { channels[0].channelId shouldBe it.channelId }
     }
 
     @Test
@@ -83,18 +85,21 @@ class ChannelRepositoryImplTest(
                 "channelDescription",
                 "TEXT"
             )
-        val updatedChannel =
-            channelRepository.updateChannel(
-                serverId,
-                channel!!.channelId,
-                "newChannelName",
-                "newChannelDescription"
-            )
-        updatedChannel shouldNotBe null
-        updatedChannel!!.channelId shouldBe channel.channelId
-        updatedChannel.name shouldBe "newChannelName"
-        updatedChannel.description shouldBe "newChannelDescription"
-        updatedChannel.type shouldBe ChannelType.TEXT
+        channel?.let { channelCreated ->
+            val updatedChannel =
+                channelRepository.updateChannel(
+                    serverId,
+                    channelCreated.channelId,
+                    "newChannelName",
+                    "newChannelDescription"
+                )
+            updatedChannel?.let {
+                it.channelId shouldBe updatedChannel.channelId
+                it.name shouldBe "newChannelName"
+                it.description shouldBe "newChannelDescription"
+                it.type shouldBe ChannelType.TEXT
+            }
+        }
     }
 
     @Test
@@ -106,14 +111,16 @@ class ChannelRepositoryImplTest(
                 "channelDescription",
                 "TEXT"
             )
-        val updatedChannel =
-            channelRepository.updateChannel(
-                fakeServerId,
-                channel!!.channelId,
-                "newChannelName",
-                "newChannelDescription"
-            )
-        updatedChannel shouldBe null
+        channel?.let {
+            val updatedChannel =
+                channelRepository.updateChannel(
+                    fakeServerId,
+                    it.channelId,
+                    "newChannelName",
+                    "newChannelDescription"
+                )
+            updatedChannel shouldBe null
+        }
     }
 
     @Test
@@ -137,9 +144,11 @@ class ChannelRepositoryImplTest(
                 "channelDescription",
                 "TEXT"
             )
-        val deleted = channelRepository.deleteChannel(serverId, channel!!.channelId)
-        deleted shouldBe true
-        channelRepository.findChannelByServerId(serverId).size shouldBe 0
+        channel?.let {
+            val deleted = channelRepository.deleteChannel(serverId, it.channelId)
+            deleted shouldBe true
+            channelRepository.findChannelByServerId(serverId).size shouldBe 0
+        }
     }
 
     @Test
@@ -151,8 +160,10 @@ class ChannelRepositoryImplTest(
                 "channelDescription",
                 "TEXT"
             )
-        val deleted = channelRepository.deleteChannel(fakeServerId, channel!!.channelId)
-        deleted shouldBe false
+        channel?.let {
+            val deleted = channelRepository.deleteChannel(fakeServerId, it.channelId)
+            deleted shouldBe false
+        }
     }
 
     @Test
@@ -170,9 +181,14 @@ class ChannelRepositoryImplTest(
                 "channelDescription",
                 "TEXT"
             )
-        val messages =
-            channelRepository.getMessagesFromServerIdAndChannelId(channel!!.channelId, 0, 10)
-        messages.size shouldBe 0
+        channel?.let {
+            channelRepository.addMessageInChannel(serverId, it.channelId, "message", "sender")
+            val messages =
+                channelRepository.getMessagesFromServerIdAndChannelId(it.channelId, 0, 10)
+            messages.size shouldBe 1
+            messages[0].content shouldBe "message"
+            messages[0].sender shouldBe "sender"
+        }
     }
 
     @Test
@@ -208,14 +224,16 @@ class ChannelRepositoryImplTest(
                 "channelDescription",
                 "TEXT"
             )
-        val added =
-            channelRepository.addMessageInChannel(
-                fakeServerId,
-                channel!!.channelId,
-                "message",
-                "sender"
-            )
-        added shouldBe null
+        channel?.let {
+            val added =
+                channelRepository.addMessageInChannel(
+                    fakeServerId,
+                    it.channelId,
+                    "message",
+                    "sender"
+                )
+            added shouldBe null
+        }
     }
 
     @Test
@@ -227,12 +245,14 @@ class ChannelRepositoryImplTest(
                 "channelDescription",
                 "TEXT"
             )
-        channelRepository.addMessageInChannel(serverId, channel!!.channelId, "message1", "sender")
-        channelRepository.addMessageInChannel(serverId, channel.channelId, "message2", "sender")
-        val messages =
-            channelRepository.getMessagesFromServerIdAndChannelId(channel.channelId, 0, 10)
-        messages.size shouldBe 2
-        messages[0].content shouldBe "message1"
-        messages[1].content shouldBe "message2"
+        channel?.let {
+            channelRepository.addMessageInChannel(serverId, it.channelId, "message1", "sender")
+            channelRepository.addMessageInChannel(serverId, it.channelId, "message2", "sender")
+            val messages =
+                channelRepository.getMessagesFromServerIdAndChannelId(it.channelId, 0, 10)
+            messages.size shouldBe 2
+            messages[0].content shouldBe "message1"
+            messages[1].content shouldBe "message2"
+        }
     }
 }
