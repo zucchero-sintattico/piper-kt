@@ -2,12 +2,12 @@ package piperkt.services.multimedia.infrastructure.implementation
 
 import jakarta.inject.Singleton
 import piperkt.services.multimedia.application.usecases.AddSessionAllowedUser
-import piperkt.services.multimedia.application.usecases.AddSessionParticipant
 import piperkt.services.multimedia.application.usecases.CreateSession
 import piperkt.services.multimedia.application.usecases.DeleteSession
 import piperkt.services.multimedia.application.usecases.GetSessionParticipants
+import piperkt.services.multimedia.application.usecases.JoinSession
+import piperkt.services.multimedia.application.usecases.LeaveSession
 import piperkt.services.multimedia.application.usecases.RemoveSessionAllowedUser
-import piperkt.services.multimedia.application.usecases.RemoveSessionParticipant
 import piperkt.services.multimedia.domain.SessionRepository
 import piperkt.services.multimedia.domain.events.SessionEventPublisher
 
@@ -30,16 +30,16 @@ object UseCases {
         GetSessionParticipants(sessionRepository)
 
     @Singleton
-    class AddSessionParticipantService(
+    class JoinSessionService(
         sessionRepository: SessionRepository,
         sessionEventPublisher: SessionEventPublisher
-    ) : AddSessionParticipant(sessionRepository, sessionEventPublisher)
+    ) : JoinSession(sessionRepository, sessionEventPublisher)
 
     @Singleton
-    class RemoveSessionParticipantService(
+    class LeaveSessionService(
         sessionRepository: SessionRepository,
         sessionEventPublisher: SessionEventPublisher
-    ) : RemoveSessionParticipant(sessionRepository, sessionEventPublisher)
+    ) : LeaveSession(sessionRepository, sessionEventPublisher)
 
     @Singleton
     class AddSessionAllowedUserService(
