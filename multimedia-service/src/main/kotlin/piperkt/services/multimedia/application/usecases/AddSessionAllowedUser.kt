@@ -1,24 +1,22 @@
 package piperkt.services.multimedia.application.usecases
 
 import piperkt.services.multimedia.application.CommandUseCase
-import piperkt.services.multimedia.application.DomainEvent
-import piperkt.services.multimedia.application.EventPublisher
 import piperkt.services.multimedia.application.failure
 import piperkt.services.multimedia.application.success
+import piperkt.services.multimedia.application.usecases.AddSessionAllowedUser.Errors.SessionNotFound
+import piperkt.services.multimedia.application.usecases.AddSessionAllowedUser.Errors.UserAlreadyAllowed
 import piperkt.services.multimedia.domain.SessionId
 import piperkt.services.multimedia.domain.SessionRepository
 import piperkt.services.multimedia.domain.User
+import piperkt.services.multimedia.domain.events.SessionEvent
+import piperkt.services.multimedia.domain.events.SessionEventPublisher
 
-open class AddSessionAllowedUserUseCase(
+open class AddSessionAllowedUser(
     private val sessionRepository: SessionRepository,
-    private val eventPublisher: EventPublisher
-) : CommandUseCase<AddSessionAllowedUserUseCase.Command> {
+    private val sessionEventPublisher: SessionEventPublisher
+) : CommandUseCase<AddSessionAllowedUser.Command> {
 
     data class Command(val sessionId: String, val username: String)
-
-    sealed class Events : DomainEvent {
-        data class AllowedUserAdded(val sessionId: SessionId, val user: User) : Events()
-    }
 
     sealed class Errors : Exception() {
         data class SessionNotFound(val sessionId: String) : Errors()
@@ -27,14 +25,14 @@ open class AddSessionAllowedUserUseCase(
     }
 
     override fun invoke(command: Command): Result<Unit> {
-        val user = User.fromUsername(command.username)
         val session =
             sessionRepository.findById(SessionId(command.sessionId))
-                ?: return failure(Errors.SessionNotFound(command.sessionId))
+                ?: return failure(SessionNotFound(command.sessionId))
+        val user = User.fromUsername(command.username)
         if (session.allowedUsers.contains(user))
-            return failure(Errors.UserAlreadyAllowed(session.id, user))
+            return failure(UserAlreadyAllowed(session.id, user))
         sessionRepository.addAllowedUser(session.id, user)
-        eventPublisher.publish(Events.AllowedUserAdded(session.id, user))
+        sessionEventPublisher.publish(SessionEvent.AllowedUserAdded(session.id, user))
         return success()
     }
 }

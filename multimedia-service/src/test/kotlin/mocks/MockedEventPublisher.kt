@@ -1,12 +1,13 @@
 package mocks
 
-import piperkt.services.multimedia.application.DomainEvent
-import piperkt.services.multimedia.application.EventPublisher
+import piperkt.services.multimedia.domain.events.EventPublisher
+import piperkt.services.multimedia.domain.events.SessionEvent
+import piperkt.services.multimedia.domain.events.SessionEventPublisher
 
-class MockedEventPublisher : EventPublisher {
-    val publishedEvents = mutableListOf<Any>()
+open class MockedEventPublisher<E> : EventPublisher<E> {
+    val publishedEvents = mutableListOf<E>()
 
-    override fun publish(event: DomainEvent) {
+    override fun publish(event: E) {
         publishedEvents.add(event)
     }
 
@@ -14,3 +15,5 @@ class MockedEventPublisher : EventPublisher {
         publishedEvents.clear()
     }
 }
+
+class MockedSessionEventPublisher : SessionEventPublisher, MockedEventPublisher<SessionEvent>()

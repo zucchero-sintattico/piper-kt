@@ -6,8 +6,8 @@ import data.UsersData.john
 import io.kotest.matchers.shouldBe
 import mocks.repositories.InMemorySessionRepository
 import org.junit.jupiter.api.assertThrows
-import piperkt.services.multimedia.application.usecases.GetSessionParticipantsUseCase
-import piperkt.services.multimedia.application.usecases.GetSessionParticipantsUseCase.Errors.SessionNotFound
+import piperkt.services.multimedia.application.usecases.GetSessionParticipants
+import piperkt.services.multimedia.application.usecases.GetSessionParticipants.Errors.SessionNotFound
 import piperkt.services.multimedia.domain.SessionId
 import piperkt.services.multimedia.interfaces.web.api.GetSessionParticipantsApi.Response
 
@@ -15,7 +15,7 @@ class GetSessionParticipantsControllerTest :
     Test.Unit.FunSpec({
         val sessionRepository = InMemorySessionRepository()
         val getUserInSessionApi =
-            GetSessionParticipantsController(GetSessionParticipantsUseCase(sessionRepository))
+            GetSessionParticipantsController(GetSessionParticipants(sessionRepository))
 
         beforeEach { sessionRepository.clear() }
 

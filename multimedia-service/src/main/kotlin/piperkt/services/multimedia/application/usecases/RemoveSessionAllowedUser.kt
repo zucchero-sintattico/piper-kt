@@ -1,25 +1,21 @@
 package piperkt.services.multimedia.application.usecases
 
 import piperkt.services.multimedia.application.CommandUseCase
-import piperkt.services.multimedia.application.DomainEvent
-import piperkt.services.multimedia.application.EventPublisher
 import piperkt.services.multimedia.application.failure
 import piperkt.services.multimedia.application.isNull
 import piperkt.services.multimedia.application.success
 import piperkt.services.multimedia.domain.SessionId
 import piperkt.services.multimedia.domain.SessionRepository
 import piperkt.services.multimedia.domain.User
+import piperkt.services.multimedia.domain.events.SessionEvent
+import piperkt.services.multimedia.domain.events.SessionEventPublisher
 
-open class RemoveSessionParticipantUseCase(
+open class RemoveSessionAllowedUser(
     private val sessionRepository: SessionRepository,
-    private val eventPublisher: EventPublisher
-) : CommandUseCase<RemoveSessionParticipantUseCase.Command> {
+    private val sessionEventPublisher: SessionEventPublisher
+) : CommandUseCase<RemoveSessionAllowedUser.Command> {
 
     data class Command(val sessionId: String, val username: String)
-
-    sealed class Events : DomainEvent {
-        data class ParticipantRemoved(val sessionId: SessionId, val user: User) : Events()
-    }
 
     sealed class Errors : Exception() {
         data class SessionNotFound(val sessionId: String) : Errors()
@@ -31,13 +27,13 @@ open class RemoveSessionParticipantUseCase(
         if (sessionRepository.findById(SessionId(command.sessionId)).isNull())
             return failure(Errors.SessionNotFound(command.sessionId))
         val removed =
-            sessionRepository.removeParticipant(
+            sessionRepository.removeAllowedUser(
                 SessionId(command.sessionId),
                 User.fromUsername(command.username)
             )
         if (!removed) return failure(Errors.UserNotInSession(command.sessionId, command.username))
-        eventPublisher.publish(
-            Events.ParticipantRemoved(
+        sessionEventPublisher.publish(
+            SessionEvent.AllowedUserRemoved(
                 SessionId(command.sessionId),
                 User.fromUsername(command.username)
             )
