@@ -1,11 +1,11 @@
 package piperkt.services.multimedia.infrastructure.persistence.repository
 
 import jakarta.inject.Singleton
-import piperkt.services.multimedia.domain.directs.Direct
-import piperkt.services.multimedia.domain.directs.DirectId
-import piperkt.services.multimedia.domain.directs.DirectRepository
-import piperkt.services.multimedia.domain.sessions.Session
-import piperkt.services.multimedia.domain.sessions.SessionId
+import piperkt.services.multimedia.domain.Direct
+import piperkt.services.multimedia.domain.DirectId
+import piperkt.services.multimedia.domain.DirectRepository
+import piperkt.services.multimedia.domain.Session
+import piperkt.services.multimedia.domain.SessionId
 import piperkt.services.multimedia.infrastructure.persistence.model.DirectEntityRepository
 
 @Singleton

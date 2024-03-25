@@ -2,11 +2,11 @@ package piperkt.services.multimedia.infrastructure.persistence.repository
 
 import io.micronaut.context.annotation.Primary
 import jakarta.inject.Singleton
-import piperkt.services.multimedia.domain.sessions.Session
-import piperkt.services.multimedia.domain.sessions.SessionId
-import piperkt.services.multimedia.domain.sessions.SessionRepository
-import piperkt.services.multimedia.domain.users.User
-import piperkt.services.multimedia.domain.users.Username
+import piperkt.services.multimedia.domain.Session
+import piperkt.services.multimedia.domain.SessionId
+import piperkt.services.multimedia.domain.SessionRepository
+import piperkt.services.multimedia.domain.User
+import piperkt.services.multimedia.domain.Username
 import piperkt.services.multimedia.infrastructure.Utils.asNullable
 import piperkt.services.multimedia.infrastructure.persistence.model.SessionEntityRepository
 

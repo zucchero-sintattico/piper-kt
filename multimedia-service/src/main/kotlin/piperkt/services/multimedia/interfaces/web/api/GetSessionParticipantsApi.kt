@@ -7,7 +7,7 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.Status
 import io.micronaut.serde.annotation.Serdeable
-import piperkt.services.multimedia.application.sessions.usecases.GetSessionParticipantsUseCase
+import piperkt.services.multimedia.application.usecases.GetSessionParticipantsUseCase
 
 interface GetSessionParticipantsApi {
 

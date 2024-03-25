@@ -2,8 +2,8 @@ package domain
 
 import base.Test
 import io.kotest.matchers.shouldBe
-import piperkt.services.multimedia.domain.users.User
-import piperkt.services.multimedia.domain.users.Username
+import piperkt.services.multimedia.domain.User
+import piperkt.services.multimedia.domain.Username
 
 class UserTest :
     Test.Unit.FunSpec({

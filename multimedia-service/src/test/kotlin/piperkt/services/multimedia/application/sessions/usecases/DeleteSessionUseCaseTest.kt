@@ -5,10 +5,11 @@ import io.kotest.matchers.shouldBe
 import mocks.MockedEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.asFailure
-import piperkt.services.multimedia.application.sessions.usecases.DeleteSessionUseCase.Command
-import piperkt.services.multimedia.application.sessions.usecases.DeleteSessionUseCase.Errors.SessionNotFound
-import piperkt.services.multimedia.application.sessions.usecases.DeleteSessionUseCase.Events.SessionDeleted
 import piperkt.services.multimedia.application.success
+import piperkt.services.multimedia.application.usecases.DeleteSessionUseCase
+import piperkt.services.multimedia.application.usecases.DeleteSessionUseCase.Command
+import piperkt.services.multimedia.application.usecases.DeleteSessionUseCase.Errors.SessionNotFound
+import piperkt.services.multimedia.application.usecases.DeleteSessionUseCase.Events.SessionDeleted
 
 class DeleteSessionUseCaseTest :
     Test.Unit.FunSpec({

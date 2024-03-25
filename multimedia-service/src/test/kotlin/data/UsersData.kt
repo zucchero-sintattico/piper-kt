@@ -1,7 +1,7 @@
 package data
 
-import piperkt.services.multimedia.domain.users.User
-import piperkt.services.multimedia.domain.users.Username
+import piperkt.services.multimedia.domain.User
+import piperkt.services.multimedia.domain.Username
 
 object UsersData {
 

@@ -5,9 +5,10 @@ import data.UsersData
 import io.kotest.matchers.shouldBe
 import mocks.MockedEventPublisher
 import mocks.repositories.InMemorySessionRepository
-import piperkt.services.multimedia.application.sessions.usecases.CreateSessionUseCase.Command
-import piperkt.services.multimedia.application.sessions.usecases.CreateSessionUseCase.Events.SessionCreated
 import piperkt.services.multimedia.application.success
+import piperkt.services.multimedia.application.usecases.CreateSessionUseCase
+import piperkt.services.multimedia.application.usecases.CreateSessionUseCase.Command
+import piperkt.services.multimedia.application.usecases.CreateSessionUseCase.Events.SessionCreated
 
 class CreateSessionUseCaseTest :
     Test.Unit.FunSpec({

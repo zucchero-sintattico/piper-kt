@@ -1,9 +1,9 @@
 package data
 
-import piperkt.services.multimedia.domain.sessions.Session
-import piperkt.services.multimedia.domain.sessions.SessionId
-import piperkt.services.multimedia.domain.users.User
-import piperkt.services.multimedia.domain.users.Username
+import piperkt.services.multimedia.domain.Session
+import piperkt.services.multimedia.domain.SessionId
+import piperkt.services.multimedia.domain.User
+import piperkt.services.multimedia.domain.Username
 
 object SessionsData {
 

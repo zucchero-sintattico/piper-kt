@@ -5,10 +5,10 @@ import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.data.mongodb.annotation.MongoRepository
 import io.micronaut.data.repository.CrudRepository
-import piperkt.services.multimedia.domain.sessions.Session
-import piperkt.services.multimedia.domain.sessions.SessionId
-import piperkt.services.multimedia.domain.users.User
-import piperkt.services.multimedia.domain.users.Username
+import piperkt.services.multimedia.domain.Session
+import piperkt.services.multimedia.domain.SessionId
+import piperkt.services.multimedia.domain.User
+import piperkt.services.multimedia.domain.Username
 
 @MappedEntity
 data class SessionEntity(
