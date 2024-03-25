@@ -1,6 +1,6 @@
 package piperkt.services.multimedia.application.dto
 
-import piperkt.services.multimedia.domain.sessions.Session
+import piperkt.services.multimedia.domain.Session
 
 data class SessionDTO(
     val id: String,

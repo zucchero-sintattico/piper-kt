@@ -3,8 +3,8 @@ package domain
 import base.Test
 import data.UsersData
 import io.kotest.matchers.shouldBe
-import piperkt.services.multimedia.domain.sessions.Session
-import piperkt.services.multimedia.domain.sessions.SessionId
+import piperkt.services.multimedia.domain.Session
+import piperkt.services.multimedia.domain.SessionId
 
 class SessionTest :
     Test.Unit.FunSpec({

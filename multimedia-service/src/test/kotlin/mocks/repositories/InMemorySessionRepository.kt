@@ -1,11 +1,11 @@
 package mocks.repositories
 
 import java.util.*
-import piperkt.services.multimedia.domain.sessions.Session
-import piperkt.services.multimedia.domain.sessions.SessionId
-import piperkt.services.multimedia.domain.sessions.SessionRepository
-import piperkt.services.multimedia.domain.users.User
-import piperkt.services.multimedia.domain.users.Username
+import piperkt.services.multimedia.domain.Session
+import piperkt.services.multimedia.domain.SessionId
+import piperkt.services.multimedia.domain.SessionRepository
+import piperkt.services.multimedia.domain.User
+import piperkt.services.multimedia.domain.Username
 
 class InMemorySessionRepository(val sessions: MutableMap<String, Session> = mutableMapOf()) :
     SessionRepository {

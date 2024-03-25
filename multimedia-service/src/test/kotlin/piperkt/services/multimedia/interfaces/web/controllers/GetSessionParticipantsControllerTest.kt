@@ -6,9 +6,9 @@ import data.UsersData.john
 import io.kotest.matchers.shouldBe
 import mocks.repositories.InMemorySessionRepository
 import org.junit.jupiter.api.assertThrows
-import piperkt.services.multimedia.application.sessions.usecases.GetSessionParticipantsUseCase
-import piperkt.services.multimedia.application.sessions.usecases.GetSessionParticipantsUseCase.Errors.SessionNotFound
-import piperkt.services.multimedia.domain.sessions.SessionId
+import piperkt.services.multimedia.application.usecases.GetSessionParticipantsUseCase
+import piperkt.services.multimedia.application.usecases.GetSessionParticipantsUseCase.Errors.SessionNotFound
+import piperkt.services.multimedia.domain.SessionId
 import piperkt.services.multimedia.interfaces.web.api.GetSessionParticipantsApi.Response
 
 class GetSessionParticipantsControllerTest :

@@ -6,11 +6,12 @@ import io.kotest.matchers.shouldBe
 import mocks.MockedEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.asFailure
-import piperkt.services.multimedia.application.sessions.usecases.AddSessionAllowedUserUseCase.Command
-import piperkt.services.multimedia.application.sessions.usecases.AddSessionAllowedUserUseCase.Errors.SessionNotFound
-import piperkt.services.multimedia.application.sessions.usecases.AddSessionAllowedUserUseCase.Errors.UserAlreadyAllowed
-import piperkt.services.multimedia.application.sessions.usecases.AddSessionAllowedUserUseCase.Events.AllowedUserAdded
 import piperkt.services.multimedia.application.success
+import piperkt.services.multimedia.application.usecases.AddSessionAllowedUserUseCase
+import piperkt.services.multimedia.application.usecases.AddSessionAllowedUserUseCase.Command
+import piperkt.services.multimedia.application.usecases.AddSessionAllowedUserUseCase.Errors.SessionNotFound
+import piperkt.services.multimedia.application.usecases.AddSessionAllowedUserUseCase.Errors.UserAlreadyAllowed
+import piperkt.services.multimedia.application.usecases.AddSessionAllowedUserUseCase.Events.AllowedUserAdded
 
 class AddSessionAllowedUserUseCaseTest :
     Test.Unit.FunSpec({

@@ -6,10 +6,11 @@ import io.kotest.matchers.shouldBe
 import mocks.MockedEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.asFailure
-import piperkt.services.multimedia.application.sessions.usecases.AddSessionParticipantUseCase.Command
-import piperkt.services.multimedia.application.sessions.usecases.AddSessionParticipantUseCase.Errors.*
-import piperkt.services.multimedia.application.sessions.usecases.AddSessionParticipantUseCase.Events.ParticipantAdded
 import piperkt.services.multimedia.application.success
+import piperkt.services.multimedia.application.usecases.AddSessionParticipantUseCase
+import piperkt.services.multimedia.application.usecases.AddSessionParticipantUseCase.Command
+import piperkt.services.multimedia.application.usecases.AddSessionParticipantUseCase.Errors.*
+import piperkt.services.multimedia.application.usecases.AddSessionParticipantUseCase.Events.ParticipantAdded
 
 class AddSessionParticipantUseCaseTest :
     Test.Unit.FunSpec({

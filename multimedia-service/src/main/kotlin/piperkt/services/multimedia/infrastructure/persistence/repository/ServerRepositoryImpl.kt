@@ -1,9 +1,10 @@
 package piperkt.services.multimedia.infrastructure.persistence.repository
 
 import jakarta.inject.Singleton
-import piperkt.services.multimedia.domain.servers.Server
-import piperkt.services.multimedia.domain.servers.ServerId
-import piperkt.services.multimedia.domain.servers.ServerRepository
+import piperkt.services.multimedia.domain.Server
+import piperkt.services.multimedia.domain.ServerId
+import piperkt.services.multimedia.domain.ServerRepository
+import piperkt.services.multimedia.domain.User
 
 @Singleton
 class ServerRepositoryImpl : ServerRepository {
@@ -32,6 +33,14 @@ class ServerRepositoryImpl : ServerRepository {
     }
 
     override fun count(): Long {
+        TODO("Not yet implemented")
+    }
+
+    override fun addUser(id: ServerId, user: User) {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeUser(id: ServerId, user: User) {
         TODO("Not yet implemented")
     }
 }

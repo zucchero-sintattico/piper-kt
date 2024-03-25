@@ -6,11 +6,12 @@ import io.kotest.matchers.shouldBe
 import mocks.MockedEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.asFailure
-import piperkt.services.multimedia.application.sessions.usecases.RemoveSessionAllowedUserUseCase.Command
-import piperkt.services.multimedia.application.sessions.usecases.RemoveSessionAllowedUserUseCase.Errors.SessionNotFound
-import piperkt.services.multimedia.application.sessions.usecases.RemoveSessionAllowedUserUseCase.Errors.UserNotInSession
-import piperkt.services.multimedia.application.sessions.usecases.RemoveSessionAllowedUserUseCase.Events.AllowedUserRemoved
 import piperkt.services.multimedia.application.success
+import piperkt.services.multimedia.application.usecases.RemoveSessionAllowedUserUseCase
+import piperkt.services.multimedia.application.usecases.RemoveSessionAllowedUserUseCase.Command
+import piperkt.services.multimedia.application.usecases.RemoveSessionAllowedUserUseCase.Errors.SessionNotFound
+import piperkt.services.multimedia.application.usecases.RemoveSessionAllowedUserUseCase.Errors.UserNotInSession
+import piperkt.services.multimedia.application.usecases.RemoveSessionAllowedUserUseCase.Events.AllowedUserRemoved
 
 class RemoveSessionAllowedUserUseCaseTest :
     Test.Unit.FunSpec({

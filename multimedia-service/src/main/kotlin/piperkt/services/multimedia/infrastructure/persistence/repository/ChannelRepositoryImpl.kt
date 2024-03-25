@@ -1,9 +1,9 @@
 package piperkt.services.multimedia.infrastructure.persistence.repository
 
 import jakarta.inject.Singleton
-import piperkt.services.multimedia.domain.channels.ChannelId
-import piperkt.services.multimedia.domain.channels.ChannelRepository
-import piperkt.services.multimedia.domain.sessions.Session
+import piperkt.services.multimedia.domain.ChannelId
+import piperkt.services.multimedia.domain.ChannelRepository
+import piperkt.services.multimedia.domain.Session
 
 @Singleton
 class ChannelRepositoryImpl : ChannelRepository {

@@ -1,6 +1,6 @@
 package piperkt.services.multimedia.application.dto
 
-import piperkt.services.multimedia.domain.users.User
+import piperkt.services.multimedia.domain.User
 
 data class UserDTO(
     val username: String,
