@@ -3,22 +3,21 @@ package piperkt.services.multimedia.application.sessions.usecases
 import base.Test
 import data.UsersData
 import io.kotest.matchers.shouldBe
-import mocks.MockedEventPublisher
+import mocks.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.success
-import piperkt.services.multimedia.application.usecases.AddSessionParticipantUseCase
-import piperkt.services.multimedia.application.usecases.AddSessionParticipantUseCase.Command
-import piperkt.services.multimedia.application.usecases.AddSessionParticipantUseCase.Errors.*
-import piperkt.services.multimedia.application.usecases.AddSessionParticipantUseCase.Events.ParticipantAdded
+import piperkt.services.multimedia.application.usecases.AddSessionParticipant
+import piperkt.services.multimedia.application.usecases.AddSessionParticipant.Command
+import piperkt.services.multimedia.application.usecases.AddSessionParticipant.Errors.*
+import piperkt.services.multimedia.domain.events.SessionEvent.ParticipantJoined
 
-class AddSessionParticipantUseCaseTest :
+class AddSessionParticipantTest :
     Test.Unit.FunSpec({
         context("a session") {
             val sessionRepository = InMemorySessionRepository()
-            val eventPublisher = MockedEventPublisher()
-            val addSessionParticipantUseCase =
-                AddSessionParticipantUseCase(sessionRepository, eventPublisher)
+            val eventPublisher = MockedSessionEventPublisher()
+            val addSessionParticipant = AddSessionParticipant(sessionRepository, eventPublisher)
 
             beforeEach {
                 eventPublisher.clear()
@@ -32,20 +31,16 @@ class AddSessionParticipantUseCaseTest :
                 val session =
                     sessionRepository.createSession(allowedUsers.map { it.username.value })
                 val result =
-                    addSessionParticipantUseCase(
-                        Command(session.id.value, allowedUsers[0].username.value)
-                    )
+                    addSessionParticipant(Command(session.id.value, allowedUsers[0].username.value))
                 result shouldBe success()
                 eventPublisher.publishedEvents shouldBe
-                    listOf(ParticipantAdded(session.id, allowedUsers[0]))
+                    listOf(ParticipantJoined(session.id, allowedUsers[0]))
             }
 
             test("should return SessionNotFound error if session does not exist") {
                 val fakeSessionId = "fakeSessionId"
                 val result =
-                    addSessionParticipantUseCase(
-                        Command(fakeSessionId, UsersData.john().username.value)
-                    )
+                    addSessionParticipant(Command(fakeSessionId, UsersData.john().username.value))
                 result shouldBe SessionNotFound(fakeSessionId).asFailure()
             }
 
@@ -54,7 +49,7 @@ class AddSessionParticipantUseCaseTest :
                 val session =
                     sessionRepository.createSession(allowedUsers.map { it.username.value })
                 val result =
-                    addSessionParticipantUseCase(
+                    addSessionParticipant(
                         Command(session.id.value, UsersData.jane().username.value)
                     )
                 result shouldBe
@@ -67,13 +62,9 @@ class AddSessionParticipantUseCaseTest :
                     sessionRepository.createSession(
                         allowedUsers = allowedUsers.map { it.username.value }
                     )
-                addSessionParticipantUseCase(
-                    Command(session.id.value, allowedUsers[0].username.value)
-                )
+                addSessionParticipant(Command(session.id.value, allowedUsers[0].username.value))
                 val result =
-                    addSessionParticipantUseCase(
-                        Command(session.id.value, allowedUsers[0].username.value)
-                    )
+                    addSessionParticipant(Command(session.id.value, allowedUsers[0].username.value))
                 result shouldBe
                     UserAlreadyParticipant(session.id.value, allowedUsers[0].username.value)
                         .asFailure()

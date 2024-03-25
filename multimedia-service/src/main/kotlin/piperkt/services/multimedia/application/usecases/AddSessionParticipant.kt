@@ -1,24 +1,20 @@
 package piperkt.services.multimedia.application.usecases
 
 import piperkt.services.multimedia.application.CommandUseCase
-import piperkt.services.multimedia.application.DomainEvent
-import piperkt.services.multimedia.application.EventPublisher
 import piperkt.services.multimedia.application.failure
 import piperkt.services.multimedia.application.success
 import piperkt.services.multimedia.domain.SessionId
 import piperkt.services.multimedia.domain.SessionRepository
 import piperkt.services.multimedia.domain.User
+import piperkt.services.multimedia.domain.events.SessionEvent
+import piperkt.services.multimedia.domain.events.SessionEventPublisher
 
-open class AddSessionParticipantUseCase(
+open class AddSessionParticipant(
     private val sessionRepository: SessionRepository,
-    private val eventPublisher: EventPublisher
-) : CommandUseCase<AddSessionParticipantUseCase.Command> {
+    private val sessionEventPublisher: SessionEventPublisher
+) : CommandUseCase<AddSessionParticipant.Command> {
 
     data class Command(val sessionId: String, val username: String)
-
-    sealed class Events : DomainEvent {
-        data class ParticipantAdded(val sessionId: SessionId, val user: User) : Events()
-    }
 
     sealed class Errors : Exception() {
         data class SessionNotFound(val sessionId: String) : Errors()
@@ -40,8 +36,8 @@ open class AddSessionParticipantUseCase(
             SessionId(command.sessionId),
             User.fromUsername(command.username)
         )
-        eventPublisher.publish(
-            Events.ParticipantAdded(
+        sessionEventPublisher.publish(
+            SessionEvent.ParticipantJoined(
                 SessionId(command.sessionId),
                 User.fromUsername(command.username)
             )

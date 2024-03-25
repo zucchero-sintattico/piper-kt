@@ -1,55 +1,55 @@
 package piperkt.services.multimedia.infrastructure.implementation
 
 import jakarta.inject.Singleton
-import piperkt.services.multimedia.application.EventPublisher
-import piperkt.services.multimedia.application.usecases.AddSessionAllowedUserUseCase
-import piperkt.services.multimedia.application.usecases.AddSessionParticipantUseCase
-import piperkt.services.multimedia.application.usecases.CreateSessionUseCase
-import piperkt.services.multimedia.application.usecases.DeleteSessionUseCase
-import piperkt.services.multimedia.application.usecases.GetSessionParticipantsUseCase
-import piperkt.services.multimedia.application.usecases.RemoveSessionAllowedUserUseCase
-import piperkt.services.multimedia.application.usecases.RemoveSessionParticipantUseCase
+import piperkt.services.multimedia.application.usecases.AddSessionAllowedUser
+import piperkt.services.multimedia.application.usecases.AddSessionParticipant
+import piperkt.services.multimedia.application.usecases.CreateSession
+import piperkt.services.multimedia.application.usecases.DeleteSession
+import piperkt.services.multimedia.application.usecases.GetSessionParticipants
+import piperkt.services.multimedia.application.usecases.RemoveSessionAllowedUser
+import piperkt.services.multimedia.application.usecases.RemoveSessionParticipant
 import piperkt.services.multimedia.domain.SessionRepository
+import piperkt.services.multimedia.domain.events.SessionEventPublisher
 
 object UseCases {
 
     @Singleton
     class CreateSessionUseCaseService(
         sessionRepository: SessionRepository,
-        eventPublisher: EventPublisher
-    ) : CreateSessionUseCase(sessionRepository, eventPublisher)
+        sessionEventPublisher: SessionEventPublisher,
+    ) : CreateSession(sessionRepository, sessionEventPublisher)
 
     @Singleton
-    class DeleteSessionUseCaseService(
+    class DeleteSessionService(
         sessionRepository: SessionRepository,
-        eventPublisher: EventPublisher
-    ) : DeleteSessionUseCase(sessionRepository, eventPublisher)
+        sessionEventPublisher: SessionEventPublisher,
+    ) : DeleteSession(sessionRepository, sessionEventPublisher)
 
     @Singleton
-    class GetSessionParticipantsUseCaseService(sessionRepository: SessionRepository) :
-        GetSessionParticipantsUseCase(sessionRepository)
+    class GetSessionParticipantsService(sessionRepository: SessionRepository) :
+        GetSessionParticipants(sessionRepository)
 
     @Singleton
-    class AddSessionParticipantUseCaseService(
+    class AddSessionParticipantService(
         sessionRepository: SessionRepository,
-        eventPublisher: EventPublisher
-    ) : AddSessionParticipantUseCase(sessionRepository, eventPublisher)
+        sessionEventPublisher: SessionEventPublisher
+    ) : AddSessionParticipant(sessionRepository, sessionEventPublisher)
 
     @Singleton
-    class RemoveSessionParticipantUseCaseService(
+    class RemoveSessionParticipantService(
         sessionRepository: SessionRepository,
-        eventPublisher: EventPublisher
-    ) : RemoveSessionParticipantUseCase(sessionRepository, eventPublisher)
+        sessionEventPublisher: SessionEventPublisher
+    ) : RemoveSessionParticipant(sessionRepository, sessionEventPublisher)
 
     @Singleton
-    class AddSessionAllowedUserUseCaseService(
+    class AddSessionAllowedUserService(
         sessionRepository: SessionRepository,
-        eventPublisher: EventPublisher
-    ) : AddSessionAllowedUserUseCase(sessionRepository, eventPublisher)
+        sessionEventPublisher: SessionEventPublisher
+    ) : AddSessionAllowedUser(sessionRepository, sessionEventPublisher)
 
     @Singleton
-    class RemoveSessionAllowedUserUseCaseService(
+    class RemoveSessionAllowedUserService(
         sessionRepository: SessionRepository,
-        eventPublisher: EventPublisher
-    ) : RemoveSessionAllowedUserUseCase(sessionRepository, eventPublisher)
+        sessionEventPublisher: SessionEventPublisher
+    ) : RemoveSessionAllowedUser(sessionRepository, sessionEventPublisher)
 }

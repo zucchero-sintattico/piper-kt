@@ -49,7 +49,5 @@ class SessionRepositoryImpl(private val sessionEntityRepository: SessionEntityRe
         TODO("Not yet implemented")
     }
 
-    override fun exists(sessionId: String): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun exists(sessionId: String): Boolean = findById(SessionId(sessionId)) != null
 }

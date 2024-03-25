@@ -6,16 +6,16 @@ import io.kotest.matchers.shouldBe
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.asSuccess
-import piperkt.services.multimedia.application.usecases.GetSessionParticipantsUseCase
-import piperkt.services.multimedia.application.usecases.GetSessionParticipantsUseCase.Errors.SessionNotFound
-import piperkt.services.multimedia.application.usecases.GetSessionParticipantsUseCase.Query
-import piperkt.services.multimedia.application.usecases.GetSessionParticipantsUseCase.Response
+import piperkt.services.multimedia.application.usecases.GetSessionParticipants
+import piperkt.services.multimedia.application.usecases.GetSessionParticipants.Errors.SessionNotFound
+import piperkt.services.multimedia.application.usecases.GetSessionParticipants.Query
+import piperkt.services.multimedia.application.usecases.GetSessionParticipants.Response
 import piperkt.services.multimedia.domain.SessionId
 
-class GetSessionParticipantsUseCaseTest :
+class GetSessionParticipantsTest :
     Test.Unit.FunSpec({
         val sessionRepository = InMemorySessionRepository()
-        val getSessionParticipantsUseCase = GetSessionParticipantsUseCase(sessionRepository)
+        val getSessionParticipants = GetSessionParticipants(sessionRepository)
 
         beforeEach { sessionRepository.clear() }
 
@@ -24,13 +24,13 @@ class GetSessionParticipantsUseCaseTest :
             val session = sessionRepository.createSession(users.map { it.username.value })
             sessionRepository.addParticipant(session.id, users[0])
             sessionRepository.addParticipant(session.id, users[1])
-            val result = getSessionParticipantsUseCase(Query(session.id.value))
+            val result = getSessionParticipants(Query(session.id.value))
             result shouldBe Response(users.map { it.username.value }.toSet()).asSuccess()
         }
 
         test("should return SessionNotFound error when session does not exist") {
             val fakeSessionId = SessionId("fakeSessionId")
-            val result = getSessionParticipantsUseCase(Query(fakeSessionId.value))
+            val result = getSessionParticipants(Query(fakeSessionId.value))
             result shouldBe SessionNotFound(fakeSessionId.value).asFailure()
         }
     })
