@@ -7,19 +7,18 @@ import mocks.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.success
-import piperkt.services.multimedia.application.usecases.RemoveSessionParticipant
-import piperkt.services.multimedia.application.usecases.RemoveSessionParticipant.Command
-import piperkt.services.multimedia.application.usecases.RemoveSessionParticipant.Errors.SessionNotFound
-import piperkt.services.multimedia.application.usecases.RemoveSessionParticipant.Errors.UserNotInSession
+import piperkt.services.multimedia.application.usecases.LeaveSession
+import piperkt.services.multimedia.application.usecases.LeaveSession.Command
+import piperkt.services.multimedia.application.usecases.LeaveSession.Errors.SessionNotFound
+import piperkt.services.multimedia.application.usecases.LeaveSession.Errors.UserNotInSession
 import piperkt.services.multimedia.domain.events.SessionEvent.ParticipantLeft
 
-class RemoveSessionParticipantTest :
+class LeaveSessionTest :
     Test.Unit.FunSpec({
         context("a session") {
             val sessionRepository = InMemorySessionRepository()
             val eventPublisher = MockedSessionEventPublisher()
-            val removeSessionParticipant =
-                RemoveSessionParticipant(sessionRepository, eventPublisher)
+            val leaveSession = LeaveSession(sessionRepository, eventPublisher)
 
             beforeEach {
                 sessionRepository.clear()
@@ -30,8 +29,7 @@ class RemoveSessionParticipantTest :
                 val users = listOf(UsersData.john(), UsersData.jane())
                 val session = sessionRepository.createSession(users.map { it.username.value })
                 sessionRepository.addParticipant(session.id, users[0])
-                val result =
-                    removeSessionParticipant(Command(session.id.value, users[0].username.value))
+                val result = leaveSession(Command(session.id.value, users[0].username.value))
                 result shouldBe success()
                 eventPublisher.publishedEvents shouldBe
                     listOf(ParticipantLeft(session.id, users[0]))
@@ -40,7 +38,7 @@ class RemoveSessionParticipantTest :
             test("should return SessionNotFound error if session does not exist") {
                 val fakeSessionId = "fakeSessionId"
                 val fakeUser = "fakeUser"
-                val result = removeSessionParticipant(Command(fakeSessionId, fakeUser))
+                val result = leaveSession(Command(fakeSessionId, fakeUser))
                 result shouldBe SessionNotFound(fakeSessionId).asFailure()
             }
 
@@ -48,9 +46,7 @@ class RemoveSessionParticipantTest :
                 val session = sessionRepository.createSession(emptyList())
                 val userNotInSession = UsersData.john()
                 val result =
-                    removeSessionParticipant(
-                        Command(session.id.value, userNotInSession.username.value)
-                    )
+                    leaveSession(Command(session.id.value, userNotInSession.username.value))
                 result shouldBe
                     UserNotInSession(session.id.value, userNotInSession.username.value).asFailure()
             }
