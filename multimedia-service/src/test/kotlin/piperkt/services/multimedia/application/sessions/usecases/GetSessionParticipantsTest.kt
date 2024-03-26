@@ -2,6 +2,7 @@ package piperkt.services.multimedia.application.sessions.usecases
 
 import base.Test
 import data.UsersData
+import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.asFailure
@@ -13,7 +14,8 @@ import piperkt.services.multimedia.application.usecases.GetSessionParticipants.R
 import piperkt.services.multimedia.domain.SessionId
 
 class GetSessionParticipantsTest :
-    Test.Unit.FunSpec({
+    Test.Unit,
+    FunSpec({
         val sessionRepository = InMemorySessionRepository()
         val getSessionParticipants = GetSessionParticipants(sessionRepository)
 
