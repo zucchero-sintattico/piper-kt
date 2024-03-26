@@ -2,12 +2,14 @@ package domain
 
 import base.Test
 import data.UsersData
+import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import piperkt.services.multimedia.domain.Session
 import piperkt.services.multimedia.domain.SessionId
 
 class SessionTest :
-    Test.Unit.FunSpec({
+    Test.Unit,
+    FunSpec({
         context("a Session") {
             val users = listOf(UsersData.john(), UsersData.jane())
             val sessionId = SessionId("SessionId")

@@ -1,6 +1,7 @@
 package piperkt.services.multimedia.application.sessions.usecases
 
 import base.Test
+import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import mocks.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
@@ -12,7 +13,8 @@ import piperkt.services.multimedia.application.usecases.DeleteSession.Errors.Ses
 import piperkt.services.multimedia.domain.events.SessionEvent.SessionDeleted
 
 class DeleteSessionTest :
-    Test.Unit.FunSpec({
+    Test.Unit,
+    FunSpec({
         val sessionRepository = InMemorySessionRepository()
         val eventPublisher = MockedSessionEventPublisher()
         val deleteSession = DeleteSession(sessionRepository, eventPublisher)

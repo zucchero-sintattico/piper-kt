@@ -9,6 +9,7 @@ dependencies {
     // Kafka
     implementation("io.micronaut.kafka:micronaut-kafka")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    implementation("com.corundumstudio.socketio:netty-socketio:2.0.9")
 }
 
 detekt { config.from(files("detekt-config.yml")) }

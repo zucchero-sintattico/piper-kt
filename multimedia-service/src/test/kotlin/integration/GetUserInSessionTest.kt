@@ -1,6 +1,7 @@
 package integration
 
 import base.Test
+import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Get
@@ -15,7 +16,8 @@ interface GetUserInSessionClient {
 }
 
 class GetUserInSessionTest(private val getUserInSessionClient: GetUserInSessionClient) :
-    Test.Integration.FunSpec({
+    Test.Integration,
+    FunSpec({
         test("should return Not Found when session does not exist") {
             val sessionId = "000000000000000000000000"
             val exception = getUserInSessionClient.get(sessionId)
