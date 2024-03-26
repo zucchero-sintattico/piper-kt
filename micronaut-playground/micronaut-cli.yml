@@ -1,5 +1,5 @@
 applicationType: default
-defaultPackage: micronaut.playground
+defaultPackage: piperkt.services.template
 testFramework: kotest
 sourceLanguage: kotlin
 buildTool: gradle_kotlin
