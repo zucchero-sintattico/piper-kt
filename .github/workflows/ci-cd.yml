@@ -28,7 +28,7 @@ jobs:
       matrix:
         os:
           # Commented until we find a way to run containertests on macOS and Windows
-          # - macos-13
+          # - macos-14
           # - windows-2022
           - ubuntu-22.04
         java-version: [17, 21]
