@@ -5,8 +5,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.socket.client.IO
 import piperkt.services.multimedia.interfaces.toJson
-import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolMessage
-import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolMessage.JoinMessage
+import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolMessage.*
 
 class MultimediaSocketIOServerTest :
     Test.Unit,
@@ -29,21 +28,21 @@ class MultimediaSocketIOServerTest :
         }
 
         test("should allow client to offer") {
-            val message = MultimediaProtocolMessage.OfferMessage("from", "to", "offer")
+            val message = OfferMessage("from", "to", "offer")
             client.emit("offer", message.toJson())
             Thread.sleep(1000)
             server.events.last() shouldBe message
         }
 
         test("should allow client to answer") {
-            val message = MultimediaProtocolMessage.AnswerMessage("from", "to", "answer")
+            val message = AnswerMessage("from", "to", "answer")
             client.emit("answer", message.toJson())
             Thread.sleep(1000)
             server.events.last() shouldBe message
         }
 
         test("should allow client to send ice candidate") {
-            val message = MultimediaProtocolMessage.IceCandidateMessage("from", "to", "candidate")
+            val message = IceCandidateMessage("from", "to", "candidate")
             client.emit("candidate", message.toJson())
             Thread.sleep(1000)
             server.events.last() shouldBe message
