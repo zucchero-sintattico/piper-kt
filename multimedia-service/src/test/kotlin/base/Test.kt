@@ -6,5 +6,5 @@ sealed interface Test {
 
     interface Unit : Test
 
-    @MicronautTest interface Integration : Test
+    @MicronautTest data object Integration : Test
 }

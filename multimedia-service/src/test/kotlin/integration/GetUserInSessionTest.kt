@@ -1,12 +1,12 @@
 package integration
 
-import base.Test
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.client.annotation.Client
+import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import piperkt.services.multimedia.interfaces.web.api.GetSessionParticipantsApi
 
 @Client("/")
@@ -15,8 +15,8 @@ interface GetUserInSessionClient {
     fun get(@PathVariable sessionId: String): HttpResponse<GetSessionParticipantsApi.Response>
 }
 
+@MicronautTest
 class GetUserInSessionTest(private val getUserInSessionClient: GetUserInSessionClient) :
-    Test.Integration,
     FunSpec({
         test("should return Not Found when session does not exist") {
             val sessionId = "000000000000000000000000"
