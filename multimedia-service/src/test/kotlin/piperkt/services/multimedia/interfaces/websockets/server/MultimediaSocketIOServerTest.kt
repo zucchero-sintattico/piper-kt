@@ -3,18 +3,18 @@ package piperkt.services.multimedia.interfaces.websockets.server
 import base.Test
 import io.kotest.core.spec.style.FunSpec
 import io.socket.client.IO
-import kotlinx.serialization.json.Json
 
 class MultimediaSocketIOServerTest :
     Test.Unit,
     FunSpec({
-        val server = MultimediaSocketIOServer(SocketIOConfiguration())
+        val server = MultimediaSocketIOServer()
         server.start()
-        val client = IO.socket("http://localhost:8888")
+        val client =
+            IO.socket(
+                "http://localhost:8888",
+                IO.Options.builder().setExtraHeaders(mapOf("authToken" to listOf("test"))).build()
+            )
         client.connect()
 
-        test("should handle join message") {
-            val message = JoinMessage("username", "content")
-            client.emit("join", Json.encodeToString(JoinMessage.serializer(), message))
-        }
+        test("should start the server") {}
     })

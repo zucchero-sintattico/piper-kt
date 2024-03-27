@@ -1,14 +1,36 @@
 package piperkt.services.multimedia.interfaces.websockets.api
 
+import kotlinx.serialization.Serializable
+import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolMessage.*
+
+sealed interface MultimediaProtocolMessage {
+
+    @Serializable data class JoinMessage(val sessionId: String) : MultimediaProtocolMessage
+
+    @Serializable
+    data class OfferMessage(val from: String, val to: String, val offer: String) :
+        MultimediaProtocolMessage
+
+    @Serializable
+    data class AnswerMessage(val from: String, val to: String, val answer: String) :
+        MultimediaProtocolMessage
+
+    @Serializable
+    data class IceCandidateMessage(val from: String, val to: String, val candidate: String) :
+        MultimediaProtocolMessage
+}
+
 interface MultimediaServerApi {
 
-    fun onUserJoin(username: String, sessionId: String)
+    fun onConnect()
 
-    fun onUserLeave(username: String, sessionId: String)
+    fun onDisconnect()
 
-    fun onOffer(username: String, sessionId: String, offer: String)
+    fun onUserJoin(message: JoinMessage)
 
-    fun onAnswer(username: String, sessionId: String, answer: String)
+    fun onOffer(message: OfferMessage)
 
-    fun onIceCandidate(username: String, sessionId: String, candidate: String)
+    fun onAnswer(message: AnswerMessage)
+
+    fun onIceCandidate(message: IceCandidateMessage)
 }
