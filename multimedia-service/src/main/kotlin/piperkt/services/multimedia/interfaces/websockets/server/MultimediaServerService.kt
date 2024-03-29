@@ -4,7 +4,11 @@ import com.corundumstudio.socketio.Configuration
 import com.corundumstudio.socketio.SocketIOClient
 import com.corundumstudio.socketio.SocketIOServer
 import io.micronaut.context.annotation.ConfigurationProperties
+import piperkt.services.multimedia.domain.SessionId
+import piperkt.services.multimedia.domain.SessionRepository
+import piperkt.services.multimedia.domain.User
 import piperkt.services.multimedia.interfaces.on
+import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolEvent.*
 import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolMessage
 
 @ConfigurationProperties("socketio")
@@ -13,30 +17,35 @@ class SocketIOConfiguration {
 }
 
 class MultimediaSocketIOServer(
-    private val configuration: SocketIOConfiguration = SocketIOConfiguration()
+    private val sessionRepository: SessionRepository,
+    private val configuration: SocketIOConfiguration = SocketIOConfiguration(),
 ) {
     private val socketIoConfig =
         Configuration().apply { port = configuration.port }.apply { isNeedClientAuth = false }
     private val server = SocketIOServer(socketIoConfig)
     private val clients = mutableMapOf<String, SocketIOClient>()
+    private val clientToSessionId = mutableMapOf<String, String>()
     val events = mutableListOf<Any>()
 
     fun start() {
         server.addConnectListener(this::onConnect)
         server.addDisconnectListener(this::onDisconnect)
-        server.on("join") { client, message: MultimediaProtocolMessage.JoinMessage, _ ->
+        server.on(JOIN.event) { client, message: MultimediaProtocolMessage.JoinMessage, _ ->
             onJoin(client, message)
             events.add(message)
         }
-        server.on("offer") { _, message: MultimediaProtocolMessage.OfferMessage, _ ->
+        server.on(OFFER.event) { _, message: MultimediaProtocolMessage.OfferMessage, _ ->
             onOffer(message)
             events.add(message)
         }
-        server.on("answer") { _, message: MultimediaProtocolMessage.AnswerMessage, _ ->
+        server.on(ANSWER.event) { _, message: MultimediaProtocolMessage.AnswerMessage, _ ->
             onAnswer(message)
             events.add(message)
         }
-        server.on("candidate") { _, message: MultimediaProtocolMessage.IceCandidateMessage, _ ->
+        server.on(ICE_CANDIDATE.event) {
+            _,
+            message: MultimediaProtocolMessage.IceCandidateMessage,
+            _ ->
             onIceCandidate(message)
             events.add(message)
         }
@@ -51,7 +60,7 @@ class MultimediaSocketIOServer(
     private fun roomOf(sessionId: String) = server.getRoomOperations(sessionId)
 
     private fun SocketIOClient.notAuthenticated() {
-        this.sendEvent("notAuthenticated")
+        this.sendEvent(NOT_AUTHENTICATED.event)
         this.disconnect()
     }
 
@@ -65,6 +74,11 @@ class MultimediaSocketIOServer(
         val username = client.getUsername() ?: return client.notAuthenticated()
         clients.remove(username)
         println("User $username disconnected")
+        clientToSessionId[username]?.let { sessionId ->
+            client.leaveRoom(sessionId)
+            roomOf(sessionId).sendEvent(USER_LEFT.event, username)
+            sessionRepository.removeParticipant(SessionId(sessionId), User.fromUsername(username))
+        }
     }
 
     fun onJoin(
@@ -73,8 +87,10 @@ class MultimediaSocketIOServer(
     ) {
         val username = client.getUsername() ?: return client.notAuthenticated()
         val sessionId = joinMessage.sessionId
-        roomOf(sessionId).sendEvent("userJoin", username)
+        clientToSessionId[username] = sessionId
+        roomOf(sessionId).sendEvent(USER_JOIN.event, username)
         client.joinRoom(sessionId)
+        sessionRepository.addParticipant(SessionId(sessionId), User.fromUsername(username))
         println("User $username joined session $sessionId")
     }
 
@@ -84,7 +100,7 @@ class MultimediaSocketIOServer(
         val to = offerMessage.to
         println("User ${offerMessage.from} sent offer to $to")
         val toClient = clients[to] ?: return
-        toClient.sendEvent("offer", offerMessage)
+        toClient.sendEvent(OFFER_RECEIVED.event, offerMessage)
     }
 
     fun onAnswer(
@@ -93,7 +109,7 @@ class MultimediaSocketIOServer(
         val to = answerMessage.to
         println("User ${answerMessage.from} sent answer to $to")
         val toClient = clients[to] ?: return
-        toClient.sendEvent("answer", answerMessage)
+        toClient.sendEvent(ANSWER_RECEIVED.event, answerMessage)
     }
 
     fun onIceCandidate(
@@ -102,6 +118,6 @@ class MultimediaSocketIOServer(
         val to = iceCandidateMessage.to
         println("User ${iceCandidateMessage.from} sent ice candidate to $to")
         val toClient = clients[to] ?: return
-        toClient.sendEvent("iceCandidate", iceCandidateMessage)
+        toClient.sendEvent(ICE_CANDIDATE_RECEIVED.event, iceCandidateMessage)
     }
 }

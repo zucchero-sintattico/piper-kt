@@ -4,25 +4,26 @@ import base.Test
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.socket.client.IO
+import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.interfaces.toJson
+import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolEvent.JOIN
 import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolMessage.*
 
 class MultimediaSocketIOServerTest :
     Test.Unit,
     FunSpec({
-        val server = MultimediaSocketIOServer()
+        val server = MultimediaSocketIOServer(InMemorySessionRepository())
         server.start()
-        val client =
-            IO.socket(
-                "http://localhost:8888",
-                IO.Options.builder().setExtraHeaders(mapOf("authToken" to listOf("test"))).build()
-            )
+        val token = "test"
+        val authenticatedOptions =
+            IO.Options.builder().setExtraHeaders(mapOf("authToken" to listOf(token))).build()
+        val client = IO.socket("http://localhost:8888", authenticatedOptions)
         client.connect()
         Thread.sleep(1000)
 
         test("should allow client to join") {
             val message = JoinMessage("sessionId")
-            client.emit("join", message.toJson())
+            client.emit(JOIN.event, message.toJson())
             Thread.sleep(1000)
             server.events.last() shouldBe message
         }
