@@ -128,7 +128,7 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: "adopt"
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
       - name: Create artifacts directory
         run: mkdir -p ./tmp-site
       - name: Build documentation
