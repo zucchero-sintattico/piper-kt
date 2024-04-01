@@ -23,5 +23,6 @@ class DirectRepositoryImpl(private val directModelRepository: DirectModelReposit
 
     override fun sendDirectMessage(username: String, friendUsername: String, message: Message) {
         TODO("Not yet implemented")
+        directModelRepository.count()
     }
 }
