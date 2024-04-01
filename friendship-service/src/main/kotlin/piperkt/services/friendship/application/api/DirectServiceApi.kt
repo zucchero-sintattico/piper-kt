@@ -1,7 +1,8 @@
-package piperkt.services.friendship.domain
+package piperkt.services.friendship.application.api
 
-interface DirectRepository {
+import piperkt.services.friendship.domain.Message
 
+interface DirectServiceApi {
     fun getDirectMessagesPaginated(
         username: String,
         friendUsername: String,
