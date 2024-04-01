@@ -1,6 +1,5 @@
 package piperkt.services.friendship.infrastructure.web
 
-import io.micronaut.http.MediaType.TEXT_PLAIN
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
