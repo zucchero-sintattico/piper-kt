@@ -1,4 +1,5 @@
 package piperkt.services.friendship.infrastructure.persistence.model
+
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.data.mongodb.annotation.MongoRepository
@@ -16,6 +17,5 @@ class MessageEntity {
     lateinit var content: String
     var timestamp: String = Instant.now().toString()
 }
-
 
 @MongoRepository interface DirectModelRepository : CrudRepository<DirectEntity, String>
