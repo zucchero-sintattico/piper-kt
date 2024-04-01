@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: micronaut-k8s
-  name: "friendship-service"
+  name: {{ .Values.ServiceName }}
 spec:
   selector:
     matchLabels:
-      app: "friendship-service"
+      app: {{ .Values.ServiceName }}
   template:
     metadata:
       labels:
-        app: "friendship-service"
+        app: {{ .Values.ServiceName }}
     spec:
       serviceAccountName: micronaut-service # <1>
       containers:
-        - name: "friendship-service"
-          image: friendship-service # <2>
+        - name: {{ .Values.ServiceName }}
+          image: {{ .Values.ServiceName }}
           imagePullPolicy: Never # <3>
           ports:
             - name: http
@@ -38,11 +38,14 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: micronaut-k8s
-  name: "friendship-service" # <4>
+  name: {{ .Values.ServiceName }}
 spec:
   selector:
-    app: "friendship-service"
+    app: {{ .Values.ServiceName }}
   type: LoadBalancer
   ports:
     - protocol: "TCP"
       port: 8080 # <5>
+
+---
+
