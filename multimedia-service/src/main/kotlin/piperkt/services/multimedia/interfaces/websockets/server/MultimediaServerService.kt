@@ -4,9 +4,9 @@ import com.corundumstudio.socketio.Configuration
 import com.corundumstudio.socketio.SocketIOClient
 import com.corundumstudio.socketio.SocketIOServer
 import io.micronaut.context.annotation.ConfigurationProperties
-import piperkt.services.multimedia.domain.SessionId
-import piperkt.services.multimedia.domain.SessionRepository
-import piperkt.services.multimedia.domain.User
+import piperkt.services.multimedia.domain.session.SessionId
+import piperkt.services.multimedia.domain.session.SessionRepository
+import piperkt.services.multimedia.domain.user.UserId
 import piperkt.services.multimedia.interfaces.on
 import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolEvent.*
 import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolMessage
@@ -64,6 +64,11 @@ class MultimediaSocketIOServer(
         this.disconnect()
     }
 
+    private fun SocketIOClient.error(message: String) {
+        this.sendEvent("error", message)
+        this.disconnect()
+    }
+
     fun onConnect(client: SocketIOClient) {
         val username = client.getUsername() ?: return client.notAuthenticated()
         clients[username] = client
@@ -77,7 +82,12 @@ class MultimediaSocketIOServer(
         clientToSessionId[username]?.let { sessionId ->
             client.leaveRoom(sessionId)
             roomOf(sessionId).sendEvent(USER_LEFT.event, username)
-            sessionRepository.removeParticipant(SessionId(sessionId), User.fromUsername(username))
+            val session =
+                sessionRepository.findById(SessionId(sessionId))
+                    ?: return client.error("Session not found")
+            session.removeParticipant(UserId(username))
+            sessionRepository.save(session)
+            println("User $username left session $sessionId")
         }
     }
 
@@ -90,7 +100,11 @@ class MultimediaSocketIOServer(
         clientToSessionId[username] = sessionId
         roomOf(sessionId).sendEvent(USER_JOIN.event, username)
         client.joinRoom(sessionId)
-        sessionRepository.addParticipant(SessionId(sessionId), User.fromUsername(username))
+        val session =
+            sessionRepository.findById(SessionId(sessionId))
+                ?: return client.error("Session not found")
+        session.addParticipant(UserId(username))
+        sessionRepository.save(session)
         println("User $username joined session $sessionId")
     }
 

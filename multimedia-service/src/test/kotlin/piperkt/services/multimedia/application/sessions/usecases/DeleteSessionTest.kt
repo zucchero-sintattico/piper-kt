@@ -7,10 +7,12 @@ import mocks.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.success
-import piperkt.services.multimedia.application.usecases.DeleteSession
-import piperkt.services.multimedia.application.usecases.DeleteSession.Command
-import piperkt.services.multimedia.application.usecases.DeleteSession.Errors.SessionNotFound
+import piperkt.services.multimedia.application.usecases.internal.DeleteSession
+import piperkt.services.multimedia.application.usecases.internal.DeleteSession.Command
 import piperkt.services.multimedia.domain.events.SessionEvent.SessionDeleted
+import piperkt.services.multimedia.domain.session.Session
+import piperkt.services.multimedia.domain.session.SessionErrors
+import piperkt.services.multimedia.domain.session.SessionId
 
 class DeleteSessionTest :
     Test.Unit,
@@ -25,15 +27,17 @@ class DeleteSessionTest :
         }
 
         test("should delete session and publish SessionDeleted event") {
-            val session = sessionRepository.createSession(emptyList())
-            val result = deleteSession(Command(session.id.value))
+            val sessionId = SessionId("sessionId")
+            val session = Session(id = sessionId)
+            sessionRepository.save(session)
+            val result = deleteSession(Command(sessionId))
             result shouldBe success()
             eventPublisher.publishedEvents shouldBe listOf(SessionDeleted(session.id))
         }
 
         test("should return SessionNotFound error") {
             val fakeSessionId = "fakeSessionId"
-            val result = deleteSession(Command(fakeSessionId))
-            result shouldBe SessionNotFound(fakeSessionId).asFailure()
+            val result = deleteSession(Command(SessionId(fakeSessionId)))
+            result shouldBe SessionErrors.SessionNotFound(SessionId(fakeSessionId)).asFailure()
         }
     })

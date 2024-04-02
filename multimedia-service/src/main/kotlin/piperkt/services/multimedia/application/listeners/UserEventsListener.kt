@@ -1,10 +1,10 @@
 package piperkt.services.multimedia.application.listeners
 
-import piperkt.services.multimedia.domain.ServerId
-import piperkt.services.multimedia.domain.ServerRepository
-import piperkt.services.multimedia.domain.User
 import piperkt.services.multimedia.domain.events.EventListener
 import piperkt.services.multimedia.domain.events.UserEvent
+import piperkt.services.multimedia.domain.server.ServerId
+import piperkt.services.multimedia.domain.server.ServerRepository
+import piperkt.services.multimedia.domain.user.UserId
 
 open class UserEventsListener(private val serverRepository: ServerRepository) :
     EventListener<UserEvent> {
@@ -17,14 +17,20 @@ open class UserEventsListener(private val serverRepository: ServerRepository) :
     }
 
     private fun onUserJoinedServer(event: UserEvent.UserJoinedServer) {
-        serverRepository.addUser(ServerId(event.serverId), User.fromUsername(event.username))
+        val server = serverRepository.findById(ServerId(event.serverId))!!
+        server.addMember(UserId(event.username))
+        serverRepository.save(server)
     }
 
     private fun onUserLeftServer(event: UserEvent.UserLeftServer) {
-        serverRepository.removeUser(ServerId(event.serverId), User.fromUsername(event.username))
+        val server = serverRepository.findById(ServerId(event.serverId))!!
+        server.removeMember(UserId(event.username))
+        serverRepository.save(server)
     }
 
     private fun onUserKickedFromServer(event: UserEvent.UserKickedFromServer) {
-        serverRepository.removeUser(ServerId(event.serverId), User.fromUsername(event.username))
+        val server = serverRepository.findById(ServerId(event.serverId))!!
+        server.removeMember(UserId(event.username))
+        serverRepository.save(server)
     }
 }

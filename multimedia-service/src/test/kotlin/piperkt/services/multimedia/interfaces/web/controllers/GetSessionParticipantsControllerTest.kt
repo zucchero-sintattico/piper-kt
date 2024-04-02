@@ -8,9 +8,10 @@ import io.kotest.matchers.shouldBe
 import mocks.repositories.InMemorySessionRepository
 import org.junit.jupiter.api.assertThrows
 import piperkt.services.multimedia.application.usecases.GetSessionParticipants
-import piperkt.services.multimedia.application.usecases.GetSessionParticipants.Errors.SessionNotFound
-import piperkt.services.multimedia.domain.SessionId
-import piperkt.services.multimedia.interfaces.web.api.GetSessionParticipantsApi.Response
+import piperkt.services.multimedia.domain.session.Session
+import piperkt.services.multimedia.domain.session.SessionErrors
+import piperkt.services.multimedia.domain.session.SessionId
+import piperkt.services.multimedia.interfaces.web.api.GetSessionParticipantsApi
 
 class GetSessionParticipantsControllerTest :
     Test.Unit,
@@ -22,15 +23,16 @@ class GetSessionParticipantsControllerTest :
         beforeEach { sessionRepository.clear() }
 
         test("should return users when session exists") {
-            val users = listOf(john(), jane())
-            val session = sessionRepository.createSession(users.map { it.username.value })
-            sessionRepository.addParticipant(session.id, john())
-            val result = getUserInSessionApi(session.id.value)
-            result shouldBe Response(setOf(john().username.value))
+            val users = listOf(john(), jane()).map { it.id }
+            val sessionId = SessionId("sessionId")
+            val session = Session(id = sessionId, allowedUsers = users, participants = users)
+            sessionRepository.save(session)
+            val result = getUserInSessionApi(sessionId.value)
+            result shouldBe GetSessionParticipantsApi.Response(users.map { it.value }.toSet())
         }
 
         test("should throw SessionNotFound when session does not exist") {
             val fakeSessionId = SessionId("nonExistingSessionId")
-            assertThrows<SessionNotFound> { getUserInSessionApi(fakeSessionId.value) }
+            assertThrows<SessionErrors.SessionNotFound> { getUserInSessionApi(fakeSessionId.value) }
         }
     })

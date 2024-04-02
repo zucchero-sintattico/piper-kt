@@ -8,11 +8,12 @@ import mocks.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.success
-import piperkt.services.multimedia.application.usecases.AddSessionAllowedUser
-import piperkt.services.multimedia.application.usecases.AddSessionAllowedUser.Command
-import piperkt.services.multimedia.application.usecases.AddSessionAllowedUser.Errors.SessionNotFound
-import piperkt.services.multimedia.application.usecases.AddSessionAllowedUser.Errors.UserAlreadyAllowed
+import piperkt.services.multimedia.application.usecases.internal.AddSessionAllowedUser
+import piperkt.services.multimedia.application.usecases.internal.AddSessionAllowedUser.Command
 import piperkt.services.multimedia.domain.events.SessionEvent.AllowedUserAdded
+import piperkt.services.multimedia.domain.session.Session
+import piperkt.services.multimedia.domain.session.SessionErrors
+import piperkt.services.multimedia.domain.session.SessionId
 
 class AddSessionAllowedUserTest :
     Test.Unit,
@@ -30,26 +31,28 @@ class AddSessionAllowedUserTest :
             test("should allow to add an allowed user to the session") {
                 val users = listOf(UsersData.john())
                 val userToAdd = UsersData.jane()
-                val session = sessionRepository.createSession(users.map { it.username.value })
-                val result =
-                    addSessionAllowedUser(Command(session.id.value, userToAdd.username.value))
+                val session =
+                    Session(id = SessionId("sessionId"), allowedUsers = users.map { it.id })
+                sessionRepository.save(session)
+                val result = addSessionAllowedUser(Command(session.id, userToAdd.id))
                 result shouldBe success()
                 eventPublisher.publishedEvents shouldBe
-                    listOf(AllowedUserAdded(session.id, userToAdd))
+                    listOf(AllowedUserAdded(session.id, userToAdd.id))
             }
 
             test("should return SessionNotFound error if session does not exist") {
                 val fakeSessionId = "fakeSessionId"
-                val result =
-                    addSessionAllowedUser(Command(fakeSessionId, UsersData.john().username.value))
-                result shouldBe SessionNotFound(fakeSessionId).asFailure()
+                val user = UsersData.john()
+                val result = addSessionAllowedUser(Command(SessionId(fakeSessionId), user.id))
+                result shouldBe SessionErrors.SessionNotFound(SessionId(fakeSessionId)).asFailure()
             }
 
             test("should return UserAlreadyAllowed error if user is already allowed") {
-                val john = UsersData.john()
-                val session = sessionRepository.createSession(listOf(john.username.value))
-                val result = addSessionAllowedUser(Command(session.id.value, john.username.value))
-                result shouldBe UserAlreadyAllowed(session.id, john).asFailure()
+                val user = UsersData.john()
+                val session = Session(id = SessionId("sessionId"), allowedUsers = listOf(user.id))
+                sessionRepository.save(session)
+                val result = addSessionAllowedUser(Command(session.id, user.id))
+                result shouldBe SessionErrors.UserAlreadyAllowed(session.id, user.id).asFailure()
             }
         }
     })
