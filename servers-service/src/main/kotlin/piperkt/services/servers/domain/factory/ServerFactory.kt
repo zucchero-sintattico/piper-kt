@@ -6,17 +6,22 @@ import piperkt.services.servers.domain.Server
 
 object ServerFactory {
 
+    @Suppress("LongParameterList")
     fun createServer(
         serverId: String,
         name: String,
         description: String,
         owner: String,
+        channels: List<Channel> = emptyList(),
+        users: List<String> = listOf(owner)
     ): Server {
         return Server(
             id = ServerId(serverId),
             name = name,
             owner = owner,
-            description = description
+            description = description,
+            channels = channels.toMutableList(),
+            users = users.toMutableList()
         )
     }
 

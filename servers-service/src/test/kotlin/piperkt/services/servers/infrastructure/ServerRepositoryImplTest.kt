@@ -4,7 +4,10 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
+import piperkt.services.commons.domain.id.ChannelId
 import piperkt.services.servers.application.ServerRepository
+import piperkt.services.servers.domain.ChannelType
+import piperkt.services.servers.domain.factory.ChannelFactory
 
 @MicronautTest
 class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
@@ -22,7 +25,7 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
 
         "should delete a server" {
             serverRepository.save("serverName", "serverDescription", "owner").also {
-                serverRepository.delete(it.id)
+                serverRepository.deleteById(it.id)
             }
             serverRepository.findByMember("owner").size shouldBe 0
         }
@@ -48,7 +51,60 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
         "should find servers from a member" {
             serverRepository.save("serverName", "serverDescription", "owner")
             serverRepository.save("serverName", "serverDescription", "member")
+            serverRepository.findByMember("member").size shouldBe 1
+        }
 
-            serverRepository.findByMember("owner").size shouldBe 1
+        "should create a channel" {
+            val server = serverRepository.save("serverName", "serverDescription", "owner")
+            val channel =
+                ChannelFactory.createFromType(
+                    server.channels.size.toString(),
+                    "channelName",
+                    "channelDescription",
+                    "TEXT"
+                )
+            server.addChannel(channel)
+            serverRepository.update(server).let {
+                it.channels.size shouldBe 1
+                it.channels[0].channelId shouldBe ChannelId("0")
+                it.channels[0].name shouldBe "channelName"
+                it.channels[0].description shouldBe "channelDescription"
+                it.channels[0].type shouldBe ChannelType.TEXT
+            }
+        }
+
+        "should delete a channel" {
+            val server = serverRepository.save("serverName", "serverDescription", "owner")
+            val channel =
+                ChannelFactory.createFromType(
+                    server.channels.size.toString(),
+                    "channelName",
+                    "channelDescription",
+                    "TEXT"
+                )
+            server.addChannel(channel)
+            server.removeChannel(channel)
+            serverRepository.update(server).channels.size shouldBe 0
+        }
+
+        "should update a channel" {
+            val server = serverRepository.save("serverName", "serverDescription", "owner")
+            val channel =
+                ChannelFactory.createFromType(
+                    server.channels.size.toString(),
+                    "channelName",
+                    "channelDescription",
+                    "TEXT"
+                )
+            server.addChannel(channel)
+            channel.name = "newChannelName"
+            channel.description = "newChannelDescription"
+            serverRepository.update(server).let {
+                it.channels.size shouldBe 1
+                it.channels[0].channelId shouldBe ChannelId("0")
+                it.channels[0].name shouldBe "newChannelName"
+                it.channels[0].description shouldBe "newChannelDescription"
+                it.channels[0].type shouldBe ChannelType.TEXT
+            }
         }
     })

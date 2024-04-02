@@ -27,7 +27,7 @@ open class ServerService(
         val server = serverRepository.findById(request.serverId)
         return if (server != null) {
             if (isUserAdmin(request.serverId, request.requestFrom)) {
-                serverRepository.delete(request.serverId)
+                serverRepository.deleteById(request.serverId)
                 eventPublisher.publish(ServerEvent.ServerDeletedEvent(request.serverId))
                 Result.success(ServerCommand.DeleteServer.Response)
             } else {

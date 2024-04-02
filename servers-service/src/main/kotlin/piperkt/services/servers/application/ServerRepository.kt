@@ -12,7 +12,7 @@ interface ServerRepository {
 
     fun save(serverName: String, serverDescription: String, owner: String): Server
 
-    fun delete(serverId: ServerId)
+    fun deleteById(serverId: ServerId)
 
     fun update(server: Server): Server
 

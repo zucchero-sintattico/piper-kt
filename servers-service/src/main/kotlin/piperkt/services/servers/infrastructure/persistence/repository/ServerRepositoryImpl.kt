@@ -7,6 +7,7 @@ import kotlin.jvm.optionals.getOrNull
 import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.ServerRepository
 import piperkt.services.servers.domain.Server
+import piperkt.services.servers.domain.factory.ChannelFactory
 import piperkt.services.servers.domain.factory.ServerFactory
 import piperkt.services.servers.infrastructure.persistence.model.ChannelEntity
 import piperkt.services.servers.infrastructure.persistence.model.ServerEntity
@@ -26,16 +27,14 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
                     users = listOf(owner)
                 )
             )
-            .let { ServerFactory.createServer(it.id.orEmpty(), it.name, it.description, it.owner) }
+            .toServer()
     }
 
     override fun findAll(): List<Server> {
-        return serverModelRepository.findAll().map {
-            ServerFactory.createServer(it.id.orEmpty(), it.name, it.description, it.owner)
-        }
+        return serverModelRepository.findAll().map { it.toServer() }
     }
 
-    override fun delete(serverId: ServerId) {
+    override fun deleteById(serverId: ServerId) {
         return serverModelRepository.deleteById(serverId.value)
     }
 
@@ -60,7 +59,7 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
                     channels = channelEntities
                 )
             )
-            .let { ServerFactory.createServer(it.id.orEmpty(), it.name, it.description, it.owner) }
+            .toServer()
     }
 
     override fun isUserInServer(serverId: ServerId, username: String): Boolean {
@@ -74,14 +73,30 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
     }
 
     override fun findById(serverId: ServerId): Server? {
-        return serverModelRepository.findById(serverId.value).getOrNull()?.let {
-            ServerFactory.createServer(it.id.orEmpty(), it.name, it.description, it.owner)
-        }
+        return serverModelRepository.findById(serverId.value).getOrNull()?.toServer()
     }
 
     override fun findByMember(username: String): List<Server> {
-        return serverModelRepository.findByUsersContains(username).map {
-            ServerFactory.createServer(it.id.orEmpty(), it.name, it.description, it.owner)
-        }
+        return serverModelRepository.findByUsersContains(username).map { it.toServer() }
+    }
+
+    // Extension method to create server from serverEntity
+    private fun ServerEntity.toServer(): Server {
+        return ServerFactory.createServer(
+            serverId = this.id.orEmpty(),
+            name = this.name,
+            description = this.description,
+            owner = this.owner,
+            channels =
+                this.channels.map { channelEntity ->
+                    ChannelFactory.createFromType(
+                        channelEntity.id,
+                        channelEntity.name,
+                        channelEntity.description,
+                        channelEntity.channelType
+                    )
+                },
+            users = this.users
+        )
     }
 }
