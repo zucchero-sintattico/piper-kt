@@ -4,7 +4,7 @@ import piperkt.services.multimedia.domain.user.UserId
 
 object SessionOps {
     fun Session.isAllowed(user: UserId): Boolean {
-        return allowedUsers().contains(user)
+        return allowedUsersId().contains(user)
     }
 
     fun Session.isParticipant(user: UserId): Boolean {

@@ -10,8 +10,8 @@ import piperkt.services.multimedia.application.success
 import piperkt.services.multimedia.application.usecases.internal.DeleteSession
 import piperkt.services.multimedia.application.usecases.internal.DeleteSession.Command
 import piperkt.services.multimedia.domain.events.SessionEvent.SessionDeleted
-import piperkt.services.multimedia.domain.session.Session
 import piperkt.services.multimedia.domain.session.SessionErrors
+import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionId
 
 class DeleteSessionTest :
@@ -27,17 +27,16 @@ class DeleteSessionTest :
         }
 
         test("should delete session and publish SessionDeleted event") {
-            val sessionId = SessionId("sessionId")
-            val session = Session(id = sessionId)
+            val session = SessionFactory.empty()
             sessionRepository.save(session)
-            val result = deleteSession(Command(sessionId))
+            val result = deleteSession(Command(session.id))
             result shouldBe success()
             eventPublisher.publishedEvents shouldBe listOf(SessionDeleted(session.id))
         }
 
         test("should return SessionNotFound error") {
-            val fakeSessionId = "fakeSessionId"
-            val result = deleteSession(Command(SessionId(fakeSessionId)))
-            result shouldBe SessionErrors.SessionNotFound(SessionId(fakeSessionId)).asFailure()
+            val fakeSessionId = SessionId("fakeSessionId")
+            val result = deleteSession(Command(fakeSessionId))
+            result shouldBe SessionErrors.SessionNotFound(fakeSessionId).asFailure()
         }
     })

@@ -21,7 +21,7 @@ class SessionRepositoryImpl(private val sessionEntityRepository: SessionEntityRe
         val mapped =
             SessionEntity(
                 id = entity.id.value,
-                allowedUsers = entity.allowedUsers().map { it.value },
+                allowedUsers = entity.allowedUsersId().map { it.value },
                 participants = entity.participants().map { it.value }
             )
         return sessionEntityRepository.save(mapped).toDomain()

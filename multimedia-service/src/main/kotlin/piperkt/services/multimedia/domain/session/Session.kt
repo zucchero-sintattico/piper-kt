@@ -3,14 +3,14 @@ package piperkt.services.multimedia.domain.session
 import piperkt.services.multimedia.domain.AggregateRoot
 import piperkt.services.multimedia.domain.user.UserId
 
-class Session(
-    id: SessionId = SessionId.empty(),
-    private var allowedUsers: List<UserId> = emptyList(),
-    private var participants: List<UserId> = emptyList()
+abstract class Session(
+    id: SessionId,
+    private var allowedUsersId: Set<UserId> = emptySet(),
+    private var participants: Set<UserId> = emptySet(),
 ) : AggregateRoot<SessionId>(id) {
 
-    fun allowedUsers(): List<UserId> {
-        return allowedUsers.toList()
+    fun allowedUsersId(): List<UserId> {
+        return allowedUsersId.toList()
     }
 
     fun participants(): List<UserId> {
@@ -35,23 +35,17 @@ class Session(
 
     @Throws(SessionErrors.UserAlreadyAllowed::class)
     fun addAllowedUser(user: UserId) {
-        if (allowedUsers.contains(user)) {
+        if (allowedUsersId.contains(user)) {
             throw SessionErrors.UserAlreadyAllowed(id, user)
         }
-        allowedUsers += user
+        allowedUsersId += user
     }
 
     @Throws(SessionErrors.UserNotAllowed::class)
     fun removeAllowedUser(user: UserId) {
-        if (!allowedUsers.contains(user)) {
+        if (!allowedUsersId.contains(user)) {
             throw SessionErrors.UserNotAllowed(id, user)
         }
-        allowedUsers -= user
-    }
-
-    companion object {
-        fun findById(id: SessionId, sessionRepository: SessionRepository): Session {
-            return sessionRepository.findById(id) ?: throw SessionErrors.SessionNotFound(id)
-        }
+        allowedUsersId -= user
     }
 }

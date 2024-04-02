@@ -5,7 +5,7 @@ import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.data.mongodb.annotation.MongoRepository
 import io.micronaut.data.repository.CrudRepository
-import piperkt.services.multimedia.domain.session.Session
+import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.domain.user.UserId
 
@@ -16,10 +16,10 @@ data class SessionEntity(
     val participants: List<String>
 ) {
     fun toDomain() =
-        Session(
+        SessionFactory.create(
             SessionId(id!!),
-            allowedUsers.map { UserId(it) }.toList(),
-            participants.map { UserId(it) }.toList()
+            allowedUsers.map { UserId(it) }.toSet(),
+            participants.map { UserId(it) }.toSet()
         )
 }
 

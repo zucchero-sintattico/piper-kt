@@ -27,7 +27,7 @@ open class RemoveSessionAllowedUser(
         val session =
             sessionRepository.findById(command.sessionId)
                 ?: throw SessionErrors.SessionNotFound(command.sessionId)
-        if (!session.allowedUsers().contains(command.userId)) {
+        if (!session.allowedUsersId().contains(command.userId)) {
             throw SessionErrors.UserNotAllowed(command.sessionId, command.userId)
         }
     }

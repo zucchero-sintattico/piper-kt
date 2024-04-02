@@ -1,7 +1,7 @@
 package piperkt.services.multimedia.application.sessions.usecases
 
 import base.Test
-import data.UsersData
+import data.UsersData.john
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import mocks.MockedSessionEventPublisher
@@ -23,8 +23,8 @@ class CreateSessionTest :
         }
 
         test("should create session and publish SessionCreated event") {
-            val users = listOf(UsersData.john())
-            val result = createSession(Command(users.map { it.id }))
+            val users = setOf(john().id)
+            val result = createSession(Command(users))
             result shouldBe success()
         }
     })

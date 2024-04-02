@@ -1,7 +1,7 @@
 package piperkt.services.multimedia.application.sessions.usecases
 
 import base.Test
-import data.UsersData
+import data.UsersData.john
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import mocks.MockedSessionEventPublisher
@@ -10,8 +10,8 @@ import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.success
 import piperkt.services.multimedia.application.usecases.JoinSession
 import piperkt.services.multimedia.application.usecases.JoinSession.Command
-import piperkt.services.multimedia.domain.session.Session
 import piperkt.services.multimedia.domain.session.SessionErrors
+import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionId
 
 class JoinSessionTest :
@@ -30,41 +30,34 @@ class JoinSessionTest :
             test(
                 "should allow to add a participant to the session if user is allowed to join the session"
             ) {
-                val allowedUsers = listOf(UsersData.john())
-                val sessionId = SessionId("sessionId")
-                val session = Session(id = sessionId, allowedUsers = allowedUsers.map { it.id })
+                val allowedUsers = setOf(john().id)
+                val session = SessionFactory.fromAllowedUsersIds(allowedUsers)
                 sessionRepository.save(session)
-                val result = joinSession(Command(sessionId, allowedUsers[0].id))
+                val result = joinSession(Command(session.id, john().id))
                 result shouldBe success()
             }
 
             test("should return SessionNotFound error if session does not exist") {
                 val fakeSessionId = SessionId("fakeSessionId")
-                val result = joinSession(Command(fakeSessionId, UsersData.john().id))
+                val result = joinSession(Command(fakeSessionId, john().id))
                 result shouldBe SessionErrors.SessionNotFound(fakeSessionId).asFailure()
             }
 
             test("should return UserNotAllowed error if user is not allowed to join the session") {
-                val allowedUsers = listOf(UsersData.john()).map { it.id }
-                val session = Session(id = SessionId("sessionId"), allowedUsers = allowedUsers)
+                val session = SessionFactory.empty()
                 sessionRepository.save(session)
-                val result = joinSession(Command(session.id, UsersData.jane().id))
-                result shouldBe
-                    SessionErrors.UserNotAllowed(session.id, UsersData.jane().id).asFailure()
+                val result = joinSession(Command(session.id, john().id))
+                result shouldBe SessionErrors.UserNotAllowed(session.id, john().id).asFailure()
             }
 
             test("should return UserAlreadyParticipant error if user is already a participant") {
-                val allowedUsers = listOf(UsersData.john()).map { it.id }
-                val session =
-                    Session(
-                        id = SessionId("sessionId"),
-                        allowedUsers = allowedUsers,
-                        participants = allowedUsers
-                    )
+                val allowedUsers = setOf(john().id)
+                val session = SessionFactory.withParticipants(allowedUsers, allowedUsers)
                 sessionRepository.save(session)
-                val result = joinSession(Command(session.id, allowedUsers[0]))
+                val result = joinSession(Command(session.id, allowedUsers.first()))
                 result shouldBe
-                    SessionErrors.UserAlreadyParticipant(session.id, allowedUsers[0]).asFailure()
+                    SessionErrors.UserAlreadyParticipant(session.id, allowedUsers.first())
+                        .asFailure()
             }
         }
     })
