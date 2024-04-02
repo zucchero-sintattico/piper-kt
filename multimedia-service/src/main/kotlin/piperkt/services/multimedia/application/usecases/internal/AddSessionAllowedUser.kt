@@ -34,7 +34,7 @@ open class AddSessionAllowedUser(
         val session =
             sessionRepository.findById(command.sessionId)
                 ?: throw SessionErrors.SessionNotFound(command.sessionId)
-        if (session.allowedUsers().contains(command.userId)) {
+        if (session.allowedUsersId().contains(command.userId)) {
             throw SessionErrors.UserAlreadyAllowed(command.sessionId, command.userId)
         }
     }

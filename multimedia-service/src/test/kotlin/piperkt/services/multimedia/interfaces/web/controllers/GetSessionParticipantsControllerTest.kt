@@ -8,8 +8,8 @@ import io.kotest.matchers.shouldBe
 import mocks.repositories.InMemorySessionRepository
 import org.junit.jupiter.api.assertThrows
 import piperkt.services.multimedia.application.usecases.GetSessionParticipants
-import piperkt.services.multimedia.domain.session.Session
 import piperkt.services.multimedia.domain.session.SessionErrors
+import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.interfaces.web.api.GetSessionParticipantsApi
 
@@ -24,10 +24,9 @@ class GetSessionParticipantsControllerTest :
 
         test("should return users when session exists") {
             val users = listOf(john(), jane()).map { it.id }
-            val sessionId = SessionId("sessionId")
-            val session = Session(id = sessionId, allowedUsers = users, participants = users)
+            val session = SessionFactory.withParticipants(users.toSet(), users.toSet())
             sessionRepository.save(session)
-            val result = getUserInSessionApi(sessionId.value)
+            val result = getUserInSessionApi(session.id.value)
             result shouldBe GetSessionParticipantsApi.Response(users.map { it.value }.toSet())
         }
 

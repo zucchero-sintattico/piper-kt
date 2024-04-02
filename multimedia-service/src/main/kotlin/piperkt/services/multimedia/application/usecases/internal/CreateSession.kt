@@ -3,7 +3,7 @@ package piperkt.services.multimedia.application.usecases.internal
 import piperkt.services.multimedia.application.CommandUseCase
 import piperkt.services.multimedia.domain.events.SessionEvent.SessionCreated
 import piperkt.services.multimedia.domain.events.SessionEventPublisher
-import piperkt.services.multimedia.domain.session.Session
+import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionRepository
 import piperkt.services.multimedia.domain.user.UserId
 
@@ -23,12 +23,13 @@ open class CreateSession(
      *
      * @param allowedUserIds the list of user ids allowed in the session
      */
-    data class Command(val allowedUserIds: List<UserId>)
+    data class Command(val allowedUserIds: Set<UserId>)
 
     override fun validate(command: Command) = Unit // No validation needed
 
     override fun execute(command: Command) {
-        val session = sessionRepository.save(Session(allowedUsers = command.allowedUserIds))
-        sessionEventPublisher.publish(SessionCreated(session.id, session.allowedUsers()))
+        val session = SessionFactory.fromAllowedUsersIds(command.allowedUserIds)
+        sessionRepository.save(session)
+        sessionEventPublisher.publish(SessionCreated(session.id, session.allowedUsersId()))
     }
 }

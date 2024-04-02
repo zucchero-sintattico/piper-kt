@@ -1,7 +1,8 @@
 package piperkt.services.multimedia.application.sessions.usecases
 
 import base.Test
-import data.UsersData
+import data.UsersData.jane
+import data.UsersData.john
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import mocks.MockedSessionEventPublisher
@@ -10,8 +11,8 @@ import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.success
 import piperkt.services.multimedia.application.usecases.LeaveSession
 import piperkt.services.multimedia.application.usecases.LeaveSession.Command
-import piperkt.services.multimedia.domain.session.Session
 import piperkt.services.multimedia.domain.session.SessionErrors
+import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionId
 
 class LeaveSessionTest :
@@ -28,37 +29,24 @@ class LeaveSessionTest :
             }
 
             test("should allow to remove a participant from the session") {
-                val users = listOf(UsersData.john(), UsersData.jane())
-                val sessionId = SessionId("sessionId")
-                val session =
-                    Session(
-                        id = sessionId,
-                        allowedUsers = users.map { it.id },
-                    )
-                session.addParticipant(users[0].id)
+                val users = setOf(john().id, jane().id)
+                val session = SessionFactory.withParticipants(users, users)
                 sessionRepository.save(session)
-                val result = leaveSession(Command(sessionId, users[0].id))
+                val result = leaveSession(Command(session.id, jane().id))
                 result shouldBe success()
             }
 
             test("should return SessionNotFound error if session does not exist") {
                 val fakeSessionId = SessionId("fakeSessionId")
-                val result = leaveSession(Command(fakeSessionId, UsersData.john().id))
+                val result = leaveSession(Command(fakeSessionId, john().id))
                 result shouldBe SessionErrors.SessionNotFound(fakeSessionId).asFailure()
             }
 
             test("should return UserNotParticipant error if user is not in the session") {
-                val users = listOf(UsersData.john(), UsersData.jane())
-                val sessionId = SessionId("sessionId")
-                val session =
-                    Session(
-                        id = sessionId,
-                        allowedUsers = users.map { it.id },
-                    )
+                val session = SessionFactory.empty()
                 sessionRepository.save(session)
-                val result = leaveSession(Command(sessionId, UsersData.jane().id))
-                result shouldBe
-                    SessionErrors.UserNotParticipant(sessionId, UsersData.jane().id).asFailure()
+                val result = leaveSession(Command(session.id, jane().id))
+                result shouldBe SessionErrors.UserNotParticipant(session.id, jane().id).asFailure()
             }
         }
     })
