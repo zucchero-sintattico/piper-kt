@@ -4,10 +4,10 @@ import io.kotest.matchers.shouldBe
 import org.mockito.kotlin.any
 import org.mockito.kotlin.reset
 import org.mockito.kotlin.whenever
-import piperkt.services.servers.application.SimpleClasses.simpleChannel
 import piperkt.services.servers.application.SimpleClasses.simpleChannelId
 import piperkt.services.servers.application.SimpleClasses.simpleMessage
 import piperkt.services.servers.application.SimpleClasses.simpleServerId
+import piperkt.services.servers.application.SimpleClasses.simpleServerWithChannelAndMessage
 import piperkt.services.servers.application.api.query.ChannelQuery
 import piperkt.services.servers.application.exceptions.UserNotInServerException
 
@@ -15,16 +15,14 @@ class ChannelServiceQueryTest : BasicChannelServiceTest() {
 
     @BeforeEach
     fun setUp() {
-        reset(channelRepository, serverRepository, eventPublisher)
+        reset(serverRepository, eventPublisher)
     }
 
     @Test
     fun `should get messages from channel if user is in server`() {
         val fakeMessages = listOf(simpleMessage())
-        whenever(channelRepository.getMessagesFromServerIdAndChannelId(any(), any(), any()))
-            .thenReturn(fakeMessages)
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(true)
-        whenever(channelRepository.findChannelById(any())).thenReturn(simpleChannel())
+        whenever(serverRepository.findById(any())).thenReturn(simpleServerWithChannelAndMessage())
         val response =
             channelService.getMessagesFromChannelId(
                 ChannelQuery.GetMessagesFromChannelId.Request(

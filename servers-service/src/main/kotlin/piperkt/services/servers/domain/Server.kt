@@ -7,8 +7,8 @@ class Server(
     var name: String,
     var description: String = "",
     val owner: String,
-    var users: List<String> = listOf(owner),
-    var channels: List<Channel> = emptyList(),
+    var users: MutableList<String> = mutableListOf(owner),
+    var channels: MutableList<Channel> = mutableListOf(),
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -24,21 +24,19 @@ class Server(
     }
 
     fun addUser(username: String) {
-        this.users = users.plus(username)
+        this.users.add(username)
     }
 
     fun removeUser(username: String) {
-        this.users = users.minus(username)
+        this.users.remove(username)
     }
 
     fun addChannel(channel: Channel) {
-        if (!channels.contains(channel)) {
-            channels.plus(channel)
-        }
+        this.channels.add(channel)
     }
 
     fun removeChannel(channel: Channel) {
-        channels.minus(channel)
+        this.channels.remove(channel)
     }
 
     fun updateName(name: String) {

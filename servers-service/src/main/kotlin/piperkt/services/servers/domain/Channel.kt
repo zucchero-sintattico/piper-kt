@@ -9,9 +9,9 @@ enum class ChannelType {
 
 open class Channel(
     val channelId: ChannelId,
-    val name: String,
+    var name: String,
     val type: ChannelType,
-    val description: String,
+    var description: String,
     val messages: MutableList<Message> = mutableListOf()
 ) {
     override fun equals(other: Any?): Boolean {
@@ -25,5 +25,9 @@ open class Channel(
 
     override fun hashCode(): Int {
         return channelId.hashCode()
+    }
+
+    fun addMessage(message: Message) {
+        messages.add(message)
     }
 }

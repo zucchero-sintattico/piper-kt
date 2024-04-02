@@ -1,6 +1,7 @@
 package piperkt.services.servers.domain.factory
 
 import piperkt.services.commons.domain.id.ServerId
+import piperkt.services.servers.domain.Channel
 import piperkt.services.servers.domain.Server
 
 object ServerFactory {
@@ -31,7 +32,23 @@ object ServerFactory {
             name = name,
             owner = owner,
             description = description,
-            users = members
+            users = members.toMutableList()
+        )
+    }
+
+    fun createServerWithChannels(
+        serverId: String,
+        name: String,
+        description: String,
+        owner: String,
+        channels: List<Channel>
+    ): Server {
+        return Server(
+            id = ServerId(serverId),
+            name = name,
+            owner = owner,
+            description = description,
+            channels = channels.toMutableList()
         )
     }
 }

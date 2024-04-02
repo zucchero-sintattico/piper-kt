@@ -10,14 +10,32 @@ object SimpleClasses {
 
     fun simpleServerId() = ServerId("000000000000000000000000")
 
-    fun simpleChannelId() = ChannelId("000000000000000000000000")
+    fun simpleChannelId() = ChannelId("0")
 
     fun simpleServer() =
         ServerFactory.createServer(
             simpleServerId().value,
             "serverName",
             "serverDescription",
-            "owner"
+            "owner",
+        )
+
+    fun simpleServerWithChannel() =
+        ServerFactory.createServerWithChannels(
+            simpleServerId().value,
+            "serverName",
+            "serverDescription",
+            "owner",
+            listOf(simpleChannel())
+        )
+
+    fun simpleServerWithChannelAndMessage() =
+        ServerFactory.createServerWithChannels(
+            simpleServerId().value,
+            "serverName",
+            "serverDescription",
+            "owner",
+            listOf(simpleChannel().apply { addMessage(simpleMessage()) })
         )
 
     fun simpleChannel() =
@@ -28,6 +46,5 @@ object SimpleClasses {
             "TEXT"
         )
 
-    fun simpleMessage() =
-        MessageFactory.createMessage("000000000000000000000000", "content", "sender")
+    fun simpleMessage() = MessageFactory.createMessage("0", "content", "sender")
 }
