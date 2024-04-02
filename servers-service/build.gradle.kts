@@ -10,4 +10,6 @@ dependencies {
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
     // Kafka
     implementation("io.micronaut.kafka:micronaut-kafka")
+    // Jwt
+    implementation("io.micronaut.security:micronaut-security-jwt")
 }

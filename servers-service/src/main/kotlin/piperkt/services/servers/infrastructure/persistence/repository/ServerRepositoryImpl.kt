@@ -8,6 +8,7 @@ import piperkt.services.commons.domain.id.ServerId
 import piperkt.services.servers.application.ServerRepository
 import piperkt.services.servers.domain.Server
 import piperkt.services.servers.domain.factory.ServerFactory
+import piperkt.services.servers.infrastructure.persistence.model.ChannelEntity
 import piperkt.services.servers.infrastructure.persistence.model.ServerEntity
 import piperkt.services.servers.infrastructure.persistence.model.ServerModelRepository
 
@@ -28,102 +29,38 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
             .let { ServerFactory.createServer(it.id.orEmpty(), it.name, it.description, it.owner) }
     }
 
-    override fun getServersFromUser(memberUsername: String): List<Server> {
-        return serverModelRepository.findByUsersContains(memberUsername).map {
+    override fun findAll(): List<Server> {
+        return serverModelRepository.findAll().map {
             ServerFactory.createServer(it.id.orEmpty(), it.name, it.description, it.owner)
         }
     }
 
-    override fun deleteServer(serverId: ServerId): Boolean {
-        serverModelRepository.findById(serverId.value).getOrElse {
-            return false
-        }
-        serverModelRepository.deleteById(serverId.value)
-        return true
+    override fun delete(serverId: ServerId) {
+        return serverModelRepository.deleteById(serverId.value)
     }
 
-    override fun updateServer(
-        serverId: ServerId,
-        serverName: String?,
-        serverDescription: String?
-    ): Server? {
-        val server =
-            serverModelRepository.findById(serverId.value).getOrElse {
-                return null
+    override fun update(server: Server): Server {
+        val channelEntities =
+            server.channels.map {
+                ChannelEntity(
+                    id = it.channelId.value,
+                    name = it.name,
+                    description = it.description,
+                    channelType = it.type.toString()
+                )
             }
         return serverModelRepository
             .update(
                 ServerEntity(
-                    id = serverId.value,
-                    name = serverName ?: server.name,
-                    description = serverDescription ?: server.description,
+                    id = server.id.value,
+                    name = server.name,
+                    description = server.description,
                     owner = server.owner,
+                    users = server.users,
+                    channels = channelEntities
                 )
             )
             .let { ServerFactory.createServer(it.id.orEmpty(), it.name, it.description, it.owner) }
-    }
-
-    override fun getServerUsers(serverId: ServerId): List<String> =
-        serverModelRepository
-            .findById(serverId.value)
-            .getOrElse {
-                return emptyList()
-            }
-            .users
-
-    override fun addUserToServer(serverId: ServerId, username: String): Server? {
-        val server =
-            serverModelRepository.findById(serverId.value).getOrElse {
-                return null
-            }
-
-        val members = server.users.toMutableList().also { it.add(username) }
-        return serverModelRepository
-            .update(
-                ServerEntity(
-                    id = serverId.value,
-                    name = server.name,
-                    description = server.description,
-                    owner = server.owner,
-                    users = members
-                )
-            )
-            .let {
-                ServerFactory.createServerWithMembers(
-                    it.id.orEmpty(),
-                    it.name,
-                    it.description,
-                    it.owner,
-                    members
-                )
-            }
-    }
-
-    override fun removeUserFromServer(serverId: ServerId, username: String): Server? {
-        val server =
-            serverModelRepository.findById(serverId.value).getOrElse {
-                return null
-            }
-        val members = server.users.toMutableList().also { it.remove(username) }
-        return serverModelRepository
-            .update(
-                ServerEntity(
-                    id = serverId.value,
-                    name = server.name,
-                    description = server.description,
-                    owner = server.owner,
-                    users = members
-                )
-            )
-            .let {
-                ServerFactory.createServerWithMembers(
-                    it.id.orEmpty(),
-                    it.name,
-                    it.description,
-                    it.owner,
-                    members
-                )
-            }
     }
 
     override fun isUserInServer(serverId: ServerId, username: String): Boolean {
@@ -138,6 +75,12 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
 
     override fun findById(serverId: ServerId): Server? {
         return serverModelRepository.findById(serverId.value).getOrNull()?.let {
+            ServerFactory.createServer(it.id.orEmpty(), it.name, it.description, it.owner)
+        }
+    }
+
+    override fun findByMember(username: String): List<Server> {
+        return serverModelRepository.findByUsersContains(username).map {
             ServerFactory.createServer(it.id.orEmpty(), it.name, it.description, it.owner)
         }
     }

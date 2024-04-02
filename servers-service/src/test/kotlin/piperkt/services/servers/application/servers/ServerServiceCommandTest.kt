@@ -37,7 +37,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
 
     @Test
     fun `should not allow to update a server if is not the admin`() {
-        whenever(serverRepository.updateServer(any(), any(), any())).thenReturn(simpleServer())
+        whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         serverService.updateServer(
             ServerCommand.UpdateServer.Request(
                 simpleServerId(),
@@ -51,7 +51,6 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
 
     @Test
     fun `should allow to delete a server`() {
-        whenever(serverRepository.deleteServer(any())).thenReturn(true)
         whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         serverService.deleteServer(
             ServerCommand.DeleteServer.Request(simpleServerId(), "owner")
@@ -62,8 +61,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
 
     @Test
     fun `should not allow to delete a server that does not exist`() {
-        whenever(serverRepository.deleteServer(any())).thenReturn(false)
-        whenever(serverRepository.findById(any())).thenReturn(simpleServer())
+        whenever(serverRepository.findById(any())).thenReturn(null)
         serverService.deleteServer(
             ServerCommand.DeleteServer.Request(simpleServerId(), "owner")
         ) shouldBe Result.failure(ServerNotFoundException())
@@ -72,7 +70,6 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
 
     @Test
     fun `should not allow to delete a server if user doesn't have permission`() {
-        whenever(serverRepository.deleteServer(any())).thenReturn(true)
         whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         serverService.deleteServer(
             ServerCommand.DeleteServer.Request(simpleServerId(), "member")
@@ -82,8 +79,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
 
     @Test
     fun `should not allow to update a server that does not exist`() {
-        whenever(serverRepository.updateServer(any(), any(), any())).thenReturn(null)
-        whenever(serverRepository.findById(any())).thenReturn(simpleServer())
+        whenever(serverRepository.findById(any())).thenReturn(null)
         serverService.updateServer(
             ServerCommand.UpdateServer.Request(
                 simpleServerId(),
@@ -97,7 +93,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
 
     @Test
     fun `should not allow to update a server if user doesn't have permission`() {
-        whenever(serverRepository.updateServer(any(), any(), any())).thenReturn(simpleServer())
+        whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         serverService.updateServer(
             ServerCommand.UpdateServer.Request(
                 simpleServerId(),
@@ -111,8 +107,8 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
 
     @Test
     fun `should allow to update a server`() {
-        whenever(serverRepository.updateServer(any(), any(), any())).thenReturn(simpleServer())
         whenever(serverRepository.findById(any())).thenReturn(simpleServer())
+        whenever(serverRepository.update(any())).thenReturn(simpleServer())
         serverService.updateServer(
             ServerCommand.UpdateServer.Request(
                 simpleServerId(),
@@ -126,7 +122,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
 
     @Test
     fun `should allow user to join the server`() {
-        whenever(serverRepository.addUserToServer(any(), any())).thenReturn(simpleServer())
+        whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         serverService.addUserToServer(
             ServerCommand.AddUserToServer.Request(simpleServerId(), "member", "member")
         ) shouldBe Result.success(ServerCommand.AddUserToServer.Response)
@@ -135,7 +131,6 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
 
     @Test
     fun `should not allow to join a server that does not exist`() {
-        whenever(serverRepository.addUserToServer(any(), any())).thenReturn(null)
         serverService.addUserToServer(
             ServerCommand.AddUserToServer.Request(simpleServerId(), "member", "member")
         ) shouldBe Result.failure(ServerNotFoundException())
@@ -144,7 +139,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
 
     @Test
     fun `should allow user to leave the server`() {
-        whenever(serverRepository.removeUserFromServer(any(), any())).thenReturn(simpleServer())
+        whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         serverService.removeUserFromServer(
             ServerCommand.RemoveUserFromServer.Request(simpleServerId(), "member", "member")
         ) shouldBe Result.success(ServerCommand.RemoveUserFromServer.Response)
@@ -154,7 +149,6 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
 
     @Test
     fun `should allow the admin to kick a user`() {
-        whenever(serverRepository.removeUserFromServer(any(), any())).thenReturn(simpleServer())
         whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         serverService.kickUserFromServer(
             ServerCommand.KickUserFromServer.Request(simpleServerId(), "member", "owner")
@@ -165,7 +159,6 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
 
     @Test
     fun `should not allow non-admin to kick a user`() {
-        whenever(serverRepository.removeUserFromServer(any(), any())).thenReturn(simpleServer())
         serverService.kickUserFromServer(
             ServerCommand.KickUserFromServer.Request(simpleServerId(), "member", "member")
         ) shouldBe Result.failure(UserNotHasPermissionsException())

@@ -4,11 +4,11 @@ import piperkt.services.commons.domain.id.ServerId
 
 class Server(
     val id: ServerId,
-    val name: String,
-    val description: String = "",
+    var name: String,
+    var description: String = "",
     val owner: String,
-    val users: List<String> = listOf(owner),
-    val channels: List<Channel> = emptyList(),
+    var users: List<String> = listOf(owner),
+    var channels: List<Channel> = emptyList(),
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -21,5 +21,31 @@ class Server(
 
     override fun hashCode(): Int {
         return id.hashCode()
+    }
+
+    fun addUser(username: String) {
+        this.users = users.plus(username)
+    }
+
+    fun removeUser(username: String) {
+        this.users = users.minus(username)
+    }
+
+    fun addChannel(channel: Channel) {
+        if (!channels.contains(channel)) {
+            channels.plus(channel)
+        }
+    }
+
+    fun removeChannel(channel: Channel) {
+        channels.minus(channel)
+    }
+
+    fun updateName(name: String) {
+        this.name = name
+    }
+
+    fun updateDescription(description: String) {
+        this.description = description
     }
 }
