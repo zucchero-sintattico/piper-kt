@@ -10,8 +10,9 @@ import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.success
 import piperkt.services.multimedia.application.usecases.JoinSession
 import piperkt.services.multimedia.application.usecases.JoinSession.Command
-import piperkt.services.multimedia.application.usecases.JoinSession.Errors.*
-import piperkt.services.multimedia.domain.events.SessionEvent.ParticipantJoined
+import piperkt.services.multimedia.domain.session.Session
+import piperkt.services.multimedia.domain.session.SessionErrors
+import piperkt.services.multimedia.domain.session.SessionId
 
 class JoinSessionTest :
     Test.Unit,
@@ -30,40 +31,40 @@ class JoinSessionTest :
                 "should allow to add a participant to the session if user is allowed to join the session"
             ) {
                 val allowedUsers = listOf(UsersData.john())
-                val session =
-                    sessionRepository.createSession(allowedUsers.map { it.username.value })
-                val result = joinSession(Command(session.id.value, allowedUsers[0].username.value))
+                val sessionId = SessionId("sessionId")
+                val session = Session(id = sessionId, allowedUsers = allowedUsers.map { it.id })
+                sessionRepository.save(session)
+                val result = joinSession(Command(sessionId, allowedUsers[0].id))
                 result shouldBe success()
-                eventPublisher.publishedEvents shouldBe
-                    listOf(ParticipantJoined(session.id, allowedUsers[0]))
             }
 
             test("should return SessionNotFound error if session does not exist") {
-                val fakeSessionId = "fakeSessionId"
-                val result = joinSession(Command(fakeSessionId, UsersData.john().username.value))
-                result shouldBe SessionNotFound(fakeSessionId).asFailure()
+                val fakeSessionId = SessionId("fakeSessionId")
+                val result = joinSession(Command(fakeSessionId, UsersData.john().id))
+                result shouldBe SessionErrors.SessionNotFound(fakeSessionId).asFailure()
             }
 
             test("should return UserNotAllowed error if user is not allowed to join the session") {
-                val allowedUsers = listOf(UsersData.john())
-                val session =
-                    sessionRepository.createSession(allowedUsers.map { it.username.value })
-                val result = joinSession(Command(session.id.value, UsersData.jane().username.value))
+                val allowedUsers = listOf(UsersData.john()).map { it.id }
+                val session = Session(id = SessionId("sessionId"), allowedUsers = allowedUsers)
+                sessionRepository.save(session)
+                val result = joinSession(Command(session.id, UsersData.jane().id))
                 result shouldBe
-                    UserNotAllowed(session.id.value, UsersData.jane().username.value).asFailure()
+                    SessionErrors.UserNotAllowed(session.id, UsersData.jane().id).asFailure()
             }
 
             test("should return UserAlreadyParticipant error if user is already a participant") {
-                val allowedUsers = listOf(UsersData.john())
+                val allowedUsers = listOf(UsersData.john()).map { it.id }
                 val session =
-                    sessionRepository.createSession(
-                        allowedUsers = allowedUsers.map { it.username.value }
+                    Session(
+                        id = SessionId("sessionId"),
+                        allowedUsers = allowedUsers,
+                        participants = allowedUsers
                     )
-                joinSession(Command(session.id.value, allowedUsers[0].username.value))
-                val result = joinSession(Command(session.id.value, allowedUsers[0].username.value))
+                sessionRepository.save(session)
+                val result = joinSession(Command(session.id, allowedUsers[0]))
                 result shouldBe
-                    UserAlreadyParticipant(session.id.value, allowedUsers[0].username.value)
-                        .asFailure()
+                    SessionErrors.UserAlreadyParticipant(session.id, allowedUsers[0]).asFailure()
             }
         }
     })

@@ -1,11 +1,11 @@
 package piperkt.services.multimedia.application.listeners
 
-import piperkt.services.multimedia.domain.Server
-import piperkt.services.multimedia.domain.ServerId
-import piperkt.services.multimedia.domain.ServerRepository
-import piperkt.services.multimedia.domain.User
 import piperkt.services.multimedia.domain.events.EventListener
 import piperkt.services.multimedia.domain.events.ServerEvent
+import piperkt.services.multimedia.domain.server.Server
+import piperkt.services.multimedia.domain.server.ServerId
+import piperkt.services.multimedia.domain.server.ServerRepository
+import piperkt.services.multimedia.domain.user.UserId
 
 open class ServerEventsListener(private val serverRepository: ServerRepository) :
     EventListener<ServerEvent> {
@@ -18,7 +18,7 @@ open class ServerEventsListener(private val serverRepository: ServerRepository) 
     }
 
     private fun onServerCreated(event: ServerEvent.ServerCreated) {
-        val server = Server.new(User.fromUsername(event.owner))
+        val server = Server(members = listOf(UserId(event.owner)))
         serverRepository.save(server)
     }
 

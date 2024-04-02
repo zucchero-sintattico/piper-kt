@@ -7,7 +7,7 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.Status
 import io.micronaut.serde.annotation.Serdeable
-import piperkt.services.multimedia.application.usecases.GetSessionParticipants
+import piperkt.services.multimedia.domain.session.SessionErrors
 
 interface GetSessionParticipantsApi {
 
@@ -22,10 +22,10 @@ interface GetSessionParticipantsApi {
     @Status(HttpStatus.OK)
     operator fun invoke(@PathVariable sessionId: String): Response
 
-    @Error(GetSessionParticipants.Errors.SessionNotFound::class)
+    @Error(SessionErrors.SessionNotFound::class)
     @Status(HttpStatus.NOT_FOUND)
     fun onSessionNotFound(
-        exception: GetSessionParticipants.Errors.SessionNotFound,
+        exception: SessionErrors.SessionNotFound,
         @PathVariable sessionId: String
     ): Errors
 }

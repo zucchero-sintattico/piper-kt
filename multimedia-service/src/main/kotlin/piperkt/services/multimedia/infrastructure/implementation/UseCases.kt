@@ -1,15 +1,15 @@
 package piperkt.services.multimedia.infrastructure.implementation
 
 import jakarta.inject.Singleton
-import piperkt.services.multimedia.application.usecases.AddSessionAllowedUser
-import piperkt.services.multimedia.application.usecases.CreateSession
-import piperkt.services.multimedia.application.usecases.DeleteSession
 import piperkt.services.multimedia.application.usecases.GetSessionParticipants
 import piperkt.services.multimedia.application.usecases.JoinSession
 import piperkt.services.multimedia.application.usecases.LeaveSession
-import piperkt.services.multimedia.application.usecases.RemoveSessionAllowedUser
-import piperkt.services.multimedia.domain.SessionRepository
+import piperkt.services.multimedia.application.usecases.internal.AddSessionAllowedUser
+import piperkt.services.multimedia.application.usecases.internal.CreateSession
+import piperkt.services.multimedia.application.usecases.internal.DeleteSession
+import piperkt.services.multimedia.application.usecases.internal.RemoveSessionAllowedUser
 import piperkt.services.multimedia.domain.events.SessionEventPublisher
+import piperkt.services.multimedia.domain.session.SessionRepository
 
 object UseCases {
 
