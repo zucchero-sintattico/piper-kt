@@ -1,5 +1,5 @@
 package piperkt.services.multimedia.domain.session
 
-import piperkt.services.multimedia.common.Repository
+import piperkt.common.Repository
 
 interface SessionRepository : Repository<SessionId, Session>

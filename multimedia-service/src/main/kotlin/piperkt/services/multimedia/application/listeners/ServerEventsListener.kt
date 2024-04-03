@@ -1,6 +1,6 @@
 package piperkt.services.multimedia.application.listeners
 
-import piperkt.services.multimedia.common.EventListener
+import piperkt.common.EventListener
 import piperkt.services.multimedia.domain.server.Server
 import piperkt.services.multimedia.domain.server.ServerEvent
 import piperkt.services.multimedia.domain.server.ServerId

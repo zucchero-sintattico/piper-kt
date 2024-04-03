@@ -1,6 +1,6 @@
 package piperkt.services.multimedia.domain.server
 
-import piperkt.services.multimedia.common.AggregateRoot
+import piperkt.common.AggregateRoot
 import piperkt.services.multimedia.domain.user.Username
 
 class Server(

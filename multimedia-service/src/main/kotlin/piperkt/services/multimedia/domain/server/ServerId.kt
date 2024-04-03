@@ -1,6 +1,6 @@
 package piperkt.services.multimedia.domain.server
 
-import piperkt.services.multimedia.common.EntityId
+import piperkt.common.EntityId
 
 class ServerId(value: String) : EntityId<String>(value) {
     companion object {

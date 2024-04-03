@@ -1,5 +1,5 @@
 package piperkt.services.multimedia.domain.server
 
-import piperkt.services.multimedia.common.Repository
+import piperkt.common.Repository
 
 interface ServerRepository : Repository<ServerId, Server>

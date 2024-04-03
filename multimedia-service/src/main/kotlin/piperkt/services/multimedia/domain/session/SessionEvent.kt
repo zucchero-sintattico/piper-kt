@@ -1,7 +1,7 @@
 package piperkt.services.multimedia.domain.session
 
-import piperkt.services.multimedia.common.DomainEvent
-import piperkt.services.multimedia.common.EventPublisher
+import piperkt.common.DomainEvent
+import piperkt.common.EventPublisher
 import piperkt.services.multimedia.domain.user.Username
 
 sealed interface SessionEvent : DomainEvent {
