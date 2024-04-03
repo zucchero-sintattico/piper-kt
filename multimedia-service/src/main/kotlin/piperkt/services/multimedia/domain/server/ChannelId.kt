@@ -1,9 +1,5 @@
 package piperkt.services.multimedia.domain.server
 
-import piperkt.services.multimedia.domain.EntityId
+import piperkt.services.multimedia.domain.UUIDEntityId
 
-class ChannelId(value: Int) : EntityId<Int>(value) {
-    companion object {
-        fun empty() = ChannelId(0)
-    }
-}
+class ChannelId(value: String = generateId()) : UUIDEntityId(value)
