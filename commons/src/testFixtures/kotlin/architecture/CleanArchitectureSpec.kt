@@ -1,11 +1,7 @@
 package architecture
 
-import base.Test
-import io.kotest.core.spec.style.AnnotationSpec
-
-class CleanArchitectureSpec : Test.Unit, ArchitectureSpec, AnnotationSpec() {
-    override val prefix: String = "piperkt.services.multimedia"
-    private val domainLayer = super.assertLayer("domain")
+abstract class CleanArchitectureSpec(prefix: String) : ArchitectureSpec(prefix) {
+    private val domainLayer = assertLayer("domain")
     private val applicationLayer = assertLayer("application")
     private val interfacesLayer = assertLayer("interfaces")
     private val infrastructureLayer = assertLayer("infrastructure")

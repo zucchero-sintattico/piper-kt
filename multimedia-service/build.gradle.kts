@@ -1,5 +1,6 @@
 plugins {
     id("micronaut-base")
+    id("java-test-fixtures")
     kotlin("plugin.serialization") version "1.9.23"
 }
 
@@ -7,6 +8,7 @@ application { mainClass.set("piperkt.services.multimedia.ApplicationKt") }
 
 dependencies {
     implementation(project(":commons"))
+    testImplementation(testFixtures(project(":commons")))
     ksp("io.micronaut.data:micronaut-data-document-processor")
     implementation("io.micronaut.data:micronaut-data-mongodb")
     runtimeOnly("org.mongodb:mongodb-driver-sync")

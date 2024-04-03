@@ -1,10 +1,6 @@
 package architecture
 
-import base.Test
-import io.kotest.core.spec.style.AnnotationSpec
-
-class FrameworkIndependenceTest : Test.Unit, ArchitectureSpec, AnnotationSpec() {
-    override val prefix = "piperkt.services.multimedia"
+abstract class FrameworkIndependenceTest(prefix: String) : ArchitectureSpec(prefix) {
 
     private val frameworks = listOf("io.micronaut", "jakarta")
 
