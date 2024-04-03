@@ -6,10 +6,10 @@ import com.corundumstudio.socketio.SocketIOServer
 import io.micronaut.context.annotation.ConfigurationProperties
 import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.domain.session.SessionRepository
-import piperkt.services.multimedia.domain.user.UserId
-import piperkt.services.multimedia.interfaces.on
+import piperkt.services.multimedia.domain.user.Username
 import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolEvent.*
 import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolMessage
+import piperkt.services.multimedia.interfaces.websockets.on
 
 @ConfigurationProperties("socketio")
 class SocketIOConfiguration {
@@ -31,23 +31,23 @@ class MultimediaSocketIOServer(
         server.addConnectListener(this::onConnect)
         server.addDisconnectListener(this::onDisconnect)
         server.on(JOIN.event) { client, message: MultimediaProtocolMessage.JoinMessage, _ ->
-            onJoin(client, message)
             events.add(message)
+            onJoin(client, message)
         }
         server.on(OFFER.event) { _, message: MultimediaProtocolMessage.OfferMessage, _ ->
-            onOffer(message)
             events.add(message)
+            onOffer(message)
         }
         server.on(ANSWER.event) { _, message: MultimediaProtocolMessage.AnswerMessage, _ ->
-            onAnswer(message)
             events.add(message)
+            onAnswer(message)
         }
         server.on(ICE_CANDIDATE.event) {
             _,
             message: MultimediaProtocolMessage.IceCandidateMessage,
             _ ->
-            onIceCandidate(message)
             events.add(message)
+            onIceCandidate(message)
         }
         server.start()
     }
@@ -60,11 +60,13 @@ class MultimediaSocketIOServer(
     private fun roomOf(sessionId: String) = server.getRoomOperations(sessionId)
 
     private fun SocketIOClient.notAuthenticated() {
+        println("Not authenticated")
         this.sendEvent(NOT_AUTHENTICATED.event)
         this.disconnect()
     }
 
     private fun SocketIOClient.error(message: String) {
+        println("Error: $message")
         this.sendEvent("error", message)
         this.disconnect()
     }
@@ -85,7 +87,7 @@ class MultimediaSocketIOServer(
             val session =
                 sessionRepository.findById(SessionId(sessionId))
                     ?: return client.error("Session not found")
-            session.removeParticipant(UserId(username))
+            session.removeParticipant(Username(username))
             sessionRepository.save(session)
             println("User $username left session $sessionId")
         }
@@ -103,7 +105,7 @@ class MultimediaSocketIOServer(
         val session =
             sessionRepository.findById(SessionId(sessionId))
                 ?: return client.error("Session not found")
-        session.addParticipant(UserId(username))
+        session.addParticipant(Username(username))
         sessionRepository.save(session)
         println("User $username joined session $sessionId")
     }

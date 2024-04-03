@@ -1,24 +1,24 @@
 package piperkt.services.multimedia.domain.session
 
-import piperkt.services.multimedia.domain.AggregateRoot
-import piperkt.services.multimedia.domain.user.UserId
+import piperkt.services.multimedia.common.AggregateRoot
+import piperkt.services.multimedia.domain.user.Username
 
-abstract class Session(
-    id: SessionId,
-    private var allowedUsersId: Set<UserId> = emptySet(),
-    private var participants: Set<UserId> = emptySet(),
+class Session(
+    id: SessionId = SessionId(),
+    private var allowedUsers: Set<Username> = emptySet(),
+    private var participants: Set<Username> = emptySet(),
 ) : AggregateRoot<SessionId>(id) {
 
-    fun allowedUsersId(): List<UserId> {
-        return allowedUsersId.toList()
+    fun allowedUsers(): List<Username> {
+        return allowedUsers.toList()
     }
 
-    fun participants(): List<UserId> {
+    fun participants(): List<Username> {
         return participants.toList()
     }
 
     @Throws(SessionErrors.UserAlreadyParticipant::class)
-    fun addParticipant(participant: UserId) {
+    fun addParticipant(participant: Username) {
         if (participants.contains(participant)) {
             throw SessionErrors.UserAlreadyParticipant(id, participant)
         }
@@ -26,7 +26,7 @@ abstract class Session(
     }
 
     @Throws(SessionErrors.UserNotParticipant::class)
-    fun removeParticipant(participant: UserId) {
+    fun removeParticipant(participant: Username) {
         if (!participants.contains(participant)) {
             throw SessionErrors.UserNotParticipant(id, participant)
         }
@@ -34,18 +34,18 @@ abstract class Session(
     }
 
     @Throws(SessionErrors.UserAlreadyAllowed::class)
-    fun addAllowedUser(user: UserId) {
-        if (allowedUsersId.contains(user)) {
+    fun addAllowedUser(user: Username) {
+        if (allowedUsers.contains(user)) {
             throw SessionErrors.UserAlreadyAllowed(id, user)
         }
-        allowedUsersId += user
+        allowedUsers += user
     }
 
     @Throws(SessionErrors.UserNotAllowed::class)
-    fun removeAllowedUser(user: UserId) {
-        if (!allowedUsersId.contains(user)) {
+    fun removeAllowedUser(user: Username) {
+        if (!allowedUsers.contains(user)) {
             throw SessionErrors.UserNotAllowed(id, user)
         }
-        allowedUsersId -= user
+        allowedUsers -= user
     }
 }

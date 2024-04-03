@@ -15,10 +15,8 @@ class ServerRepositoryImpl(private val serverEntityRepository: ServerEntityRepos
         return serverEntityRepository.findById(id.value).asNullable()?.toDomain()
     }
 
-    override fun save(entity: Server): Server {
-        val mapped =
-            ServerEntity(id = entity.id.value, participants = entity.members().map { it.value })
-        return serverEntityRepository.save(mapped).toDomain()
+    override fun save(entity: Server) {
+        serverEntityRepository.save(ServerEntity.fromDomain(entity))
     }
 
     override fun deleteById(id: ServerId) {

@@ -3,7 +3,7 @@ package piperkt.services.multimedia.infrastructure.events.listeners
 import io.micronaut.configuration.kafka.annotation.KafkaListener
 import io.micronaut.configuration.kafka.annotation.Topic
 import piperkt.services.multimedia.application.listeners.UserEventsListener
-import piperkt.services.multimedia.domain.events.UserEvent
+import piperkt.services.multimedia.domain.user.UserEvent
 
 @KafkaListener
 class UserEventsKafkaListener(private val userEventsListener: UserEventsListener) {

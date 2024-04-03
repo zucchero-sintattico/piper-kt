@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.interfaces
+package piperkt.services.multimedia.interfaces.websockets
 
 import com.corundumstudio.socketio.SocketIOServer
 import com.corundumstudio.socketio.listener.DataListener

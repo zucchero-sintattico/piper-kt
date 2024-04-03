@@ -1,9 +1,9 @@
 package piperkt.services.multimedia.application.usecases.internal
 
 import piperkt.services.multimedia.application.CommandUseCase
-import piperkt.services.multimedia.domain.events.SessionEvent
-import piperkt.services.multimedia.domain.events.SessionEventPublisher
 import piperkt.services.multimedia.domain.session.SessionErrors
+import piperkt.services.multimedia.domain.session.SessionEvent
+import piperkt.services.multimedia.domain.session.SessionEventPublisher
 import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.domain.session.SessionRepository
 
@@ -11,7 +11,7 @@ import piperkt.services.multimedia.domain.session.SessionRepository
  * Deletes a session.
  *
  * @param sessionRepository the repository to access the session
- * @param sessionEventPublisher the event publisher to publish the event
+ * @param sessionEventPublisher the event publishers to publish the event
  * @exception SessionNotFound the session was not found
  */
 open class DeleteSession(

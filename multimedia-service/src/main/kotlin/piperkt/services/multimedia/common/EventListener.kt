@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.domain.events
+package piperkt.services.multimedia.common
 
 interface EventListener<E> {
     fun handle(event: E)

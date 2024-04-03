@@ -1,8 +1,8 @@
-package piperkt.services.multimedia.domain
+package piperkt.services.multimedia.common
 
-import java.util.UUID.randomUUID
+interface ValueObject
 
-open class EntityId<I>(val value: I) {
+open class EntityId<Id>(val value: Id) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -17,13 +17,7 @@ open class EntityId<I>(val value: I) {
     }
 }
 
-open class UUIDEntityId(value: String) : EntityId<String>(value) {
-    companion object {
-        fun generateId(): String = randomUUID().toString()
-    }
-}
-
-open class Entity<I : EntityId<*>>(open val id: I) {
+open class Entity<Id : EntityId<*>>(open val id: Id) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -38,16 +32,14 @@ open class Entity<I : EntityId<*>>(open val id: I) {
     }
 }
 
-open class AggregateRoot<I : EntityId<*>>(id: I) : Entity<I>(id)
-
-interface ValueObject
+open class AggregateRoot<Id : EntityId<*>>(id: Id) : Entity<Id>(id)
 
 interface Factory<E : Entity<*>>
 
-interface Repository<I : EntityId<*>, E : AggregateRoot<I>> {
-    fun findById(id: I): E?
+interface Repository<Id : EntityId<*>, E : AggregateRoot<Id>> {
+    fun findById(id: Id): E?
 
-    fun save(entity: E): E
+    fun save(entity: E)
 
-    fun deleteById(id: I)
+    fun deleteById(id: Id)
 }

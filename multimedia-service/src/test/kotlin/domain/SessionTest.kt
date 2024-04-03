@@ -16,21 +16,21 @@ class SessionTest :
 
             test("should be able to create a session given an Id") {
                 val session = SessionFactory.empty()
-                session.allowedUsersId() shouldBe emptyList()
+                session.allowedUsers() shouldBe emptyList()
                 session.participants() shouldBe emptyList()
             }
 
             test("should be able to create a session given an Id and a list of allowed users") {
-                val session = SessionFactory.fromAllowedUsersIds(users)
-                session.allowedUsersId() shouldBe users
+                val session = SessionFactory.fromAllowedUsers(users)
+                session.allowedUsers() shouldBe users
                 session.participants() shouldBe emptyList()
             }
 
             test(
                 "should be able to create a session given an Id, a list of allowed users and a list of participants()"
             ) {
-                val session = SessionFactory.withParticipants(users, users)
-                session.allowedUsersId() shouldBe users
+                val session = SessionFactory.fromAllowedParticipants(users)
+                session.allowedUsers() shouldBe users
                 session.participants() shouldBe users
             }
         }

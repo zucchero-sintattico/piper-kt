@@ -4,7 +4,7 @@ import base.Test
 import data.UsersData.john
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import mocks.MockedSessionEventPublisher
+import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.success
@@ -31,7 +31,7 @@ class JoinSessionTest :
                 "should allow to add a participant to the session if user is allowed to join the session"
             ) {
                 val allowedUsers = setOf(john().id)
-                val session = SessionFactory.fromAllowedUsersIds(allowedUsers)
+                val session = SessionFactory.fromAllowedUsers(allowedUsers)
                 sessionRepository.save(session)
                 val result = joinSession(Command(session.id, john().id))
                 result shouldBe success()
@@ -51,13 +51,12 @@ class JoinSessionTest :
             }
 
             test("should return UserAlreadyParticipant error if user is already a participant") {
-                val allowedUsers = setOf(john().id)
-                val session = SessionFactory.withParticipants(allowedUsers, allowedUsers)
+                val users = setOf(john().id)
+                val session = SessionFactory.fromAllowedParticipants(users)
                 sessionRepository.save(session)
-                val result = joinSession(Command(session.id, allowedUsers.first()))
+                val result = joinSession(Command(session.id, users.first()))
                 result shouldBe
-                    SessionErrors.UserAlreadyParticipant(session.id, allowedUsers.first())
-                        .asFailure()
+                    SessionErrors.UserAlreadyParticipant(session.id, users.first()).asFailure()
             }
         }
     })

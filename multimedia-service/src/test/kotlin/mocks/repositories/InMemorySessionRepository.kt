@@ -1,6 +1,6 @@
 package mocks.repositories
 
-import data.InMemoryRepository
+import piperkt.services.multimedia.common.InMemoryRepository
 import piperkt.services.multimedia.domain.session.Session
 import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.domain.session.SessionRepository

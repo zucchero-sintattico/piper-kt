@@ -1,4 +1,6 @@
-package piperkt.services.multimedia.domain.events
+package piperkt.services.multimedia.domain.user
+
+import piperkt.services.multimedia.common.DomainEvent
 
 sealed interface UserEvent : DomainEvent {
 
