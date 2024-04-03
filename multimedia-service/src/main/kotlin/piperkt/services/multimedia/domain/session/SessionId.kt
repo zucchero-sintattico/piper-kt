@@ -1,6 +1,5 @@
 package piperkt.services.multimedia.domain.session
 
-import java.util.*
-import piperkt.services.multimedia.domain.EntityId
+import piperkt.services.multimedia.domain.UUIDEntityId
 
-class SessionId(value: String = UUID.randomUUID().toString()) : EntityId<String>(value)
+class SessionId(value: String = generateId()) : UUIDEntityId(value)
