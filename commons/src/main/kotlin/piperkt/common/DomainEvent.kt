@@ -1,3 +1,3 @@
 package piperkt.common
 
-interface DomainEvent
+interface DomainEvent : ValueObject

@@ -37,7 +37,9 @@ open class JoinSession(
     }
 
     override fun execute(command: Command) {
-        val session = sessionRepository.findById(command.sessionId)!!
+        val session =
+            sessionRepository.findById(command.sessionId)
+                ?: throw SessionErrors.SessionNotFound(command.sessionId)
         session.addParticipant(command.username)
         sessionRepository.save(session)
         sessionEventPublisher.publish(ParticipantJoined(command.sessionId, command.username))
