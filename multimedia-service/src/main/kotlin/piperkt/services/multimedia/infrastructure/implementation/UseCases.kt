@@ -8,7 +8,7 @@ import piperkt.services.multimedia.application.usecases.internal.AddSessionAllow
 import piperkt.services.multimedia.application.usecases.internal.CreateSession
 import piperkt.services.multimedia.application.usecases.internal.DeleteSession
 import piperkt.services.multimedia.application.usecases.internal.RemoveSessionAllowedUser
-import piperkt.services.multimedia.domain.events.SessionEventPublisher
+import piperkt.services.multimedia.domain.session.SessionEventPublisher
 import piperkt.services.multimedia.domain.session.SessionRepository
 
 object UseCases {

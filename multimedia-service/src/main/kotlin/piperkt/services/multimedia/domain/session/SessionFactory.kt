@@ -1,33 +1,27 @@
 package piperkt.services.multimedia.domain.session
 
-import piperkt.services.multimedia.domain.Factory
-import piperkt.services.multimedia.domain.user.UserId
-
-class SessionImpl(
-    id: SessionId = SessionId(),
-    allowedUsersId: Set<UserId> = emptySet(),
-    participants: Set<UserId> = emptySet(),
-) : Session(id, allowedUsersId, participants)
+import piperkt.services.multimedia.common.Factory
+import piperkt.services.multimedia.domain.user.Username
 
 object SessionFactory : Factory<Session> {
 
     fun create(
         id: SessionId = SessionId(),
-        allowedUsers: Set<UserId> = emptySet(),
-        participants: Set<UserId> = emptySet()
+        allowedUsers: Set<Username> = emptySet(),
+        participants: Set<Username> = emptySet()
     ): Session {
-        return SessionImpl(id, allowedUsers, participants)
+        return Session(id, allowedUsers, participants)
     }
 
-    fun fromAllowedUsersIds(allowedUsers: Set<UserId>): Session {
-        return SessionImpl(allowedUsersId = allowedUsers)
+    fun fromAllowedUsers(allowedUsers: Set<Username>): Session {
+        return Session(allowedUsers = allowedUsers)
     }
 
-    fun withParticipants(allowedUsers: Set<UserId>, participants: Set<UserId>): Session {
-        return SessionImpl(allowedUsersId = allowedUsers, participants = participants)
+    fun fromAllowedParticipants(participants: Set<Username>): Session {
+        return Session(allowedUsers = participants, participants = participants)
     }
 
     fun empty(): Session {
-        return SessionImpl()
+        return Session()
     }
 }

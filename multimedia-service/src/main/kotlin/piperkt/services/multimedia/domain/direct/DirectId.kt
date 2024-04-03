@@ -1,6 +1,6 @@
 package piperkt.services.multimedia.domain.direct
 
-import piperkt.services.multimedia.domain.EntityId
-import piperkt.services.multimedia.domain.user.UserId
+import piperkt.services.multimedia.common.EntityId
+import piperkt.services.multimedia.domain.user.Username
 
-class DirectId(value: Set<UserId>) : EntityId<Set<UserId>>(value)
+class DirectId(value: Set<Username>) : EntityId<Set<Username>>(value)

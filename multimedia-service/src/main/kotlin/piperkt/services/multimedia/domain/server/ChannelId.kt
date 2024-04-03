@@ -1,5 +1,5 @@
 package piperkt.services.multimedia.domain.server
 
-import piperkt.services.multimedia.domain.UUIDEntityId
+import piperkt.services.multimedia.common.UUIDEntityId
 
-class ChannelId(value: String = generateId()) : UUIDEntityId(value)
+class ChannelId(value: String = newId()) : UUIDEntityId(value)

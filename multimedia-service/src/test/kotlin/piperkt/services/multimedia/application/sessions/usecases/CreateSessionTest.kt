@@ -4,7 +4,7 @@ import base.Test
 import data.UsersData.john
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import mocks.MockedSessionEventPublisher
+import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.success
 import piperkt.services.multimedia.application.usecases.internal.CreateSession

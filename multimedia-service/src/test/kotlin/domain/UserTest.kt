@@ -4,7 +4,7 @@ import base.Test
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import piperkt.services.multimedia.domain.user.User
-import piperkt.services.multimedia.domain.user.UserId
+import piperkt.services.multimedia.domain.user.Username
 
 class UserTest :
     Test.Unit,
@@ -12,7 +12,7 @@ class UserTest :
         context("a User") {
             test("should be able to create a user given an UserId") {
                 val username = "username"
-                val userId = UserId(username)
+                val userId = Username(username)
                 val user = User(userId)
                 user.id shouldBe userId
                 user.username shouldBe username
@@ -21,7 +21,7 @@ class UserTest :
 
         context("two Users") {
             val username = "username"
-            val userID = UserId(username)
+            val userID = Username(username)
             val user1 = User(userID)
             val user2 = User(userID)
 

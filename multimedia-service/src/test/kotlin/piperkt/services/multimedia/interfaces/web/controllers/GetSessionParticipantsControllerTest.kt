@@ -23,8 +23,8 @@ class GetSessionParticipantsControllerTest :
         beforeEach { sessionRepository.clear() }
 
         test("should return users when session exists") {
-            val users = listOf(john(), jane()).map { it.id }
-            val session = SessionFactory.withParticipants(users.toSet(), users.toSet())
+            val users = setOf(john().id, jane().id)
+            val session = SessionFactory.fromAllowedParticipants(users)
             sessionRepository.save(session)
             val result = getUserInSessionApi(session.id.value)
             result shouldBe GetSessionParticipantsApi.Response(users.map { it.value }.toSet())

@@ -5,7 +5,7 @@ import data.UsersData.jane
 import data.UsersData.john
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import mocks.MockedSessionEventPublisher
+import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.success
@@ -30,7 +30,7 @@ class LeaveSessionTest :
 
             test("should allow to remove a participant from the session") {
                 val users = setOf(john().id, jane().id)
-                val session = SessionFactory.withParticipants(users, users)
+                val session = SessionFactory.fromAllowedParticipants(users)
                 sessionRepository.save(session)
                 val result = leaveSession(Command(session.id, jane().id))
                 result shouldBe success()

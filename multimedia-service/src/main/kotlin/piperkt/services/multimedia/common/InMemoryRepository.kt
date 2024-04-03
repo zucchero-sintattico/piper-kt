@@ -1,8 +1,4 @@
-package data
-
-import piperkt.services.multimedia.domain.AggregateRoot
-import piperkt.services.multimedia.domain.EntityId
-import piperkt.services.multimedia.domain.Repository
+package piperkt.services.multimedia.common
 
 open class InMemoryRepository<I : EntityId<*>, A : AggregateRoot<I>>(
     var entities: Map<I, A> = mapOf()
@@ -11,9 +7,8 @@ open class InMemoryRepository<I : EntityId<*>, A : AggregateRoot<I>>(
         return entities[id]
     }
 
-    override fun save(entity: A): A {
+    override fun save(entity: A) {
         entities += entity.id to entity
-        return entity
     }
 
     override fun deleteById(id: I) {

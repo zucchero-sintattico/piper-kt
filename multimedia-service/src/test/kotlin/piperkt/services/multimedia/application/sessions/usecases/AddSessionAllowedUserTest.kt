@@ -5,14 +5,14 @@ import data.UsersData.jane
 import data.UsersData.john
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import mocks.MockedSessionEventPublisher
+import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.success
 import piperkt.services.multimedia.application.usecases.internal.AddSessionAllowedUser
 import piperkt.services.multimedia.application.usecases.internal.AddSessionAllowedUser.Command
-import piperkt.services.multimedia.domain.events.SessionEvent.AllowedUserAdded
 import piperkt.services.multimedia.domain.session.SessionErrors
+import piperkt.services.multimedia.domain.session.SessionEvent.AllowedUserAdded
 import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionId
 
@@ -31,7 +31,7 @@ class AddSessionAllowedUserTest :
 
             test("should allow to add an allowed user to the session") {
                 val allowedUsers = setOf(john().id)
-                val session = SessionFactory.fromAllowedUsersIds(allowedUsers)
+                val session = SessionFactory.fromAllowedUsers(allowedUsers)
                 sessionRepository.save(session)
                 val userToAdd = jane()
                 val result = addSessionAllowedUser(Command(session.id, userToAdd.id))
@@ -49,7 +49,7 @@ class AddSessionAllowedUserTest :
 
             test("should return UserAlreadyAllowed error if user is already allowed") {
                 val users = setOf(john().id)
-                val session = SessionFactory.fromAllowedUsersIds(users)
+                val session = SessionFactory.fromAllowedUsers(users)
                 sessionRepository.save(session)
                 val result = addSessionAllowedUser(Command(session.id, users.first()))
                 result shouldBe

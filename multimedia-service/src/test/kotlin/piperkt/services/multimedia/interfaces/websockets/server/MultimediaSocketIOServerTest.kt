@@ -5,9 +5,9 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.socket.client.IO
 import mocks.repositories.InMemorySessionRepository
-import piperkt.services.multimedia.interfaces.toJson
 import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolEvent.JOIN
 import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolMessage.*
+import piperkt.services.multimedia.interfaces.websockets.toJson
 
 class MultimediaSocketIOServerTest :
     Test.Unit,

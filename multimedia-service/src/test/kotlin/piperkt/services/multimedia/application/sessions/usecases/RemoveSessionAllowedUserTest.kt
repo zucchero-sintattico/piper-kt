@@ -5,7 +5,7 @@ import data.UsersData.jane
 import data.UsersData.john
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import mocks.MockedSessionEventPublisher
+import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.asFailure
 import piperkt.services.multimedia.application.success
@@ -31,7 +31,7 @@ class RemoveSessionAllowedUserTest :
 
             test("should allow to remove an allowed user from the session") {
                 val users = setOf(john().id, jane().id)
-                val session = SessionFactory.fromAllowedUsersIds(users)
+                val session = SessionFactory.fromAllowedUsers(users)
                 sessionRepository.save(session)
                 val result = removeSessionAllowedUser(Command(session.id, jane().id))
                 result shouldBe success()

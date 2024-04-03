@@ -1,15 +1,15 @@
 package piperkt.services.multimedia.domain.server
 
-import piperkt.services.multimedia.domain.AggregateRoot
-import piperkt.services.multimedia.domain.user.UserId
+import piperkt.services.multimedia.common.AggregateRoot
+import piperkt.services.multimedia.domain.user.Username
 
 class Server(
     id: ServerId = ServerId.empty(),
-    private var members: List<UserId> = emptyList(),
+    private var members: List<Username> = emptyList(),
     private var channels: List<Channel> = emptyList()
 ) : AggregateRoot<ServerId>(id) {
 
-    fun members(): List<UserId> {
+    fun members(): List<Username> {
         return members.toList()
     }
 
@@ -18,7 +18,7 @@ class Server(
     }
 
     @Throws(ServerErrors.UserAlreadyInServer::class)
-    fun addMember(member: UserId) {
+    fun addMember(member: Username) {
         if (members.contains(member)) {
             throw ServerErrors.UserAlreadyInServer(id, member)
         }
@@ -26,7 +26,7 @@ class Server(
     }
 
     @Throws(ServerErrors.UserNotInServer::class)
-    fun removeMember(member: UserId) {
+    fun removeMember(member: Username) {
         if (!members.contains(member)) {
             throw ServerErrors.UserNotInServer(id, member)
         }

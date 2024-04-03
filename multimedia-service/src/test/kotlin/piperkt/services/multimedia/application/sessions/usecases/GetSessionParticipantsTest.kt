@@ -25,7 +25,7 @@ class GetSessionParticipantsTest :
 
         test("should return users when session exists") {
             val users = setOf(john().id, jane().id)
-            val session = SessionFactory.withParticipants(users, users)
+            val session = SessionFactory.fromAllowedParticipants(users)
             sessionRepository.save(session)
             val result = getSessionParticipants(Query(session.id))
             result shouldBe Response(users).asSuccess()
