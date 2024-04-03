@@ -1,5 +1,5 @@
 package piperkt.services.multimedia.domain.session
 
-import piperkt.services.multimedia.common.UUIDEntityId
+import piperkt.common.UUIDEntityId
 
 class SessionId(value: String = newId()) : UUIDEntityId(value)

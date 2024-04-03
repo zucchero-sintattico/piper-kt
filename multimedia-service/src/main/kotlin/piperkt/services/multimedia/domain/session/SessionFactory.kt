@@ -1,6 +1,6 @@
 package piperkt.services.multimedia.domain.session
 
-import piperkt.services.multimedia.common.Factory
+import piperkt.common.Factory
 import piperkt.services.multimedia.domain.user.Username
 
 object SessionFactory : Factory<Session> {

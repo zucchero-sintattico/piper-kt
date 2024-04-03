@@ -1,6 +1,6 @@
 package piperkt.services.multimedia.domain.server
 
-import piperkt.services.multimedia.common.DomainEvent
+import piperkt.common.DomainEvent
 
 sealed interface ServerEvent : DomainEvent {
     data class ServerCreated(val serverId: String, val owner: String) : ServerEvent
