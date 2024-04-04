@@ -1,9 +1,8 @@
 package piperkt.services.multimedia.interfaces.web.controllers
 
-import base.Test
+import base.UnitTest
 import data.UsersData.jane
 import data.UsersData.john
-import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import mocks.repositories.InMemorySessionRepository
 import org.junit.jupiter.api.assertThrows
@@ -14,8 +13,7 @@ import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.interfaces.web.api.GetSessionParticipantsApi
 
 class GetSessionParticipantsControllerTest :
-    Test.Unit,
-    FunSpec({
+    UnitTest.FunSpec({
         val sessionRepository = InMemorySessionRepository()
         val getUserInSessionApi =
             GetSessionParticipantsController(GetSessionParticipants(sessionRepository))
