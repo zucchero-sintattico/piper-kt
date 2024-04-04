@@ -1,15 +1,16 @@
 package piperkt.services.servers.domain
 
+import piperkt.common.AggregateRoot
 import piperkt.common.id.ServerId
 
 class Server(
-    val id: ServerId,
+    id: ServerId = ServerId(),
     var name: String,
     var description: String = "",
     val owner: String,
     var users: MutableList<String> = mutableListOf(owner),
     var channels: MutableList<Channel> = mutableListOf(),
-) {
+) : AggregateRoot<ServerId>(id) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

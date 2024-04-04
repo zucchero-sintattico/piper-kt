@@ -8,7 +8,6 @@ import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 import piperkt.common.events.ChannelEvent
 import piperkt.services.servers.application.SimpleClasses.simpleChannelId
-import piperkt.services.servers.application.SimpleClasses.simpleMessage
 import piperkt.services.servers.application.SimpleClasses.simpleServer
 import piperkt.services.servers.application.SimpleClasses.simpleServerId
 import piperkt.services.servers.application.SimpleClasses.simpleServerWithChannel
@@ -35,9 +34,10 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 "TEXT",
                 "owner"
             )
-        channelService.createNewChannelInServer(request) shouldBe
-            Result.success(ChannelCommand.CreateNewChannelInServer.Response(simpleChannelId()))
-        verify(eventPublisher).publish(ChannelEvent.ChannelCreatedEvent(simpleChannelId()))
+        val response = channelService.createNewChannelInServer(request)
+        response.isSuccess shouldBe true
+        verify(eventPublisher)
+            .publish(ChannelEvent.ChannelCreatedEvent(response.getOrThrow().channelId))
     }
 
     @Test
@@ -164,17 +164,22 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
     fun `should allow to add a message in a channel`() {
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(true)
         whenever(serverRepository.findById(any())).thenReturn(simpleServerWithChannel())
-        channelService.addMessageInChannel(
-            ChannelCommand.AddMessageInChannel.Request(
-                simpleServerId(),
-                simpleChannelId(),
-                "content",
-                "sender"
+        val response =
+            channelService.addMessageInChannel(
+                ChannelCommand.AddMessageInChannel.Request(
+                    simpleServerId(),
+                    simpleChannelId(),
+                    "content",
+                    "sender"
+                )
             )
-        ) shouldBe Result.success(ChannelCommand.AddMessageInChannel.Response)
+        response.isSuccess shouldBe true
         verify(eventPublisher)
             .publish(
-                ChannelEvent.MessageInChannelEvent(simpleChannelId(), simpleMessage().messageId)
+                ChannelEvent.MessageInChannelEvent(
+                    simpleChannelId(),
+                    response.getOrThrow().messageId
+                )
             )
     }
 

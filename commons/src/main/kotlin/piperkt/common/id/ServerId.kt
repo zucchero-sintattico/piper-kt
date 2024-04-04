@@ -1,3 +1,5 @@
 package piperkt.common.id
 
-data class ServerId(val value: String)
+import piperkt.common.UUIDEntityId
+
+class ServerId(value: String = newId()) : UUIDEntityId(value)

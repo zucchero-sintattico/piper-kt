@@ -8,6 +8,7 @@ import piperkt.services.servers.application.api.command.ServerCommand
 import piperkt.services.servers.application.api.query.ServerQuery
 import piperkt.services.servers.application.exceptions.ServerNotFoundException
 import piperkt.services.servers.application.exceptions.UserNotHasPermissionsException
+import piperkt.services.servers.domain.factory.ServerFactory
 
 open class ServerService(
     private val serverRepository: ServerRepository,
@@ -16,7 +17,9 @@ open class ServerService(
     override fun createServer(
         request: ServerCommand.CreateServer.Request
     ): Result<ServerCommand.CreateServer.Response> {
-        val server = serverRepository.save(request.name, request.description, request.owner)
+        val server =
+            ServerFactory.createServer(request.name, request.description, request.requestFrom)
+        serverRepository.save(server)
         eventPublisher.publish(ServerEvent.ServerCreatedEvent(server.id))
         return Result.success(ServerCommand.CreateServer.Response(server.id))
     }

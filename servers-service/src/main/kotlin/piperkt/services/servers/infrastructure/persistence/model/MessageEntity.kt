@@ -1,18 +1,27 @@
 package piperkt.services.servers.infrastructure.persistence.model
 
-import io.micronaut.data.annotation.GeneratedValue
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
-import io.micronaut.data.mongodb.annotation.MongoRepository
-import io.micronaut.data.repository.CrudRepository
 import java.time.Instant
+import piperkt.services.servers.domain.factory.MessageFactory
 
 @MappedEntity
 data class MessageEntity(
-    @Id @GeneratedValue val id: String? = null,
+    @Id val id: String,
     val content: String,
     val sender: String,
     val timestamp: String = Instant.now().toString()
-)
+) {
+    companion object {
+        fun fromDomain(message: piperkt.services.servers.domain.Message) =
+            MessageEntity(
+                id = message.id.value,
+                content = message.content,
+                sender = message.sender,
+                timestamp = message.timestamp.toString()
+            )
+    }
+}
 
-@MongoRepository interface MessageModelRepository : CrudRepository<MessageEntity, String>
+fun MessageEntity.toDomain() =
+    MessageFactory.createMessage(id = id, content = content, sender = sender, timeStamp = timestamp)

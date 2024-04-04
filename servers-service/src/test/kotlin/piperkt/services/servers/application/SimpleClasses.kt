@@ -1,6 +1,7 @@
 package piperkt.services.servers.application
 
 import piperkt.common.id.ChannelId
+import piperkt.common.id.MessageId
 import piperkt.common.id.ServerId
 import piperkt.services.servers.domain.factory.ChannelFactory
 import piperkt.services.servers.domain.factory.MessageFactory
@@ -8,30 +9,31 @@ import piperkt.services.servers.domain.factory.ServerFactory
 
 object SimpleClasses {
 
-    fun simpleServerId() = ServerId("000000000000000000000000")
+    fun simpleServerId() = ServerId("0")
 
     fun simpleChannelId() = ChannelId("0")
 
+    fun simpleMessageId() = MessageId("0")
+
     fun simpleServer() =
         ServerFactory.createServer(
-            simpleServerId().value,
             "serverName",
             "serverDescription",
             "owner",
+            id = simpleServerId().value
         )
 
     fun simpleServerWithChannel() =
-        ServerFactory.createServerWithChannels(
-            simpleServerId().value,
+        ServerFactory.createServer(
             "serverName",
             "serverDescription",
             "owner",
-            listOf(simpleChannel())
+            listOf(simpleChannel()),
+            id = simpleServerId().value
         )
 
     fun simpleServerWithChannelAndMessage() =
         ServerFactory.createServerWithChannels(
-            simpleServerId().value,
             "serverName",
             "serverDescription",
             "owner",
@@ -40,11 +42,12 @@ object SimpleClasses {
 
     fun simpleChannel() =
         ChannelFactory.createFromType(
-            simpleChannelId().value,
             "channelName",
             "channelDescription",
-            "TEXT"
+            "TEXT",
+            id = simpleChannelId().value
         )
 
-    fun simpleMessage() = MessageFactory.createMessage("0", "content", "sender")
+    fun simpleMessage() =
+        MessageFactory.createMessage("content", "sender", id = simpleMessageId().value)
 }

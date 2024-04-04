@@ -22,7 +22,6 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
 
     @Test
     fun `should allow to create a server`() {
-        whenever(serverRepository.save(any(), any(), any())).thenReturn(simpleServer())
         val request =
             ServerCommand.CreateServer.Request(
                 "serverName",
@@ -30,9 +29,11 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
                 "serverOwner",
                 "serverOwner"
             )
-        serverService.createServer(request) shouldBe
-            Result.success(ServerCommand.CreateServer.Response(simpleServerId()))
-        verify(eventPublisher).publish(ServerEvent.ServerCreatedEvent(simpleServerId()))
+        val response = serverService.createServer(request)
+        response.isSuccess shouldBe true
+        verify(serverRepository).save(any())
+        verify(eventPublisher)
+            .publish(ServerEvent.ServerCreatedEvent(response.getOrThrow().serverId))
     }
 
     @Test

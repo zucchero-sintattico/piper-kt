@@ -26,7 +26,6 @@ open class ChannelService(
         return if (isUserAdmin(request.serverId, request.requestFrom)) {
             val channel =
                 ChannelFactory.createFromType(
-                        channelId = server.channels.size.toString(),
                         name = request.channelName,
                         description = request.channelDescription,
                         type = request.channelType
@@ -35,8 +34,8 @@ open class ChannelService(
                         server.addChannel(it)
                         serverRepository.update(server)
                     }
-            eventPublisher.publish(ChannelEvent.ChannelCreatedEvent(channel.channelId))
-            Result.success(ChannelCommand.CreateNewChannelInServer.Response(channel.channelId))
+            eventPublisher.publish(ChannelEvent.ChannelCreatedEvent(channel.id))
+            Result.success(ChannelCommand.CreateNewChannelInServer.Response(channel.id))
         } else {
             Result.failure(UserNotHasPermissionsException())
         }
@@ -51,7 +50,7 @@ open class ChannelService(
         return if (isUserAdmin(request.serverId, request.requestFrom)) {
             val channel =
                 server.channels
-                    .find { it.channelId == request.channelId }
+                    .find { it.id == request.channelId }
                     ?.also {
                         it.name = request.channelName ?: it.name
                         it.description = request.channelDescription ?: it.description
@@ -76,7 +75,7 @@ open class ChannelService(
                 ?: return Result.failure(ServerOrChannelNotFoundException())
         return if (isUserAdmin(request.serverId, request.requestFrom)) {
             server.channels
-                .find { it.channelId == request.channelId }
+                .find { it.id == request.channelId }
                 .let {
                     if (it == null) {
                         Result.failure(ServerOrChannelNotFoundException())
@@ -117,7 +116,7 @@ open class ChannelService(
         val server =
             serverRepository.findById(request.serverId)
                 ?: return Result.failure(ServerOrChannelNotFoundException())
-        val channel = server.channels.find { it.channelId == request.channelId }
+        val channel = server.channels.find { it.id == request.channelId }
         if (channel == null) {
             return Result.failure(ServerOrChannelNotFoundException())
         }
@@ -141,22 +140,16 @@ open class ChannelService(
         val server =
             serverRepository.findById(request.serverId)
                 ?: return Result.failure(ServerOrChannelNotFoundException())
-        val channel = server.channels.find { it.channelId == request.channelId }
+        val channel = server.channels.find { it.id == request.channelId }
         if (channel == null) {
             return Result.failure(ServerOrChannelNotFoundException())
         }
         val message =
-            MessageFactory.createMessage(
-                messageId = channel.messages.size.toString(),
-                content = request.content,
-                sender = request.sender
-            )
+            MessageFactory.createMessage(content = request.content, sender = request.sender)
         channel.addMessage(message)
         serverRepository.update(server)
-        eventPublisher.publish(
-            ChannelEvent.MessageInChannelEvent(request.channelId, message.messageId)
-        )
-        return Result.success(ChannelCommand.AddMessageInChannel.Response)
+        eventPublisher.publish(ChannelEvent.MessageInChannelEvent(request.channelId, message.id))
+        return Result.success(ChannelCommand.AddMessageInChannel.Response(message.id))
     }
 
     private fun isUserAdmin(serverId: ServerId, username: String): Boolean {

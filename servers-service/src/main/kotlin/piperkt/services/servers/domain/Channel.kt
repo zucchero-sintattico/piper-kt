@@ -1,5 +1,6 @@
 package piperkt.services.servers.domain
 
+import piperkt.common.Entity
 import piperkt.common.id.ChannelId
 
 enum class ChannelType {
@@ -8,23 +9,23 @@ enum class ChannelType {
 }
 
 open class Channel(
-    val channelId: ChannelId,
+    id: ChannelId = ChannelId(),
     var name: String,
     val type: ChannelType,
     var description: String,
     val messages: MutableList<Message> = mutableListOf()
-) {
+) : Entity<ChannelId>(id) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Channel) return false
 
-        if (channelId != other.channelId) return false
+        if (id != other.id) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return channelId.hashCode()
+        return id.hashCode()
     }
 
     fun addMessage(message: Message) {

@@ -7,42 +7,40 @@ import kotlin.jvm.optionals.getOrNull
 import piperkt.common.id.ServerId
 import piperkt.services.servers.application.ServerRepository
 import piperkt.services.servers.domain.Server
-import piperkt.services.servers.domain.factory.ChannelFactory
-import piperkt.services.servers.domain.factory.ServerFactory
 import piperkt.services.servers.infrastructure.persistence.model.ChannelEntity
 import piperkt.services.servers.infrastructure.persistence.model.ServerEntity
 import piperkt.services.servers.infrastructure.persistence.model.ServerModelRepository
+import piperkt.services.servers.infrastructure.persistence.model.toDomain
 
 @Singleton
 @Primary
 class ServerRepositoryImpl(private val serverModelRepository: ServerModelRepository) :
     ServerRepository {
-    override fun save(serverName: String, serverDescription: String, owner: String): Server {
-        return serverModelRepository
-            .save(
-                ServerEntity(
-                    name = serverName,
-                    description = serverDescription,
-                    owner = owner,
-                    users = listOf(owner)
-                )
+    override fun save(entity: Server) {
+        serverModelRepository.save(
+            ServerEntity(
+                id = entity.id.value,
+                name = entity.name,
+                description = entity.description,
+                owner = entity.owner,
+                users = entity.users,
             )
-            .toServer()
+        )
     }
 
     override fun findAll(): List<Server> {
-        return serverModelRepository.findAll().map { it.toServer() }
+        return serverModelRepository.findAll().map { it.toDomain() }
     }
 
-    override fun deleteById(serverId: ServerId) {
-        return serverModelRepository.deleteById(serverId.value)
+    override fun deleteById(id: ServerId) {
+        return serverModelRepository.deleteById(id.value)
     }
 
     override fun update(server: Server): Server {
         val channelEntities =
             server.channels.map {
                 ChannelEntity(
-                    id = it.channelId.value,
+                    id = it.id.value,
                     name = it.name,
                     description = it.description,
                     channelType = it.type.toString()
@@ -59,7 +57,7 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
                     channels = channelEntities
                 )
             )
-            .toServer()
+            .toDomain()
     }
 
     override fun isUserInServer(serverId: ServerId, username: String): Boolean {
@@ -72,31 +70,14 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
             .contains(username)
     }
 
-    override fun findById(serverId: ServerId): Server? {
-        return serverModelRepository.findById(serverId.value).getOrNull()?.toServer()
+    override fun findById(id: ServerId): Server? {
+        return serverModelRepository.findById(id.value).getOrNull()?.toDomain()
     }
 
     override fun findByMember(username: String): List<Server> {
-        return serverModelRepository.findByUsersContains(username).map { it.toServer() }
+        return serverModelRepository.findByUsersContains(username).map { it.toDomain() }
     }
 
     // Extension method to create server from serverEntity
-    private fun ServerEntity.toServer(): Server {
-        return ServerFactory.createServer(
-            serverId = this.id.orEmpty(),
-            name = this.name,
-            description = this.description,
-            owner = this.owner,
-            channels =
-                this.channels.map { channelEntity ->
-                    ChannelFactory.createFromType(
-                        channelEntity.id,
-                        channelEntity.name,
-                        channelEntity.description,
-                        channelEntity.channelType
-                    )
-                },
-            users = this.users
-        )
-    }
+
 }

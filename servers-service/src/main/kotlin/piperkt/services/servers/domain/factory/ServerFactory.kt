@@ -1,22 +1,23 @@
 package piperkt.services.servers.domain.factory
 
+import piperkt.common.Factory
 import piperkt.common.id.ServerId
 import piperkt.services.servers.domain.Channel
 import piperkt.services.servers.domain.Server
 
-object ServerFactory {
+object ServerFactory : Factory<Server> {
 
     @Suppress("LongParameterList")
     fun createServer(
-        serverId: String,
         name: String,
         description: String,
         owner: String,
         channels: List<Channel> = emptyList(),
-        users: List<String> = listOf(owner)
+        users: List<String> = listOf(owner),
+        id: String = ServerId().toString()
     ): Server {
         return Server(
-            id = ServerId(serverId),
+            id = ServerId(id),
             name = name,
             owner = owner,
             description = description,
@@ -26,14 +27,12 @@ object ServerFactory {
     }
 
     fun createServerWithMembers(
-        serverId: String,
         name: String,
         description: String,
         owner: String,
         members: List<String>
     ): Server {
         return Server(
-            id = ServerId(serverId),
             name = name,
             owner = owner,
             description = description,
@@ -42,14 +41,12 @@ object ServerFactory {
     }
 
     fun createServerWithChannels(
-        serverId: String,
         name: String,
         description: String,
         owner: String,
         channels: List<Channel>
     ): Server {
         return Server(
-            id = ServerId(serverId),
             name = name,
             owner = owner,
             description = description,

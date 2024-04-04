@@ -1,3 +1,5 @@
 package piperkt.common.id
 
-data class MessageId(val value: String)
+import piperkt.common.UUIDEntityId
+
+class MessageId(value: String = newId()) : UUIDEntityId(value)

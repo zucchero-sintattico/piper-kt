@@ -7,12 +7,11 @@ import piperkt.services.servers.domain.factory.MessageFactory
 
 class ChannelTest : AnnotationSpec() {
 
-    private val simpleChannel =
-        ChannelFactory.createFromType("channelId", "name", "description", "TEXT")
+    private val simpleChannel = ChannelFactory.createFromType("name", "description", "TEXT")
 
     @Test
     fun `should add message to channel`() {
-        val message = MessageFactory.createMessage("messageId", "content", "sender")
+        val message = MessageFactory.createMessage("content", "sender")
         simpleChannel.addMessage(message)
         simpleChannel.messages.size shouldBe 1
     }

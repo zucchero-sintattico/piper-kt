@@ -1,20 +1,42 @@
 package piperkt.services.servers.infrastructure.persistence.model
 
-import io.micronaut.data.annotation.GeneratedValue
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.data.mongodb.annotation.MongoRepository
 import io.micronaut.data.repository.CrudRepository
+import piperkt.services.servers.domain.factory.ServerFactory
 
 @MappedEntity
 data class ServerEntity(
-    @Id @GeneratedValue val id: String? = null,
+    @Id val id: String,
     val name: String,
     val description: String,
     val owner: String,
     val users: List<String> = listOf(owner),
     val channels: List<ChannelEntity> = emptyList(),
-)
+) {
+    companion object {
+        fun fromDomain(server: piperkt.services.servers.domain.Server) =
+            ServerEntity(
+                id = server.id.value,
+                name = server.name,
+                description = server.description,
+                owner = server.owner,
+                users = server.users,
+                channels = server.channels.map { ChannelEntity.fromDomain(it) }
+            )
+    }
+}
+
+fun ServerEntity.toDomain() =
+    ServerFactory.createServer(
+        id = id,
+        name = name,
+        owner = owner,
+        description = description,
+        channels = channels.map { it.toDomain() }.toMutableList(),
+        users = users.toMutableList()
+    )
 
 @MongoRepository
 interface ServerModelRepository : CrudRepository<ServerEntity, String> {

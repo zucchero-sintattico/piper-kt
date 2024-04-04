@@ -1,3 +1,5 @@
 package piperkt.common.id
 
-data class ChannelId(val value: String)
+import piperkt.common.UUIDEntityId
+
+class ChannelId(value: String = newId()) : UUIDEntityId(value)

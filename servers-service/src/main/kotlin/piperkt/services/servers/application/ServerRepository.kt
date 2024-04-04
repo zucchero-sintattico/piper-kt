@@ -1,18 +1,19 @@
 package piperkt.services.servers.application
 
+import piperkt.common.Repository
 import piperkt.common.id.ServerId
 import piperkt.services.servers.domain.Server
 
-interface ServerRepository {
+interface ServerRepository : Repository<ServerId, Server> {
     fun findAll(): List<Server>
 
-    fun findById(serverId: ServerId): Server?
+    override fun findById(id: ServerId): Server?
 
     fun findByMember(username: String): List<Server>
 
-    fun save(serverName: String, serverDescription: String, owner: String): Server
+    override fun save(entity: Server)
 
-    fun deleteById(serverId: ServerId)
+    override fun deleteById(id: ServerId)
 
     fun update(server: Server): Server
 
