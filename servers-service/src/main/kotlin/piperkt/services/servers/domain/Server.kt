@@ -1,6 +1,6 @@
 package piperkt.services.servers.domain
 
-import piperkt.services.commons.domain.id.ServerId
+import piperkt.common.id.ServerId
 
 class Server(
     val id: ServerId,

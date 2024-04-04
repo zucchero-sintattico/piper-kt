@@ -2,7 +2,7 @@ package piperkt.services.servers.application.channels
 
 import io.kotest.core.spec.style.AnnotationSpec
 import org.mockito.kotlin.mock
-import piperkt.services.commons.domain.events.ChannelEventPublisher
+import piperkt.common.events.ChannelEventPublisher
 import piperkt.services.servers.application.ChannelService
 import piperkt.services.servers.application.ServerRepository
 

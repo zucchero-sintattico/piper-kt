@@ -6,7 +6,7 @@ import org.mockito.kotlin.reset
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
-import piperkt.services.commons.domain.events.ChannelEvent
+import piperkt.common.events.ChannelEvent
 import piperkt.services.servers.application.SimpleClasses.simpleChannelId
 import piperkt.services.servers.application.SimpleClasses.simpleMessage
 import piperkt.services.servers.application.SimpleClasses.simpleServer

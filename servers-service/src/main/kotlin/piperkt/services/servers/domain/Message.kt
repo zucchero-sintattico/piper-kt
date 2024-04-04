@@ -1,7 +1,7 @@
 package piperkt.services.servers.domain
 
 import java.time.Instant
-import piperkt.services.commons.domain.id.MessageId
+import piperkt.common.id.MessageId
 
 class Message(
     val messageId: MessageId,

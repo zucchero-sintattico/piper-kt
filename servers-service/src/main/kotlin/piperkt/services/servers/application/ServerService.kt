@@ -1,8 +1,8 @@
 package piperkt.services.servers.application
 
-import piperkt.services.commons.domain.events.ServerEvent
-import piperkt.services.commons.domain.events.ServerEventPublisher
-import piperkt.services.commons.domain.id.ServerId
+import piperkt.common.events.ServerEvent
+import piperkt.common.events.ServerEventPublisher
+import piperkt.common.id.ServerId
 import piperkt.services.servers.application.api.ServerServiceApi
 import piperkt.services.servers.application.api.command.ServerCommand
 import piperkt.services.servers.application.api.query.ServerQuery

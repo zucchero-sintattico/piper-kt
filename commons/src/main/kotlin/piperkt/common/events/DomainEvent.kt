@@ -1,4 +1,4 @@
-package piperkt.services.commons.domain.events
+package piperkt.common.events
 
 interface DomainEvent
 

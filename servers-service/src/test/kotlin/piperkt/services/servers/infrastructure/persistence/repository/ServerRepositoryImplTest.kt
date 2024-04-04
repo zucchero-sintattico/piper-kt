@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
-import piperkt.services.commons.domain.id.ChannelId
+import piperkt.common.id.ChannelId
 import piperkt.services.servers.application.ServerRepository
 import piperkt.services.servers.domain.ChannelType
 import piperkt.services.servers.domain.factory.ChannelFactory

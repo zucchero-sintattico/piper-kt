@@ -1,7 +1,7 @@
-package piperkt.services.commons.domain.events
+package piperkt.common.events
 
-import piperkt.services.commons.domain.id.ChannelId
-import piperkt.services.commons.domain.id.MessageId
+import piperkt.common.id.ChannelId
+import piperkt.common.id.MessageId
 
 sealed interface ChannelEvent : DomainEvent {
     data class ChannelCreatedEvent(val channelId: ChannelId) : ChannelEvent

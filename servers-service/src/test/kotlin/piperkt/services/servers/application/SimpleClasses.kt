@@ -1,7 +1,7 @@
 package piperkt.services.servers.application
 
-import piperkt.services.commons.domain.id.ChannelId
-import piperkt.services.commons.domain.id.ServerId
+import piperkt.common.id.ChannelId
+import piperkt.common.id.ServerId
 import piperkt.services.servers.domain.factory.ChannelFactory
 import piperkt.services.servers.domain.factory.MessageFactory
 import piperkt.services.servers.domain.factory.ServerFactory

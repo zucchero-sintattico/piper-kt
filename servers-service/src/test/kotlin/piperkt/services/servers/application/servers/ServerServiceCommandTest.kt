@@ -6,7 +6,7 @@ import org.mockito.kotlin.reset
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
-import piperkt.services.commons.domain.events.ServerEvent
+import piperkt.common.events.ServerEvent
 import piperkt.services.servers.application.SimpleClasses.simpleServer
 import piperkt.services.servers.application.SimpleClasses.simpleServerId
 import piperkt.services.servers.application.api.command.ServerCommand

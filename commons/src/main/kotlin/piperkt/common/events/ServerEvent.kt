@@ -1,6 +1,6 @@
-package piperkt.services.commons.domain.events
+package piperkt.common.events
 
-import piperkt.services.commons.domain.id.ServerId
+import piperkt.common.id.ServerId
 
 sealed interface ServerEvent : DomainEvent {
     data class ServerCreatedEvent(val serverId: ServerId) : ServerEvent

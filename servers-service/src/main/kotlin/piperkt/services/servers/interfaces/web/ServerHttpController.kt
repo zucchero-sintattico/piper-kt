@@ -6,7 +6,7 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.Status
-import piperkt.services.commons.domain.id.ServerId
+import piperkt.common.id.ServerId
 import piperkt.services.servers.application.ServerService
 import piperkt.services.servers.application.api.query.ServerQuery
 import piperkt.services.servers.interfaces.web.api.ServerHttpControllerApi

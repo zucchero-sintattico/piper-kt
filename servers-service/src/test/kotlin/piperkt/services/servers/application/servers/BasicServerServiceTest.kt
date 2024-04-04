@@ -2,7 +2,7 @@ package piperkt.services.servers.application.servers
 
 import io.kotest.core.spec.style.AnnotationSpec
 import org.mockito.kotlin.mock
-import piperkt.services.commons.domain.events.ServerEventPublisher
+import piperkt.common.events.ServerEventPublisher
 import piperkt.services.servers.application.ServerRepository
 import piperkt.services.servers.application.ServerService
 

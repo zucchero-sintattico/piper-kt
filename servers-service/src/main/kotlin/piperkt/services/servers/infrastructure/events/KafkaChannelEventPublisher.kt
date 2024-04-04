@@ -2,8 +2,8 @@ package piperkt.services.servers.infrastructure.events
 
 import io.micronaut.configuration.kafka.annotation.KafkaClient
 import io.micronaut.configuration.kafka.annotation.Topic
-import piperkt.services.commons.domain.events.ChannelEvent
-import piperkt.services.commons.domain.events.ChannelEventPublisher
+import piperkt.common.events.ChannelEvent
+import piperkt.common.events.ChannelEventPublisher
 
 @KafkaClient
 interface KafkaChannelEventPublisher : ChannelEventPublisher {

@@ -1,7 +1,7 @@
 package piperkt.services.servers.application.api.query
 
-import piperkt.services.commons.domain.id.ChannelId
-import piperkt.services.commons.domain.id.ServerId
+import piperkt.common.id.ChannelId
+import piperkt.common.id.ServerId
 import piperkt.services.servers.application.api.ServiceRequest
 import piperkt.services.servers.domain.Channel
 import piperkt.services.servers.domain.Message
