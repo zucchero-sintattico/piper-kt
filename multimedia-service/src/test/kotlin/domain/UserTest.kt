@@ -1,14 +1,12 @@
 package domain
 
-import base.Test
-import io.kotest.core.spec.style.FunSpec
+import base.UnitTest
 import io.kotest.matchers.shouldBe
 import piperkt.services.multimedia.domain.user.User
 import piperkt.services.multimedia.domain.user.Username
 
 class UserTest :
-    Test.Unit,
-    FunSpec({
+    UnitTest.FunSpec({
         context("a User") {
             test("should be able to create a user given an UserId") {
                 val username = "username"

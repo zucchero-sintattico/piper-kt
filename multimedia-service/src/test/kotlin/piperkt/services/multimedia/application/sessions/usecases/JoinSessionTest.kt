@@ -1,8 +1,7 @@
 package piperkt.services.multimedia.application.sessions.usecases
 
-import base.Test
+import base.UnitTest
 import data.UsersData.john
-import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
@@ -15,8 +14,7 @@ import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionId
 
 class JoinSessionTest :
-    Test.Unit,
-    FunSpec({
+    UnitTest.FunSpec({
         context("a session") {
             val sessionRepository = InMemorySessionRepository()
             val eventPublisher = MockedSessionEventPublisher()
