@@ -43,7 +43,7 @@ object ChannelFactory : Factory<Channel> {
         id: String = ChannelId().value,
         messages: MutableList<Message> = mutableListOf()
     ): Channel {
-        if (type == "TEXT") {
+        if (ChannelType.valueOf(type) == ChannelType.TEXT) {
             return createMessageChannel(name, description, id, messages)
         }
         return createMultimediaChannel(name, description, id)

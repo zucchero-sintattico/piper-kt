@@ -13,41 +13,38 @@ object SimpleClasses {
 
     fun simpleChannelId() = ChannelId("0")
 
-    fun simpleMessageId() = MessageId("0")
+    private fun simpleMessageId() = MessageId("0")
 
     fun simpleServer() =
         ServerFactory.createServer(
-            "serverName",
-            "serverDescription",
-            "owner",
+            name = "serverName",
+            description = "serverDescription",
+            owner = "owner",
             id = simpleServerId().value
         )
 
     fun simpleServerWithChannel() =
         ServerFactory.createServer(
-            "serverName",
-            "serverDescription",
-            "owner",
-            listOf(simpleChannel()),
-            id = simpleServerId().value
+            name = "serverName",
+            description = "serverDescription",
+            owner = "owner",
+            id = simpleServerId().value,
+            channels = listOf(simpleChannel)
         )
 
-    fun simpleServerWithChannelAndMessage() =
-        ServerFactory.createServerWithChannels(
-            "serverName",
-            "serverDescription",
-            "owner",
-            listOf(simpleChannel().apply { addMessage(simpleMessage()) })
-        )
-
-    fun simpleChannel() =
+    private val simpleChannel =
         ChannelFactory.createFromType(
-            "channelName",
-            "channelDescription",
-            "TEXT",
-            id = simpleChannelId().value
+            name = "channelName",
+            description = "channelDescription",
+            type = "TEXT",
+            id = simpleChannelId().value,
+            messages = mutableListOf(simpleMessage())
         )
 
     fun simpleMessage() =
-        MessageFactory.createMessage("content", "sender", id = simpleMessageId().value)
+        MessageFactory.createMessage(
+            content = "content",
+            sender = "sender",
+            id = simpleMessageId().value
+        )
 }

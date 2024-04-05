@@ -10,7 +10,7 @@ object MessageFactory : Factory<Message> {
     fun createMessage(
         content: String,
         sender: String,
-        timeStamp: String? = Instant.now().toString(),
+        timeStamp: String = Instant.now().toString(),
         id: String = MessageId().value
     ) =
         Message(

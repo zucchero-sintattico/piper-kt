@@ -14,7 +14,7 @@ object ServerFactory : Factory<Server> {
         owner: String,
         channels: List<Channel> = emptyList(),
         users: List<String> = listOf(owner),
-        id: String = ServerId().toString()
+        id: String = ServerId().value
     ): Server {
         return Server(
             id = ServerId(id),
@@ -23,34 +23,6 @@ object ServerFactory : Factory<Server> {
             description = description,
             channels = channels.toMutableList(),
             users = users.toMutableList()
-        )
-    }
-
-    fun createServerWithMembers(
-        name: String,
-        description: String,
-        owner: String,
-        members: List<String>
-    ): Server {
-        return Server(
-            name = name,
-            owner = owner,
-            description = description,
-            users = members.toMutableList()
-        )
-    }
-
-    fun createServerWithChannels(
-        name: String,
-        description: String,
-        owner: String,
-        channels: List<Channel>
-    ): Server {
-        return Server(
-            name = name,
-            owner = owner,
-            description = description,
-            channels = channels.toMutableList()
         )
     }
 }

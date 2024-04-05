@@ -28,14 +28,16 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         val request =
             ChannelCommand.CreateNewChannelInServer.Request(
-                simpleServerId(),
-                "channelName",
-                "channelDescription",
-                "TEXT",
-                "owner"
+                serverId = simpleServerId(),
+                channelName = "channelName",
+                channelDescription = "channelDescription",
+                channelType = "TEXT",
+                requestFrom = "owner"
             )
         val response = channelService.createNewChannelInServer(request)
         response.isSuccess shouldBe true
+        // Only way to test the response is to check if the event was published with the correct
+        // channelId
         verify(eventPublisher)
             .publish(ChannelEvent.ChannelCreatedEvent(response.getOrThrow().channelId))
     }
@@ -45,11 +47,11 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         whenever(serverRepository.findById(any())).thenReturn(null)
         val request =
             ChannelCommand.CreateNewChannelInServer.Request(
-                simpleServerId(),
-                "channelName",
-                "channelDescription",
-                "TEXT",
-                "owner"
+                serverId = simpleServerId(),
+                channelName = "channelName",
+                channelDescription = "channelDescription",
+                channelType = "TEXT",
+                requestFrom = "owner"
             )
         channelService.createNewChannelInServer(request) shouldBe
             Result.failure(ServerOrChannelNotFoundException())
@@ -61,11 +63,11 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         val request =
             ChannelCommand.CreateNewChannelInServer.Request(
-                simpleServerId(),
-                "channelName",
-                "channelDescription",
-                "TEXT",
-                "notOwner"
+                serverId = simpleServerId(),
+                channelName = "channelName",
+                channelDescription = "channelDescription",
+                channelType = "TEXT",
+                requestFrom = "notOwner"
             )
         channelService.createNewChannelInServer(request) shouldBe
             Result.failure(UserNotHasPermissionsException())
@@ -77,12 +79,11 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServerWithChannel())
         channelService.updateChannelInServer(
             ChannelCommand.UpdateChannelInServer.Request(
-                simpleServerId(),
-                simpleChannelId(),
-                "newChannelName",
-                "channelDescription",
-                "TEXT",
-                "owner"
+                serverId = simpleServerId(),
+                channelId = simpleChannelId(),
+                channelName = "newChannelName",
+                channelDescription = "channelDescription",
+                requestFrom = "owner"
             )
         ) shouldBe Result.success(ChannelCommand.UpdateChannelInServer.Response)
         verify(eventPublisher).publish(ChannelEvent.ChannelUpdatedEvent(simpleChannelId()))
@@ -93,12 +94,11 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         channelService.updateChannelInServer(
             ChannelCommand.UpdateChannelInServer.Request(
-                simpleServerId(),
-                simpleChannelId(),
-                "channelName",
-                "channelDescription",
-                "TEXT",
-                "owner"
+                serverId = simpleServerId(),
+                channelId = simpleChannelId(),
+                channelName = "channelName",
+                channelDescription = "channelDescription",
+                requestFrom = "owner"
             )
         ) shouldBe Result.failure(ServerOrChannelNotFoundException("Server or Channel not found"))
         verifyNoInteractions(eventPublisher)
@@ -109,12 +109,11 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServerWithChannel())
         channelService.updateChannelInServer(
             ChannelCommand.UpdateChannelInServer.Request(
-                simpleServerId(),
-                simpleChannelId(),
-                "channelName",
-                "channelDescription",
-                "TEXT",
-                "notOwner"
+                serverId = simpleServerId(),
+                channelId = simpleChannelId(),
+                channelName = "channelName",
+                channelDescription = "channelDescription",
+                requestFrom = "notOwner"
             )
         ) shouldBe Result.failure(UserNotHasPermissionsException())
         verifyNoInteractions(eventPublisher)
@@ -125,9 +124,9 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServerWithChannel())
         channelService.deleteChannelInServer(
             ChannelCommand.DeleteChannelInServer.Request(
-                simpleServerId(),
-                simpleChannelId(),
-                "owner"
+                serverId = simpleServerId(),
+                channelId = simpleChannelId(),
+                requestFrom = "owner"
             )
         ) shouldBe Result.success(ChannelCommand.DeleteChannelInServer.Response)
         verify(eventPublisher).publish(ChannelEvent.ChannelDeletedEvent(simpleChannelId()))
@@ -138,9 +137,9 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer())
         channelService.deleteChannelInServer(
             ChannelCommand.DeleteChannelInServer.Request(
-                simpleServerId(),
-                simpleChannelId(),
-                "owner"
+                serverId = simpleServerId(),
+                channelId = simpleChannelId(),
+                requestFrom = "owner"
             )
         ) shouldBe Result.failure(ServerOrChannelNotFoundException("Server or Channel not found"))
         verifyNoInteractions(eventPublisher)
@@ -151,9 +150,9 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServerWithChannel())
         channelService.deleteChannelInServer(
             ChannelCommand.DeleteChannelInServer.Request(
-                simpleServerId(),
-                simpleChannelId(),
-                "notOwner"
+                serverId = simpleServerId(),
+                channelId = simpleChannelId(),
+                requestFrom = "notOwner"
             )
         ) shouldBe Result.failure(UserNotHasPermissionsException())
         verifyNoInteractions(eventPublisher)
@@ -167,10 +166,10 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         val response =
             channelService.addMessageInChannel(
                 ChannelCommand.AddMessageInChannel.Request(
-                    simpleServerId(),
-                    simpleChannelId(),
-                    "content",
-                    "sender"
+                    serverId = simpleServerId(),
+                    channelId = simpleChannelId(),
+                    content = "content",
+                    sender = "sender"
                 )
             )
         response.isSuccess shouldBe true
@@ -188,10 +187,10 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(false)
         channelService.addMessageInChannel(
             ChannelCommand.AddMessageInChannel.Request(
-                simpleServerId(),
-                simpleChannelId(),
-                "content",
-                "sender"
+                serverId = simpleServerId(),
+                channelId = simpleChannelId(),
+                content = "content",
+                sender = "sender"
             )
         ) shouldBe Result.failure(UserNotInServerException())
         verifyNoInteractions(eventPublisher)

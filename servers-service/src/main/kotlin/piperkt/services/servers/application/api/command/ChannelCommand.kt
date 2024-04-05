@@ -25,7 +25,6 @@ sealed interface ChannelCommand {
             val channelId: ChannelId,
             val channelName: String?,
             val channelDescription: String?,
-            val channelType: String,
             override val requestFrom: String
         ) : UpdateChannelInServer, ServiceRequest
 
