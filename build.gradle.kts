@@ -35,7 +35,7 @@ subprojects {
 spotless {
     yaml {
         target("**/*.yml", "**/*.yaml")
-        targetExclude("**/build/**", "piperChat/**")
+        targetExclude("**/build/**", "piperChart/**")
         prettier()
     }
 }
