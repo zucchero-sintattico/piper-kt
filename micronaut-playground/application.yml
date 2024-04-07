@@ -2,8 +2,3 @@ application:
   name: "micronaut-playground"
   version: "1.0.0"
   description: "My Application Description"
-
-netty:
-  default:
-    allocator:
-      max-order: 3
