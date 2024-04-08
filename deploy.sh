@@ -8,5 +8,5 @@ kubectl apply -f auth.yml
 # shellcheck disable=SC2093
 eval $(minikube docker-env)
 ./gradlew dockerBuild
-helm install  friendship-service  piperChart  --values  friendship-service/values.yaml
+helm install  friendship-service  piper-chart  --values  friendship-service/values.yaml
 
