@@ -1,0 +1,18 @@
+project: # Project custom values
+  atlasProjectName: "friendship-db"
+  projectIpAccessList:
+    - ipAddress: "0.0.0.0"
+
+
+
+users: # Custom database users
+  - username: admin
+    databaseName: admin
+    roles:
+      - databaseName: admin-role
+        roleName: dbAdmin
+  - username: user
+    databaseName: admin
+    roles:
+      - databaseName: user-role
+        roleName: readWrite
