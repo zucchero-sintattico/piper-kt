@@ -3,6 +3,9 @@ project: # Project custom values
   projectIpAccessList:
     - ipAddress: "0.0.0.0"
 
+operator:
+  name: mongodb-friendship-operator
+
 users: # Custom database users
   - username: admin
     databaseName: admin

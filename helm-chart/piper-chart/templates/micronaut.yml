@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: micronaut-k8s
+  namespace: {{.Values.namespace}}
   name: {{.Values.serviceName}}
 spec:
   selector:
@@ -37,7 +37,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: micronaut-k8s
+  namespace: {{.Values.namespace}}
   name: {{.Values.serviceName}}
 spec:
   selector:
