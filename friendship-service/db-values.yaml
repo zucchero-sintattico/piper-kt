@@ -3,8 +3,6 @@ project: # Project custom values
   projectIpAccessList:
     - ipAddress: "0.0.0.0"
 
-
-
 users: # Custom database users
   - username: admin
     databaseName: admin

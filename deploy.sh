@@ -14,10 +14,8 @@ eval $(minikube docker-env)
 
 kubectl apply -f auth.yml
 
-helm upgrade -i  friendship-service  piper-chart  --values  friendship-service/values.yaml
+helm upgrade -i friendship-service  helm-chart/piper-chart  --values  friendship-service/values.yaml
 
-#https://github.com/mongodb/helm-charts/tree/d843c293bf86653d4b9193ab245f04934c93a722/charts/atlas-operator
-helm upgrade -i atlas-operator\
-  --namespace=atlas-operator\
-  --create-namespace atlas-operator\
-  --values friendship-service/db-values.yaml
+#https://github.com/mongodb/helm-charts/tree/d843c293bf86653d4b9193ab245f04934c93a722/charts/
+helm dependency build helm-chart/community-operator
+helm upgrade -i mongodb-friendship helm-chart/community-operator --namespace mongodb --create-namespace --values friendship-service/db-values.yaml
