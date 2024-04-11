@@ -16,3 +16,5 @@ helm upgrade -i --set image.tag=0.9.0-arm64 community-operator mongodb/community
     --values friendship-service/helm-values/db-values.yaml
 helm upgrade -i friendship-service  helm-chart/mongo-for-operator --namespace piper-kt\
     --values  friendship-service/helm-values/mongo-values.yaml
+
+#kubectl port-forward services/friendship-mongo-svc -n piper-kt  27017:27017

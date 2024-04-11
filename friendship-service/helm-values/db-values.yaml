@@ -28,6 +28,21 @@ registry:
   readinessProbe: docker.io/mohsinonxrm #quay.io/mongodb
   operator: docker.io/mohsinonxrm #quay.io/mongodb
 
+project: # Project custom values
+  atlasProjectName: "My Project"
+  projectIpAccessList:
+    - ipAddress: "0.0.0.0"
+users: # Custom database users
+  - username: dbadmin
+    databaseName: admin
+    roles:
+      - databaseName: admin-role
+        roleName: dbAdmin
+  - username: dbuser
+    databaseName: admin
+    roles:
+      - databaseName: user-role
+        roleName: readWrite
 
 externalAccess:
   externalService:
