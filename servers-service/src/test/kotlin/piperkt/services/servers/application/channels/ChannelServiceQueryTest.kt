@@ -4,10 +4,6 @@ import io.kotest.matchers.shouldBe
 import org.mockito.kotlin.any
 import org.mockito.kotlin.reset
 import org.mockito.kotlin.whenever
-import piperkt.services.servers.application.SimpleClasses.simpleChannelId
-import piperkt.services.servers.application.SimpleClasses.simpleMessage
-import piperkt.services.servers.application.SimpleClasses.simpleServerId
-import piperkt.services.servers.application.SimpleClasses.simpleServerWithChannel
 import piperkt.services.servers.application.api.query.ChannelQuery
 import piperkt.services.servers.application.exceptions.UserNotInServerException
 
@@ -20,19 +16,20 @@ class ChannelServiceQueryTest : BasicChannelServiceTest() {
 
     @Test
     fun `should get messages from channel if user is in server`() {
-        val fakeMessages = listOf(simpleMessage())
+        val fakeMessages = listOf(simpleMessage)
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(true)
-        whenever(serverRepository.findById(any())).thenReturn(simpleServerWithChannel())
+        whenever(serverRepository.findById(any())).thenReturn(simpleServerWithChannel)
         val response =
             channelService.getMessagesFromChannelId(
                 ChannelQuery.GetMessagesFromChannelId.Request(
-                    simpleServerId(),
-                    simpleChannelId(),
+                    simpleServerId,
+                    simpleChannelId,
                     0,
                     10,
                     "requestFrom"
                 )
             )
+        println(response.getOrNull()?.messages)
         response shouldBe
             Result.success(ChannelQuery.GetMessagesFromChannelId.Response(fakeMessages))
         response.getOrNull()?.messages shouldBe fakeMessages
@@ -43,8 +40,8 @@ class ChannelServiceQueryTest : BasicChannelServiceTest() {
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(false)
         channelService.getMessagesFromChannelId(
             ChannelQuery.GetMessagesFromChannelId.Request(
-                simpleServerId(),
-                simpleChannelId(),
+                simpleServerId,
+                simpleChannelId,
                 0,
                 10,
                 "requestFrom"
