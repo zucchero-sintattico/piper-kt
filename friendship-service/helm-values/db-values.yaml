@@ -1,19 +1,39 @@
-project: # Project custom values
-  atlasProjectName: "friendship-db"
-  projectIpAccessList:
-    - ipAddress: "0.0.0.0"
+# value from: https://github.com/mongodb/mongodb-kubernetes-operator/issues/1420#issuecomment-1790885017
 
 operator:
-  name: mongodb-friendship-operator
+  name: friendship-service-operator
+  operatorImageName: mongodb-kubernetes-operator
+  deploymentName: mongodb-kubernetes-operator
+  version: 0.8.1
+  resources:
+    limits:
+      cpu: 200m
+      memory: 200Mi
+    requests:
+      cpu: 200m
+      memory: 200Mi
+agent:
+  name: mongodb-agent
+  version: 12.0.24.7719-1
+versionUpgradeHook:
+  name: mongodb-kubernetes-operator-version-upgrade-post-start-hook
+  version: 1.0.7
+readinessProbe:
+  name: mongodb-kubernetes-readiness
+  version: 1.0.15
 
-users: # Custom database users
-  - username: admin
-    databaseName: admin
-    roles:
-      - databaseName: admin-role
-        roleName: dbAdmin
-  - username: user
-    databaseName: admin
-    roles:
-      - databaseName: user-role
-        roleName: readWrite
+registry:
+  agent: docker.io/mohsinonxrm #quay.io/mongodb
+  versionUpgradeHook: docker.io/mohsinonxrm #quay.io/mongodb
+  readinessProbe: docker.io/mohsinonxrm #quay.io/mongodb
+  operator: docker.io/mohsinonxrm #quay.io/mongodb
+
+
+externalAccess:
+  externalService:
+    annotations:
+    # cloud-specific annotations for the service
+    spec:
+      type: NodePort # default is LoadBalancer
+      port: 27017
+      # you can specify other spec overrides if necessary
