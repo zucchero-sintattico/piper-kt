@@ -4,9 +4,10 @@ import base.UnitTest
 import data.UsersData.jane
 import data.UsersData.john
 import io.kotest.matchers.shouldBe
+import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import org.junit.jupiter.api.assertThrows
-import piperkt.services.multimedia.application.usecases.GetSessionParticipants
+import piperkt.services.multimedia.application.services.SessionService
 import piperkt.services.multimedia.domain.session.SessionErrors
 import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionId
@@ -15,8 +16,8 @@ import piperkt.services.multimedia.interfaces.web.api.GetSessionParticipantsApi
 class GetSessionParticipantsControllerTest :
     UnitTest.FunSpec({
         val sessionRepository = InMemorySessionRepository()
-        val getUserInSessionApi =
-            GetSessionParticipantsController(GetSessionParticipants(sessionRepository))
+        val sessionService = SessionService(sessionRepository, MockedSessionEventPublisher())
+        val getUserInSessionApi = GetSessionParticipantsController(sessionService)
 
         beforeEach { sessionRepository.clear() }
 

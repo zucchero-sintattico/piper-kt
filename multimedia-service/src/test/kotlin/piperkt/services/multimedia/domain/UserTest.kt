@@ -1,4 +1,4 @@
-package domain
+package piperkt.services.multimedia.domain
 
 import base.UnitTest
 import io.kotest.matchers.shouldBe

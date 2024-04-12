@@ -1,4 +1,4 @@
-package domain
+package piperkt.services.multimedia.domain
 
 import base.UnitTest
 import data.UsersData.jane
@@ -14,14 +14,14 @@ class SessionTest :
 
             test("should be able to create a session given an Id") {
                 val session = SessionFactory.empty()
-                session.allowedUsers() shouldBe emptyList()
-                session.participants() shouldBe emptyList()
+                session.allowedUsers() shouldBe emptySet()
+                session.participants() shouldBe emptySet()
             }
 
             test("should be able to create a session given an Id and a list of allowed users") {
                 val session = SessionFactory.fromAllowedUsers(users)
                 session.allowedUsers() shouldBe users
-                session.participants() shouldBe emptyList()
+                session.participants() shouldBe emptySet()
             }
 
             test(
