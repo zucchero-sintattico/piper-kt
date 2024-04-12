@@ -1,6 +1,7 @@
 package piperkt.services.multimedia.application.usecases
 
 import piperkt.services.multimedia.application.CommandUseCase
+import piperkt.services.multimedia.application.orThrow
 import piperkt.services.multimedia.domain.session.SessionErrors
 import piperkt.services.multimedia.domain.session.SessionEvent.ParticipantJoined
 import piperkt.services.multimedia.domain.session.SessionEventPublisher
@@ -26,8 +27,9 @@ open class JoinSession(
 
     override fun execute(command: Command) {
         val session =
-            sessionRepository.findById(command.sessionId)
-                ?: throw SessionErrors.SessionNotFound(command.sessionId)
+            sessionRepository
+                .findById(command.sessionId)
+                .orThrow(SessionErrors.SessionNotFound(command.sessionId))
         session.addParticipant(command.username)
         sessionRepository.save(session)
         sessionEventPublisher.publish(ParticipantJoined(command.sessionId, command.username))
