@@ -12,4 +12,14 @@ class ServerEventsKafkaListener(private val serverEventsListener: ServerEventsLi
 
     @Topic("server-deleted")
     fun onServerDeleted(event: ServerEvent.ServerDeleted) = serverEventsListener.handle(event)
+
+    @Topic("user-joined-server")
+    fun onUserJoinedServer(event: ServerEvent.UserJoinedServer) = serverEventsListener.handle(event)
+
+    @Topic("user-left-server")
+    fun onUserLeftServer(event: ServerEvent.UserLeftServer) = serverEventsListener.handle(event)
+
+    @Topic("user-kicked-from-server")
+    fun onUserKickedFromServer(event: ServerEvent.UserKickedFromServer) =
+        serverEventsListener.handle(event)
 }

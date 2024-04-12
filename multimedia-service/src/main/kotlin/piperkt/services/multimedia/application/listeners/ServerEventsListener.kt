@@ -14,6 +14,9 @@ open class ServerEventsListener(private val serverRepository: ServerRepository) 
         when (event) {
             is ServerEvent.ServerCreated -> onServerCreated(event)
             is ServerEvent.ServerDeleted -> onServerDeleted(event)
+            is ServerEvent.UserJoinedServer -> onUserJoinedServer(event)
+            is ServerEvent.UserLeftServer -> onUserLeftServer(event)
+            is ServerEvent.UserKickedFromServer -> onUserKickedFromServer(event)
         }
     }
 
@@ -24,5 +27,23 @@ open class ServerEventsListener(private val serverRepository: ServerRepository) 
 
     private fun onServerDeleted(event: ServerEvent.ServerDeleted) {
         serverRepository.deleteById(ServerId(event.serverId))
+    }
+
+    private fun onUserJoinedServer(event: ServerEvent.UserJoinedServer) {
+        val server = serverRepository.findById(ServerId(event.serverId))!!
+        server.addMember(Username(event.username))
+        serverRepository.save(server)
+    }
+
+    private fun onUserLeftServer(event: ServerEvent.UserLeftServer) {
+        val server = serverRepository.findById(ServerId(event.serverId))!!
+        server.removeMember(Username(event.username))
+        serverRepository.save(server)
+    }
+
+    private fun onUserKickedFromServer(event: ServerEvent.UserKickedFromServer) {
+        val server = serverRepository.findById(ServerId(event.serverId))!!
+        server.removeMember(Username(event.username))
+        serverRepository.save(server)
     }
 }
