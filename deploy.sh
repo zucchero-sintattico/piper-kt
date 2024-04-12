@@ -18,3 +18,4 @@ helm upgrade -i friendship-service  helm-chart/mongo-for-operator --namespace pi
     --values  friendship-service/helm-values/mongo-values.yaml
 
 #kubectl port-forward services/friendship-mongo-svc -n piper-kt  27017:27017
+#Connection String: mongodb://my-user:password@localhost:27017/?authSource=admin&authMechanism=SCRAM-SHA-256&directConnection=true

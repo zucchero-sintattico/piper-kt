@@ -28,27 +28,18 @@ registry:
   readinessProbe: docker.io/mohsinonxrm #quay.io/mongodb
   operator: docker.io/mohsinonxrm #quay.io/mongodb
 
-project: # Project custom values
-  atlasProjectName: "My Project"
-  projectIpAccessList:
-    - ipAddress: "0.0.0.0"
-users: # Custom database users
-  - username: dbadmin
-    databaseName: admin
+users:
+  - name: my-user
+    db: admin
+    passwordSecretRef: # a reference to the secret that will be used to generate the user's password
+      name: <secretName>
     roles:
-      - databaseName: admin-role
-        roleName: dbAdmin
-  - username: dbuser
-    databaseName: admin
-    roles:
-      - databaseName: user-role
-        roleName: readWrite
-
-externalAccess:
-  externalService:
-    annotations:
-    # cloud-specific annotations for the service
-    spec:
-      type: NodePort # default is LoadBalancer
-      port: 27017
-      # you can specify other spec overrides if necessary
+      - name: clusterAdmin
+        db: admin
+      - name: userAdminAnyDatabase
+        db: admin
+      - name: readWriteAnyDatabase
+        db: admin
+      - name: dbAdminAnyDatabase
+        db: admin
+    scramCredentialsSecretName: my-scram
