@@ -44,14 +44,19 @@ class Server(
     @Throws(ServerErrors.ChannelNotInServer::class)
     fun removeChannel(channel: Channel) {
         if (!channels.contains(channel)) {
-            throw ServerErrors.ChannelNotInServer(id, channel)
+            throw ServerErrors.ChannelNotInServer(id, channel.id)
         }
         channels -= channel
     }
 
-    companion object {
-        fun findById(id: ServerId, serverRepository: ServerRepository): Server {
-            return serverRepository.findById(id) ?: throw ServerErrors.ServerNotFound(id)
+    fun removeChannelById(channelId: ChannelId) {
+        if (channels.none { it.id == channelId }) {
+            throw ServerErrors.ChannelNotInServer(id, channelId)
         }
+        channels = channels.filter { it.id != channelId }
+    }
+
+    fun getChannelById(channelId: ChannelId): Channel {
+        return channels.first { it.id == channelId }
     }
 }

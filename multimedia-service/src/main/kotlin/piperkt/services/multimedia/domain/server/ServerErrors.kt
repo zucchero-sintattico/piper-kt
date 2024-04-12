@@ -11,5 +11,5 @@ sealed class ServerErrors : Exception() {
 
     data class ChannelAlreadyInServer(val id: ServerId, val channel: Channel) : ServerErrors()
 
-    data class ChannelNotInServer(val id: ServerId, val channel: Channel) : ServerErrors()
+    data class ChannelNotInServer(val id: ServerId, val channelId: ChannelId) : ServerErrors()
 }
