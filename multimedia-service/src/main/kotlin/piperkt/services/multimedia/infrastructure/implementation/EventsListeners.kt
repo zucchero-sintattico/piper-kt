@@ -4,6 +4,7 @@ import jakarta.inject.Singleton
 import piperkt.services.multimedia.application.listeners.ChannelEventsListener
 import piperkt.services.multimedia.application.listeners.DirectEventsListener
 import piperkt.services.multimedia.application.listeners.ServerEventsListener
+import piperkt.services.multimedia.application.services.SessionService
 import piperkt.services.multimedia.domain.direct.DirectRepository
 import piperkt.services.multimedia.domain.server.ServerRepository
 import piperkt.services.multimedia.domain.session.SessionEventPublisher
@@ -24,6 +25,6 @@ object EventsListeners {
     @Singleton
     class ChannelEventListenerService(
         serverRepository: ServerRepository,
-        sessionRepository: SessionRepository
-    ) : ChannelEventsListener(serverRepository, sessionRepository)
+        sessionService: SessionService
+    ) : ChannelEventsListener(serverRepository, sessionService)
 }

@@ -1,6 +1,7 @@
 package piperkt.services.multimedia.application.usecases
 
 import piperkt.services.multimedia.application.QueryUseCase
+import piperkt.services.multimedia.application.orThrow
 import piperkt.services.multimedia.domain.session.SessionErrors
 import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.domain.session.SessionRepository
@@ -20,8 +21,9 @@ open class GetSessionParticipants(private val sessionRepository: SessionReposito
 
     override fun execute(query: Query): Response {
         val session =
-            sessionRepository.findById(query.sessionId)
-                ?: throw SessionErrors.SessionNotFound(query.sessionId)
+            sessionRepository
+                .findById(query.sessionId)
+                .orThrow(SessionErrors.SessionNotFound(query.sessionId))
         return Response(session.participants().toSet())
     }
 }
