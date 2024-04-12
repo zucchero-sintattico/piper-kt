@@ -23,17 +23,10 @@ open class RemoveSessionAllowedUser(
 
     data class Command(val sessionId: SessionId, val username: Username)
 
-    override fun validate(command: Command) {
+    override fun execute(command: Command) {
         val session =
             sessionRepository.findById(command.sessionId)
                 ?: throw SessionErrors.SessionNotFound(command.sessionId)
-        if (!session.allowedUsers().contains(command.username)) {
-            throw SessionErrors.UserNotAllowed(command.sessionId, command.username)
-        }
-    }
-
-    override fun execute(command: Command) {
-        val session = sessionRepository.findById(command.sessionId)!!
         session.removeAllowedUser(command.username)
         sessionRepository.save(session)
         sessionEventPublisher.publish(AllowedUserRemoved(command.sessionId, command.username))

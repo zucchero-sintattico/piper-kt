@@ -14,7 +14,7 @@ import piperkt.services.multimedia.domain.user.Username
 open class DirectEventsListener(
     private val directRepository: DirectRepository,
     private val sessionRepository: SessionRepository,
-    private val sessionEventPublisher: SessionEventPublisher
+    private val sessionEventPublisher: SessionEventPublisher,
 ) : EventListener<DirectEvent> {
     override fun handle(event: DirectEvent) {
         when (event) {

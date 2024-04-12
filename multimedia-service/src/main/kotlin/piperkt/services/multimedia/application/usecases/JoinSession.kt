@@ -24,18 +24,6 @@ open class JoinSession(
 
     data class Command(val sessionId: SessionId, val username: Username)
 
-    override fun validate(command: Command) {
-        val session =
-            sessionRepository.findById(command.sessionId)
-                ?: throw SessionErrors.SessionNotFound(command.sessionId)
-        if (!session.allowedUsers().contains(command.username)) {
-            throw SessionErrors.UserNotAllowed(command.sessionId, command.username)
-        }
-        if (session.participants().contains(command.username)) {
-            throw SessionErrors.UserAlreadyParticipant(command.sessionId, command.username)
-        }
-    }
-
     override fun execute(command: Command) {
         val session =
             sessionRepository.findById(command.sessionId)

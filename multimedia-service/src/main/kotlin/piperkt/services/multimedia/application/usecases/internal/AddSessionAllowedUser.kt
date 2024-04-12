@@ -30,17 +30,10 @@ open class AddSessionAllowedUser(
      */
     data class Command(val sessionId: SessionId, val username: Username)
 
-    override fun validate(command: Command) {
+    override fun execute(command: Command) {
         val session =
             sessionRepository.findById(command.sessionId)
                 ?: throw SessionErrors.SessionNotFound(command.sessionId)
-        if (session.allowedUsers().contains(command.username)) {
-            throw SessionErrors.UserAlreadyAllowed(command.sessionId, command.username)
-        }
-    }
-
-    override fun execute(command: Command) {
-        val session = sessionRepository.findById(command.sessionId)!!
         session.addAllowedUser(command.username)
         sessionRepository.save(session)
         sessionEventPublisher.publish(AllowedUserAdded(command.sessionId, command.username))

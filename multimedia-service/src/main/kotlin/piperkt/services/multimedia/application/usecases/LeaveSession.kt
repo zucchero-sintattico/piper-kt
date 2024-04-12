@@ -23,17 +23,10 @@ open class LeaveSession(
 
     data class Command(val sessionId: SessionId, val username: Username)
 
-    override fun validate(command: Command) {
+    override fun execute(command: Command) {
         val session =
             sessionRepository.findById(command.sessionId)
                 ?: throw SessionErrors.SessionNotFound(command.sessionId)
-        if (!session.participants().contains(command.username)) {
-            throw SessionErrors.UserNotParticipant(command.sessionId, command.username)
-        }
-    }
-
-    override fun execute(command: Command) {
-        val session = sessionRepository.findById(command.sessionId)!!
         session.removeParticipant(command.username)
         sessionRepository.save(session)
         sessionEventPublisher.publish(
