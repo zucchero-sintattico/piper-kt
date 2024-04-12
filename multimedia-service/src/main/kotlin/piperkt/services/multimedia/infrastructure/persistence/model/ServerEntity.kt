@@ -30,8 +30,8 @@ data class ServerEntity(
     fun toDomain() =
         Server(
             id = ServerId(id),
-            members = participants.map { Username(it) },
-            channels = channels.map { it.toDomain() }
+            members = participants.map { Username(it) }.toSet(),
+            channels = channels.map { it.toDomain() }.toSet()
         )
 
     companion object {

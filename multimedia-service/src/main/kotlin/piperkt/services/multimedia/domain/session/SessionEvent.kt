@@ -6,7 +6,7 @@ import piperkt.services.multimedia.domain.user.Username
 
 sealed interface SessionEvent : DomainEvent {
 
-    data class SessionCreated(val sessionId: SessionId, val allowedUsers: List<Username>) :
+    data class SessionCreated(val sessionId: SessionId, val allowedUsers: Set<Username>) :
         SessionEvent
 
     data class SessionDeleted(val sessionId: SessionId) : SessionEvent

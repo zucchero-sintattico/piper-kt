@@ -2,8 +2,8 @@ package piperkt.services.multimedia.application.services
 
 import piperkt.services.multimedia.application.orThrow
 import piperkt.services.multimedia.domain.session.Session
-import piperkt.services.multimedia.domain.session.SessionErrors
-import piperkt.services.multimedia.domain.session.SessionEvent
+import piperkt.services.multimedia.domain.session.SessionErrors.SessionNotFound
+import piperkt.services.multimedia.domain.session.SessionEvent.*
 import piperkt.services.multimedia.domain.session.SessionEventPublisher
 import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionId
@@ -30,12 +30,14 @@ open class SessionService(
         data class LeaveSession(val sessionId: SessionId, val username: Username) : Command
     }
 
+    fun getSession(sessionId: SessionId): Session {
+        return sessionRepository.findById(sessionId).orThrow(SessionNotFound(sessionId))
+    }
+
     fun createSession(command: Command.CreateSession): Session {
         val session = SessionFactory.fromAllowedUsers(command.allowedUsers)
         sessionRepository.save(session)
-        sessionEventPublisher.publish(
-            SessionEvent.SessionCreated(session.id, session.allowedUsers())
-        )
+        sessionEventPublisher.publish(SessionCreated(session.id, session.allowedUsers()))
         return session
     }
 
@@ -43,45 +45,29 @@ open class SessionService(
         sessionRepository.deleteById(command.sessionId)
     }
 
-    fun addAllowedUser(command: Command.AddAllowedUser) {
-        val session =
-            sessionRepository
-                .findById(command.sessionId)
-                .orThrow(SessionErrors.SessionNotFound(command.sessionId))
-        session.addAllowedUser(command.username)
+    private fun updateSession(id: SessionId, update: Session.() -> Unit) {
+        val session = getSession(id)
+        session.update()
         sessionRepository.save(session)
+    }
+
+    fun addAllowedUser(command: Command.AddAllowedUser) {
+        updateSession(command.sessionId) { addAllowedUser(command.username) }
+        sessionEventPublisher.publish(AllowedUserAdded(command.sessionId, command.username))
     }
 
     fun removeAllowedUser(command: Command.RemoveAllowedUser) {
-        val session =
-            sessionRepository
-                .findById(command.sessionId)
-                .orThrow(SessionErrors.SessionNotFound(command.sessionId))
-        session.removeAllowedUser(command.username)
-        sessionRepository.save(session)
+        updateSession(command.sessionId) { removeAllowedUser(command.username) }
+        sessionEventPublisher.publish(AllowedUserRemoved(command.sessionId, command.username))
     }
 
     fun joinSession(command: Command.JoinSession) {
-        val session =
-            sessionRepository
-                .findById(command.sessionId)
-                .orThrow(SessionErrors.SessionNotFound(command.sessionId))
-        session.addParticipant(command.username)
-        sessionRepository.save(session)
-        sessionEventPublisher.publish(
-            SessionEvent.ParticipantJoined(command.sessionId, command.username)
-        )
+        updateSession(command.sessionId) { addParticipant(command.username) }
+        sessionEventPublisher.publish(ParticipantJoined(command.sessionId, command.username))
     }
 
     fun leaveSession(command: Command.LeaveSession) {
-        val session =
-            sessionRepository
-                .findById(command.sessionId)
-                .orThrow(SessionErrors.SessionNotFound(command.sessionId))
-        session.removeParticipant(command.username)
-        sessionRepository.save(session)
-        sessionEventPublisher.publish(
-            SessionEvent.ParticipantLeft(command.sessionId, command.username)
-        )
+        updateSession(command.sessionId) { removeParticipant(command.username) }
+        sessionEventPublisher.publish(ParticipantLeft(command.sessionId, command.username))
     }
 }

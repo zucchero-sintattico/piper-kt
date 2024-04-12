@@ -19,7 +19,9 @@ class SessionRepositoryImpl(private val sessionEntityRepository: SessionEntityRe
         sessionEntityRepository.save(SessionEntity.fromDomain(entity))
     }
 
-    override fun deleteById(id: SessionId) {
+    override fun deleteById(id: SessionId): Session? {
+        val session = findById(id)
         sessionEntityRepository.deleteById(id.value)
+        return session
     }
 }

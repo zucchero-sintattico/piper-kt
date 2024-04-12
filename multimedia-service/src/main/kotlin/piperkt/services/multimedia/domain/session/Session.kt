@@ -9,12 +9,12 @@ class Session(
     private var participants: Set<Username> = emptySet(),
 ) : AggregateRoot<SessionId>(id) {
 
-    fun allowedUsers(): List<Username> {
-        return allowedUsers.toList()
+    fun allowedUsers(): Set<Username> {
+        return allowedUsers
     }
 
-    fun participants(): List<Username> {
-        return participants.toList()
+    fun participants(): Set<Username> {
+        return participants
     }
 
     @Throws(SessionErrors.UserAlreadyParticipant::class)

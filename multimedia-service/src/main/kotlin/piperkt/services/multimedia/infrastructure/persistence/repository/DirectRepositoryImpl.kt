@@ -23,7 +23,9 @@ class DirectRepositoryImpl(private val directEntityRepository: DirectEntityRepos
         directEntityRepository.save(DirectEntity.fromDomain(entity))
     }
 
-    override fun deleteById(id: DirectId) {
+    override fun deleteById(id: DirectId): Direct? {
+        val direct = findById(id)
         directEntityRepository.deleteById(id.value.map { it.value }.toSet())
+        return direct
     }
 }
