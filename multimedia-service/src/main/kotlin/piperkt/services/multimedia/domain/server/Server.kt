@@ -5,16 +5,16 @@ import piperkt.services.multimedia.domain.user.Username
 
 class Server(
     id: ServerId = ServerId.empty(),
-    private var members: List<Username> = emptyList(),
-    private var channels: List<Channel> = emptyList()
+    private var members: Set<Username> = emptySet(),
+    private var channels: Set<Channel> = emptySet()
 ) : AggregateRoot<ServerId>(id) {
 
-    fun members(): List<Username> {
-        return members.toList()
+    fun members(): Set<Username> {
+        return members
     }
 
-    fun channels(): List<Channel> {
-        return channels.toList()
+    fun channels(): Set<Channel> {
+        return channels
     }
 
     @Throws(ServerErrors.UserAlreadyInServer::class)
@@ -53,7 +53,7 @@ class Server(
         if (channels.none { it.id == channelId }) {
             throw ServerErrors.ChannelNotInServer(id, channelId)
         }
-        channels = channels.filter { it.id != channelId }
+        channels = channels.filter { it.id != channelId }.toSet()
     }
 
     fun getChannelById(channelId: ChannelId): Channel {

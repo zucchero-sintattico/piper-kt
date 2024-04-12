@@ -19,7 +19,9 @@ class ServerRepositoryImpl(private val serverEntityRepository: ServerEntityRepos
         serverEntityRepository.save(ServerEntity.fromDomain(entity))
     }
 
-    override fun deleteById(id: ServerId) {
+    override fun deleteById(id: ServerId): Server? {
+        val server = findById(id)
         serverEntityRepository.deleteById(id.value)
+        return server
     }
 }

@@ -1,19 +1,18 @@
 package piperkt.services.multimedia.interfaces.web.controllers
 
 import io.micronaut.http.annotation.Controller
-import piperkt.services.multimedia.application.usecases.GetSessionParticipants
+import piperkt.services.multimedia.application.services.SessionService
 import piperkt.services.multimedia.domain.session.SessionErrors
 import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.interfaces.web.api.GetSessionParticipantsApi
 
 @Controller
-class GetSessionParticipantsController(private val useCase: GetSessionParticipants) :
+class GetSessionParticipantsController(private val sessionService: SessionService) :
     GetSessionParticipantsApi {
 
     override fun invoke(sessionId: String): GetSessionParticipantsApi.Response {
-        val response =
-            useCase.invoke(GetSessionParticipants.Query(SessionId(sessionId))).getOrThrow()
-        return GetSessionParticipantsApi.Response(response.usersIds.map { it.value }.toSet())
+        val session = sessionService.getSession(SessionId(sessionId))
+        return GetSessionParticipantsApi.Response(session.participants().map { it.value }.toSet())
     }
 
     override fun onSessionNotFound(

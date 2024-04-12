@@ -1,15 +1,13 @@
 package piperkt.services.multimedia.application.listeners
 
 import piperkt.common.EventListener
-import piperkt.services.multimedia.application.orThrow
-import piperkt.services.multimedia.domain.server.Server
-import piperkt.services.multimedia.domain.server.ServerErrors
+import piperkt.services.multimedia.application.services.ServerService
+import piperkt.services.multimedia.application.services.ServerService.Command.*
 import piperkt.services.multimedia.domain.server.ServerEvent
 import piperkt.services.multimedia.domain.server.ServerId
-import piperkt.services.multimedia.domain.server.ServerRepository
 import piperkt.services.multimedia.domain.user.Username
 
-open class ServerEventsListener(private val serverRepository: ServerRepository) :
+open class ServerEventsListener(private val serverService: ServerService) :
     EventListener<ServerEvent> {
 
     override fun handle(event: ServerEvent) {
@@ -23,38 +21,28 @@ open class ServerEventsListener(private val serverRepository: ServerRepository) 
     }
 
     private fun onServerCreated(event: ServerEvent.ServerCreated) {
-        val server = Server(members = listOf(Username(event.owner)))
-        serverRepository.save(server)
+        serverService.createServer(CreateServer(setOf(Username(event.owner))))
     }
 
     private fun onServerDeleted(event: ServerEvent.ServerDeleted) {
-        serverRepository.deleteById(ServerId(event.serverId))
+        serverService.deleteServer(DeleteServer(ServerId(event.serverId)))
     }
 
     private fun onUserJoinedServer(event: ServerEvent.UserJoinedServer) {
-        val server =
-            serverRepository
-                .findById(ServerId(event.serverId))
-                .orThrow(ServerErrors.ServerNotFound(ServerId(event.serverId)))
-        server.addMember(Username(event.username))
-        serverRepository.save(server)
+        serverService.addServerMember(
+            AddServerMember(ServerId(event.serverId), Username(event.username))
+        )
     }
 
     private fun onUserLeftServer(event: ServerEvent.UserLeftServer) {
-        val server =
-            serverRepository
-                .findById(ServerId(event.serverId))
-                .orThrow(ServerErrors.ServerNotFound(ServerId(event.serverId)))
-        server.removeMember(Username(event.username))
-        serverRepository.save(server)
+        serverService.removeServerMember(
+            RemoveServerMember(ServerId(event.serverId), Username(event.username))
+        )
     }
 
     private fun onUserKickedFromServer(event: ServerEvent.UserKickedFromServer) {
-        val server =
-            serverRepository
-                .findById(ServerId(event.serverId))
-                .orThrow(ServerErrors.ServerNotFound(ServerId(event.serverId)))
-        server.removeMember(Username(event.username))
-        serverRepository.save(server)
+        serverService.removeServerMember(
+            RemoveServerMember(ServerId(event.serverId), Username(event.username))
+        )
     }
 }
