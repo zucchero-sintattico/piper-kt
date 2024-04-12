@@ -18,14 +18,10 @@ open class GetSessionParticipants(private val sessionRepository: SessionReposito
 
     data class Response(val usersIds: Set<Username>)
 
-    override fun validate(query: Query) {
-        if (sessionRepository.findById(query.sessionId) == null) {
-            throw SessionErrors.SessionNotFound(query.sessionId)
-        }
-    }
-
     override fun execute(query: Query): Response {
-        val session = sessionRepository.findById(query.sessionId)!!
+        val session =
+            sessionRepository.findById(query.sessionId)
+                ?: throw SessionErrors.SessionNotFound(query.sessionId)
         return Response(session.participants().toSet())
     }
 }

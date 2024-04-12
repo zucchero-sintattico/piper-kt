@@ -11,7 +11,7 @@ import piperkt.services.multimedia.domain.session.SessionRepository
 
 open class ChannelEventsListener(
     private val serverRepository: ServerRepository,
-    private val sessionRepository: SessionRepository
+    private val sessionRepository: SessionRepository,
 ) : EventListener<ChannelEvent> {
     override fun handle(event: ChannelEvent) {
         when (event) {

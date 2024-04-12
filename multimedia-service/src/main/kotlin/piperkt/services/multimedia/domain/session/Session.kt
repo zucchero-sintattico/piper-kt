@@ -19,6 +19,9 @@ class Session(
 
     @Throws(SessionErrors.UserAlreadyParticipant::class)
     fun addParticipant(participant: Username) {
+        if (!allowedUsers.contains(participant)) {
+            throw SessionErrors.UserNotAllowed(id, participant)
+        }
         if (participants.contains(participant)) {
             throw SessionErrors.UserAlreadyParticipant(id, participant)
         }

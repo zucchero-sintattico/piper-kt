@@ -25,8 +25,6 @@ open class CreateSession(
      */
     data class Command(val allowedUsernames: Set<Username>)
 
-    override fun validate(command: Command) = Unit // No validation needed
-
     override fun execute(command: Command) {
         val session = SessionFactory.fromAllowedUsers(command.allowedUsernames)
         sessionRepository.save(session)

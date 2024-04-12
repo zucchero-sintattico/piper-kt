@@ -26,13 +26,9 @@ open class DeleteSession(
      */
     data class Command(val sessionId: SessionId)
 
-    override fun validate(command: Command) {
-        if (sessionRepository.findById(command.sessionId) == null) {
-            throw SessionErrors.SessionNotFound(command.sessionId)
-        }
-    }
-
     override fun execute(command: Command) {
+        sessionRepository.findById(command.sessionId)
+            ?: throw SessionErrors.SessionNotFound(command.sessionId)
         sessionRepository.deleteById(command.sessionId)
         sessionEventPublisher.publish(SessionEvent.SessionDeleted(command.sessionId))
     }
