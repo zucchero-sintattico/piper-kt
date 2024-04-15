@@ -1,6 +1,7 @@
 package piperkt.services.multimedia.interfaces.web.controllers
 
 import io.micronaut.http.annotation.Controller
+import java.security.Principal
 import piperkt.services.multimedia.application.services.SessionService
 import piperkt.services.multimedia.domain.session.SessionErrors
 import piperkt.services.multimedia.domain.session.SessionId
@@ -10,7 +11,10 @@ import piperkt.services.multimedia.interfaces.web.api.GetSessionParticipantsApi
 class GetSessionParticipantsController(private val sessionService: SessionService) :
     GetSessionParticipantsApi {
 
-    override fun invoke(sessionId: String): GetSessionParticipantsApi.Response {
+    override fun invoke(
+        principal: Principal,
+        sessionId: String
+    ): GetSessionParticipantsApi.Response {
         val session = sessionService.getSession(SessionId(sessionId))
         return GetSessionParticipantsApi.Response(session.participants().map { it.value }.toSet())
     }

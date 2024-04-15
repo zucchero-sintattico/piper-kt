@@ -13,23 +13,23 @@ import java.security.Principal
 import piperkt.services.multimedia.domain.session.SessionErrors
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
-interface GetSessionParticipantsApi {
+interface GetDirectSessionApi {
 
-    @Serdeable data class Response(val users: Set<String>)
+    @Serdeable data class Response(val sessionId: String)
 
     @Serdeable
     sealed interface Errors {
-        @Serdeable data class SessionNotFound(val sessionId: String) : Errors
+        @Serdeable data class DirectSessionNotFound(val user: String) : Errors
     }
 
-    @Get("/sessions/{sessionId}/users", produces = [MediaType.APPLICATION_JSON])
+    @Get("/users/{username}/session", produces = [MediaType.APPLICATION_JSON])
     @Status(HttpStatus.OK)
-    operator fun invoke(principal: Principal, @PathVariable sessionId: String): Response
+    operator fun invoke(principal: Principal, @PathVariable username: String): Response
 
     @Error(SessionErrors.SessionNotFound::class)
     @Status(HttpStatus.NOT_FOUND)
-    fun onSessionNotFound(
+    fun onDirectSessionNotFound(
         exception: SessionErrors.SessionNotFound,
-        @PathVariable sessionId: String
+        @PathVariable username: String
     ): Errors
 }
