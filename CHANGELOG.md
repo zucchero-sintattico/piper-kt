@@ -1,3 +1,21 @@
+## [2.1.0](https://github.com/zucchero-sintattico/piper-kt/compare/v2.0.0...v2.1.0) (2024-04-15)
+
+
+### Features
+
+* **events:** import kafka and implement kafka clients ([d54a10d](https://github.com/zucchero-sintattico/piper-kt/commit/d54a10d488b38b9a37c26637ce5ff43275341ffe))
+* merge main into microservice branch ([fa15428](https://github.com/zucchero-sintattico/piper-kt/commit/fa15428dcb191f994a7c95e473b890f401b980b8))
+* **messages:** implement messages repository ([7e46558](https://github.com/zucchero-sintattico/piper-kt/commit/7e4655852aced9fba7f8c5d9363f2e396167e741))
+
+
+### Bug Fixes
+
+* **channel-service:** implement event publishing and fix mocks in tests ([a3a7906](https://github.com/zucchero-sintattico/piper-kt/commit/a3a790666fa15e8d4e2481d160e9ee64e39f0702))
+* **repository:** fix bugs and add tests to repository ([b63a635](https://github.com/zucchero-sintattico/piper-kt/commit/b63a63596b94f9299b57b7bc65ab04f81f14488c))
+* **server-service:** implement event publishing and fix mocks in tests ([f18c74f](https://github.com/zucchero-sintattico/piper-kt/commit/f18c74ff00e2614a00324510bdcf35a3d5756362))
+* **service-tests:** refactor basic class test ([2c6f353](https://github.com/zucchero-sintattico/piper-kt/commit/2c6f353fdb9cff4e1f9d74c257e89ec261b2ed23))
+* **test:** remove template refuse ([472d728](https://github.com/zucchero-sintattico/piper-kt/commit/472d7287201c6ddfdb286453b545de9ea0eb6561))
+
 ## [2.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.13.1...v2.0.0) (2024-04-15)
 
 
