@@ -6,12 +6,12 @@ import piperkt.services.multimedia.application.direct.DirectService
 import piperkt.services.multimedia.application.server.ChannelEventsListener
 import piperkt.services.multimedia.application.server.ServerEventsListener
 import piperkt.services.multimedia.application.server.ServerService
-import piperkt.services.multimedia.application.services.SessionService
+import piperkt.services.multimedia.application.session.SessionService
 
 object EventsListeners {
     @Singleton
-    class ServerEventListenerService(serverService: ServerService) :
-        ServerEventsListener(serverService)
+    class ServerEventListenerService(serverService: ServerService, sessionService: SessionService) :
+        ServerEventsListener(serverService, sessionService)
 
     @Singleton
     class DirectEventListenerService(directService: DirectService, sessionService: SessionService) :

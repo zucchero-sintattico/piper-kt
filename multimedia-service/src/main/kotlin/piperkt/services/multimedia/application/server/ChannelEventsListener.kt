@@ -3,9 +3,9 @@ package piperkt.services.multimedia.application.server
 import piperkt.common.EventListener
 import piperkt.services.multimedia.application.server.ServerService.Command.AddServerChannel
 import piperkt.services.multimedia.application.server.ServerService.Command.RemoveServerChannel
-import piperkt.services.multimedia.application.services.SessionService
-import piperkt.services.multimedia.application.services.SessionService.Command.CreateSession
-import piperkt.services.multimedia.application.services.SessionService.Command.DeleteSession
+import piperkt.services.multimedia.application.session.SessionService
+import piperkt.services.multimedia.application.session.SessionService.Command.CreateSession
+import piperkt.services.multimedia.application.session.SessionService.Command.DeleteSession
 import piperkt.services.multimedia.domain.server.Channel
 import piperkt.services.multimedia.domain.server.ChannelEvent
 import piperkt.services.multimedia.domain.server.ChannelId

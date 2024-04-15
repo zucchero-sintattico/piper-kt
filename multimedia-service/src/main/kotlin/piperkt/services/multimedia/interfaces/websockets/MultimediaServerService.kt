@@ -4,21 +4,23 @@ import com.corundumstudio.socketio.Configuration
 import com.corundumstudio.socketio.SocketIOClient
 import com.corundumstudio.socketio.SocketIOServer
 import io.micronaut.context.annotation.ConfigurationProperties
-import piperkt.services.multimedia.application.services.SessionService
-import piperkt.services.multimedia.application.services.SessionService.Command.JoinSession
-import piperkt.services.multimedia.application.services.SessionService.Command.LeaveSession
+import kotlin.random.Random
+import kotlin.random.nextInt
+import piperkt.services.multimedia.application.session.SessionService
+import piperkt.services.multimedia.application.session.SessionService.Command.JoinSession
+import piperkt.services.multimedia.application.session.SessionService.Command.LeaveSession
 import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.domain.user.Username
 import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolEvent.*
 
 @ConfigurationProperties("socketio")
 class SocketIOConfiguration {
-    var port: Int = 8888
+    var port: Int = Random.nextInt(10000..20000)
 }
 
 class MultimediaSocketIOServer(
     private val sessionService: SessionService,
-    private val configuration: SocketIOConfiguration = SocketIOConfiguration(),
+    val configuration: SocketIOConfiguration = SocketIOConfiguration(),
 ) {
     private val socketIoConfig =
         Configuration().apply { port = configuration.port }.apply { isNeedClientAuth = false }
@@ -29,7 +31,7 @@ class MultimediaSocketIOServer(
 
     fun start() {
         server.addConnectListener { client -> runCatching { onConnect(client) } }
-        server.addDisconnectListener(this::onDisconnect)
+        server.addDisconnectListener { client -> runCatching { onDisconnect(client) } }
         server.on(JOIN.event) { client, message: MultimediaProtocolMessage.JoinMessage, _ ->
             events.add(message)
             runCatching { onJoin(client, message) }

@@ -8,7 +8,7 @@ import java.security.Principal
 import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import org.junit.jupiter.api.assertThrows
-import piperkt.services.multimedia.application.services.SessionService
+import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.domain.session.SessionErrors
 import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionId

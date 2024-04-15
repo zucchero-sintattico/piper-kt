@@ -17,6 +17,6 @@ fun <E : Exception> E.asFailure(): Result<Nothing> {
 fun Any?.isNull() = this == null
 
 fun <E> E?.orThrow(e: Exception): E {
-    if (this.isNull()) throw e
-    return this!!
+    if (this == null) throw e
+    return this
 }
