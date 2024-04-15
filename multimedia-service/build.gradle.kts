@@ -4,7 +4,7 @@ plugins {
     kotlin("plugin.serialization") version "1.9.23"
 }
 
-application { mainClass.set("piperkt.services.multimedia.ApplicationKt") }
+application { mainClass.set("piperkt.session.multimedia.ApplicationKt") }
 
 dependencies {
     implementation(project(":commons"))

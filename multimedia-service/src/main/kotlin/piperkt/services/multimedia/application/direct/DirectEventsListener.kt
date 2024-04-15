@@ -2,8 +2,8 @@ package piperkt.services.multimedia.application.direct
 
 import piperkt.common.EventListener
 import piperkt.services.multimedia.application.direct.DirectService.Command.CreateDirect
-import piperkt.services.multimedia.application.services.SessionService
-import piperkt.services.multimedia.application.services.SessionService.Command.CreateSession
+import piperkt.services.multimedia.application.session.SessionService
+import piperkt.services.multimedia.application.session.SessionService.Command.CreateSession
 import piperkt.services.multimedia.domain.direct.DirectEvent
 import piperkt.services.multimedia.domain.user.Username
 

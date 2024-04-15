@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.application.services
+package piperkt.services.multimedia.application.session
 
 import piperkt.common.orThrow
 import piperkt.services.multimedia.domain.session.Session
