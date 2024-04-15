@@ -1,5 +1,7 @@
 package piperkt.common.events
 
+import piperkt.common.DomainEvent
+import piperkt.common.EventPublisher
 import piperkt.common.id.ServerId
 
 sealed interface ServerEvent : DomainEvent {
@@ -16,4 +18,4 @@ sealed interface ServerEvent : DomainEvent {
     data class ServerDeletedEvent(val serverId: ServerId) : ServerEvent
 }
 
-interface ServerEventPublisher : DomainEventPublisher<ServerEvent>
+interface ServerEventPublisher : EventPublisher<ServerEvent>

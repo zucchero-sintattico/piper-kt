@@ -3,7 +3,7 @@ plugins {
     id("java-test-fixtures")
 }
 
-application { mainClass.set("micronaut.playground.ApplicationKt") }
+application { mainClass.set("piperkt.services.servers.ApplicationKt") }
 
 dependencies {
     ksp("io.micronaut.data:micronaut-data-document-processor")

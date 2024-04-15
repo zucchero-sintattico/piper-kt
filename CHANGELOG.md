@@ -1,3 +1,10 @@
+## [1.13.1](https://github.com/zucchero-sintattico/piper-kt/compare/v1.13.0...v1.13.1) (2024-03-08)
+
+
+### Bug Fixes
+
+* **spotless:** yaml configuration dependencies conflict ([5ccdbb2](https://github.com/zucchero-sintattico/piper-kt/commit/5ccdbb26433209f8f9ced20a9450a4307fea743c))
+
 ## [1.13.0](https://github.com/zucchero-sintattico/piper-kt/compare/v1.12.0...v1.13.0) (2024-03-07)
 
 

@@ -1,7 +1,5 @@
 package piperkt.common
 
-import piperkt.common.events.DomainEvent
-
 open class MockedEventPublisher<E : DomainEvent> : EventPublisher<E> {
     val publishedEvents = mutableListOf<E>()
 

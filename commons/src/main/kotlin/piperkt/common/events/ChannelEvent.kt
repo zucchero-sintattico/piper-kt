@@ -1,5 +1,7 @@
 package piperkt.common.events
 
+import piperkt.common.DomainEvent
+import piperkt.common.EventPublisher
 import piperkt.common.id.ChannelId
 import piperkt.common.id.MessageId
 
@@ -14,4 +16,4 @@ sealed interface ChannelEvent : DomainEvent {
         ChannelEvent
 }
 
-interface ChannelEventPublisher : DomainEventPublisher<ChannelEvent>
+interface ChannelEventPublisher : EventPublisher<ChannelEvent>

@@ -32,8 +32,10 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
         return serverModelRepository.findAll().map { it.toDomain() }
     }
 
-    override fun deleteById(id: ServerId) {
-        return serverModelRepository.deleteById(id.value)
+    override fun deleteById(id: ServerId): Server? {
+        return serverModelRepository.findById(id.value).getOrNull()?.toDomain().also {
+            serverModelRepository.deleteById(id.value)
+        }
     }
 
     override fun update(server: Server): Server {

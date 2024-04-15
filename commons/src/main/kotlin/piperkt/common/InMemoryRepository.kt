@@ -11,8 +11,10 @@ open class InMemoryRepository<I : EntityId<*>, A : AggregateRoot<I>>(
         entities += entity.id to entity
     }
 
-    override fun deleteById(id: I) {
+    override fun deleteById(id: I): A? {
+        val entity = findById(id)
         entities -= id
+        return entity
     }
 
     fun clear() {

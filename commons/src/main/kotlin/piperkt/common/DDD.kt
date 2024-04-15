@@ -41,5 +41,5 @@ interface Repository<Id : EntityId<*>, E : AggregateRoot<Id>> {
 
     fun save(entity: E)
 
-    fun deleteById(id: Id)
+    fun deleteById(id: Id): E?
 }

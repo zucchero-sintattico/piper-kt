@@ -1,7 +1,7 @@
 package piperkt.common
 
-import piperkt.common.events.DomainEvent
-
 interface EventListener<E : DomainEvent> {
     fun handle(event: E)
+
+    operator fun invoke(event: E) = runCatching { handle(event) }
 }
