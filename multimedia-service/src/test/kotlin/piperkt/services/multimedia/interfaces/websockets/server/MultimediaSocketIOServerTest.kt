@@ -7,7 +7,9 @@ import io.kotest.assertions.nondeterministic.eventuallyConfig
 import io.kotest.matchers.shouldBe
 import io.socket.client.IO
 import kotlin.time.Duration.Companion.seconds
+import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
+import piperkt.services.multimedia.application.services.SessionService
 import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolEvent.*
 import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolMessage
@@ -19,7 +21,8 @@ class MultimediaSocketIOServerTest :
     UnitTest.FunSpec({
         // Setup
         val sessionRepository = InMemorySessionRepository()
-        val server = MultimediaSocketIOServer(sessionRepository)
+        val sessionService = SessionService(sessionRepository, MockedSessionEventPublisher())
+        val server = MultimediaSocketIOServer(sessionService)
 
         // Setup data
         val userId = john().id

@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.interfaces.web.controllers
+package piperkt.services.multimedia.interfaces.web
 
 import base.UnitTest
 import data.UsersData.jane

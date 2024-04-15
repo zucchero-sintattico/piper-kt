@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.interfaces.web.controllers
+package piperkt.services.multimedia.interfaces.web
 
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
