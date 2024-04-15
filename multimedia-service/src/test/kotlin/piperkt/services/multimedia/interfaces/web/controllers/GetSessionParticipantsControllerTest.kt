@@ -28,14 +28,21 @@ class GetSessionParticipantsControllerTest :
             val session = SessionFactory.fromAllowedParticipants(users)
             sessionRepository.save(session)
             val result =
-                getSessionParticipantsController(john().id.value.toPrincipal(), session.id.value)
-            result shouldBe GetSessionParticipantsApi.Response(users.map { it.value }.toSet())
+                getSessionParticipantsController.get(
+                    john().id.value.toPrincipal(),
+                    session.id.value
+                )
+            result shouldBe
+                GetSessionParticipantsController.Response(users.map { it.value }.toSet())
         }
 
         test("should throw SessionNotFound when session does not exist") {
             val fakeSessionId = SessionId("nonExistingSessionId")
             assertThrows<SessionErrors.SessionNotFound> {
-                getSessionParticipantsController(john().id.value.toPrincipal(), fakeSessionId.value)
+                getSessionParticipantsController.get(
+                    john().id.value.toPrincipal(),
+                    fakeSessionId.value
+                )
             }
         }
     })
