@@ -9,9 +9,10 @@ import io.socket.client.IO
 import kotlin.time.Duration.Companion.seconds
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.domain.session.SessionFactory
-import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolEvent.*
-import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolMessage
-import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolMessage.*
+import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolEvent.*
+import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolMessage
+import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolMessage.*
+import piperkt.services.multimedia.interfaces.websockets.MultimediaSocketIOServer
 import piperkt.services.multimedia.interfaces.websockets.toJson
 
 class MultimediaSocketIOServerTest :

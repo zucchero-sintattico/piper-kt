@@ -1,15 +1,15 @@
-package piperkt.services.multimedia.interfaces.websockets.server
+package piperkt.services.multimedia.interfaces.websockets
 
 import com.corundumstudio.socketio.Configuration
 import com.corundumstudio.socketio.SocketIOClient
 import com.corundumstudio.socketio.SocketIOServer
 import io.micronaut.context.annotation.ConfigurationProperties
+import piperkt.services.multimedia.application.services.SessionService
+import piperkt.services.multimedia.application.services.SessionService.Command.JoinSession
+import piperkt.services.multimedia.application.services.SessionService.Command.LeaveSession
 import piperkt.services.multimedia.domain.session.SessionId
-import piperkt.services.multimedia.domain.session.SessionRepository
 import piperkt.services.multimedia.domain.user.Username
-import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolEvent.*
-import piperkt.services.multimedia.interfaces.websockets.api.MultimediaProtocolMessage
-import piperkt.services.multimedia.interfaces.websockets.on
+import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolEvent.*
 
 @ConfigurationProperties("socketio")
 class SocketIOConfiguration {
@@ -17,7 +17,7 @@ class SocketIOConfiguration {
 }
 
 class MultimediaSocketIOServer(
-    private val sessionRepository: SessionRepository,
+    private val sessionService: SessionService,
     private val configuration: SocketIOConfiguration = SocketIOConfiguration(),
 ) {
     private val socketIoConfig =
@@ -84,11 +84,7 @@ class MultimediaSocketIOServer(
         clientToSessionId[username]?.let { sessionId ->
             client.leaveRoom(sessionId)
             roomOf(sessionId).sendEvent(USER_LEFT.event, username)
-            val session =
-                sessionRepository.findById(SessionId(sessionId))
-                    ?: return client.error("Session not found")
-            session.removeParticipant(Username(username))
-            sessionRepository.save(session)
+            sessionService.leaveSession(LeaveSession(SessionId(sessionId), Username(username)))
             println("User $username left session $sessionId")
         }
     }
@@ -102,11 +98,7 @@ class MultimediaSocketIOServer(
         clientToSessionId[username] = sessionId
         roomOf(sessionId).sendEvent(USER_JOIN.event, username)
         client.joinRoom(sessionId)
-        val session =
-            sessionRepository.findById(SessionId(sessionId))
-                ?: return client.error("Session not found")
-        session.addParticipant(Username(username))
-        sessionRepository.save(session)
+        sessionService.joinSession(JoinSession(SessionId(sessionId), Username(username)))
         println("User $username joined session $sessionId")
     }
 
