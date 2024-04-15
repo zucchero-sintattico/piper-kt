@@ -29,6 +29,6 @@ include("commons")
 
 include("servers-service")
 
-include(
-    "multimedia-service"
-)
+include("multimedia-service")
+
+include("friendships-service")

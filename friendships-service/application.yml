@@ -1,0 +1,4 @@
+application:
+  name: "Friendships Service"
+  version: "1.0.0"
+  description: "Friendships Service"

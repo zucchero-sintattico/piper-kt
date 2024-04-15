@@ -1,5 +1,5 @@
 applicationType: default
-defaultPackage: piperkt.services.multimedia
+defaultPackage: piperkt.services.friendships
 testFramework: kotest
 sourceLanguage: kotlin
 buildTool: gradle_kotlin
