@@ -17,4 +17,7 @@ sealed interface MultimediaProtocolMessage {
     @Serializable
     data class IceCandidateMessage(val from: String, val to: String, val candidate: String) :
         MultimediaProtocolMessage
+
+    @Serializable
+    data class UserJoined(val sessionId: String, val userId: String) : MultimediaProtocolMessage
 }

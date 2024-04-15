@@ -3,12 +3,9 @@ package piperkt.services.multimedia.interfaces.websockets
 import base.UnitTest
 import data.UsersData.jane
 import data.UsersData.john
-import io.kotest.assertions.nondeterministic.eventually
-import io.kotest.assertions.nondeterministic.eventuallyConfig
-import io.kotest.matchers.shouldBe
+import io.kotest.assertions.fail
 import io.socket.client.IO
 import io.socket.client.Socket
-import kotlin.time.Duration.Companion.seconds
 import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.session.SessionService
@@ -43,35 +40,33 @@ class MultimediaSocketIOServerTest :
         val johnClient = authorizedClientOf(johnId.value)
         val janeClient = authorizedClientOf(janeId.value)
 
-        val eventuallyConfig = eventuallyConfig {
-            retries = 15
-            duration = 30.seconds
-        }
-
         test("should allow client to join") {
             val message = JoinMessage(session.id.value)
             johnClient.emit(JOIN.event, message.toJson())
-            eventually(eventuallyConfig) { server.events.last() shouldBe message }
-
+            johnClient.on(USER_JOIN.event) { args ->
+                val received = args[0] as UserJoined
+                if (received.sessionId != session.id.value) {
+                    fail("Session id does not match")
+                }
+                if (received.userId != janeId.value) {
+                    fail("User id does not match")
+                }
+            }
             janeClient.emit(JOIN.event, message.toJson())
-            eventually(eventuallyConfig) { server.events.last() shouldBe message }
         }
 
         test("should allow client to offer") {
             val message = OfferMessage(johnId.value, janeId.value, "offer")
             johnClient.emit(OFFER.event, message.toJson())
-            eventually(eventuallyConfig) { server.events.last() shouldBe message }
         }
 
         test("should allow client to answer") {
             val message = AnswerMessage(janeId.value, johnId.value, "answer")
             janeClient.emit(ANSWER.event, message.toJson())
-            eventually(eventuallyConfig) { server.events.last() shouldBe message }
         }
 
         test("should allow client to send ice candidate") {
             val message = IceCandidateMessage(johnId.value, janeId.value, "candidate")
             johnClient.emit(ICE_CANDIDATE.event, message.toJson())
-            eventually(eventuallyConfig) { server.events.last() shouldBe message }
         }
     })

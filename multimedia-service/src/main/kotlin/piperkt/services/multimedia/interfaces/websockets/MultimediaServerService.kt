@@ -12,6 +12,7 @@ import piperkt.services.multimedia.application.session.SessionService.Command.Le
 import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.domain.user.Username
 import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolEvent.*
+import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolMessage.UserJoined
 
 @ConfigurationProperties("socketio")
 class SocketIOConfiguration {
@@ -67,12 +68,6 @@ class MultimediaSocketIOServer(
         this.disconnect()
     }
 
-    private fun SocketIOClient.error(message: String) {
-        println("Error: $message")
-        this.sendEvent("error", message)
-        this.disconnect()
-    }
-
     fun onConnect(client: SocketIOClient) {
         val username = client.getUsername() ?: return client.notAuthenticated()
         clients[username] = client
@@ -98,7 +93,7 @@ class MultimediaSocketIOServer(
         val username = client.getUsername() ?: return client.notAuthenticated()
         val sessionId = joinMessage.sessionId
         clientToSessionId[username] = sessionId
-        roomOf(sessionId).sendEvent(USER_JOIN.event, username)
+        roomOf(sessionId).sendEvent(USER_JOIN.event, UserJoined(sessionId, username).toJson())
         client.joinRoom(sessionId)
         sessionService.joinSession(JoinSession(SessionId(sessionId), Username(username)))
         println("User $username joined session $sessionId")
