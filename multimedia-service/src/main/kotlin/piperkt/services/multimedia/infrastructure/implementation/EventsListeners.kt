@@ -1,11 +1,11 @@
 package piperkt.services.multimedia.infrastructure.implementation
 
 import jakarta.inject.Singleton
-import piperkt.services.multimedia.application.listeners.ChannelEventsListener
-import piperkt.services.multimedia.application.listeners.DirectEventsListener
-import piperkt.services.multimedia.application.listeners.ServerEventsListener
-import piperkt.services.multimedia.application.services.DirectService
-import piperkt.services.multimedia.application.services.ServerService
+import piperkt.services.multimedia.application.direct.DirectEventsListener
+import piperkt.services.multimedia.application.direct.DirectService
+import piperkt.services.multimedia.application.server.ChannelEventsListener
+import piperkt.services.multimedia.application.server.ServerEventsListener
+import piperkt.services.multimedia.application.server.ServerService
 import piperkt.services.multimedia.application.services.SessionService
 
 object EventsListeners {

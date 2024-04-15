@@ -11,7 +11,7 @@ import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import io.micronaut.serde.annotation.Serdeable
 import java.security.Principal
-import piperkt.services.multimedia.application.services.DirectService
+import piperkt.services.multimedia.application.direct.DirectService
 import piperkt.services.multimedia.domain.direct.DirectId
 import piperkt.services.multimedia.domain.session.SessionErrors
 import piperkt.services.multimedia.domain.user.Username

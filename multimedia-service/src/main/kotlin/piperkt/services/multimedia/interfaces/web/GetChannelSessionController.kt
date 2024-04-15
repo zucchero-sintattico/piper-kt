@@ -9,7 +9,7 @@ import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.Status
 import io.micronaut.serde.annotation.Serdeable
 import java.security.Principal
-import piperkt.services.multimedia.application.services.ServerService
+import piperkt.services.multimedia.application.server.ServerService
 import piperkt.services.multimedia.domain.server.ChannelId
 import piperkt.services.multimedia.domain.server.ServerId
 import piperkt.services.multimedia.domain.session.SessionErrors

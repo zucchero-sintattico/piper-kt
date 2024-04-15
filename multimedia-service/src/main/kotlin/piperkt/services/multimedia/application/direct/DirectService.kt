@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.application.services
+package piperkt.services.multimedia.application.direct
 
 import piperkt.common.orThrow
 import piperkt.services.multimedia.domain.direct.Direct

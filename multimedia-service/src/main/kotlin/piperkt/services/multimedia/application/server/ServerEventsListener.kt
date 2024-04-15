@@ -1,8 +1,7 @@
-package piperkt.services.multimedia.application.listeners
+package piperkt.services.multimedia.application.server
 
 import piperkt.common.EventListener
-import piperkt.services.multimedia.application.services.ServerService
-import piperkt.services.multimedia.application.services.ServerService.Command.*
+import piperkt.services.multimedia.application.server.ServerService.Command.*
 import piperkt.services.multimedia.domain.server.ServerEvent
 import piperkt.services.multimedia.domain.server.ServerId
 import piperkt.services.multimedia.domain.user.Username
