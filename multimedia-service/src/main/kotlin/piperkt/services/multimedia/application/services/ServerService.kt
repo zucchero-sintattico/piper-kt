@@ -1,6 +1,6 @@
 package piperkt.services.multimedia.application.services
 
-import piperkt.services.multimedia.application.orThrow
+import piperkt.common.orThrow
 import piperkt.services.multimedia.domain.server.Channel
 import piperkt.services.multimedia.domain.server.ChannelId
 import piperkt.services.multimedia.domain.server.Server

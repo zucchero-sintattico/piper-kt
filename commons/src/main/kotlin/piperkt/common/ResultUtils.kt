@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.application
+package piperkt.common
 
 fun success() = success(Unit)
 

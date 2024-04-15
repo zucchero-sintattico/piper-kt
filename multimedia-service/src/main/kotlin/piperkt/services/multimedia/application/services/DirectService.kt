@@ -1,6 +1,6 @@
 package piperkt.services.multimedia.application.services
 
-import piperkt.services.multimedia.application.orThrow
+import piperkt.common.orThrow
 import piperkt.services.multimedia.domain.direct.Direct
 import piperkt.services.multimedia.domain.direct.DirectErrors
 import piperkt.services.multimedia.domain.direct.DirectId

@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.application
+package piperkt.common
 
 interface QueryUseCase<in Q, out R> {
 

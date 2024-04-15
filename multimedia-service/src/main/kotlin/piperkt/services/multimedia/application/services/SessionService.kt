@@ -1,6 +1,6 @@
 package piperkt.services.multimedia.application.services
 
-import piperkt.services.multimedia.application.orThrow
+import piperkt.common.orThrow
 import piperkt.services.multimedia.domain.session.Session
 import piperkt.services.multimedia.domain.session.SessionErrors.SessionNotFound
 import piperkt.services.multimedia.domain.session.SessionEvent.*

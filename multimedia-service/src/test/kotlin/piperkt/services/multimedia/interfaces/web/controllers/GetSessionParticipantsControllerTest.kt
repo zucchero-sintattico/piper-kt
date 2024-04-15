@@ -4,6 +4,7 @@ import base.UnitTest
 import data.UsersData.jane
 import data.UsersData.john
 import io.kotest.matchers.shouldBe
+import java.security.Principal
 import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import org.junit.jupiter.api.assertThrows
@@ -11,13 +12,14 @@ import piperkt.services.multimedia.application.services.SessionService
 import piperkt.services.multimedia.domain.session.SessionErrors
 import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionId
-import piperkt.services.multimedia.interfaces.web.api.GetSessionParticipantsApi
+
+fun String.toPrincipal() = Principal { this }
 
 class GetSessionParticipantsControllerTest :
     UnitTest.FunSpec({
         val sessionRepository = InMemorySessionRepository()
         val sessionService = SessionService(sessionRepository, MockedSessionEventPublisher())
-        val getUserInSessionApi = GetSessionParticipantsController(sessionService)
+        val getSessionParticipantsController = GetSessionParticipantsController(sessionService)
 
         beforeEach { sessionRepository.clear() }
 
@@ -25,12 +27,15 @@ class GetSessionParticipantsControllerTest :
             val users = setOf(john().id, jane().id)
             val session = SessionFactory.fromAllowedParticipants(users)
             sessionRepository.save(session)
-            val result = getUserInSessionApi(session.id.value)
+            val result =
+                getSessionParticipantsController(john().id.value.toPrincipal(), session.id.value)
             result shouldBe GetSessionParticipantsApi.Response(users.map { it.value }.toSet())
         }
 
         test("should throw SessionNotFound when session does not exist") {
             val fakeSessionId = SessionId("nonExistingSessionId")
-            assertThrows<SessionErrors.SessionNotFound> { getUserInSessionApi(fakeSessionId.value) }
+            assertThrows<SessionErrors.SessionNotFound> {
+                getSessionParticipantsController(john().id.value.toPrincipal(), fakeSessionId.value)
+            }
         }
     })

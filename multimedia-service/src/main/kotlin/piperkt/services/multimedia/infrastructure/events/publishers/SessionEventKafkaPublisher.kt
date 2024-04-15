@@ -6,7 +6,7 @@ import piperkt.services.multimedia.domain.session.SessionEvent
 import piperkt.services.multimedia.domain.session.SessionEventPublisher
 
 @KafkaClient
-interface ServerEventKafkaPublisher : SessionEventPublisher {
+interface SessionEventKafkaPublisher : SessionEventPublisher {
 
     override fun publish(event: SessionEvent) {
         when (event) {
