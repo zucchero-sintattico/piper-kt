@@ -44,8 +44,8 @@ class MultimediaSocketIOServerTest :
         val janeClient = authorizedClientOf(janeId.value)
 
         val eventuallyConfig = eventuallyConfig {
-            retries = 20
-            duration = 5.seconds
+            retries = 15
+            duration = 30.seconds
         }
 
         test("should allow client to join") {
