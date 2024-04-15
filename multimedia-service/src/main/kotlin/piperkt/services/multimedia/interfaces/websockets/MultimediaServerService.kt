@@ -28,26 +28,26 @@ class MultimediaSocketIOServer(
     val events = mutableListOf<Any>()
 
     fun start() {
-        server.addConnectListener(this::onConnect)
+        server.addConnectListener { client -> runCatching { onConnect(client) } }
         server.addDisconnectListener(this::onDisconnect)
         server.on(JOIN.event) { client, message: MultimediaProtocolMessage.JoinMessage, _ ->
             events.add(message)
-            onJoin(client, message)
+            runCatching { onJoin(client, message) }
         }
         server.on(OFFER.event) { _, message: MultimediaProtocolMessage.OfferMessage, _ ->
             events.add(message)
-            onOffer(message)
+            runCatching { onOffer(message) }
         }
         server.on(ANSWER.event) { _, message: MultimediaProtocolMessage.AnswerMessage, _ ->
             events.add(message)
-            onAnswer(message)
+            runCatching { onAnswer(message) }
         }
         server.on(ICE_CANDIDATE.event) {
             _,
             message: MultimediaProtocolMessage.IceCandidateMessage,
             _ ->
             events.add(message)
-            onIceCandidate(message)
+            runCatching { onIceCandidate(message) }
         }
         server.start()
     }
