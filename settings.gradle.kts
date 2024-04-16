@@ -27,6 +27,8 @@ include("bdd")
 
 include("commons")
 
+include("users-service")
+
 include("servers-service")
 
 include("multimedia-service")

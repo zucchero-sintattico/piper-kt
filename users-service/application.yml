@@ -1,0 +1,4 @@
+application:
+  name: "Piperchat/Users-Service"
+  version: "1.0.0"
+  description: "Piperchat/Users-Service"
