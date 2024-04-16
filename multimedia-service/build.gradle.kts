@@ -1,7 +1,6 @@
 plugins {
     id("micronaut-base")
     id("java-test-fixtures")
-    kotlin("plugin.serialization") version "1.9.23"
 }
 
 application { mainClass.set("piperkt.services.multimedia.ApplicationKt") }
