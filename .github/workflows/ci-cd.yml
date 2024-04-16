@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
       - name: Build with Gradle
-        uses: DanySK/build-check-deploy-gradle-action@2.4.6
+        uses: DanySK/build-check-deploy-gradle-action@2.4.15
         with:
           java-version: ${{ env.JAVA_VERSION }}
           should-run-codecov: false
@@ -42,7 +42,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
-      - uses: DanySK/build-check-deploy-gradle-action@2.4.6
+      - uses: DanySK/build-check-deploy-gradle-action@2.4.15
         with:
           java-version: ${{ matrix.java-version }}
           java-distribution: ${{ matrix.java-distribution }}
@@ -78,7 +78,7 @@ jobs:
       - name: Produce coverage report
         run: ./gradlew koverXmlReport --parallel
       - name: Push coverage report
-        uses: codecov/codecov-action@v4.1.0
+        uses: codecov/codecov-action@v4.3.0
         with:
           files: ./build/reports/kover/report.xml
           verbose: true
@@ -128,7 +128,7 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: "adopt"
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
       - name: Create artifacts directory
         run: mkdir -p ./tmp-site
       - name: Build documentation
@@ -143,4 +143,4 @@ jobs:
           path: ./tmp-site
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4.0.4
+        uses: actions/deploy-pages@v4.0.5

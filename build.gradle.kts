@@ -25,7 +25,7 @@ dependencies {
 }
 
 allprojects {
-    group = "piperchat"
+    group = "piperkt"
 }
 
 subprojects {
