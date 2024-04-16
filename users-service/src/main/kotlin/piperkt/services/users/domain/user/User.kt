@@ -4,15 +4,14 @@ import piperkt.common.AggregateRoot
 import piperkt.services.users.domain.friends.FriendRequest
 
 class User(
-    id: Username,
-    val username: String = id.value,
+    val username: Username,
     var password: String = "",
     var description: String = "",
     var profilePicture: ByteArray = ByteArray(0),
     var friends: List<Username> = emptyList(),
     var friendRequests: List<FriendRequest> = emptyList(),
     var sentFriendRequests: List<FriendRequest> = emptyList()
-) : AggregateRoot<Username>(id) {
+) : AggregateRoot<Username>(username) {
 
     fun updateDescription(description: String) {
         this.description = description
