@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.domain.user
+package piperkt.services.users.domain.user
 
 import piperkt.common.EntityId
 
