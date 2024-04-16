@@ -7,6 +7,8 @@ import io.micronaut.http.annotation.Error
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.Status
+import io.micronaut.security.annotation.Secured
+import io.micronaut.security.rules.SecurityRule
 import io.micronaut.serde.annotation.Serdeable
 import java.security.Principal
 import piperkt.services.multimedia.application.server.ServerService
@@ -15,6 +17,7 @@ import piperkt.services.multimedia.domain.server.ServerId
 import piperkt.services.multimedia.domain.session.SessionErrors
 
 @Controller
+@Secured(SecurityRule.IS_AUTHENTICATED)
 class GetChannelSessionController(private val serverService: ServerService) {
 
     @Serdeable data class Response(val sessionId: String)

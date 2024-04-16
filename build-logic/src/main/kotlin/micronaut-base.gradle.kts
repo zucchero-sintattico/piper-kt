@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.allopen")
     id("com.google.devtools.ksp")
     id("com.github.johnrengelman.shadow")
-    id("io.micronaut.application")
+    id("io.micronaut.minimal.application")
     id("io.micronaut.aot")
     id("io.micronaut.test-resources")
 }
@@ -22,8 +22,6 @@ dependencies {
 }
 
 java { sourceCompatibility = JavaVersion.asVersion }
-
-graalvmNative.toolchainDetection.set(false)
 
 micronaut {
     runtime("netty")

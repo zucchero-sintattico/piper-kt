@@ -1,5 +1,5 @@
 applicationType: default
-defaultPackage: piperkt.session.multimedia
+defaultPackage: piperkt.services.multimedia
 testFramework: kotest
 sourceLanguage: kotlin
 buildTool: gradle_kotlin
