@@ -14,6 +14,7 @@ dependencies {
     // Kafka
     implementation("io.micronaut.kafka:micronaut-kafka")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
+    implementation("org.mindrot:jbcrypt:0.4")
     annotationProcessor("io.micronaut.security:micronaut-security-annotations")
     implementation("io.micronaut.security:micronaut-security-jwt")
 }

@@ -16,14 +16,4 @@ open class UserService(private val userRepository: UserRepository) {
         userRepository.save(user)
         return user
     }
-
-    fun registerUser(username: String, password: String): User {
-        val user = User(Username(username), password)
-        userRepository.save(user)
-        return user
-    }
-
-    fun login(username: String, password: String): User {
-        TODO()
-    }
 }
