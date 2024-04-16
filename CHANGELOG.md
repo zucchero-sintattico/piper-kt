@@ -1,3 +1,53 @@
+## [3.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v2.1.0...v3.0.0) (2024-04-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ddd:** changed domain and application in order to follow ddd best practices
+* **services:** added multimedia service
+
+### Features
+
+* added UUIDEntityId ([3e6b3b8](https://github.com/zucchero-sintattico/piper-kt/commit/3e6b3b8c971e69ee81ba7b119ee4edcb4585a604))
+* **deps:** added socketio library to enable creation of socket.io server ([bfeb8ce](https://github.com/zucchero-sintattico/piper-kt/commit/bfeb8ce8ba4f89fb6f840d3baccc0b1e18b3749d))
+* **deps:** added socketio-client in order to test the socket.io server ([5ff562c](https://github.com/zucchero-sintattico/piper-kt/commit/5ff562cf55b86eb0a9d78e45e9036e6157adf397))
+* **json:** added kotlinx.serializtion to handle json serialization/deserialization ([3e94090](https://github.com/zucchero-sintattico/piper-kt/commit/3e9409040add9237b64aef8b2e3a849360d216c7))
+* **multimedia-web:** added controllers and security rules ([e35b46d](https://github.com/zucchero-sintattico/piper-kt/commit/e35b46dc234bb01ab1d1ba02e09d3217fc3d4d8c))
+* **multimedia-websocket:** switched to service use instead of repository ([1d32643](https://github.com/zucchero-sintattico/piper-kt/commit/1d32643e7434934bbb189a9ed2164470b7388263))
+* **multimedia:** Added event listeners for users joining, leaving, and being kicked from servers ([80caa1f](https://github.com/zucchero-sintattico/piper-kt/commit/80caa1fbfa3b6f376183af2ceaa52c12f7832c5a))
+* **multimedia:** Added Kafka dependency, implemented ServersEventsListener and ServerRepositoryImpl. ([e8ebf8c](https://github.com/zucchero-sintattico/piper-kt/commit/e8ebf8ca8e54ab7c82d704c08fcc36f355d53e91))
+* **multimedia:** Added MultimediaApi interface, and Result class for handling API responses ([c5acfc3](https://github.com/zucchero-sintattico/piper-kt/commit/c5acfc3176aa2ee2383b71ccaa09dd8f192df60f))
+* **multimedia:** implemented event listeners ([4f9cc77](https://github.com/zucchero-sintattico/piper-kt/commit/4f9cc7711505ef662c7f01737f9ce8dfaf5ad581))
+* **multimedia:** implementing multimedia service general structure ([1f911fa](https://github.com/zucchero-sintattico/piper-kt/commit/1f911fa69b850a51549d78ac93e80950f4ca4830))
+* **multimedia:** integrated repository operation in protocol ([04b1995](https://github.com/zucchero-sintattico/piper-kt/commit/04b199521973b82aefc8ea264a9cf77fc9fecbeb))
+* refactor ([da657eb](https://github.com/zucchero-sintattico/piper-kt/commit/da657ebdd7a372cfa1c84bb2d032887d26cb9fb9))
+* **services:** added multimedia service ([957d35c](https://github.com/zucchero-sintattico/piper-kt/commit/957d35c292d253f33c4fd5b0db2775978a7aef25))
+* **ws:** added token extraction and rooms managment ([49f2aa4](https://github.com/zucchero-sintattico/piper-kt/commit/49f2aa4bf991f8b4ba97a298dea39e93a6419f39))
+
+
+### Bug Fixes
+
+* **api:** fixed error handling method signature ([afdecc3](https://github.com/zucchero-sintattico/piper-kt/commit/afdecc3afefb4330c603e5fac41432cb4c169f8f))
+* micronauttest annotation ([ca51984](https://github.com/zucchero-sintattico/piper-kt/commit/ca51984b483d47909e0fe7390ebdcf2732671887))
+* **multimedia-test:** added runCatching to avoid error throwing on socket test ([c20aa48](https://github.com/zucchero-sintattico/piper-kt/commit/c20aa48fdc392b79c56351950437439623049063))
+* **multimedia-test:** removed assertion temporary from socket test to avoid bug in C.I. ([520d0f8](https://github.com/zucchero-sintattico/piper-kt/commit/520d0f8bd5a3e4e6dd1dc39673d355fbd6491a10))
+* **multimedia:** fixed test that doesnt compile ([2c6485f](https://github.com/zucchero-sintattico/piper-kt/commit/2c6485fb026ff588058540f5716785b4a1f06eec))
+* **multimedia:** fixed tests ([f1221f0](https://github.com/zucchero-sintattico/piper-kt/commit/f1221f0238beefbf8933e78b3d4d3dcf948551a0))
+* **multimedia:** merged main ([45bfb4d](https://github.com/zucchero-sintattico/piper-kt/commit/45bfb4d2e3b9b215e1aa9e9331059cd12625b6d9))
+* **multimedia:** put random port on server startup to avoid bind exception ([d1b9cd5](https://github.com/zucchero-sintattico/piper-kt/commit/d1b9cd5373be2da603a6d4398f8f8b1b056bee07))
+* **multimedia:** removed dependency that broke build ([df065cf](https://github.com/zucchero-sintattico/piper-kt/commit/df065cf27e0a14ab67602d4fd29bf7781854b0b5))
+* **multimedia:** removed integration test ([e9a4585](https://github.com/zucchero-sintattico/piper-kt/commit/e9a4585413ed2303d35cb0c3745d89257770a7c7))
+* **project:** removed deleted dependencies ([87e63aa](https://github.com/zucchero-sintattico/piper-kt/commit/87e63aaa96530f8d783ad547bdfafe1aabf377f0))
+* **test:** fixed architecture test ([1cb0626](https://github.com/zucchero-sintattico/piper-kt/commit/1cb062676ffc6125a5025581dd0eb545f558a0ff))
+* **test:** fixed architecture test ([35f1def](https://github.com/zucchero-sintattico/piper-kt/commit/35f1def452d488e168e306b2cc75697d0124a8f9))
+* **test:** fixed socketio server test setupping a session repository ([a73ba6d](https://github.com/zucchero-sintattico/piper-kt/commit/a73ba6d81318b70f64dc864c76fa327cc3b3bd1c))
+* **test:** fixed type in base test class name ([6b4ff1e](https://github.com/zucchero-sintattico/piper-kt/commit/6b4ff1eea8e36910867f3a80190fd062a8f426e7))
+
+
+### Code Refactoring
+
+* **ddd:** changed domain and application in order to follow ddd best practices ([17e2399](https://github.com/zucchero-sintattico/piper-kt/commit/17e239919ad728380210f30d5c791f95a19da351))
+
 ## [2.1.0](https://github.com/zucchero-sintattico/piper-kt/compare/v2.0.0...v2.1.0) (2024-04-15)
 
 
