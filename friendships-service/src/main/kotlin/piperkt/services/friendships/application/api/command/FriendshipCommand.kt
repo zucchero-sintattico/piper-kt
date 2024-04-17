@@ -1,44 +1,46 @@
 package piperkt.services.friendships.application.api.command
 
-import piperkt.services.friendships.domain.Message
+import piperkt.services.friendships.application.api.ServiceRequest
 
 sealed interface FriendshipCommand {
     sealed interface CreateFriendship : FriendshipCommand {
-        data class Request(val firstUser: String, val secondUser: String) : CreateFriendship
+        data class Request(
+            val firstUser: String,
+            val secondUser: String,
+            override val requestFrom: String
+        ) : CreateFriendship, ServiceRequest
     }
 
     sealed interface SendFriendshipRequest : FriendshipCommand {
-        data class Request(val sender: String, val receiver: String) : SendFriendshipRequest
+        data class Request(
+            val sender: String,
+            val receiver: String,
+            override val requestFrom: String
+        ) : SendFriendshipRequest, ServiceRequest
     }
 
     sealed interface AcceptFriendshipRequest : FriendshipCommand {
-        data class Request(val sender: String, val receiver: String) : AcceptFriendshipRequest
+        data class Request(
+            val sender: String,
+            val receiver: String,
+            override val requestFrom: String
+        ) : AcceptFriendshipRequest, ServiceRequest
     }
 
     sealed interface DeclineFriendshipRequest : FriendshipCommand {
-        data class Request(val sender: String, val receiver: String) : DeclineFriendshipRequest
+        data class Request(
+            val sender: String,
+            val receiver: String,
+            override val requestFrom: String
+        ) : DeclineFriendshipRequest, ServiceRequest
     }
 
     sealed interface SendMessage : FriendshipCommand {
-        data class Request(val sender: String, val receiver: String, val content: String) :
-            SendMessage
-    }
-
-    sealed interface GetMessages : FriendshipCommand {
-        data class Request(val sender: String, val receiver: String) : GetMessages
-
-        data class Response(val messages: List<Message>) : GetMessages
-    }
-
-    sealed interface GetFriendshipRequests : FriendshipCommand {
-        data class Request(val receiver: String) : GetFriendshipRequests
-
-        data class Response(val requests: List<String>) : GetFriendshipRequests
-    }
-
-    sealed interface GetFriendships : FriendshipCommand {
-        data class Request(val user: String) : GetFriendships
-
-        data class Response(val friendships: List<String>) : GetFriendships
+        data class Request(
+            val sender: String,
+            val receiver: String,
+            val content: String,
+            override val requestFrom: String
+        ) : SendMessage, ServiceRequest
     }
 }

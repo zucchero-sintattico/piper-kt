@@ -1,6 +1,7 @@
 package piperkt.services.friendships.application.api
 
 import piperkt.services.friendships.application.api.command.FriendshipCommand
+import piperkt.services.friendships.application.api.query.FriendshipQuery
 
 interface FriendshipsApi {
 
@@ -15,14 +16,14 @@ interface FriendshipsApi {
     fun sendMessage(request: FriendshipCommand.SendMessage.Request)
 
     fun getMessages(
-        request: FriendshipCommand.GetMessages.Request
-    ): FriendshipCommand.GetMessages.Response
+        request: FriendshipQuery.GetMessages.Request
+    ): FriendshipQuery.GetMessages.Response
 
     fun getFriendshipRequests(
-        request: FriendshipCommand.GetFriendshipRequests.Request
-    ): FriendshipCommand.GetFriendshipRequests.Response
+        request: FriendshipQuery.GetFriendshipRequests.Request
+    ): FriendshipQuery.GetFriendshipRequests.Response
 
     fun getFriendships(
-        request: FriendshipCommand.GetFriendships.Request
-    ): FriendshipCommand.GetFriendships.Response
+        request: FriendshipQuery.GetFriendships.Request
+    ): FriendshipQuery.GetFriendships.Response
 }
