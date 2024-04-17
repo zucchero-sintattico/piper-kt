@@ -5,25 +5,31 @@ import piperkt.services.friendships.application.api.query.FriendshipQuery
 
 interface FriendshipsApi {
 
-    fun createFriendship(request: FriendshipCommand.CreateFriendship.Request)
+    fun createFriendship(request: FriendshipCommand.CreateFriendship.Request): Result<Unit>
 
-    fun sendFriendshipRequest(request: FriendshipCommand.SendFriendshipRequest.Request)
+    fun sendFriendshipRequest(
+        request: FriendshipCommand.SendFriendshipRequest.Request
+    ): Result<Unit>
 
-    fun acceptFriendshipRequest(request: FriendshipCommand.AcceptFriendshipRequest.Request)
+    fun acceptFriendshipRequest(
+        request: FriendshipCommand.AcceptFriendshipRequest.Request
+    ): Result<Unit>
 
-    fun declineFriendshipRequest(request: FriendshipCommand.DeclineFriendshipRequest.Request)
+    fun declineFriendshipRequest(
+        request: FriendshipCommand.DeclineFriendshipRequest.Request
+    ): Result<Unit>
 
-    fun sendMessage(request: FriendshipCommand.SendMessage.Request)
+    fun sendMessage(request: FriendshipCommand.SendMessage.Request): Result<Unit>
 
     fun getMessages(
         request: FriendshipQuery.GetMessages.Request
-    ): FriendshipQuery.GetMessages.Response
+    ): Result<FriendshipQuery.GetMessages.Response>
 
     fun getFriendshipRequests(
         request: FriendshipQuery.GetFriendshipRequests.Request
-    ): FriendshipQuery.GetFriendshipRequests.Response
+    ): Result<FriendshipQuery.GetFriendshipRequests.Response>
 
     fun getFriendships(
         request: FriendshipQuery.GetFriendships.Request
-    ): FriendshipQuery.GetFriendships.Response
+    ): Result<FriendshipQuery.GetFriendships.Response>
 }
