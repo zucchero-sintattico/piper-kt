@@ -9,5 +9,5 @@ enum class FriendshipRequestStatus {
 data class FriendshipRequest(
     val from: String,
     val to: String,
-    val status: FriendshipRequestStatus,
+    var status: FriendshipRequestStatus,
 )

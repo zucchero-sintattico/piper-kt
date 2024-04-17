@@ -4,6 +4,7 @@ import piperkt.services.friendships.application.api.FriendshipsApi
 import piperkt.services.friendships.application.api.command.FriendshipCommand
 import piperkt.services.friendships.application.api.query.FriendshipQuery
 import piperkt.services.friendships.application.exceptions.FriendshipServiceException
+import piperkt.services.friendships.domain.FriendshipRequestStatus
 import piperkt.services.friendships.domain.factory.FriendshipAggregateFactory
 
 class FriendshipService(
@@ -21,7 +22,7 @@ class FriendshipService(
         if (request.requestFrom != request.sender) {
             return Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
         }
-        repository.findFriendshipRequest(request.sender, request.receiver)?.let {
+        repository.findByFriendshipRequest(request.sender, request.receiver)?.let {
             return Result.failure(
                 FriendshipServiceException.FriendshipRequestAlreadyExistsException()
             )
@@ -35,7 +36,21 @@ class FriendshipService(
     override fun acceptFriendshipRequest(
         request: FriendshipCommand.AcceptFriendshipRequest.Request
     ): Result<Unit> {
-        TODO("Not yet implemented")
+        if (request.requestFrom != request.receiver) {
+            return Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
+        }
+        repository.findByFriendshipRequest(request.sender, request.receiver)?.let {
+            if (it.friendshipRequest.status == FriendshipRequestStatus.ACCEPTED) {
+                return Result.failure(
+                    FriendshipServiceException.FriendshipRequestAlreadyExistsException()
+                )
+            } else {
+                it.friendshipRequest.status = FriendshipRequestStatus.ACCEPTED
+                repository.save(it)
+                return Result.success(Unit)
+            }
+        }
+        return Result.failure(FriendshipServiceException.FriendshipRequestNotFoundException())
     }
 
     override fun declineFriendshipRequest(
