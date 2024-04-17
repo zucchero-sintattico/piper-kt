@@ -7,7 +7,7 @@ interface FriendshipsApi {
 
     fun createFriendship(request: FriendshipCommand.CreateFriendship.Request)
 
-    fun sendFrienshipRequest(request: FriendshipCommand.SendFriendshipRequest.Request)
+    fun sendFriendshipRequest(request: FriendshipCommand.SendFriendshipRequest.Request)
 
     fun acceptFriendshipRequest(request: FriendshipCommand.AcceptFriendshipRequest.Request)
 
