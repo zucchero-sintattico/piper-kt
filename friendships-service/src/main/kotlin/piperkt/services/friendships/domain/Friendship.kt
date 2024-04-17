@@ -29,4 +29,8 @@ class Friendship(
     fun addMessage(message: Message) {
         messages.add(message)
     }
+
+    fun FriendshipRequest.toFriendship(): Friendship {
+        return Friendship(users = setOf(this.from, this.to))
+    }
 }

@@ -1,13 +1,13 @@
 package piperkt.services.friendships.domain
 
 import piperkt.common.AggregateRoot
-import piperkt.common.id.FriendshipId
+import piperkt.common.id.FriendshipAggregateId
 
 class FriendshipAggregate(
-    id: FriendshipId = FriendshipId(),
+    id: FriendshipAggregateId = FriendshipAggregateId(),
     val friendshipRequest: FriendshipRequest,
     val friendship: Friendship? = null
-) : AggregateRoot<FriendshipId>(id) {
+) : AggregateRoot<FriendshipAggregateId>(id) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is FriendshipAggregate) return false
