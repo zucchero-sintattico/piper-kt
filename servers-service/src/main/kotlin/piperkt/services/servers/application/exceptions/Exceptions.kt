@@ -1,14 +1,18 @@
 package piperkt.services.servers.application.exceptions
 
-data class UserNotInServerException(override val message: String = "User not in server") :
-    Exception()
+sealed class ServerServiceException : Exception() {
 
-data class ServerNotFoundException(override val message: String = "Server not found") : Exception()
+    data class UserNotInServerException(override val message: String = "User not in server") :
+        ServerServiceException()
 
-data class ServerOrChannelNotFoundException(
-    override val message: String = "Server or Channel not found"
-) : Exception()
+    data class ServerNotFoundException(override val message: String = "Server not found") :
+        ServerServiceException()
 
-data class UserNotHasPermissionsException(
-    override val message: String = "User not has permissions to perform this action"
-) : Exception()
+    data class ServerOrChannelNotFoundException(
+        override val message: String = "Server or Channel not found"
+    ) : ServerServiceException()
+
+    data class UserNotHasPermissionsException(
+        override val message: String = "User not has permissions to perform this action"
+    ) : ServerServiceException()
+}
