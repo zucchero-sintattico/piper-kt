@@ -13,11 +13,6 @@ import piperkt.services.friendships.domain.toFriendship
 class FriendshipService(
     private val repository: FriendshipAggregateRepository,
 ) : FriendshipsApi {
-    override fun createFriendship(
-        request: FriendshipCommand.CreateFriendship.Request
-    ): Result<Unit> {
-        TODO("Not yet implemented")
-    }
 
     override fun sendFriendshipRequest(
         request: FriendshipCommand.SendFriendshipRequest.Request
@@ -103,18 +98,43 @@ class FriendshipService(
     override fun getMessages(
         request: FriendshipQuery.GetMessages.Request
     ): Result<FriendshipQuery.GetMessages.Response> {
-        TODO("Not yet implemented")
+        val friendshipAggregate =
+            repository.findByFriendship(request.requestFrom, request.friend)
+                ?: return Result.failure(FriendshipServiceException.FriendshipNotFoundException())
+        val friendship = friendshipAggregate.friendship!!
+        return Result.success(
+            FriendshipQuery.GetMessages.Response(
+                // Take the last messages from the list
+                friendship.messages.subList(
+                    request.index,
+                    request.offset.coerceAtMost(friendship.messages.size)
+                )
+            )
+        )
     }
 
     override fun getFriendshipRequests(
         request: FriendshipQuery.GetFriendshipRequests.Request
     ): Result<FriendshipQuery.GetFriendshipRequests.Response> {
-        TODO("Not yet implemented")
+        val friendshipRequests =
+            repository
+                .findByUserFriendshipRequests(request.requestFrom)
+                .map { it.friendshipRequest.from }
+                .toList()
+        return Result.success(FriendshipQuery.GetFriendshipRequests.Response(friendshipRequests))
     }
 
     override fun getFriendships(
         request: FriendshipQuery.GetFriendships.Request
     ): Result<FriendshipQuery.GetFriendships.Response> {
-        TODO("Not yet implemented")
+        val friendships =
+            repository.findByUserFriendships(request.requestFrom).map {
+                if (it.friendshipRequest.from == request.requestFrom) {
+                    it.friendshipRequest.to
+                } else {
+                    it.friendshipRequest.from
+                }
+            }
+        return Result.success(FriendshipQuery.GetFriendships.Response(friendships))
     }
 }

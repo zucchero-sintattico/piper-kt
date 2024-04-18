@@ -5,8 +5,6 @@ import piperkt.services.friendships.application.api.query.FriendshipQuery
 
 interface FriendshipsApi {
 
-    fun createFriendship(request: FriendshipCommand.CreateFriendship.Request): Result<Unit>
-
     fun sendFriendshipRequest(
         request: FriendshipCommand.SendFriendshipRequest.Request
     ): Result<Unit>

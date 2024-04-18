@@ -6,10 +6,7 @@ import piperkt.common.id.ServerId
 import piperkt.services.servers.application.api.ChannelServiceApi
 import piperkt.services.servers.application.api.command.ChannelCommand
 import piperkt.services.servers.application.api.query.ChannelQuery
-import piperkt.services.servers.application.exceptions.ServerOrChannelNotFoundException
 import piperkt.services.servers.application.exceptions.ServerServiceException
-import piperkt.services.servers.application.exceptions.UserNotHasPermissionsException
-import piperkt.services.servers.application.exceptions.UserNotInServerException
 import piperkt.services.servers.domain.factory.ChannelFactory
 import piperkt.services.servers.domain.factory.MessageFactory
 

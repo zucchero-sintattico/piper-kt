@@ -9,7 +9,7 @@ import io.micronaut.http.annotation.Status
 import io.micronaut.http.server.exceptions.ExceptionHandler
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.inject.Singleton
-import piperkt.services.servers.application.exceptions.ServerNotFoundException
+import piperkt.services.servers.application.exceptions.ServerServiceException
 
 @Serdeable
 data class ServerNotFoundResponse(
@@ -18,17 +18,19 @@ data class ServerNotFoundResponse(
 
 @Produces
 @Singleton
-@Requires(classes = [ServerNotFoundException::class, ExceptionHandler::class])
+@Requires(
+    classes = [ServerServiceException.ServerNotFoundException::class, ExceptionHandler::class]
+)
 class ServerNotFoundExceptionHandler :
-    ExceptionHandler<ServerNotFoundException, ServerNotFoundResponse> {
+    ExceptionHandler<ServerServiceException.ServerNotFoundException, ServerNotFoundResponse> {
     @Error(
         global = true,
-        exception = ServerNotFoundException::class,
+        exception = ServerServiceException.ServerNotFoundException::class,
     )
     @Status(HttpStatus.NOT_FOUND)
     override fun handle(
         request: HttpRequest<*>?,
-        exception: ServerNotFoundException?
+        exception: ServerServiceException.ServerNotFoundException?
     ): ServerNotFoundResponse {
         return ServerNotFoundResponse(exception!!.message)
     }
