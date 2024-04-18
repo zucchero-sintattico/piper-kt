@@ -29,4 +29,17 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
             FriendshipCommand.AcceptFriendshipRequest.Request(request.from, request.to, request.to)
         ) shouldBe Result.success(Unit)
     }
+
+    @Test
+    fun `should allow to decline friend request`() {
+        val request = FriendshipRequestFactory.createFriendshipRequest("peppe", "ciro")
+        val friendshipAggregate =
+            FriendshipAggregateFactory.createFriendshipAggregate(request.from, request.to)
+        friendshipAggregate.friendshipRequest.status = FriendshipRequestStatus.PENDING
+        whenever(mockedRepository.findByFriendshipRequest(request.from, request.to))
+            .thenReturn(friendshipAggregate)
+        service.declineFriendshipRequest(
+            FriendshipCommand.DeclineFriendshipRequest.Request(request.from, request.to, request.to)
+        ) shouldBe Result.success(Unit)
+    }
 }

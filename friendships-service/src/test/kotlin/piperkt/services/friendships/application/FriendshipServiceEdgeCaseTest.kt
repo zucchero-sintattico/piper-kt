@@ -76,4 +76,50 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
         ) shouldBe
             Result.failure(FriendshipServiceException.FriendshipRequestAlreadyExistsException())
     }
+
+    @Test
+    fun `should not allow to decline friend request if user is not the receiver`() {
+        val request = FriendshipRequestFactory.createFriendshipRequest("peppe", "ciro")
+        service.declineFriendshipRequest(
+            FriendshipCommand.DeclineFriendshipRequest.Request(request.from, request.to, "notCiro")
+        ) shouldBe Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
+    }
+
+    @Test
+    fun `should not allow to decline friend request if request does not exist`() {
+        val request = FriendshipRequestFactory.createFriendshipRequest("peppe", "ciro")
+        whenever(mockedRepository.findByFriendshipRequest(request.from, request.to))
+            .thenReturn(null)
+        service.declineFriendshipRequest(
+            FriendshipCommand.DeclineFriendshipRequest.Request(request.from, request.to, request.to)
+        ) shouldBe Result.failure(FriendshipServiceException.FriendshipRequestNotFoundException())
+    }
+
+    @Test
+    fun `should not allow to decline friend request if request is already accepted`() {
+        val request = FriendshipRequestFactory.createFriendshipRequest("peppe", "ciro")
+        val friendshipAggregate =
+            FriendshipAggregateFactory.createFriendshipAggregate(request.from, request.to)
+        friendshipAggregate.friendshipRequest.status = FriendshipRequestStatus.ACCEPTED
+        whenever(mockedRepository.findByFriendshipRequest(request.from, request.to))
+            .thenReturn(friendshipAggregate)
+        service.declineFriendshipRequest(
+            FriendshipCommand.DeclineFriendshipRequest.Request(request.from, request.to, request.to)
+        ) shouldBe
+            Result.failure(FriendshipServiceException.FriendshipRequestAlreadyExistsException())
+    }
+
+    @Test
+    fun `should not allow to decline friend request if request is already rejected`() {
+        val request = FriendshipRequestFactory.createFriendshipRequest("peppe", "ciro")
+        val friendshipAggregate =
+            FriendshipAggregateFactory.createFriendshipAggregate(request.from, request.to)
+        friendshipAggregate.friendshipRequest.status = FriendshipRequestStatus.REJECTED
+        whenever(mockedRepository.findByFriendshipRequest(request.from, request.to))
+            .thenReturn(friendshipAggregate)
+        service.declineFriendshipRequest(
+            FriendshipCommand.DeclineFriendshipRequest.Request(request.from, request.to, request.to)
+        ) shouldBe
+            Result.failure(FriendshipServiceException.FriendshipRequestAlreadyExistsException())
+    }
 }

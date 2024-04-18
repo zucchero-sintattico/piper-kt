@@ -64,7 +64,22 @@ class FriendshipService(
     override fun declineFriendshipRequest(
         request: FriendshipCommand.DeclineFriendshipRequest.Request
     ): Result<Unit> {
-        TODO("Not yet implemented")
+        // Only the receiver can decline the friendship request
+        if (request.requestFrom != request.receiver) {
+            return Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
+        }
+        repository.findByFriendshipRequest(request.sender, request.receiver)?.let {
+            if (checkIfRequestIsAlreadyAcceptedOrRejected(it.friendshipRequest)) {
+                return Result.failure(
+                    FriendshipServiceException.FriendshipRequestAlreadyExistsException()
+                )
+            } else {
+                it.friendshipRequest.status = FriendshipRequestStatus.REJECTED
+                repository.save(it)
+                return Result.success(Unit)
+            }
+        }
+        return Result.failure(FriendshipServiceException.FriendshipRequestNotFoundException())
     }
 
     override fun sendMessage(request: FriendshipCommand.SendMessage.Request): Result<Unit> {
