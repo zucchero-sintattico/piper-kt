@@ -25,4 +25,9 @@ class FriendshipAggregate(
         result = 31 * result + friendship.hashCode()
         return result
     }
+
+    fun copy(
+        friendshipRequest: FriendshipRequest = this.friendshipRequest,
+        friendship: Friendship? = this.friendship
+    ) = FriendshipAggregate(id, friendshipRequest, friendship)
 }

@@ -4,8 +4,10 @@ import piperkt.services.friendships.application.api.FriendshipsApi
 import piperkt.services.friendships.application.api.command.FriendshipCommand
 import piperkt.services.friendships.application.api.query.FriendshipQuery
 import piperkt.services.friendships.application.exceptions.FriendshipServiceException
+import piperkt.services.friendships.domain.FriendshipRequest
 import piperkt.services.friendships.domain.FriendshipRequestStatus
 import piperkt.services.friendships.domain.factory.FriendshipAggregateFactory
+import piperkt.services.friendships.domain.toFriendship
 
 class FriendshipService(
     private val repository: FriendshipAggregateRepository,
@@ -36,22 +38,28 @@ class FriendshipService(
     override fun acceptFriendshipRequest(
         request: FriendshipCommand.AcceptFriendshipRequest.Request
     ): Result<Unit> {
+        // Only the receiver can accept the friendship request
         if (request.requestFrom != request.receiver) {
             return Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
         }
         repository.findByFriendshipRequest(request.sender, request.receiver)?.let {
-            if (it.friendshipRequest.status == FriendshipRequestStatus.ACCEPTED) {
+            if (checkIfRequestIsAlreadyAcceptedOrRejected(it.friendshipRequest)) {
                 return Result.failure(
                     FriendshipServiceException.FriendshipRequestAlreadyExistsException()
                 )
             } else {
+                // Create a new friendship between the two users
                 it.friendshipRequest.status = FriendshipRequestStatus.ACCEPTED
-                repository.save(it)
+                repository.save(it.copy(friendship = it.friendshipRequest.toFriendship()))
                 return Result.success(Unit)
             }
         }
         return Result.failure(FriendshipServiceException.FriendshipRequestNotFoundException())
     }
+
+    private fun checkIfRequestIsAlreadyAcceptedOrRejected(request: FriendshipRequest) =
+        request.status == FriendshipRequestStatus.ACCEPTED ||
+            request.status == FriendshipRequestStatus.REJECTED
 
     override fun declineFriendshipRequest(
         request: FriendshipCommand.DeclineFriendshipRequest.Request
