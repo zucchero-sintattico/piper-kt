@@ -42,4 +42,16 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
             FriendshipCommand.DeclineFriendshipRequest.Request(request.from, request.to, request.to)
         ) shouldBe Result.success(Unit)
     }
+
+    @Test
+    fun `should allow to send message`() {
+        val request = FriendshipRequestFactory.createFriendshipRequest("peppe", "ciro")
+        val friendshipAggregate =
+            FriendshipAggregateFactory.createFriendshipAggregate(request.from, request.to)
+        whenever(mockedRepository.findByFriendship(request.from, request.to))
+            .thenReturn(friendshipAggregate)
+        service.sendMessage(
+            FriendshipCommand.SendMessage.Request(request.from, request.to, "Hello", request.from)
+        ) shouldBe Result.success(Unit)
+    }
 }

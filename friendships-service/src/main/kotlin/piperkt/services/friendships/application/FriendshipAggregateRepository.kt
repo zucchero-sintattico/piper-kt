@@ -10,6 +10,8 @@ interface FriendshipAggregateRepository : Repository<FriendshipAggregateId, Frie
 
     fun findByFriendshipRequest(from: String, to: String): FriendshipAggregate?
 
+    fun findByFriendship(from: String, to: String): FriendshipAggregate?
+
     fun findByUserFriendships(user: String): List<FriendshipAggregate>
 
     fun findAll(): List<FriendshipAggregate>

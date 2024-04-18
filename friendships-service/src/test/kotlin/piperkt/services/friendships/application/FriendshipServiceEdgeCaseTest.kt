@@ -122,4 +122,25 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
         ) shouldBe
             Result.failure(FriendshipServiceException.FriendshipRequestAlreadyExistsException())
     }
+
+    @Test
+    fun `should not allow to send message if friendship does not exist`() {
+        val request = FriendshipRequestFactory.createFriendshipRequest("peppe", "ciro")
+        whenever(mockedRepository.findByFriendship(request.from, request.to)).thenReturn(null)
+        service.sendMessage(
+            FriendshipCommand.SendMessage.Request(request.from, request.to, "Hello", request.from)
+        ) shouldBe Result.failure(FriendshipServiceException.FriendshipNotFoundException())
+    }
+
+    @Test
+    fun `should not allow to send message if sender is not in the friendship`() {
+        val request = FriendshipRequestFactory.createFriendshipRequest("peppe", "ciro")
+        val friendshipAggregate =
+            FriendshipAggregateFactory.createFriendshipAggregate(request.from, request.to)
+        whenever(mockedRepository.findByFriendship(request.from, request.to))
+            .thenReturn(friendshipAggregate)
+        service.sendMessage(
+            FriendshipCommand.SendMessage.Request(request.from, request.to, "Hello", "notPeppe")
+        ) shouldBe Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
+    }
 }

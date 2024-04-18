@@ -7,6 +7,7 @@ import piperkt.services.friendships.application.exceptions.FriendshipServiceExce
 import piperkt.services.friendships.domain.FriendshipRequest
 import piperkt.services.friendships.domain.FriendshipRequestStatus
 import piperkt.services.friendships.domain.factory.FriendshipAggregateFactory
+import piperkt.services.friendships.domain.factory.MessageFactory
 import piperkt.services.friendships.domain.toFriendship
 
 class FriendshipService(
@@ -83,7 +84,20 @@ class FriendshipService(
     }
 
     override fun sendMessage(request: FriendshipCommand.SendMessage.Request): Result<Unit> {
-        TODO("Not yet implemented")
+        val friendshipAggregate =
+            repository.findByFriendship(request.sender, request.receiver)
+                ?: return Result.failure(FriendshipServiceException.FriendshipNotFoundException())
+        // I'm sure that if repository find the aggregate by the friendship, the friendship is not
+        // null
+        val friendship = friendshipAggregate.friendship!!
+        if (!friendship.users.contains(request.requestFrom)) {
+            return Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
+        }
+        friendshipAggregate.friendship.addMessage(
+            MessageFactory.createMessage(sender = request.sender, content = request.receiver)
+        )
+        repository.save(friendshipAggregate)
+        return Result.success(Unit)
     }
 
     override fun getMessages(
