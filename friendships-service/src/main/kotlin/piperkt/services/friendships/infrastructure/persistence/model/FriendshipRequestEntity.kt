@@ -1,10 +1,8 @@
 package piperkt.services.friendships.infrastructure.persistence.model
 
-import io.micronaut.data.annotation.MappedEntity
 import piperkt.services.friendships.domain.FriendshipRequest
 import piperkt.services.friendships.domain.FriendshipRequestStatus
 
-@MappedEntity
 class FriendShipRequestEntity(
     val fromUser: String,
     val toUser: String,

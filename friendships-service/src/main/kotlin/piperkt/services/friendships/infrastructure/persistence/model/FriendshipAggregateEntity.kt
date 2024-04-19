@@ -2,6 +2,8 @@ package piperkt.services.friendships.infrastructure.persistence.model
 
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
+import io.micronaut.data.mongodb.annotation.MongoRepository
+import io.micronaut.data.repository.CrudRepository
 import piperkt.common.id.FriendshipAggregateId
 import piperkt.services.friendships.domain.FriendshipAggregate
 
@@ -32,3 +34,17 @@ fun FriendshipAggregateEntity.toDomain() =
         friendshipRequest = friendshipRequest.toDomain(),
         friendship = friendship?.toDomain()
     )
+
+@MongoRepository
+interface FriendshipAggregateModelRepository : CrudRepository<FriendshipAggregateEntity, String> {
+
+    fun findByFriendshipRequestFromUserAndFriendshipRequestToUser(
+        fromUser: String,
+        toUser: String
+    ): FriendshipAggregateEntity?
+
+    // find by friendship user
+    fun findByFriendship_Users(friendshipUsers: Set<String>): List<FriendshipAggregateEntity>
+
+    fun findByFriendship_UsersContains(user: String): List<FriendshipAggregateEntity>
+}
