@@ -1,6 +1,7 @@
 package piperkt.services.friendships.application
 
 import io.kotest.matchers.shouldBe
+import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 import piperkt.services.friendships.application.api.command.FriendshipCommand
 import piperkt.services.friendships.application.api.query.FriendshipQuery
@@ -15,6 +16,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
         service.sendFriendshipRequest(
             FriendshipCommand.SendFriendshipRequest.Request(request.from, request.to, "notPeppe")
         ) shouldBe Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
+        verifyNoInteractions(mockedEventPublisher)
     }
 
     @Test
@@ -27,6 +29,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
             FriendshipCommand.SendFriendshipRequest.Request(request.from, request.to, request.from)
         ) shouldBe
             Result.failure(FriendshipServiceException.FriendshipRequestAlreadyExistsException())
+        verifyNoInteractions(mockedEventPublisher)
     }
 
     @Test
@@ -34,6 +37,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
         service.acceptFriendshipRequest(
             FriendshipCommand.AcceptFriendshipRequest.Request(request.from, request.to, "notCiro")
         ) shouldBe Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
+        verifyNoInteractions(mockedEventPublisher)
     }
 
     @Test
@@ -43,6 +47,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
         service.acceptFriendshipRequest(
             FriendshipCommand.AcceptFriendshipRequest.Request(request.from, request.to, request.to)
         ) shouldBe Result.failure(FriendshipServiceException.FriendshipRequestNotFoundException())
+        verifyNoInteractions(mockedEventPublisher)
     }
 
     @Test
@@ -56,6 +61,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
             FriendshipCommand.AcceptFriendshipRequest.Request(request.from, request.to, request.to)
         ) shouldBe
             Result.failure(FriendshipServiceException.FriendshipRequestAlreadyExistsException())
+        verifyNoInteractions(mockedEventPublisher)
     }
 
     @Test
@@ -69,6 +75,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
             FriendshipCommand.AcceptFriendshipRequest.Request(request.from, request.to, request.to)
         ) shouldBe
             Result.failure(FriendshipServiceException.FriendshipRequestAlreadyExistsException())
+        verifyNoInteractions(mockedEventPublisher)
     }
 
     @Test
@@ -119,6 +126,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
         service.sendMessage(
             FriendshipCommand.SendMessage.Request(request.from, request.to, "Hello", request.from)
         ) shouldBe Result.failure(FriendshipServiceException.FriendshipNotFoundException())
+        verifyNoInteractions(mockedEventPublisher)
     }
 
     @Test
@@ -130,6 +138,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
         service.sendMessage(
             FriendshipCommand.SendMessage.Request(request.from, request.to, "Hello", "notPeppe")
         ) shouldBe Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
+        verifyNoInteractions(mockedEventPublisher)
     }
 
     @Test
@@ -138,6 +147,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
         service.sendMessage(
             FriendshipCommand.SendMessage.Request(request.from, request.to, "Hello", request.from)
         ) shouldBe Result.failure(FriendshipServiceException.FriendshipNotFoundException())
+        verifyNoInteractions(mockedEventPublisher)
     }
 
     @Test

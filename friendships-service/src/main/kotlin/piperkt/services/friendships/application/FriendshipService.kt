@@ -1,5 +1,7 @@
 package piperkt.services.friendships.application
 
+import piperkt.common.events.FriendshipEvent
+import piperkt.common.events.FriendshipEventPublisher
 import piperkt.services.friendships.application.api.FriendshipsApi
 import piperkt.services.friendships.application.api.command.FriendshipCommand
 import piperkt.services.friendships.application.api.query.FriendshipQuery
@@ -12,6 +14,7 @@ import piperkt.services.friendships.domain.toFriendship
 
 class FriendshipService(
     private val repository: FriendshipAggregateRepository,
+    private val eventPublisher: FriendshipEventPublisher
 ) : FriendshipsApi {
 
     override fun sendFriendshipRequest(
@@ -28,6 +31,9 @@ class FriendshipService(
         FriendshipAggregateFactory.createFriendshipAggregate(request.sender, request.receiver).let {
             repository.save(it)
         }
+        eventPublisher.publish(
+            FriendshipEvent.FriendshipRequestSentEvent(request.sender, request.receiver)
+        )
         return Result.success(Unit)
     }
 
@@ -47,6 +53,9 @@ class FriendshipService(
                 // Create a new friendship between the two users
                 it.friendshipRequest.status = FriendshipRequestStatus.ACCEPTED
                 repository.save(it.copy(friendship = it.friendshipRequest.toFriendship()))
+                eventPublisher.publish(
+                    FriendshipEvent.FriendshipRequestAcceptedEvent(request.sender, request.receiver)
+                )
                 return Result.success(Unit)
             }
         }
@@ -88,10 +97,17 @@ class FriendshipService(
         if (!friendship.users.contains(request.requestFrom)) {
             return Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
         }
-        friendshipAggregate.friendship.addMessage(
-            MessageFactory.createMessage(sender = request.sender, content = request.receiver)
-        )
+        val message =
+            MessageFactory.createMessage(sender = request.sender, content = request.content)
+        friendshipAggregate.friendship.addMessage(message)
         repository.save(friendshipAggregate)
+        eventPublisher.publish(
+            FriendshipEvent.NewMessageInFriendshipEvent(
+                request.sender,
+                request.receiver,
+                message.id
+            )
+        )
         return Result.success(Unit)
     }
 

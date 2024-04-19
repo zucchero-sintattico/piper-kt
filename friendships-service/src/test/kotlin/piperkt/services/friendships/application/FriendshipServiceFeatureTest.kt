@@ -2,6 +2,7 @@ package piperkt.services.friendships.application
 
 import io.kotest.matchers.shouldBe
 import org.mockito.kotlin.any
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import piperkt.services.friendships.application.api.command.FriendshipCommand
 import piperkt.services.friendships.application.api.query.FriendshipQuery
@@ -16,6 +17,8 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
         service.sendFriendshipRequest(
             FriendshipCommand.SendFriendshipRequest.Request(request.from, request.to, request.from)
         ) shouldBe Result.success(Unit)
+        verify(mockedRepository).save(any())
+        verify(mockedEventPublisher).publish(any())
     }
 
     @Test
@@ -28,6 +31,8 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
         service.acceptFriendshipRequest(
             FriendshipCommand.AcceptFriendshipRequest.Request(request.from, request.to, request.to)
         ) shouldBe Result.success(Unit)
+        verify(mockedRepository).save(any())
+        verify(mockedEventPublisher).publish(any())
     }
 
     @Test
@@ -40,6 +45,7 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
         service.declineFriendshipRequest(
             FriendshipCommand.DeclineFriendshipRequest.Request(request.from, request.to, request.to)
         ) shouldBe Result.success(Unit)
+        verify(mockedRepository).save(any())
     }
 
     @Test
@@ -51,6 +57,8 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
         service.sendMessage(
             FriendshipCommand.SendMessage.Request(request.from, request.to, "Hello", request.from)
         ) shouldBe Result.success(Unit)
+        verify(mockedRepository).save(any())
+        verify(mockedEventPublisher).publish(any())
     }
 
     @Test
