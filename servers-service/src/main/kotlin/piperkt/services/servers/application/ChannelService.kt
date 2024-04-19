@@ -104,7 +104,6 @@ open class ChannelService(
         }
     }
 
-    @Suppress("ReturnCount")
     override fun getMessagesFromChannelId(
         request: ChannelQuery.GetMessagesFromChannelId.Request
     ): Result<ChannelQuery.GetMessagesFromChannelId.Response> {
@@ -128,7 +127,6 @@ open class ChannelService(
         )
     }
 
-    @Suppress("ReturnCount")
     override fun addMessageInChannel(
         request: ChannelCommand.AddMessageInChannel.Request
     ): Result<ChannelCommand.AddMessageInChannel.Response> {

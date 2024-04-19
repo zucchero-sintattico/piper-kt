@@ -5,6 +5,10 @@ plugins {
 
 application { mainClass.set("piperkt.services.servers.ApplicationKt") }
 
+detekt {
+    config.setFrom("./detekt-config.yml")
+}
+
 dependencies {
     ksp("io.micronaut.data:micronaut-data-document-processor")
     implementation("io.micronaut.data:micronaut-data-mongodb")
