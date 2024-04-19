@@ -2,8 +2,8 @@ package piperkt.services.servers.infrastructure.persistence.model
 
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
-import piperkt.services.servers.domain.Message
 import java.time.Instant
+import piperkt.services.servers.domain.Message
 import piperkt.services.servers.domain.factory.MessageFactory
 
 @MappedEntity

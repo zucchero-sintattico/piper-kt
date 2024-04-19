@@ -1,10 +1,14 @@
 package piperkt.services.friendships.infrastructure.persistence.model
 
 import io.micronaut.data.annotation.Id
+import io.micronaut.data.annotation.MappedEntity
+import io.micronaut.data.mongodb.annotation.MongoRepository
+import io.micronaut.data.repository.CrudRepository
 import piperkt.common.id.FriendshipId
 import piperkt.services.friendships.domain.Friendship
 
-class FriendshipEntity(
+@MappedEntity
+data class FriendshipEntity(
     @Id val id: String,
     val users: Set<String>,
     val messages: List<MessageEntity> = emptyList()
@@ -25,3 +29,10 @@ fun FriendshipEntity.toDomain() =
         users = users,
         messages = messages.map { it.toDomain() }.toMutableList()
     )
+
+@MongoRepository
+interface FriendshipModelRepository : CrudRepository<FriendshipEntity, String> {
+    fun findByUsersContains(user: String): List<FriendshipEntity>
+
+    fun findByUsersContainsAndUsersContains(user1: String, user2: String): FriendshipEntity?
+}

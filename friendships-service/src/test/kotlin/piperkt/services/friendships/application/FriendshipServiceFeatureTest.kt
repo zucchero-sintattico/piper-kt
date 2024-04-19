@@ -6,8 +6,6 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import piperkt.services.friendships.application.api.command.FriendshipCommand
 import piperkt.services.friendships.application.api.query.FriendshipQuery
-import piperkt.services.friendships.domain.FriendshipRequestStatus
-import piperkt.services.friendships.domain.factory.FriendshipAggregateFactory
 import piperkt.services.friendships.domain.factory.MessageFactory
 
 class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
@@ -17,47 +15,44 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
         service.sendFriendshipRequest(
             FriendshipCommand.SendFriendshipRequest.Request(request.from, request.to, request.from)
         ) shouldBe Result.success(Unit)
-        verify(mockedRepository).save(any())
+        verify(mockedFriendshipRequestRepository).save(any())
         verify(mockedEventPublisher).publish(any())
     }
 
     @Test
     fun `should allow to accept friend request`() {
-        val friendshipAggregate =
-            FriendshipAggregateFactory.createFriendshipAggregate(request.from, request.to)
-        friendshipAggregate.friendshipRequest.status = FriendshipRequestStatus.PENDING
-        whenever(mockedRepository.findByFriendshipRequest(request.from, request.to))
-            .thenReturn(friendshipAggregate)
+        whenever(
+                mockedFriendshipRequestRepository.findByFriendshipRequest(request.from, request.to)
+            )
+            .thenReturn(request)
         service.acceptFriendshipRequest(
             FriendshipCommand.AcceptFriendshipRequest.Request(request.from, request.to, request.to)
         ) shouldBe Result.success(Unit)
-        verify(mockedRepository).save(any())
+        verify(mockedFriendshipRepository).save(any())
+        verify(mockedFriendshipRequestRepository).deleteById(any())
         verify(mockedEventPublisher).publish(any())
     }
 
     @Test
     fun `should allow to decline friend request`() {
-        val friendshipAggregate =
-            FriendshipAggregateFactory.createFriendshipAggregate(request.from, request.to)
-        friendshipAggregate.friendshipRequest.status = FriendshipRequestStatus.PENDING
-        whenever(mockedRepository.findByFriendshipRequest(request.from, request.to))
-            .thenReturn(friendshipAggregate)
+        whenever(
+                mockedFriendshipRequestRepository.findByFriendshipRequest(request.from, request.to)
+            )
+            .thenReturn(request)
         service.declineFriendshipRequest(
             FriendshipCommand.DeclineFriendshipRequest.Request(request.from, request.to, request.to)
         ) shouldBe Result.success(Unit)
-        verify(mockedRepository).save(any())
+        verify(mockedFriendshipRequestRepository).deleteById(any())
     }
 
     @Test
     fun `should allow to send message`() {
-        val friendshipAggregate =
-            FriendshipAggregateFactory.createFriendshipAggregate(request.from, request.to)
-        whenever(mockedRepository.findByFriendship(request.from, request.to))
-            .thenReturn(friendshipAggregate)
+        whenever(mockedFriendshipRepository.findByFriendship(request.from, request.to))
+            .thenReturn(friendship)
         service.sendMessage(
             FriendshipCommand.SendMessage.Request(request.from, request.to, "Hello", request.from)
         ) shouldBe Result.success(Unit)
-        verify(mockedRepository).save(any())
+        verify(mockedFriendshipRepository).save(any())
         verify(mockedEventPublisher).publish(any())
     }
 
@@ -68,15 +63,8 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
                 MessageFactory.createMessage(request.from, "Hello"),
                 MessageFactory.createMessage(request.to, "Hi")
             )
-        val friendshipAggregateWithMessage =
-            FriendshipAggregateFactory.createFriendshipAggregate(
-                request.from,
-                request.to,
-                fakeMessages
-            )
-
-        whenever(mockedRepository.findByFriendship(any(), any()))
-            .thenReturn(friendshipAggregateWithMessage)
+        friendship.messages.addAll(fakeMessages)
+        whenever(mockedFriendshipRepository.findByFriendship(any(), any())).thenReturn(friendship)
         service.getMessages(
             FriendshipQuery.GetMessages.Request(0, 10, request.from, request.to)
         ) shouldBe Result.success(FriendshipQuery.GetMessages.Response(fakeMessages))
@@ -84,30 +72,33 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
 
     @Test
     fun `should allow to get friendship requests`() {
-        val friendshipAggregate =
-            FriendshipAggregateFactory.createFriendshipAggregate(request.from, request.to)
-        whenever(mockedRepository.findByUserFriendshipRequests(request.to))
-            .thenReturn(listOf(friendshipAggregate))
-        service.getFriendshipRequests(
+        val friendshipRequests = listOf(request)
+        whenever(mockedFriendshipRequestRepository.findByUserFriendshipRequests(request.to))
+            .thenReturn(friendshipRequests)
+        service.getFriendshipRequestsUsers(
             FriendshipQuery.GetFriendshipRequests.Request(request.to)
         ) shouldBe
             Result.success(
-                FriendshipQuery.GetFriendshipRequests.Response(
-                    listOf(friendshipAggregate.friendshipRequest.from)
-                )
+                FriendshipQuery.GetFriendshipRequests.Response(friendshipRequests.map { it.from })
             )
     }
 
     @Test
     fun `should allow to get friendships`() {
-        val friendshipAggregate =
-            FriendshipAggregateFactory.createFriendshipAggregate(request.from, request.to)
-        whenever(mockedRepository.findByUserFriendships(request.to))
-            .thenReturn(listOf(friendshipAggregate))
+        val friendships = listOf(friendship)
+        whenever(mockedFriendshipRepository.findByUserFriendships(request.to))
+            .thenReturn(friendships)
         service.getFriendships(FriendshipQuery.GetFriendships.Request(request.to)) shouldBe
             Result.success(
                 FriendshipQuery.GetFriendships.Response(
-                    listOf(friendshipAggregate.friendshipRequest.from)
+                    friendships =
+                        friendships.map {
+                            if (it.users.first() == request.to) {
+                                it.users.last()
+                            } else {
+                                it.users.first()
+                            }
+                        }
                 )
             )
     }

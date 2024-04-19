@@ -13,6 +13,7 @@ interface KafkaFriendshipEventPublisher : FriendshipEventPublisher {
             is FriendshipEvent.FriendshipRequestAcceptedEvent -> publish(event)
             is FriendshipEvent.FriendshipRequestSentEvent -> publish(event)
             is FriendshipEvent.NewMessageInFriendshipEvent -> publish(event)
+            is FriendshipEvent.FriendshipRequestRejectedEvent -> publish(event)
         }
     }
 
@@ -21,4 +22,6 @@ interface KafkaFriendshipEventPublisher : FriendshipEventPublisher {
     @Topic("friendship-events") fun publish(event: FriendshipEvent.FriendshipRequestAcceptedEvent)
 
     @Topic("friendship-events") fun publish(event: FriendshipEvent.NewMessageInFriendshipEvent)
+
+    @Topic("friendship-events") fun publish(event: FriendshipEvent.FriendshipRequestRejectedEvent)
 }

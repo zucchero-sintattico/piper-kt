@@ -6,14 +6,13 @@ import piperkt.services.friendships.application.api.FriendshipsApi
 import piperkt.services.friendships.application.api.command.FriendshipCommand
 import piperkt.services.friendships.application.api.query.FriendshipQuery
 import piperkt.services.friendships.application.exceptions.FriendshipServiceException
-import piperkt.services.friendships.domain.FriendshipRequest
-import piperkt.services.friendships.domain.FriendshipRequestStatus
-import piperkt.services.friendships.domain.factory.FriendshipAggregateFactory
+import piperkt.services.friendships.domain.factory.FriendshipRequestFactory
 import piperkt.services.friendships.domain.factory.MessageFactory
 import piperkt.services.friendships.domain.toFriendship
 
 class FriendshipService(
-    private val repository: FriendshipAggregateRepository,
+    private val friendshipRequestRepository: FriendshipRequestRepository,
+    private val friendshipRepository: FriendshipRepository,
     private val eventPublisher: FriendshipEventPublisher
 ) : FriendshipsApi {
 
@@ -23,13 +22,20 @@ class FriendshipService(
         if (request.requestFrom != request.sender) {
             return Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
         }
-        repository.findByFriendshipRequest(request.sender, request.receiver)?.let {
-            return Result.failure(
-                FriendshipServiceException.FriendshipRequestAlreadyExistsException()
-            )
+        // Check if they are already friends
+        friendshipRepository.findByFriendship(request.sender, request.receiver)?.let {
+            return Result.failure(FriendshipServiceException.FriendshipAlreadyExistsException())
         }
-        FriendshipAggregateFactory.createFriendshipAggregate(request.sender, request.receiver).let {
-            repository.save(it)
+        // Check if the friendship request already exists
+        friendshipRequestRepository.findByUserFriendshipRequests(request.sender).forEach {
+            if (it.from == request.receiver) {
+                return Result.failure(
+                    FriendshipServiceException.FriendshipRequestAlreadyExistsException()
+                )
+            }
+        }
+        FriendshipRequestFactory.createFriendshipRequest(request.sender, request.receiver).let {
+            friendshipRequestRepository.save(it)
         }
         eventPublisher.publish(
             FriendshipEvent.FriendshipRequestSentEvent(request.sender, request.receiver)
@@ -44,27 +50,21 @@ class FriendshipService(
         if (request.requestFrom != request.receiver) {
             return Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
         }
-        repository.findByFriendshipRequest(request.sender, request.receiver)?.let {
-            if (checkIfRequestIsAlreadyAcceptedOrRejected(it.friendshipRequest)) {
-                return Result.failure(
-                    FriendshipServiceException.FriendshipRequestAlreadyExistsException()
+        // Check if the friendship request exists
+        val friendshipRequest =
+            friendshipRequestRepository.findByFriendshipRequest(request.sender, request.receiver)
+                ?: return Result.failure(
+                    FriendshipServiceException.FriendshipRequestNotFoundException()
                 )
-            } else {
-                // Create a new friendship between the two users
-                it.friendshipRequest.status = FriendshipRequestStatus.ACCEPTED
-                repository.save(it.copy(friendship = it.friendshipRequest.toFriendship()))
-                eventPublisher.publish(
-                    FriendshipEvent.FriendshipRequestAcceptedEvent(request.sender, request.receiver)
-                )
-                return Result.success(Unit)
-            }
-        }
-        return Result.failure(FriendshipServiceException.FriendshipRequestNotFoundException())
-    }
 
-    private fun checkIfRequestIsAlreadyAcceptedOrRejected(request: FriendshipRequest) =
-        request.status == FriendshipRequestStatus.ACCEPTED ||
-            request.status == FriendshipRequestStatus.REJECTED
+        val friendship = friendshipRequest.toFriendship()
+        friendshipRepository.save(friendship)
+        friendshipRequestRepository.deleteById(friendshipRequest.id)
+        eventPublisher.publish(
+            FriendshipEvent.FriendshipRequestAcceptedEvent(request.sender, request.receiver)
+        )
+        return Result.success(Unit)
+    }
 
     override fun declineFriendshipRequest(
         request: FriendshipCommand.DeclineFriendshipRequest.Request
@@ -73,34 +73,37 @@ class FriendshipService(
         if (request.requestFrom != request.receiver) {
             return Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
         }
-        repository.findByFriendshipRequest(request.sender, request.receiver)?.let {
-            if (checkIfRequestIsAlreadyAcceptedOrRejected(it.friendshipRequest)) {
-                return Result.failure(
-                    FriendshipServiceException.FriendshipRequestAlreadyExistsException()
-                )
-            } else {
-                it.friendshipRequest.status = FriendshipRequestStatus.REJECTED
-                repository.save(it)
-                return Result.success(Unit)
-            }
+        // Check if the friendship already exists
+        friendshipRepository.findByFriendship(request.sender, request.receiver)?.let {
+            return Result.failure(FriendshipServiceException.FriendshipAlreadyExistsException())
         }
-        return Result.failure(FriendshipServiceException.FriendshipRequestNotFoundException())
+
+        // Check if the friendship request exists
+        val friendshipRequest =
+            friendshipRequestRepository.findByFriendshipRequest(request.sender, request.receiver)
+                ?: return Result.failure(
+                    FriendshipServiceException.FriendshipRequestNotFoundException()
+                )
+        friendshipRequestRepository.deleteById(friendshipRequest.id)
+        eventPublisher.publish(
+            FriendshipEvent.FriendshipRequestRejectedEvent(request.sender, request.receiver)
+        )
+        return Result.success(Unit)
     }
 
     override fun sendMessage(request: FriendshipCommand.SendMessage.Request): Result<Unit> {
-        val friendshipAggregate =
-            repository.findByFriendship(request.sender, request.receiver)
-                ?: return Result.failure(FriendshipServiceException.FriendshipNotFoundException())
-        // I'm sure that if repository find the aggregate by the friendship, the friendship is not
-        // null
-        val friendship = friendshipAggregate.friendship!!
-        if (!friendship.users.contains(request.requestFrom)) {
+        // Check if the sender is who makes the request
+        if (request.requestFrom != request.sender) {
             return Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
         }
+        // Check if the friendship exists
+        val friendship =
+            friendshipRepository.findByFriendship(request.sender, request.receiver)
+                ?: return Result.failure(FriendshipServiceException.FriendshipNotFoundException())
         val message =
             MessageFactory.createMessage(sender = request.sender, content = request.content)
-        friendshipAggregate.friendship.addMessage(message)
-        repository.save(friendshipAggregate)
+        friendship.addMessage(message)
+        friendshipRepository.save(friendship)
         eventPublisher.publish(
             FriendshipEvent.NewMessageInFriendshipEvent(
                 request.sender,
@@ -114,29 +117,23 @@ class FriendshipService(
     override fun getMessages(
         request: FriendshipQuery.GetMessages.Request
     ): Result<FriendshipQuery.GetMessages.Response> {
-        val friendshipAggregate =
-            repository.findByFriendship(request.requestFrom, request.friend)
+        val friendship =
+            friendshipRepository.findByFriendship(request.requestFrom, request.friend)
                 ?: return Result.failure(FriendshipServiceException.FriendshipNotFoundException())
-        val friendship = friendshipAggregate.friendship!!
-        return Result.success(
-            FriendshipQuery.GetMessages.Response(
-                // Take the last messages from the list
-                friendship.messages.subList(
-                    request.index,
-                    request.offset.coerceAtMost(friendship.messages.size)
-                )
-            )
-        )
+        return Result.success(FriendshipQuery.GetMessages.Response(friendship.messages))
     }
 
-    override fun getFriendshipRequests(
+    override fun getFriendshipRequestsUsers(
         request: FriendshipQuery.GetFriendshipRequests.Request
     ): Result<FriendshipQuery.GetFriendshipRequests.Response> {
         val friendshipRequests =
-            repository
-                .findByUserFriendshipRequests(request.requestFrom)
-                .map { it.friendshipRequest.from }
-                .toList()
+            friendshipRequestRepository.findByUserFriendshipRequests(request.requestFrom).map {
+                if (it.from == request.requestFrom) {
+                    it.to
+                } else {
+                    it.from
+                }
+            }
         return Result.success(FriendshipQuery.GetFriendshipRequests.Response(friendshipRequests))
     }
 
@@ -144,11 +141,11 @@ class FriendshipService(
         request: FriendshipQuery.GetFriendships.Request
     ): Result<FriendshipQuery.GetFriendships.Response> {
         val friendships =
-            repository.findByUserFriendships(request.requestFrom).map {
-                if (it.friendshipRequest.from == request.requestFrom) {
-                    it.friendshipRequest.to
+            friendshipRepository.findByUserFriendships(request.requestFrom).map {
+                if (it.users.first() == request.requestFrom) {
+                    it.users.last()
                 } else {
-                    it.friendshipRequest.from
+                    it.users.first()
                 }
             }
         return Result.success(FriendshipQuery.GetFriendships.Response(friendships))

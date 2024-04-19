@@ -12,7 +12,10 @@ sealed interface FriendshipEvent : DomainEvent {
     data class FriendshipRequestAcceptedEvent(val fromUser: String, val toUser: String) :
         FriendshipEvent
 
-    data class NewMessageInFriendshipEvent(
+    data class FriendshipRequestRejectedEvent(val fromUser: String, val toUser: String) :
+        FriendshipEvent
+
+    class NewMessageInFriendshipEvent(
         val fromUser: String,
         val toUser: String,
         val messageId: MessageId

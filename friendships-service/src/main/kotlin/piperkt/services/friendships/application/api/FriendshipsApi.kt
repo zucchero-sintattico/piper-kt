@@ -23,7 +23,7 @@ interface FriendshipsApi {
         request: FriendshipQuery.GetMessages.Request
     ): Result<FriendshipQuery.GetMessages.Response>
 
-    fun getFriendshipRequests(
+    fun getFriendshipRequestsUsers(
         request: FriendshipQuery.GetFriendshipRequests.Request
     ): Result<FriendshipQuery.GetFriendshipRequests.Response>
 
