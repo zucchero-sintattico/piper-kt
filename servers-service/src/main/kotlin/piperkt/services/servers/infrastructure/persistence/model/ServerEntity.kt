@@ -4,6 +4,7 @@ import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.data.mongodb.annotation.MongoRepository
 import io.micronaut.data.repository.CrudRepository
+import piperkt.services.servers.domain.Server
 import piperkt.services.servers.domain.factory.ServerFactory
 
 @MappedEntity
@@ -16,7 +17,7 @@ data class ServerEntity(
     val channels: List<ChannelEntity> = emptyList(),
 ) {
     companion object {
-        fun fromDomain(server: piperkt.services.servers.domain.Server) =
+        fun fromDomain(server: Server) =
             ServerEntity(
                 id = server.id.value,
                 name = server.name,

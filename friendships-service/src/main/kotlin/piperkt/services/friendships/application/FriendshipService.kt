@@ -23,11 +23,11 @@ open class FriendshipService(
             return Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
         }
         // Check if they are already friends
-        friendshipRepository.findByFriendship(request.sender, request.receiver)?.let {
+        friendshipRepository.findByMembers(request.sender, request.receiver)?.let {
             return Result.failure(FriendshipServiceException.FriendshipAlreadyExistsException())
         }
         // Check if the friendship request already exists
-        friendshipRequestRepository.findByUserFriendshipRequests(request.sender).forEach {
+        friendshipRequestRepository.findByUser(request.sender).forEach {
             if (it.to == request.receiver) {
                 return Result.failure(
                     FriendshipServiceException.FriendshipRequestAlreadyExistsException()
@@ -52,7 +52,7 @@ open class FriendshipService(
         }
         // Check if the friendship request exists
         val friendshipRequest =
-            friendshipRequestRepository.findByFriendshipRequest(request.sender, request.receiver)
+            friendshipRequestRepository.findByMembers(request.sender, request.receiver)
                 ?: return Result.failure(
                     FriendshipServiceException.FriendshipRequestNotFoundException()
                 )
@@ -74,13 +74,13 @@ open class FriendshipService(
             return Result.failure(FriendshipServiceException.UserNotHasPermissionsException())
         }
         // Check if the friendship already exists
-        friendshipRepository.findByFriendship(request.sender, request.receiver)?.let {
+        friendshipRepository.findByMembers(request.sender, request.receiver)?.let {
             return Result.failure(FriendshipServiceException.FriendshipAlreadyExistsException())
         }
 
         // Check if the friendship request exists
         val friendshipRequest =
-            friendshipRequestRepository.findByFriendshipRequest(request.sender, request.receiver)
+            friendshipRequestRepository.findByMembers(request.sender, request.receiver)
                 ?: return Result.failure(
                     FriendshipServiceException.FriendshipRequestNotFoundException()
                 )
@@ -98,7 +98,7 @@ open class FriendshipService(
         }
         // Check if the friendship exists
         val friendship =
-            friendshipRepository.findByFriendship(request.sender, request.receiver)
+            friendshipRepository.findByMembers(request.sender, request.receiver)
                 ?: return Result.failure(FriendshipServiceException.FriendshipNotFoundException())
         val message =
             MessageFactory.createMessage(sender = request.sender, content = request.content)
@@ -118,7 +118,7 @@ open class FriendshipService(
         request: FriendshipQuery.GetMessages.Request
     ): Result<FriendshipQuery.GetMessages.Response> {
         val friendship =
-            friendshipRepository.findByFriendship(request.requestFrom, request.friend)
+            friendshipRepository.findByMembers(request.requestFrom, request.friend)
                 ?: return Result.failure(FriendshipServiceException.FriendshipNotFoundException())
         return Result.success(FriendshipQuery.GetMessages.Response(friendship.messages))
     }
@@ -127,7 +127,7 @@ open class FriendshipService(
         request: FriendshipQuery.GetFriendshipRequests.Request
     ): Result<FriendshipQuery.GetFriendshipRequests.Response> {
         val friendshipRequests =
-            friendshipRequestRepository.findByUserFriendshipRequests(request.requestFrom).map {
+            friendshipRequestRepository.findByUser(request.requestFrom).map {
                 if (it.from == request.requestFrom) {
                     it.to
                 } else {
@@ -141,7 +141,7 @@ open class FriendshipService(
         request: FriendshipQuery.GetFriendships.Request
     ): Result<FriendshipQuery.GetFriendships.Response> {
         val friendships =
-            friendshipRepository.findByUserFriendships(request.requestFrom).map {
+            friendshipRepository.findByUser(request.requestFrom).map {
                 if (it.users.first() == request.requestFrom) {
                     it.users.last()
                 } else {

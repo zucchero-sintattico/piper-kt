@@ -5,7 +5,7 @@ import piperkt.common.id.FriendshipRequestId
 import piperkt.services.friendships.domain.FriendshipRequest
 
 interface FriendshipRequestRepository : Repository<FriendshipRequestId, FriendshipRequest> {
-    fun findByUserFriendshipRequests(user: String): List<FriendshipRequest>
+    fun findByUser(user: String): List<FriendshipRequest>
 
-    fun findByFriendshipRequest(from: String, to: String): FriendshipRequest?
+    fun findByMembers(from: String, to: String): FriendshipRequest?
 }

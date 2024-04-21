@@ -19,7 +19,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
 
     @Test
     fun `should not allow to send friend request if request already exists`() {
-        whenever(mockedFriendshipRequestRepository.findByUserFriendshipRequests(request.from))
+        whenever(mockedFriendshipRequestRepository.findByUser(request.from))
             .thenReturn(listOf(request))
         service.sendFriendshipRequest(
             FriendshipCommand.SendFriendshipRequest.Request(request.from, request.to, request.from)
@@ -38,9 +38,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
 
     @Test
     fun `should not allow to accept friend request if request does not exist`() {
-        whenever(
-                mockedFriendshipRequestRepository.findByFriendshipRequest(request.from, request.to)
-            )
+        whenever(mockedFriendshipRequestRepository.findByMembers(request.from, request.to))
             .thenReturn(null)
         service.acceptFriendshipRequest(
             FriendshipCommand.AcceptFriendshipRequest.Request(request.from, request.to, request.to)
@@ -50,7 +48,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
 
     @Test
     fun `should not allow to accept friend request if request is already accepted`() {
-        whenever(mockedFriendshipRepository.findByFriendship(request.from, request.to))
+        whenever(mockedFriendshipRepository.findByMembers(request.from, request.to))
             .thenReturn(friendship)
         service.acceptFriendshipRequest(
             FriendshipCommand.AcceptFriendshipRequest.Request(request.from, request.to, request.to)
@@ -67,9 +65,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
 
     @Test
     fun `should not allow to decline friend request if request does not exist`() {
-        whenever(
-                mockedFriendshipRequestRepository.findByFriendshipRequest(request.from, request.to)
-            )
+        whenever(mockedFriendshipRequestRepository.findByMembers(request.from, request.to))
             .thenReturn(null)
         service.declineFriendshipRequest(
             FriendshipCommand.DeclineFriendshipRequest.Request(request.from, request.to, request.to)
@@ -78,7 +74,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
 
     @Test
     fun `should not allow to decline friend request if request is already accepted`() {
-        whenever(mockedFriendshipRepository.findByFriendship(request.from, request.to))
+        whenever(mockedFriendshipRepository.findByMembers(request.from, request.to))
             .thenReturn(friendship)
         service.declineFriendshipRequest(
             FriendshipCommand.DeclineFriendshipRequest.Request(request.from, request.to, request.to)
@@ -87,7 +83,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
 
     @Test
     fun `should not allow to send message if friendship does not exist`() {
-        whenever(mockedFriendshipRepository.findByFriendship(request.from, request.to))
+        whenever(mockedFriendshipRepository.findByMembers(request.from, request.to))
             .thenReturn(null)
         service.sendMessage(
             FriendshipCommand.SendMessage.Request(request.from, request.to, "Hello", request.from)
@@ -97,7 +93,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
 
     @Test
     fun `should not allow to send message if sender is not in the friendship`() {
-        whenever(mockedFriendshipRepository.findByFriendship(request.from, request.to))
+        whenever(mockedFriendshipRepository.findByMembers(request.from, request.to))
             .thenReturn(friendship)
         service.sendMessage(
             FriendshipCommand.SendMessage.Request(request.from, request.to, "Hello", "notPeppe")
@@ -107,7 +103,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
 
     @Test
     fun `should not allow to send message if receiver is not in the friendship`() {
-        whenever(mockedFriendshipRepository.findByFriendship(request.from, request.to))
+        whenever(mockedFriendshipRepository.findByMembers(request.from, request.to))
             .thenReturn(null)
         service.sendMessage(
             FriendshipCommand.SendMessage.Request(request.from, request.to, "Hello", request.from)
@@ -117,7 +113,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
 
     @Test
     fun `should not allow to get messages from a friendship if user is not in the friendship`() {
-        whenever(mockedFriendshipRepository.findByFriendship(request.from, request.to))
+        whenever(mockedFriendshipRepository.findByMembers(request.from, request.to))
             .thenReturn(null)
         service.getMessages(
             FriendshipQuery.GetMessages.Request(0, 10, request.to, "notPeppe")
