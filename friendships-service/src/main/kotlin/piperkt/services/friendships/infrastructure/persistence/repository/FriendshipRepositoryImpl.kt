@@ -1,5 +1,7 @@
 package piperkt.services.friendships.infrastructure.persistence.repository
 
+import io.micronaut.context.annotation.Primary
+import jakarta.inject.Singleton
 import piperkt.common.id.FriendshipId
 import piperkt.services.friendships.application.FriendshipRepository
 import piperkt.services.friendships.domain.Friendship
@@ -7,6 +9,8 @@ import piperkt.services.friendships.infrastructure.persistence.model.FriendshipE
 import piperkt.services.friendships.infrastructure.persistence.model.FriendshipModelRepository
 import piperkt.services.friendships.infrastructure.persistence.model.toDomain
 
+@Singleton
+@Primary
 class FriendshipRepositoryImpl(private val friendshipModelRepository: FriendshipModelRepository) :
     FriendshipRepository {
     override fun findByFriendship(from: String, to: String): Friendship? {

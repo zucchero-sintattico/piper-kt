@@ -50,12 +50,13 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
 
     @Test
     fun `should not allow to accept friend request if request is already accepted`() {
-        whenever(mockedFriendshipRepository.findByFriendship(request.from, request.to))
-            .thenReturn(friendship)
+        whenever(
+                mockedFriendshipRequestRepository.findByFriendshipRequest(request.from, request.to)
+            )
+            .thenReturn(null)
         service.acceptFriendshipRequest(
             FriendshipCommand.AcceptFriendshipRequest.Request(request.from, request.to, request.to)
-        ) shouldBe
-            Result.failure(FriendshipServiceException.FriendshipRequestAlreadyExistsException())
+        ) shouldBe Result.failure(FriendshipServiceException.FriendshipNotFoundException())
         verifyNoInteractions(mockedEventPublisher)
     }
 
@@ -83,8 +84,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
             .thenReturn(friendship)
         service.declineFriendshipRequest(
             FriendshipCommand.DeclineFriendshipRequest.Request(request.from, request.to, request.to)
-        ) shouldBe
-            Result.failure(FriendshipServiceException.FriendshipRequestAlreadyExistsException())
+        ) shouldBe Result.failure(FriendshipServiceException.FriendshipAlreadyExistsException())
     }
 
     @Test

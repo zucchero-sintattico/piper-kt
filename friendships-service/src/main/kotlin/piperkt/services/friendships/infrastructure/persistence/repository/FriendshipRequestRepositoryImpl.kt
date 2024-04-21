@@ -1,5 +1,7 @@
 package piperkt.services.friendships.infrastructure.persistence.repository
 
+import io.micronaut.context.annotation.Primary
+import jakarta.inject.Singleton
 import piperkt.common.id.FriendshipRequestId
 import piperkt.services.friendships.application.FriendshipRequestRepository
 import piperkt.services.friendships.domain.FriendshipRequest
@@ -7,6 +9,8 @@ import piperkt.services.friendships.infrastructure.persistence.model.FriendshipR
 import piperkt.services.friendships.infrastructure.persistence.model.FriendshipRequestModelRepository
 import piperkt.services.friendships.infrastructure.persistence.model.toDomain
 
+@Singleton
+@Primary
 class FriendshipRequestRepositoryImpl(
     private val friendshipRequestModelRepository: FriendshipRequestModelRepository
 ) : FriendshipRequestRepository {

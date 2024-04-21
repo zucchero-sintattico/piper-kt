@@ -28,7 +28,7 @@ class FriendshipService(
         }
         // Check if the friendship request already exists
         friendshipRequestRepository.findByUserFriendshipRequests(request.sender).forEach {
-            if (it.from == request.receiver) {
+            if (it.to == request.receiver) {
                 return Result.failure(
                     FriendshipServiceException.FriendshipRequestAlreadyExistsException()
                 )
