@@ -10,7 +10,7 @@ import piperkt.services.friendships.domain.factory.FriendshipRequestFactory
 import piperkt.services.friendships.domain.factory.MessageFactory
 import piperkt.services.friendships.domain.toFriendship
 
-class FriendshipService(
+open class FriendshipService(
     private val friendshipRequestRepository: FriendshipRequestRepository,
     private val friendshipRepository: FriendshipRepository,
     private val eventPublisher: FriendshipEventPublisher

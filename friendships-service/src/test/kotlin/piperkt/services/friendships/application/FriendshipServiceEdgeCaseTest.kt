@@ -50,13 +50,11 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
 
     @Test
     fun `should not allow to accept friend request if request is already accepted`() {
-        whenever(
-                mockedFriendshipRequestRepository.findByFriendshipRequest(request.from, request.to)
-            )
-            .thenReturn(null)
+        whenever(mockedFriendshipRepository.findByFriendship(request.from, request.to))
+            .thenReturn(friendship)
         service.acceptFriendshipRequest(
             FriendshipCommand.AcceptFriendshipRequest.Request(request.from, request.to, request.to)
-        ) shouldBe Result.failure(FriendshipServiceException.FriendshipNotFoundException())
+        ) shouldBe Result.failure(FriendshipServiceException.FriendshipRequestNotFoundException())
         verifyNoInteractions(mockedEventPublisher)
     }
 
