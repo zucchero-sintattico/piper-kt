@@ -11,9 +11,9 @@ class FriendshipServiceImpl(
     friendshipRepository: FriendshipRepository,
     friendshipRequestRepository: FriendshipRequestRepository,
     friendshipEventPublisher: FriendshipEventPublisher
-
-) : FriendshipService(
-    friendshipRepository = friendshipRepository,
-    friendshipRequestRepository = friendshipRequestRepository,
-    eventPublisher = friendshipEventPublisher
-)
+) :
+    FriendshipService(
+        friendshipRepository = friendshipRepository,
+        friendshipRequestRepository = friendshipRequestRepository,
+        eventPublisher = friendshipEventPublisher
+    )

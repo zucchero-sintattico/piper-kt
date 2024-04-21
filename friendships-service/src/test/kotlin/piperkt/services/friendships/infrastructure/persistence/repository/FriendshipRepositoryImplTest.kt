@@ -7,9 +7,8 @@ import piperkt.services.friendships.application.FriendshipRepository
 import piperkt.services.friendships.domain.factory.FriendshipFactory
 
 @MicronautTest
-class FriendshipRepositoryImplTest(
-    private val friendshipRepository: FriendshipRepository
-) : AnnotationSpec() {
+class FriendshipRepositoryImplTest(private val friendshipRepository: FriendshipRepository) :
+    AnnotationSpec() {
 
     @Test
     fun `should create a new friendship`() {
