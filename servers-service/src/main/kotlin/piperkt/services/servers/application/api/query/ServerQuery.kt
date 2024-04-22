@@ -6,11 +6,8 @@ import piperkt.services.servers.domain.Server
 
 sealed interface ServerQuery {
     sealed interface GetServerUsers : ServerQuery {
-        data class Request(
-            val serverId: ServerId,
-            val username: String,
-            override val requestFrom: String
-        ) : GetServerUsers, ServiceRequest
+        data class Request(val serverId: ServerId, override val requestFrom: String) :
+            GetServerUsers, ServiceRequest
 
         data class Response(val users: List<String>) : GetServerUsers
     }

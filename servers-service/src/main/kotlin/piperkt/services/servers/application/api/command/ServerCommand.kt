@@ -8,7 +8,6 @@ sealed interface ServerCommand {
         data class Request(
             val name: String,
             val description: String,
-            val owner: String,
             override val requestFrom: String
         ) : CreateServer, ServiceRequest
 
