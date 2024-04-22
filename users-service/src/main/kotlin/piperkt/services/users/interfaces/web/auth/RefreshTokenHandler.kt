@@ -10,6 +10,7 @@ import piperkt.services.users.domain.user.UserError
 
 @Singleton
 class RefreshTokenHandler(private val authService: AuthService) : RefreshTokenPersistence {
+
     override fun persistToken(event: RefreshTokenGeneratedEvent) {
         authService.saveRefreshToken(event.authentication.name, event.refreshToken)
     }

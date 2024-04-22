@@ -7,7 +7,7 @@ class User(
     var password: String,
     var description: String = "",
     var profilePicture: ByteArray = ByteArray(0),
-    var refreshToken: String = ""
+    var refreshToken: String? = null
 ) : AggregateRoot<Username>(username) {
 
     fun updateDescription(description: String) {
@@ -23,6 +23,6 @@ class User(
     }
 
     fun clearRefreshToken() {
-        this.refreshToken = ""
+        this.refreshToken = null
     }
 }

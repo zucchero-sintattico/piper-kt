@@ -13,7 +13,7 @@ data class UserEntity(
     val password: String,
     val description: String,
     val profilePicture: ByteArray,
-    val refreshToken: String = ""
+    val refreshToken: String? = null
 ) {
     fun toDomain(): User {
         return User(
