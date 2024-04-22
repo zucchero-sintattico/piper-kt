@@ -14,7 +14,7 @@ kover = "0.7.6"
 ksp = "1.9.23-1.0.20"
 ktfmt = "0.18.0"
 micronaut = "4.3.6"
-micronautBuildTools = "2.5.0"
+micronautBuildTools = "2.5.1"
 shadow = "8.1.1"
 spotless = "6.25.0"
 
