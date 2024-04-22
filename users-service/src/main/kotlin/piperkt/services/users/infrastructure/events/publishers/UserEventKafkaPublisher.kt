@@ -13,9 +13,6 @@ interface UserEventKafkaPublisher : UserEventPublisher {
             is UserEvent.UserUpdated -> onUserUpdated(event)
             is UserEvent.UserLoggedIn -> this.onUserLoggedIn(event)
             is UserEvent.UserLoggedOut -> this.onUserLoggedOut(event)
-            is UserEvent.FriendRequestSent -> this.onFriendRequestSent(event)
-            is UserEvent.FriendRequestAccepted -> this.onFriendRequestAccepted(event)
-            is UserEvent.FriendRequestRejected -> this.onFriendRequestRejected(event)
         }
     }
 
@@ -26,12 +23,4 @@ interface UserEventKafkaPublisher : UserEventPublisher {
     @Topic("user-logged-in") fun onUserLoggedIn(event: UserEvent.UserLoggedIn)
 
     @Topic("user-logged-out") fun onUserLoggedOut(event: UserEvent.UserLoggedOut)
-
-    @Topic("friend-request-sent") fun onFriendRequestSent(event: UserEvent.FriendRequestSent)
-
-    @Topic("friend-request-accepted")
-    fun onFriendRequestAccepted(event: UserEvent.FriendRequestAccepted)
-
-    @Topic("friend-request-rejected")
-    fun onFriendRequestRejected(event: UserEvent.FriendRequestRejected)
 }
