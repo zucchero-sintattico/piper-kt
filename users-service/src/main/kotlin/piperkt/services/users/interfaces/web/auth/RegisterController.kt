@@ -7,13 +7,13 @@ import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import piperkt.services.users.application.AuthService
 import piperkt.services.users.application.RegisterRequest
+import piperkt.services.users.presentation.user.UserDTO
+import piperkt.services.users.presentation.user.toDTO
 
 @Controller("/register")
 @Secured(SecurityRule.IS_ANONYMOUS)
 class RegisterController(private val authService: AuthService) {
 
     @Post
-    fun register(@Body request: RegisterRequest) {
-        authService.register(request)
-    }
+    fun register(@Body request: RegisterRequest): UserDTO = authService.register(request).toDTO()
 }
