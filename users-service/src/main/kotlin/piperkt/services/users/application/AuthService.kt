@@ -57,8 +57,9 @@ open class AuthService(
         return user
     }
 
-    fun saveRefreshToken(username: String, refreshToken: String) {
+    fun saveRefreshToken(username: String, refreshToken: String): User {
         updateUser(Username(username)) { updateRefreshToken(refreshToken) }
+        return getUserOrThrow(username) { UserError.UserNotFound(it) }
     }
 
     fun getUserByRefreshToken(refreshToken: String): User {

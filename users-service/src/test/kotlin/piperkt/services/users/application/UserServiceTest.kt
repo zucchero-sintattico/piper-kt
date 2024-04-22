@@ -33,10 +33,7 @@ class UserServiceTest :
             userRepository.save(user)
         }
 
-        test("getUser") {
-            val userDTO = userService.getUser(username.value)
-            userDTO shouldBe user.toDTO()
-        }
+        test("getUser") { userService.getUser(username.value) shouldBe user }
 
         test("getUser throws UserNotFound") {
             assertThrows<UserNotFound> { userService.getUser("nonExistingUsername") }

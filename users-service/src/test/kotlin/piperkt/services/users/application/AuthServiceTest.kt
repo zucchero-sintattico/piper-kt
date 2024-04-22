@@ -6,6 +6,7 @@ import io.kotest.matchers.shouldNotBe
 import mocks.publishers.MockedUserEventPublisher
 import mocks.repositories.InMemoryUserRepository
 import org.junit.jupiter.api.assertThrows
+import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserError
 import piperkt.services.users.domain.user.UserError.UserAlreadyExists
 import piperkt.services.users.domain.user.UserError.UserNotFound
@@ -19,19 +20,20 @@ class AuthServiceTest :
 
         val existingUsername = Username("existingUsername")
         val existingPassword = "existingPassword"
+        lateinit var existingUser: User
 
         beforeEach {
             userRepository.clear()
             userEventPublisher.clear()
-            authService.register(RegisterRequest(existingUsername.value, existingPassword))
+            existingUser =
+                authService.register(RegisterRequest(existingUsername.value, existingPassword))
         }
 
         test("registerUser") {
             val username = "username"
             val password = "password"
-            authService.register(RegisterRequest(username, password))
-            val user = userRepository.findByUsername(username)!!
-            user shouldNotBe null
+            val createdUser = authService.register(RegisterRequest(username, password))
+            createdUser.username shouldBe Username(username)
         }
 
         test("registerUser throws UserAlreadyExists") {
