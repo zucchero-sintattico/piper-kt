@@ -1,4 +1,4 @@
-package piperkt.services.multimedia
+package piperkt.services.users
 
 import io.micronaut.runtime.Micronaut.run
 

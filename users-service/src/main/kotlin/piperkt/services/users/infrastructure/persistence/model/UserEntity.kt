@@ -13,9 +13,7 @@ data class UserEntity(
     val password: String,
     val description: String,
     val profilePicture: ByteArray,
-    val friends: List<String>,
-    val friendRequests: List<FriendRequestEntity>,
-    val sentFriendRequests: List<FriendRequestEntity>
+    val refreshToken: String = ""
 ) {
     fun toDomain(): User {
         return User(
@@ -23,9 +21,7 @@ data class UserEntity(
             password = password,
             description = description,
             profilePicture = profilePicture,
-            friends = friends.map { Username(it) },
-            friendRequests = friendRequests.map { it.toDomain() },
-            sentFriendRequests = sentFriendRequests.map { it.toDomain() }
+            refreshToken = refreshToken
         )
     }
 
@@ -36,10 +32,7 @@ data class UserEntity(
                 password = user.password,
                 description = user.description,
                 profilePicture = user.profilePicture,
-                friends = user.friends.map { it.value },
-                friendRequests = user.friendRequests.map { FriendRequestEntity.fromDomain(it) },
-                sentFriendRequests =
-                    user.sentFriendRequests.map { FriendRequestEntity.fromDomain(it) }
+                refreshToken = user.refreshToken
             )
         }
     }
@@ -48,4 +41,6 @@ data class UserEntity(
 @Repository
 interface UserEntityRepository : CrudRepository<UserEntity, String> {
     fun findByUsername(username: String): UserEntity?
+
+    fun findByRefreshToken(refreshToken: String): UserEntity?
 }

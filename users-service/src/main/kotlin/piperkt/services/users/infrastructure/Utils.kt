@@ -1,4 +1,4 @@
-package piperkt.services.multimedia.infrastructure
+package piperkt.services.users.infrastructure
 
 import java.util.*
 
