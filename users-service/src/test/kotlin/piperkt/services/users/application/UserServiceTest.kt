@@ -51,6 +51,12 @@ class UserServiceTest :
                 listOf(UserUpdated(user.username, description = newDescription))
         }
 
+        test("updateUserDescription throws UserNotFound") {
+            assertThrows<UserNotFound> {
+                userService.updateUserDescription("nonExistingUsername", "")
+            }
+        }
+
         test("updateUserProfilePicture") {
             val newProfilePicture = ByteArray(1)
             userService.updateUserProfilePicture(username.value, newProfilePicture)
@@ -58,5 +64,11 @@ class UserServiceTest :
             updatedUser.profilePicture shouldBe newProfilePicture
             userEventPublisher.publishedEvents shouldBe
                 listOf(UserUpdated(user.username, profilePicture = newProfilePicture))
+        }
+
+        test("updateUserProfilePicture throws UserNotFound") {
+            assertThrows<UserNotFound> {
+                userService.updateUserProfilePicture("nonExistingUsername", ByteArray(1))
+            }
         }
     })
