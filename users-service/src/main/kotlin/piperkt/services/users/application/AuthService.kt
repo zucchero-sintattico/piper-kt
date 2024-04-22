@@ -1,8 +1,11 @@
 package piperkt.services.users.application
 
-import org.mindrot.jbcrypt.BCrypt
+import org.mindrot.jbcrypt.BCrypt.*
+import piperkt.common.orThrow
 import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserError
+import piperkt.services.users.domain.user.UserEvent.*
+import piperkt.services.users.domain.user.UserEventPublisher
 import piperkt.services.users.domain.user.UserRepository
 import piperkt.services.users.domain.user.Username
 
@@ -13,46 +16,59 @@ data class RegisterRequest(
     val photo: ByteArray = byteArrayOf()
 )
 
-open class AuthService(private val userRepository: UserRepository) {
+open class AuthService(
+    private val userRepository: UserRepository,
+    private val userEventPublisher: UserEventPublisher
+) {
 
     private fun getUserOrThrow(username: String, error: (Username) -> UserError): User {
-        return userRepository.findByUsername(username) ?: throw error(Username(username))
+        return userRepository.findByUsername(username).orThrow(error(Username(username)))
+    }
+
+    private fun updateUser(username: Username, update: User.() -> Unit): User {
+        val user =
+            userRepository.findByUsername(username.value).orThrow(UserError.UserNotFound(username))
+        user.update()
+        userRepository.save(user)
+        return user
     }
 
     fun register(request: RegisterRequest): User {
         if (userRepository.findByUsername(request.username) != null) {
             throw UserError.UserAlreadyExists(Username(request.username))
         }
-        val salt = BCrypt.gensalt()
-        val hashedPassword = BCrypt.hashpw(request.password, salt)
+        val salt = gensalt()
+        val hashedPassword = hashpw(request.password, salt)
         val user =
             User(Username(request.username), hashedPassword, request.description, request.photo)
         userRepository.save(user)
+        userEventPublisher.publish(
+            UserCreated(user.username, user.description, user.profilePicture)
+        )
         return user
     }
 
     fun login(username: String, password: String): User {
         val user = getUserOrThrow(username) { UserError.UserNotFound(it) }
-        if (!BCrypt.checkpw(password, user.password)) {
+        if (!checkpw(password, user.password)) {
             throw UserError.InvalidPassword(password)
         }
+        userEventPublisher.publish(UserLoggedIn(user.username))
         return user
     }
 
     fun saveRefreshToken(username: String, refreshToken: String) {
-        val user = getUserOrThrow(username) { UserError.UserNotFound(it) }
-        user.updateRefreshToken(refreshToken)
-        userRepository.save(user)
+        updateUser(Username(username)) { updateRefreshToken(refreshToken) }
     }
 
-    fun findUserByRefreshToken(refreshToken: String): User {
-        return userRepository.findByRefreshToken(refreshToken)
-            ?: throw UserError.RefreshTokenNotFound(refreshToken)
+    fun getUserByRefreshToken(refreshToken: String): User {
+        return userRepository
+            .findByRefreshToken(refreshToken)
+            .orThrow(UserError.RefreshTokenNotFound(refreshToken))
     }
 
     fun logout(username: String) {
-        val user = getUserOrThrow(username) { UserError.UserNotFound(it) }
-        user.clearRefreshToken()
-        userRepository.save(user)
+        updateUser(Username(username)) { clearRefreshToken() }
+        userEventPublisher.publish(UserLoggedOut(Username(username)))
     }
 }

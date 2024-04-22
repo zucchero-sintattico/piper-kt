@@ -16,7 +16,7 @@ class RefreshTokenHandler(private val authService: AuthService) : RefreshTokenPe
 
     override fun getAuthentication(refreshToken: String): Publisher<Authentication> {
         return try {
-            val user = authService.findUserByRefreshToken(refreshToken)
+            val user = authService.getUserByRefreshToken(refreshToken)
             Publisher { subscriber ->
                 subscriber.onNext(Authentication.build(user.username.value, emptyList()))
                 subscriber.onComplete()
