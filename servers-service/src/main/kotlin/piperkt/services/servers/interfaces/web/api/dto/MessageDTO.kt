@@ -9,6 +9,15 @@ data class MessageDTO(
     val content: String,
     val timestamp: String,
 ) {
+    fun toDomain(): Message {
+        return Message(
+            id = MessageId(id),
+            sender = sender,
+            content = content,
+            timestamp = java.time.Instant.parse(timestamp)
+        )
+    }
+
     companion object {
         fun fromDomain(message: Message): MessageDTO {
             return MessageDTO(
@@ -21,11 +30,4 @@ data class MessageDTO(
     }
 }
 
-fun MessageDTO.toDomain(): Message {
-    return Message(
-        id = MessageId(id),
-        sender = sender,
-        content = content,
-        timestamp = java.time.Instant.parse(timestamp)
-    )
-}
+

@@ -12,6 +12,10 @@ data class ChannelDTO(
     var description: String,
     val messages: MutableList<MessageDTO> = mutableListOf()
 ) {
+    fun toDomain(): Channel {
+        return Channel(name = name, type = ChannelType.valueOf(type), description = description)
+    }
+
     companion object {
         fun fromDomain(channel: Channel): ChannelDTO {
             return ChannelDTO(
@@ -25,6 +29,3 @@ data class ChannelDTO(
     }
 }
 
-fun ChannelDTO.toDomain(): Channel {
-    return Channel(name = name, type = ChannelType.valueOf(type), description = description)
-}

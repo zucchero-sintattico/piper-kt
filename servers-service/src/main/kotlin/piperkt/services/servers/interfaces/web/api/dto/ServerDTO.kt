@@ -12,6 +12,16 @@ data class ServerDTO(
     val users: MutableList<String> = mutableListOf(owner),
     val channels: MutableList<ChannelDTO> = mutableListOf(),
 ) {
+    fun toDomain(): Server {
+        return Server(
+            name = name,
+            description = description,
+            owner = owner,
+            users = users,
+            channels = channels.map { it.toDomain() }.toMutableList()
+        )
+    }
+
     companion object {
         fun fromDomain(server: Server): ServerDTO {
             return ServerDTO(
@@ -26,12 +36,4 @@ data class ServerDTO(
     }
 }
 
-fun ServerDTO.toDomain(): Server {
-    return Server(
-        name = name,
-        description = description,
-        owner = owner,
-        users = users,
-        channels = channels.map { it.toDomain() }.toMutableList()
-    )
-}
+

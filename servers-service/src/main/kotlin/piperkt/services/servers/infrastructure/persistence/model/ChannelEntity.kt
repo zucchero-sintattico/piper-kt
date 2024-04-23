@@ -12,6 +12,15 @@ data class ChannelEntity(
     val channelType: String,
     val messages: List<MessageEntity> = emptyList()
 ) {
+    fun toDomain() =
+        ChannelFactory.createFromType(
+            id = id,
+            name = name,
+            type = channelType,
+            description = description,
+            messages = messages.map { it.toDomain() }.toMutableList()
+        )
+
     companion object {
         fun fromDomain(channel: piperkt.services.servers.domain.Channel) =
             ChannelEntity(
@@ -23,12 +32,3 @@ data class ChannelEntity(
             )
     }
 }
-
-fun ChannelEntity.toDomain() =
-    ChannelFactory.createFromType(
-        id = id,
-        name = name,
-        type = channelType,
-        description = description,
-        messages = messages.map { it.toDomain() }.toMutableList()
-    )

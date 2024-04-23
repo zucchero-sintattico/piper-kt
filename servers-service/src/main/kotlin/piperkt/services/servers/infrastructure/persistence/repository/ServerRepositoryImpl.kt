@@ -10,7 +10,6 @@ import piperkt.services.servers.domain.Server
 import piperkt.services.servers.infrastructure.persistence.model.ChannelEntity
 import piperkt.services.servers.infrastructure.persistence.model.ServerEntity
 import piperkt.services.servers.infrastructure.persistence.model.ServerModelRepository
-import piperkt.services.servers.infrastructure.persistence.model.toDomain
 
 @Singleton
 @Primary
