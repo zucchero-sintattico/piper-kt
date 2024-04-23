@@ -7,7 +7,7 @@ import io.micronaut.security.rules.SecurityRule
 import java.security.Principal
 import piperkt.services.users.application.UserService
 import piperkt.services.users.presentation.user.UserDTO
-import piperkt.services.users.presentation.user.toDTO
+import piperkt.services.users.presentation.user.UserMapper.toDTO
 
 @Controller("/profile")
 @Secured(SecurityRule.IS_AUTHENTICATED)

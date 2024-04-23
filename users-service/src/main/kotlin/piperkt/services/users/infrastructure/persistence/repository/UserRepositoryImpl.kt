@@ -4,8 +4,9 @@ import jakarta.inject.Singleton
 import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserRepository
 import piperkt.services.users.domain.user.Username
-import piperkt.services.users.infrastructure.persistence.model.UserEntity
 import piperkt.services.users.infrastructure.persistence.model.UserEntityRepository
+import piperkt.services.users.presentation.user.UserMapper.toDomain
+import piperkt.services.users.presentation.user.UserMapper.toEntity
 
 @Singleton
 class UserRepositoryImpl(private val userEntityRepository: UserEntityRepository) : UserRepository {
@@ -18,16 +19,16 @@ class UserRepositoryImpl(private val userEntityRepository: UserEntityRepository)
     }
 
     override fun findById(id: Username): User? {
-        return userEntityRepository.findById(id.value).map { it.toDomain() }.orElse(null)
+        return userEntityRepository.findByUsername(id.value)?.toDomain()
     }
 
     override fun save(entity: User) {
-        userEntityRepository.save(UserEntity.fromDomain(entity))
+        userEntityRepository.save(entity.toEntity())
     }
 
     override fun deleteById(id: Username): User? {
         val user = findById(id)
-        userEntityRepository.deleteById(id.value)
+        userEntityRepository.deleteByUsername(id.value)
         return user
     }
 }
