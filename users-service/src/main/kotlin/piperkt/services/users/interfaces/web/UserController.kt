@@ -8,7 +8,7 @@ import io.micronaut.security.rules.SecurityRule
 import java.security.Principal
 import piperkt.services.users.application.UserService
 import piperkt.services.users.presentation.user.UserDTO
-import piperkt.services.users.presentation.user.toDTO
+import piperkt.services.users.presentation.user.UserMapper.toDTO
 
 @Controller
 @Secured(SecurityRule.IS_AUTHENTICATED)
@@ -21,6 +21,7 @@ class UserController(private val userService: UserService) {
 
     @Get("/whoami")
     fun whoami(principal: Principal): UserDTO {
+        println("The principal is: ${principal.name}")
         return userService.getUser(principal.name).toDTO()
     }
 }

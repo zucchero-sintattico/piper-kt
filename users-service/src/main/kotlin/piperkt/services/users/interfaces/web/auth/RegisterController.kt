@@ -8,7 +8,7 @@ import io.micronaut.security.rules.SecurityRule
 import piperkt.services.users.application.AuthService
 import piperkt.services.users.application.RegisterRequest
 import piperkt.services.users.presentation.user.UserDTO
-import piperkt.services.users.presentation.user.toDTO
+import piperkt.services.users.presentation.user.UserMapper.toDTO
 
 @Controller("/register")
 @Secured(SecurityRule.IS_ANONYMOUS)
