@@ -1,8 +1,10 @@
 package piperkt.services.servers.interfaces.web.api.dto
 
+import io.micronaut.serde.annotation.Serdeable
 import piperkt.common.id.MessageId
 import piperkt.services.servers.domain.Message
 
+@Serdeable
 data class MessageDTO(
     val id: String,
     val sender: String,
