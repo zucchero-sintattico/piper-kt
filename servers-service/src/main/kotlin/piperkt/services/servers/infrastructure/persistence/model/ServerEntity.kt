@@ -39,7 +39,6 @@ data class ServerEntity(
     }
 }
 
-
 @MongoRepository
 interface ServerModelRepository : CrudRepository<ServerEntity, String> {
     fun findByUsersContains(member: String): List<ServerEntity>

@@ -13,7 +13,12 @@ data class MessageEntity(
     val timestamp: String = Instant.now().toString()
 ) {
     fun toDomain() =
-        MessageFactory.createMessage(id = id, content = content, sender = sender, timeStamp = timestamp)
+        MessageFactory.createMessage(
+            id = id,
+            content = content,
+            sender = sender,
+            timeStamp = timestamp
+        )
 
     companion object {
         fun fromDomain(message: piperkt.services.servers.domain.Message) =
@@ -25,5 +30,3 @@ data class MessageEntity(
             )
     }
 }
-
-

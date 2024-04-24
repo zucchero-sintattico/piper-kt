@@ -35,5 +35,3 @@ data class ServerDTO(
         }
     }
 }
-
-
