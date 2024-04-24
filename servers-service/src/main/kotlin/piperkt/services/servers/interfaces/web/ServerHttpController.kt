@@ -108,6 +108,6 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
                 )
             )
             .getOrThrow()
-        return ServerApi.DeleteServerApi.Response
+        return ServerApi.DeleteServerApi.Response(serverId = serverId)
     }
 }

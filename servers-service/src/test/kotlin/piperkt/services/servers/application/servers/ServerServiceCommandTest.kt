@@ -51,7 +51,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer)
         serverService.deleteServer(
             ServerCommand.DeleteServer.Request(simpleServerId, "owner")
-        ) shouldBe Result.success(ServerCommand.DeleteServer.Response)
+        ) shouldBe Result.success(ServerCommand.DeleteServer.Response(simpleServerId))
 
         verify(eventPublisher).publish(ServerEvent.ServerDeletedEvent(simpleServerId))
     }
@@ -114,7 +114,13 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
                 simpleServer.owner
             )
         ) shouldBe
-            Result.success(ServerCommand.UpdateServer.Response("serverName", "serverDescription"))
+            Result.success(
+                ServerCommand.UpdateServer.Response(
+                    simpleServerId,
+                    "serverName",
+                    "serverDescription"
+                )
+            )
         verify(eventPublisher).publish(ServerEvent.ServerUpdatedEvent(simpleServerId))
     }
 
@@ -123,7 +129,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer)
         serverService.addUserToServer(
             ServerCommand.AddUserToServer.Request(simpleServerId, "member", "member")
-        ) shouldBe Result.success(ServerCommand.AddUserToServer.Response)
+        ) shouldBe Result.success(ServerCommand.AddUserToServer.Response(simpleServerId, "member"))
         verify(eventPublisher).publish(ServerEvent.ServerUserAddedEvent(simpleServerId, "member"))
     }
 
@@ -140,7 +146,8 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer)
         serverService.removeUserFromServer(
             ServerCommand.RemoveUserFromServer.Request(simpleServerId, "member", "member")
-        ) shouldBe Result.success(ServerCommand.RemoveUserFromServer.Response)
+        ) shouldBe
+            Result.success(ServerCommand.RemoveUserFromServer.Response(simpleServerId, "member"))
         verify(eventPublisher).publish(ServerEvent.ServerUserRemovedEvent(simpleServerId, "member"))
     }
 
@@ -149,7 +156,8 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer)
         serverService.kickUserFromServer(
             ServerCommand.KickUserFromServer.Request(simpleServerId, "member", "owner")
-        ) shouldBe Result.success(ServerCommand.KickUserFromServer.Response)
+        ) shouldBe
+            Result.success(ServerCommand.KickUserFromServer.Response(simpleServerId, "member"))
         verify(eventPublisher).publish(ServerEvent.ServerUserKickedEvent(simpleServerId, "member"))
     }
 

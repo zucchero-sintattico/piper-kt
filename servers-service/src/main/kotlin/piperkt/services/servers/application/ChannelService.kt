@@ -56,7 +56,13 @@ open class ChannelService(
                     }
             if (channel != null) {
                 eventPublisher.publish(ChannelEvent.ChannelUpdatedEvent(request.channelId))
-                Result.success(ChannelCommand.UpdateChannelInServer.Response)
+                Result.success(
+                    ChannelCommand.UpdateChannelInServer.Response(
+                        channelId = channel.id,
+                        channelName = channel.name,
+                        channelDescription = channel.description
+                    )
+                )
             } else {
                 Result.failure(ServerServiceException.ServerOrChannelNotFoundException())
             }
@@ -81,7 +87,11 @@ open class ChannelService(
                         server.removeChannel(it)
                         serverRepository.update(server)
                         eventPublisher.publish(ChannelEvent.ChannelDeletedEvent(request.channelId))
-                        Result.success(ChannelCommand.DeleteChannelInServer.Response)
+                        Result.success(
+                            ChannelCommand.DeleteChannelInServer.Response(
+                                channelId = request.channelId
+                            )
+                        )
                     }
                 }
         } else {

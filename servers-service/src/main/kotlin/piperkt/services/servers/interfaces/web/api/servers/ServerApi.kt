@@ -19,7 +19,7 @@ sealed interface ServerApi {
     }
 
     sealed interface DeleteServerApi : ServerApi {
-        @Serdeable data object Response : DeleteServerApi
+        @Serdeable data class Response(val serverId: String) : DeleteServerApi
     }
 
     sealed interface GetServerUsersApi : ServerApi {

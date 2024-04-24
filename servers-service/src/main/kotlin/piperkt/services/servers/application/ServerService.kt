@@ -31,7 +31,7 @@ open class ServerService(
             if (isUserAdmin(request.serverId, request.requestFrom)) {
                 serverRepository.deleteById(request.serverId)
                 eventPublisher.publish(ServerEvent.ServerDeletedEvent(request.serverId))
-                Result.success(ServerCommand.DeleteServer.Response)
+                Result.success(ServerCommand.DeleteServer.Response(request.serverId))
             } else {
                 return Result.failure(ServerServiceException.UserNotHasPermissionsException())
             }
@@ -52,6 +52,7 @@ open class ServerService(
                 eventPublisher.publish(ServerEvent.ServerUpdatedEvent(request.serverId))
                 Result.success(
                     ServerCommand.UpdateServer.Response(
+                        request.serverId,
                         request.name ?: server.name,
                         request.description ?: server.description
                     )
@@ -72,7 +73,7 @@ open class ServerService(
             server.addUser(request.username)
             serverRepository.update(server)
             eventPublisher.publish(ServerEvent.ServerUserAddedEvent(server.id, request.username))
-            Result.success(ServerCommand.AddUserToServer.Response)
+            Result.success(ServerCommand.AddUserToServer.Response(server.id, request.username))
         } else {
             Result.failure(ServerServiceException.ServerNotFoundException())
         }
@@ -86,7 +87,7 @@ open class ServerService(
             server.removeUser(request.username)
             serverRepository.update(server)
             eventPublisher.publish(ServerEvent.ServerUserRemovedEvent(server.id, request.username))
-            Result.success(ServerCommand.RemoveUserFromServer.Response)
+            Result.success(ServerCommand.RemoveUserFromServer.Response(server.id, request.username))
         } else {
             Result.failure(ServerServiceException.ServerNotFoundException())
         }
@@ -103,7 +104,9 @@ open class ServerService(
                 eventPublisher.publish(
                     ServerEvent.ServerUserKickedEvent(server.id, request.username)
                 )
-                Result.success(ServerCommand.KickUserFromServer.Response)
+                Result.success(
+                    ServerCommand.KickUserFromServer.Response(server.id, request.username)
+                )
             } else {
                 Result.failure(ServerServiceException.ServerNotFoundException())
             }
