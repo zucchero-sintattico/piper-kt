@@ -16,4 +16,5 @@ dependencies {
     implementation("io.micronaut.kafka:micronaut-kafka")
     // Jwt
     implementation("io.micronaut.security:micronaut-security-jwt")
+    implementation("io.micronaut:micronaut-retry")
 }

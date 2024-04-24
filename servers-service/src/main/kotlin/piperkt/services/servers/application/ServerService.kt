@@ -123,11 +123,8 @@ open class ServerService(
     override fun getServersFromUser(
         request: ServerQuery.GetServersFromUser.Request
     ): Result<ServerQuery.GetServersFromUser.Response> {
-        if (request.username == request.requestFrom) {
-            val servers = serverRepository.findByMember(request.username)
-            return Result.success(ServerQuery.GetServersFromUser.Response(servers))
-        }
-        return Result.failure(ServerServiceException.UserNotHasPermissionsException())
+        val servers = serverRepository.findByMember(request.requestFrom)
+        return Result.success(ServerQuery.GetServersFromUser.Response(servers))
     }
 
     private fun isUserAdmin(serverId: ServerId, username: String): Boolean {

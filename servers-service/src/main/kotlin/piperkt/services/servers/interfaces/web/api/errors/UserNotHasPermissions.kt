@@ -13,18 +13,19 @@ import piperkt.services.servers.application.exceptions.ServerServiceException
 @Produces
 @Singleton
 @Requires(
-    classes = [ServerServiceException.ServerNotFoundException::class, ExceptionHandler::class]
+    classes =
+        [ServerServiceException.UserNotHasPermissionsException::class, ExceptionHandler::class]
 )
-class ServerNotFoundExceptionHandler :
-    ExceptionHandler<ServerServiceException.ServerNotFoundException, ErrorResponse> {
+class UserNotHasPermissions :
+    ExceptionHandler<ServerServiceException.UserNotHasPermissionsException, ErrorResponse> {
     @Error(
         global = true,
-        exception = ServerServiceException.ServerNotFoundException::class,
+        exception = ServerServiceException.UserNotHasPermissionsException::class,
     )
     @Status(HttpStatus.NOT_FOUND)
     override fun handle(
         request: HttpRequest<*>?,
-        exception: ServerServiceException.ServerNotFoundException?
+        exception: ServerServiceException.UserNotHasPermissionsException?
     ): ErrorResponse {
         return ErrorResponse(exception!!.message)
     }

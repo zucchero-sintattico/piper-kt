@@ -64,10 +64,7 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
         val response =
             serverService
                 .getServersFromUser(
-                    ServerQuery.GetServersFromUser.Request(
-                        username = principal.name,
-                        requestFrom = principal.name
-                    )
+                    ServerQuery.GetServersFromUser.Request(requestFrom = principal.name)
                 )
                 .getOrThrow()
         return ServerApi.GetServersFromUserApi.Response(
