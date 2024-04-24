@@ -50,9 +50,14 @@ open class ServerService(
                 request.description?.let { server.updateDescription(it) }
                 serverRepository.update(server)
                 eventPublisher.publish(ServerEvent.ServerUpdatedEvent(request.serverId))
-                Result.success(ServerCommand.UpdateServer.Response)
+                Result.success(
+                    ServerCommand.UpdateServer.Response(
+                        request.name ?: server.name,
+                        request.description ?: server.description
+                    )
+                )
             } else {
-                return Result.failure(ServerServiceException.UserNotHasPermissionsException())
+                Result.failure(ServerServiceException.UserNotHasPermissionsException())
             }
         } else {
             Result.failure(ServerServiceException.ServerNotFoundException())

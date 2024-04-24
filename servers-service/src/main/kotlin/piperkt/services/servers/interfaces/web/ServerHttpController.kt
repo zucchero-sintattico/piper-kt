@@ -89,7 +89,10 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
                 )
             )
             .getOrThrow()
-        return ServerApi.UpdateServerApi.Response
+        return ServerApi.UpdateServerApi.Response(
+            name = request.name,
+            description = request.description
+        )
     }
 
     @Delete("/{serverId}")

@@ -113,7 +113,8 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
                 "serverDescription",
                 simpleServer.owner
             )
-        ) shouldBe Result.success(ServerCommand.UpdateServer.Response)
+        ) shouldBe
+            Result.success(ServerCommand.UpdateServer.Response("serverName", "serverDescription"))
         verify(eventPublisher).publish(ServerEvent.ServerUpdatedEvent(simpleServerId))
     }
 

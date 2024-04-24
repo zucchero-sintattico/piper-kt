@@ -22,7 +22,7 @@ sealed interface ServerCommand {
             override val requestFrom: String
         ) : UpdateServer, ServiceRequest
 
-        data object Response : UpdateServer
+        data class Response(val name: String, val description: String) : UpdateServer
     }
 
     sealed interface DeleteServer : ServerCommand {

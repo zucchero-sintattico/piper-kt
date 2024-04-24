@@ -22,7 +22,7 @@ class UserNotHasPermissions :
         global = true,
         exception = ServerServiceException.UserNotHasPermissionsException::class,
     )
-    @Status(HttpStatus.NOT_FOUND)
+    @Status(HttpStatus.UNAUTHORIZED)
     override fun handle(
         request: HttpRequest<*>?,
         exception: ServerServiceException.UserNotHasPermissionsException?

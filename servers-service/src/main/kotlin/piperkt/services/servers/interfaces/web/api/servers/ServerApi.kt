@@ -15,7 +15,7 @@ sealed interface ServerApi {
     sealed interface UpdateServerApi : ServerApi {
         @Serdeable data class Request(val name: String, val description: String) : UpdateServerApi
 
-        @Serdeable data object Response : UpdateServerApi
+        @Serdeable data class Response(val name: String, val description: String) : UpdateServerApi
     }
 
     sealed interface DeleteServerApi : ServerApi {
