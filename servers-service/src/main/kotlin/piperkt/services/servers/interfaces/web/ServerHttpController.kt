@@ -14,7 +14,7 @@ import piperkt.services.servers.application.api.command.ServerCommand
 import piperkt.services.servers.application.api.query.ServerQuery
 import piperkt.services.servers.interfaces.web.api.ServerHttpControllerApi
 import piperkt.services.servers.interfaces.web.api.dto.ServerDTO
-import piperkt.services.servers.interfaces.web.api.servers.ServerApi
+import piperkt.services.servers.interfaces.web.api.interactions.ServerApi
 
 @Controller("/servers")
 class ServerHttpController(private val serverService: ServerService) : ServerHttpControllerApi {

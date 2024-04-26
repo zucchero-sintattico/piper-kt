@@ -7,7 +7,7 @@ import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import jakarta.inject.Inject
 import org.junit.jupiter.api.assertThrows
-import piperkt.services.servers.interfaces.web.api.servers.ServerApi
+import piperkt.services.servers.interfaces.web.api.interactions.ServerApi
 
 @MicronautTest
 class ServerHttpControllerTest : AnnotationSpec() {

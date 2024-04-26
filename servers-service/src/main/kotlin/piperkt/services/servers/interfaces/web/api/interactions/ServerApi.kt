@@ -1,4 +1,4 @@
-package piperkt.services.servers.interfaces.web.api.servers
+package piperkt.services.servers.interfaces.web.api.interactions
 
 import io.micronaut.serde.annotation.Serdeable
 import piperkt.services.servers.interfaces.web.api.dto.ServerDTO
