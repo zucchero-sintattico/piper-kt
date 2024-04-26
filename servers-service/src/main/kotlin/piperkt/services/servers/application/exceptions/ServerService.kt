@@ -8,8 +8,8 @@ sealed class ServerService : Exception() {
     data class ServerNotFoundException(override val message: String = "Server not found") :
         ServerService()
 
-    data class ServerOrChannelNotFoundException(
-        override val message: String = "Server or Channel not found"
+    data class ChannelNotFoundException(
+        override val message: String = "Channel not found"
     ) : ServerService()
 
     data class UserNotHasPermissionsException(

@@ -20,14 +20,14 @@ open class ChannelService(
     ): Result<ChannelCommand.CreateNewChannelInServer.Response> {
         val server =
             serverRepository.findById(request.serverId)
-                ?: return Result.failure(ServerService.ServerOrChannelNotFoundException())
+                ?: return Result.failure(ServerService.ServerNotFoundException())
         return if (isUserAdmin(request.serverId, request.requestFrom)) {
             val channel =
                 ChannelFactory.createFromType(
-                        name = request.channelName,
-                        description = request.channelDescription,
-                        type = request.channelType
-                    )
+                    name = request.channelName,
+                    description = request.channelDescription,
+                    type = request.channelType
+                )
                     .also {
                         server.addChannel(it)
                         serverRepository.update(server)
@@ -44,7 +44,7 @@ open class ChannelService(
     ): Result<ChannelCommand.UpdateChannelInServer.Response> {
         val server =
             serverRepository.findById(request.serverId)
-                ?: return Result.failure(ServerService.ServerOrChannelNotFoundException())
+                ?: return Result.failure(ServerService.ServerNotFoundException())
         return if (isUserAdmin(request.serverId, request.requestFrom)) {
             val channel =
                 server.channels
@@ -64,7 +64,7 @@ open class ChannelService(
                     )
                 )
             } else {
-                Result.failure(ServerService.ServerOrChannelNotFoundException())
+                Result.failure(ServerService.ChannelNotFoundException())
             }
         } else {
             Result.failure(ServerService.UserNotHasPermissionsException())
@@ -76,13 +76,13 @@ open class ChannelService(
     ): Result<ChannelCommand.DeleteChannelInServer.Response> {
         val server =
             serverRepository.findById(request.serverId)
-                ?: return Result.failure(ServerService.ServerOrChannelNotFoundException())
+                ?: return Result.failure(ServerService.ServerNotFoundException())
         return if (isUserAdmin(request.serverId, request.requestFrom)) {
             server.channels
                 .find { it.id == request.channelId }
                 .let {
                     if (it == null) {
-                        Result.failure(ServerService.ServerOrChannelNotFoundException())
+                        Result.failure(ServerService.ChannelNotFoundException())
                     } else {
                         server.removeChannel(it)
                         serverRepository.update(server)
@@ -104,7 +104,7 @@ open class ChannelService(
     ): Result<ChannelQuery.GetChannelByServerId.Response> {
         val server = serverRepository.findById(request.serverId)
         return if (server == null) {
-            Result.failure(ServerService.ServerOrChannelNotFoundException())
+            Result.failure(ServerService.ServerNotFoundException())
         } else {
             if (!server.users.contains(request.requestFrom)) {
                 Result.failure(ServerService.UserNotInServerException())
@@ -122,10 +122,10 @@ open class ChannelService(
         }
         val server =
             serverRepository.findById(request.serverId)
-                ?: return Result.failure(ServerService.ServerOrChannelNotFoundException())
+                ?: return Result.failure(ServerService.ServerNotFoundException())
         val channel = server.channels.find { it.id == request.channelId }
         if (channel == null) {
-            return Result.failure(ServerService.ServerOrChannelNotFoundException())
+            return Result.failure(ServerService.ChannelNotFoundException())
         }
         return Result.success(
             ChannelQuery.GetMessagesFromChannelId.Response(
@@ -145,10 +145,10 @@ open class ChannelService(
         }
         val server =
             serverRepository.findById(request.serverId)
-                ?: return Result.failure(ServerService.ServerOrChannelNotFoundException())
+                ?: return Result.failure(ServerService.ServerNotFoundException())
         val channel = server.channels.find { it.id == request.channelId }
         if (channel == null) {
-            return Result.failure(ServerService.ServerOrChannelNotFoundException())
+            return Result.failure(ServerService.ChannelNotFoundException())
         }
         val message =
             MessageFactory.createMessage(content = request.content, sender = request.sender)
