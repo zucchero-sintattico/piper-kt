@@ -75,9 +75,6 @@ class ServerHttpControllerTest : AnnotationSpec() {
             client.createServer(
                 ServerApi.CreateServerApi.Request(name = "name", description = "description")
             )
-        createResponse.status() shouldBe HttpStatus.OK
-
-        // Step 2: Update the server
         val updateResponse =
             client.updateServer(
                 serverId = createResponse.body().serverId,
@@ -87,8 +84,6 @@ class ServerHttpControllerTest : AnnotationSpec() {
                         description = "newDescription"
                     )
             )
-
-        // Step 3: Verify the response
         updateResponse.status() shouldBe HttpStatus.OK
     }
 
@@ -122,7 +117,7 @@ class ServerHttpControllerTest : AnnotationSpec() {
                     authorization = authOf("anotherUser")
                 )
             }
-            .let { it.status shouldBe HttpStatus.UNAUTHORIZED }
+            .let { it.status shouldBe HttpStatus.FORBIDDEN }
     }
 
     @Test

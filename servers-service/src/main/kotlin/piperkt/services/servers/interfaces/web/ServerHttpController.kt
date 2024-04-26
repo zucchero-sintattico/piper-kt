@@ -110,4 +110,59 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
             .getOrThrow()
         return ServerApi.DeleteServerApi.Response(serverId = serverId)
     }
+
+    override fun addUserToServer(
+        serverId: String,
+        request: ServerApi.AddUserToServerApi.Request,
+        principal: Principal
+    ): ServerApi.AddUserToServerApi.Response {
+        serverService
+            .addUserToServer(
+                ServerCommand.AddUserToServer.Request(
+                    serverId = ServerId(serverId),
+                    requestFrom = principal.name
+                )
+            )
+            .getOrThrow()
+        return ServerApi.AddUserToServerApi.Response(serverId = serverId, userId = request.username)
+    }
+
+    override fun removeUserFromServer(
+        serverId: String,
+        request: ServerApi.RemoveUserFromServerApi.Request,
+        principal: Principal
+    ): ServerApi.RemoveUserFromServerApi.Response {
+        serverService
+            .removeUserFromServer(
+                ServerCommand.RemoveUserFromServer.Request(
+                    serverId = ServerId(serverId),
+                    requestFrom = principal.name
+                )
+            )
+            .getOrThrow()
+        return ServerApi.RemoveUserFromServerApi.Response(
+            serverId = serverId,
+            username = request.username
+        )
+    }
+
+    override fun kickUserFromServer(
+        serverId: String,
+        request: ServerApi.KickUserFromServerApi.Request,
+        principal: Principal
+    ): ServerApi.KickUserFromServerApi.Response {
+        serverService
+            .kickUserFromServer(
+                ServerCommand.KickUserFromServer.Request(
+                    serverId = ServerId(serverId),
+                    username = request.username,
+                    requestFrom = principal.name
+                )
+            )
+            .getOrThrow()
+        return ServerApi.KickUserFromServerApi.Response(
+            serverId = serverId,
+            username = request.username
+        )
+    }
 }

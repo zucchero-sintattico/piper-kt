@@ -70,10 +70,10 @@ open class ServerService(
     ): Result<ServerCommand.AddUserToServer.Response> {
         val server = serverRepository.findById(request.serverId)
         return if (server != null) {
-            server.addUser(request.username)
+            server.addUser(request.requestFrom)
             serverRepository.update(server)
-            eventPublisher.publish(ServerEvent.ServerUserAddedEvent(server.id, request.username))
-            Result.success(ServerCommand.AddUserToServer.Response(server.id, request.username))
+            eventPublisher.publish(ServerEvent.ServerUserAddedEvent(server.id, request.requestFrom))
+            Result.success(ServerCommand.AddUserToServer.Response(server.id, request.requestFrom))
         } else {
             Result.failure(ServerServiceException.ServerNotFoundException())
         }
@@ -84,10 +84,14 @@ open class ServerService(
     ): Result<ServerCommand.RemoveUserFromServer.Response> {
         val server = serverRepository.findById(request.serverId)
         return if (server != null) {
-            server.removeUser(request.username)
+            server.removeUser(request.requestFrom)
             serverRepository.update(server)
-            eventPublisher.publish(ServerEvent.ServerUserRemovedEvent(server.id, request.username))
-            Result.success(ServerCommand.RemoveUserFromServer.Response(server.id, request.username))
+            eventPublisher.publish(
+                ServerEvent.ServerUserRemovedEvent(server.id, request.requestFrom)
+            )
+            Result.success(
+                ServerCommand.RemoveUserFromServer.Response(server.id, request.requestFrom)
+            )
         } else {
             Result.failure(ServerServiceException.ServerNotFoundException())
         }

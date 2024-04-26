@@ -34,21 +34,15 @@ sealed interface ServerCommand {
     }
 
     sealed interface AddUserToServer : ServerCommand {
-        data class Request(
-            val serverId: ServerId,
-            val username: String,
-            override val requestFrom: String
-        ) : AddUserToServer, ServiceRequest
+        data class Request(val serverId: ServerId, override val requestFrom: String) :
+            AddUserToServer, ServiceRequest
 
         data class Response(val serverId: ServerId, val username: String) : AddUserToServer
     }
 
     sealed interface RemoveUserFromServer : ServerCommand {
-        data class Request(
-            val serverId: ServerId,
-            val username: String,
-            override val requestFrom: String
-        ) : RemoveUserFromServer, ServiceRequest
+        data class Request(val serverId: ServerId, override val requestFrom: String) :
+            RemoveUserFromServer, ServiceRequest
 
         data class Response(val serverId: ServerId, val username: String) : RemoveUserFromServer
     }
