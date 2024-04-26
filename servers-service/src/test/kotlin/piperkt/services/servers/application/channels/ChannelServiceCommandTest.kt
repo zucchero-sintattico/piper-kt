@@ -8,7 +8,7 @@ import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 import piperkt.common.events.ChannelEvent
 import piperkt.services.servers.application.api.command.ChannelCommand
-import piperkt.services.servers.application.exceptions.ServerServiceException
+import piperkt.services.servers.application.exceptions.ServerService
 
 class ChannelServiceCommandTest : BasicChannelServiceTest() {
 
@@ -48,7 +48,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 requestFrom = "owner"
             )
         channelService.createNewChannelInServer(request) shouldBe
-            Result.failure(ServerServiceException.ServerOrChannelNotFoundException())
+            Result.failure(ServerService.ServerOrChannelNotFoundException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -64,7 +64,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 requestFrom = "notOwner"
             )
         channelService.createNewChannelInServer(request) shouldBe
-            Result.failure(ServerServiceException.UserNotHasPermissionsException())
+            Result.failure(ServerService.UserNotHasPermissionsException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -79,7 +79,14 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 channelDescription = "channelDescription",
                 requestFrom = "owner"
             )
-        ) shouldBe Result.success(ChannelCommand.UpdateChannelInServer.Response)
+        ) shouldBe
+            Result.success(
+                ChannelCommand.UpdateChannelInServer.Response(
+                    channelId = simpleChannelId,
+                    channelName = "newChannelName",
+                    channelDescription = "channelDescription"
+                )
+            )
         verify(eventPublisher).publish(ChannelEvent.ChannelUpdatedEvent(simpleChannelId))
     }
 
@@ -96,9 +103,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
             )
         ) shouldBe
             Result.failure(
-                ServerServiceException.ServerOrChannelNotFoundException(
-                    "Server or Channel not found"
-                )
+                ServerService.ServerOrChannelNotFoundException("Server or Channel not found")
             )
         verifyNoInteractions(eventPublisher)
     }
@@ -114,7 +119,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 channelDescription = "channelDescription",
                 requestFrom = "notOwner"
             )
-        ) shouldBe Result.failure(ServerServiceException.UserNotHasPermissionsException())
+        ) shouldBe Result.failure(ServerService.UserNotHasPermissionsException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -127,7 +132,10 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 channelId = simpleChannelId,
                 requestFrom = "owner"
             )
-        ) shouldBe Result.success(ChannelCommand.DeleteChannelInServer.Response)
+        ) shouldBe
+            Result.success(
+                ChannelCommand.DeleteChannelInServer.Response(channelId = simpleChannelId)
+            )
         verify(eventPublisher).publish(ChannelEvent.ChannelDeletedEvent(simpleChannelId))
     }
 
@@ -142,9 +150,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
             )
         ) shouldBe
             Result.failure(
-                ServerServiceException.ServerOrChannelNotFoundException(
-                    "Server or Channel not found"
-                )
+                ServerService.ServerOrChannelNotFoundException("Server or Channel not found")
             )
         verifyNoInteractions(eventPublisher)
     }
@@ -158,7 +164,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 channelId = simpleChannelId,
                 requestFrom = "notOwner"
             )
-        ) shouldBe Result.failure(ServerServiceException.UserNotHasPermissionsException())
+        ) shouldBe Result.failure(ServerService.UserNotHasPermissionsException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -193,7 +199,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 content = "content",
                 sender = "sender"
             )
-        ) shouldBe Result.failure(ServerServiceException.UserNotInServerException())
+        ) shouldBe Result.failure(ServerService.UserNotInServerException())
         verifyNoInteractions(eventPublisher)
     }
 }

@@ -111,9 +111,9 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
         return ServerApi.DeleteServerApi.Response(serverId = serverId)
     }
 
+    @Post("/{serverId}/users")
     override fun addUserToServer(
         serverId: String,
-        request: ServerApi.AddUserToServerApi.Request,
         principal: Principal
     ): ServerApi.AddUserToServerApi.Response {
         serverService
@@ -124,12 +124,12 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
                 )
             )
             .getOrThrow()
-        return ServerApi.AddUserToServerApi.Response(serverId = serverId, userId = request.username)
+        return ServerApi.AddUserToServerApi.Response(serverId = serverId, username = principal.name)
     }
 
+    @Delete("/{serverId}/users")
     override fun removeUserFromServer(
         serverId: String,
-        request: ServerApi.RemoveUserFromServerApi.Request,
         principal: Principal
     ): ServerApi.RemoveUserFromServerApi.Response {
         serverService
@@ -142,27 +142,25 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
             .getOrThrow()
         return ServerApi.RemoveUserFromServerApi.Response(
             serverId = serverId,
-            username = request.username
+            username = principal.name
         )
     }
 
+    @Delete("/{serverId}/users/{username}")
     override fun kickUserFromServer(
         serverId: String,
-        request: ServerApi.KickUserFromServerApi.Request,
+        username: String,
         principal: Principal
     ): ServerApi.KickUserFromServerApi.Response {
         serverService
             .kickUserFromServer(
                 ServerCommand.KickUserFromServer.Request(
                     serverId = ServerId(serverId),
-                    username = request.username,
+                    username = username,
                     requestFrom = principal.name
                 )
             )
             .getOrThrow()
-        return ServerApi.KickUserFromServerApi.Response(
-            serverId = serverId,
-            username = request.username
-        )
+        return ServerApi.KickUserFromServerApi.Response(serverId = serverId, username = username)
     }
 }

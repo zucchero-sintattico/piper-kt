@@ -23,21 +23,18 @@ sealed interface ServerApi {
     }
 
     sealed interface AddUserToServerApi : ServerApi {
-        @Serdeable data class Request(val username: String) : AddUserToServerApi
 
         @Serdeable
-        data class Response(val serverId: String, val userId: String) : AddUserToServerApi
+        data class Response(val serverId: String, val username: String) : AddUserToServerApi
     }
 
     sealed interface RemoveUserFromServerApi : ServerApi {
-        @Serdeable data class Request(val username: String) : RemoveUserFromServerApi
 
         @Serdeable
         data class Response(val serverId: String, val username: String) : RemoveUserFromServerApi
     }
 
     sealed interface KickUserFromServerApi : ServerApi {
-        @Serdeable data class Request(val username: String) : KickUserFromServerApi
 
         @Serdeable
         data class Response(val serverId: String, val username: String) : KickUserFromServerApi

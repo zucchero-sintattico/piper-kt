@@ -16,7 +16,6 @@ class MockedAuthenticationProvider : HttpRequestAuthenticationProvider<String> {
         requestContext: HttpRequest<String>?,
         authRequest: AuthenticationRequest<String, String>
     ): AuthenticationResponse {
-        println("MockedAuthenticationProvider.authenticate")
         return AuthenticationResponse.success(authRequest.identity)
     }
 }

@@ -2,57 +2,12 @@ package piperkt.services.servers.interfaces.web
 
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import io.micronaut.http.HttpHeaders
-import io.micronaut.http.HttpRequest
-import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
-import io.micronaut.http.annotation.Body
-import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.Header
-import io.micronaut.http.annotation.PathVariable
-import io.micronaut.http.annotation.Post
-import io.micronaut.http.annotation.Put
-import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.client.exceptions.HttpClientResponseException
-import io.micronaut.retry.annotation.Retryable
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import jakarta.inject.Inject
 import org.junit.jupiter.api.assertThrows
 import piperkt.services.servers.interfaces.web.api.servers.ServerApi
-
-@Client("/servers")
-@Retryable
-interface ServerControllerClient {
-
-    @Get("/")
-    fun getServersFromUser(
-        @Header(HttpHeaders.AUTHORIZATION) authorization: String = authOf("user")
-    ): HttpResponse<ServerApi.GetServersFromUserApi.Response>
-
-    @Get("/{serverId}/users")
-    fun getServerUsers(
-        @PathVariable serverId: String,
-        @Header(HttpHeaders.AUTHORIZATION) authorization: String = authOf("user")
-    ): HttpResponse<ServerApi.GetServerUsersApi.Response>
-
-    @Post("/")
-    fun createServer(
-        @Body request: ServerApi.CreateServerApi.Request,
-        @Header(HttpHeaders.AUTHORIZATION) authorization: String = authOf("user")
-    ): HttpResponse<ServerApi.CreateServerApi.Response>
-
-    @Put("/{serverId}/")
-    fun updateServer(
-        @PathVariable serverId: String,
-        @Body request: ServerApi.UpdateServerApi.Request,
-        @Header(HttpHeaders.AUTHORIZATION) authorization: String = authOf("user")
-    ): HttpResponse<Any>
-}
-
-fun authOf(username: String): String {
-    val req = HttpRequest.GET<Any>("/").basicAuth(username, "")
-    return req.headers.get(HttpHeaders.AUTHORIZATION)!!
-}
 
 @MicronautTest
 class ServerHttpControllerTest : AnnotationSpec() {
@@ -119,6 +74,155 @@ class ServerHttpControllerTest : AnnotationSpec() {
             }
             .let { it.status shouldBe HttpStatus.FORBIDDEN }
     }
+
+    @Test
+    fun `should delete server`() {
+        val serverId =
+            client
+                .createServer(
+                    ServerApi.CreateServerApi.Request(name = "name", description = "description")
+                )
+                .body()
+                .serverId
+        val response = client.deleteServer(serverId)
+        response.status() shouldBe HttpStatus.OK
+    }
+
+    @Test
+    fun `should not delete server when not found`() {
+        val response = client.deleteServer("serverId")
+        response.status() shouldBe HttpStatus.NOT_FOUND
+    }
+
+    @Test
+    fun `should not delete server when not admin`() {
+        val serverId =
+            client
+                .createServer(
+                    ServerApi.CreateServerApi.Request(name = "name", description = "description")
+                )
+                .body()
+                .serverId
+        assertThrows<HttpClientResponseException> {
+                client.deleteServer(serverId = serverId, authorization = authOf("anotherUser"))
+            }
+            .let { it.status shouldBe HttpStatus.FORBIDDEN }
+    }
+
+    @Test
+    fun `should add user to server`() {
+        val serverId =
+            client
+                .createServer(
+                    ServerApi.CreateServerApi.Request(name = "name", description = "description")
+                )
+                .body()
+                .serverId
+        val response =
+            client.addUserToServer(serverId = serverId, authorization = authOf("otherMember"))
+        response.status() shouldBe HttpStatus.OK
+    }
+
+    @Test
+    fun `should not add user to server when not found`() {
+        val response =
+            client.addUserToServer(serverId = "serverId", authorization = authOf("otherMember"))
+        response.status() shouldBe HttpStatus.NOT_FOUND
+    }
+
+    @Test
+    fun `should remove user from server`() {
+        val serverId =
+            client
+                .createServer(
+                    ServerApi.CreateServerApi.Request(name = "name", description = "description")
+                )
+                .body()
+                .serverId
+        client.addUserToServer(serverId = serverId, authorization = authOf("otherMember"))
+        val response =
+            client.removeUserFromServer(serverId = serverId, authorization = authOf("otherMember"))
+        response.status() shouldBe HttpStatus.OK
+    }
+
+    @Test
+    fun `should not remove user from server when server not found`() {
+        val response =
+            client.removeUserFromServer(
+                serverId = "serverId",
+                authorization = authOf("otherMember")
+            )
+        response.status() shouldBe HttpStatus.NOT_FOUND
+    }
+
+    @Test
+    fun `should not remove user from server when user not found`() {
+        val serverId =
+            client
+                .createServer(
+                    ServerApi.CreateServerApi.Request(name = "name", description = "description")
+                )
+                .body()
+                .serverId
+        val response =
+            client.removeUserFromServer(serverId = serverId, authorization = authOf("otherMember"))
+        response.status() shouldBe HttpStatus.NOT_FOUND
+    }
+
+    @Test
+    fun `should kick user from server`() {
+        val serverId =
+            client
+                .createServer(
+                    ServerApi.CreateServerApi.Request(name = "name", description = "description")
+                )
+                .body()
+                .serverId
+        client.addUserToServer(serverId = serverId, authorization = authOf("otherMember"))
+        val response =
+            client.kickUserFromServer(
+                serverId = serverId,
+                username = "otherMember",
+            )
+        response.status() shouldBe HttpStatus.OK
+    }
+
+    @Test
+    fun `should not kick user from server when server not found`() {
+        val response = client.kickUserFromServer("serverId", "otherMember")
+        response.status() shouldBe HttpStatus.NOT_FOUND
+    }
+
+    @Test
+    fun `should not kick user from server when user not found`() {
+        val serverId =
+            client
+                .createServer(
+                    ServerApi.CreateServerApi.Request(name = "name", description = "description")
+                )
+                .body()
+                .serverId
+        val response = client.kickUserFromServer(serverId, "otherMember")
+        response.status() shouldBe HttpStatus.NOT_FOUND
+    }
+
+    @Test
+    fun `should not kick user from server when not admin`() {
+        val serverId =
+            client
+                .createServer(
+                    ServerApi.CreateServerApi.Request(name = "name", description = "description")
+                )
+                .body()
+                .serverId
+        client.addUserToServer(serverId = serverId, authorization = authOf("otherMember"))
+        assertThrows<HttpClientResponseException> {
+                client.kickUserFromServer(serverId, "otherMember", authOf("anotherUser"))
+            }
+            .let { it.status shouldBe HttpStatus.FORBIDDEN }
+    }
+
+    // QUERIES
 
     @Test
     fun `should return servers from user`() {

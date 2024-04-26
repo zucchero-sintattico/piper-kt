@@ -35,19 +35,17 @@ interface ServerHttpControllerApi {
 
     fun addUserToServer(
         @PathVariable serverId: String,
-        @Body request: ServerApi.AddUserToServerApi.Request,
         principal: Principal
     ): ServerApi.AddUserToServerApi.Response
 
     fun removeUserFromServer(
         @PathVariable serverId: String,
-        @Body request: ServerApi.RemoveUserFromServerApi.Request,
         principal: Principal
     ): ServerApi.RemoveUserFromServerApi.Response
 
     fun kickUserFromServer(
         @PathVariable serverId: String,
-        @Body request: ServerApi.KickUserFromServerApi.Request,
+        @PathVariable username: String,
         principal: Principal
     ): ServerApi.KickUserFromServerApi.Response
 }

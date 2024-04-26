@@ -5,7 +5,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.reset
 import org.mockito.kotlin.whenever
 import piperkt.services.servers.application.api.query.ChannelQuery
-import piperkt.services.servers.application.exceptions.ServerServiceException
+import piperkt.services.servers.application.exceptions.ServerService
 
 class ChannelServiceQueryTest : BasicChannelServiceTest() {
 
@@ -46,6 +46,6 @@ class ChannelServiceQueryTest : BasicChannelServiceTest() {
                 10,
                 "requestFrom"
             )
-        ) shouldBe Result.failure(ServerServiceException.UserNotInServerException())
+        ) shouldBe Result.failure(ServerService.UserNotInServerException())
     }
 }

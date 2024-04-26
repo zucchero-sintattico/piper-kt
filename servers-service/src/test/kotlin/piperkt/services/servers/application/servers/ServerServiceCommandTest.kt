@@ -8,7 +8,7 @@ import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 import piperkt.common.events.ServerEvent
 import piperkt.services.servers.application.api.command.ServerCommand
-import piperkt.services.servers.application.exceptions.ServerServiceException
+import piperkt.services.servers.application.exceptions.ServerService
 
 class ServerServiceCommandTest : BasicServerServiceTest() {
 
@@ -42,7 +42,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
                 "serverDescription",
                 "member"
             )
-        ) shouldBe Result.failure(ServerServiceException.UserNotHasPermissionsException())
+        ) shouldBe Result.failure(ServerService.UserNotHasPermissionsException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -61,7 +61,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
         whenever(serverRepository.findById(any())).thenReturn(null)
         serverService.deleteServer(
             ServerCommand.DeleteServer.Request(simpleServerId, "owner")
-        ) shouldBe Result.failure(ServerServiceException.ServerNotFoundException())
+        ) shouldBe Result.failure(ServerService.ServerNotFoundException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -70,7 +70,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer)
         serverService.deleteServer(
             ServerCommand.DeleteServer.Request(simpleServerId, "member")
-        ) shouldBe Result.failure(ServerServiceException.UserNotHasPermissionsException())
+        ) shouldBe Result.failure(ServerService.UserNotHasPermissionsException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -84,7 +84,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
                 "serverDescription",
                 "owner"
             )
-        ) shouldBe Result.failure(ServerServiceException.ServerNotFoundException())
+        ) shouldBe Result.failure(ServerService.ServerNotFoundException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -98,7 +98,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
                 "serverDescription",
                 "member"
             )
-        ) shouldBe Result.failure(ServerServiceException.UserNotHasPermissionsException())
+        ) shouldBe Result.failure(ServerService.UserNotHasPermissionsException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -128,7 +128,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
     fun `should allow user to join the server`() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer)
         serverService.addUserToServer(
-            ServerCommand.AddUserToServer.Request(simpleServerId, "member", "member")
+            ServerCommand.AddUserToServer.Request(simpleServerId, "member")
         ) shouldBe Result.success(ServerCommand.AddUserToServer.Response(simpleServerId, "member"))
         verify(eventPublisher).publish(ServerEvent.ServerUserAddedEvent(simpleServerId, "member"))
     }
@@ -136,8 +136,8 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
     @Test
     fun `should not allow to join a server that does not exist`() {
         serverService.addUserToServer(
-            ServerCommand.AddUserToServer.Request(simpleServerId, "member", "member")
-        ) shouldBe Result.failure(ServerServiceException.ServerNotFoundException())
+            ServerCommand.AddUserToServer.Request(simpleServerId, "member")
+        ) shouldBe Result.failure(ServerService.ServerNotFoundException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -145,7 +145,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
     fun `should allow user to leave the server`() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer)
         serverService.removeUserFromServer(
-            ServerCommand.RemoveUserFromServer.Request(simpleServerId, "member", "member")
+            ServerCommand.RemoveUserFromServer.Request(simpleServerId, "member")
         ) shouldBe
             Result.success(ServerCommand.RemoveUserFromServer.Response(simpleServerId, "member"))
         verify(eventPublisher).publish(ServerEvent.ServerUserRemovedEvent(simpleServerId, "member"))
@@ -165,7 +165,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
     fun `should not allow non-admin to kick a user`() {
         serverService.kickUserFromServer(
             ServerCommand.KickUserFromServer.Request(simpleServerId, "member", "member")
-        ) shouldBe Result.failure(ServerServiceException.UserNotHasPermissionsException())
+        ) shouldBe Result.failure(ServerService.UserNotHasPermissionsException())
         verifyNoInteractions(eventPublisher)
     }
 }
