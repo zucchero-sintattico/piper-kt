@@ -5,8 +5,8 @@ import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.QueryValue
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
-import piperkt.services.servers.interfaces.web.api.interactions.ChannelApi
 import java.security.Principal
+import piperkt.services.servers.interfaces.web.api.interactions.ChannelApi
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 interface ChannelHttpControllerApi {
@@ -49,6 +49,4 @@ interface ChannelHttpControllerApi {
         @Body request: ChannelApi.SendMessageToChannelApi.Request,
         principal: Principal
     ): ChannelApi.SendMessageToChannelApi.Response
-
-
 }

@@ -48,7 +48,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 requestFrom = "owner"
             )
         channelService.createNewChannelInServer(request) shouldBe
-                Result.failure(ServerService.ServerNotFoundException())
+            Result.failure(ServerService.ServerNotFoundException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -64,7 +64,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 requestFrom = "notOwner"
             )
         channelService.createNewChannelInServer(request) shouldBe
-                Result.failure(ServerService.UserNotHasPermissionsException())
+            Result.failure(ServerService.UserNotHasPermissionsException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -80,13 +80,13 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 requestFrom = "owner"
             )
         ) shouldBe
-                Result.success(
-                    ChannelCommand.UpdateChannelInServer.Response(
-                        channelId = simpleChannelId,
-                        channelName = "newChannelName",
-                        channelDescription = "channelDescription"
-                    )
+            Result.success(
+                ChannelCommand.UpdateChannelInServer.Response(
+                    channelId = simpleChannelId,
+                    channelName = "newChannelName",
+                    channelDescription = "channelDescription"
                 )
+            )
         verify(eventPublisher).publish(ChannelEvent.ChannelUpdatedEvent(simpleChannelId))
     }
 
@@ -101,10 +101,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 channelDescription = "channelDescription",
                 requestFrom = "owner"
             )
-        ) shouldBe
-                Result.failure(
-                    ServerService.ChannelNotFoundException()
-                )
+        ) shouldBe Result.failure(ServerService.ChannelNotFoundException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -133,9 +130,9 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 requestFrom = "owner"
             )
         ) shouldBe
-                Result.success(
-                    ChannelCommand.DeleteChannelInServer.Response(channelId = simpleChannelId)
-                )
+            Result.success(
+                ChannelCommand.DeleteChannelInServer.Response(channelId = simpleChannelId)
+            )
         verify(eventPublisher).publish(ChannelEvent.ChannelDeletedEvent(simpleChannelId))
     }
 
@@ -148,10 +145,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 channelId = simpleChannelId,
                 requestFrom = "owner"
             )
-        ) shouldBe
-                Result.failure(
-                    ServerService.ChannelNotFoundException()
-                )
+        ) shouldBe Result.failure(ServerService.ChannelNotFoundException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -179,7 +173,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                     serverId = simpleServerId,
                     channelId = simpleChannelId,
                     content = "content",
-                    sender = "sender"
+                    requestFrom = "sender"
                 )
             )
         response.isSuccess shouldBe true
@@ -197,7 +191,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 serverId = simpleServerId,
                 channelId = simpleChannelId,
                 content = "content",
-                sender = "sender"
+                requestFrom = "sender"
             )
         ) shouldBe Result.failure(ServerService.UserNotInServerException())
         verifyNoInteractions(eventPublisher)

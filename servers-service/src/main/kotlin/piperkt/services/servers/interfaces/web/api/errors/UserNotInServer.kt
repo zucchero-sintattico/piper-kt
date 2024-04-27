@@ -18,7 +18,7 @@ class UserNotInServer : ExceptionHandler<ServerService.UserNotInServerException,
         global = true,
         exception = ServerService.UserNotInServerException::class,
     )
-    @Status(HttpStatus.NOT_FOUND)
+    @Status(HttpStatus.FORBIDDEN)
     override fun handle(
         request: HttpRequest<*>?,
         exception: ServerService.UserNotInServerException?

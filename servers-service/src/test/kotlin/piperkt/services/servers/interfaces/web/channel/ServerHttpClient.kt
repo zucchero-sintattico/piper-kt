@@ -1,7 +1,6 @@
-package piperkt.services.servers.interfaces.web.server
+package piperkt.services.servers.interfaces.web.channel
 
 import io.micronaut.http.HttpHeaders
-import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Delete
@@ -17,7 +16,7 @@ import piperkt.services.servers.interfaces.web.authOf
 
 @Client("/servers")
 @Retryable
-interface ServerControllerClient {
+interface ServerHttpClient {
 
     @Get("/")
     fun getServersFromUser(
@@ -68,4 +67,3 @@ interface ServerControllerClient {
         @Header(HttpHeaders.AUTHORIZATION) authorization: String = authOf("user")
     ): HttpResponse<ServerApi.KickUserFromServerApi.Response>
 }
-

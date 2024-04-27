@@ -8,37 +8,39 @@ import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import jakarta.inject.Inject
 import org.junit.jupiter.api.assertThrows
 import piperkt.services.servers.interfaces.web.api.interactions.ServerApi
+import piperkt.services.servers.interfaces.web.authOf
+import piperkt.services.servers.interfaces.web.channel.ServerHttpClient
 
 @MicronautTest
 class ServerHttpControllerTest : AnnotationSpec() {
 
-    @Inject
-    lateinit var client: ServerControllerClient
+    @Inject lateinit var client: ServerHttpClient
 
     @Test
     fun `should create server`() {
         val response =
             client.createServer(
-                ServerApi.CreateServerApi.Request(name = "name", description = "description")
+                request =
+                    ServerApi.CreateServerApi.Request(name = "name", description = "description")
             )
         response.status() shouldBe HttpStatus.OK
     }
 
     @Test
     fun `should correctly update server`() {
-        // Step 1: Create a server
         val createResponse =
             client.createServer(
-                ServerApi.CreateServerApi.Request(name = "name", description = "description")
+                request =
+                    ServerApi.CreateServerApi.Request(name = "name", description = "description")
             )
         val updateResponse =
             client.updateServer(
                 serverId = createResponse.body().serverId,
                 request =
-                ServerApi.UpdateServerApi.Request(
-                    name = "newName",
-                    description = "newDescription"
-                )
+                    ServerApi.UpdateServerApi.Request(
+                        name = "newName",
+                        description = "newDescription"
+                    )
             )
         updateResponse.status() shouldBe HttpStatus.OK
     }
@@ -63,16 +65,16 @@ class ServerHttpControllerTest : AnnotationSpec() {
                 .body()
                 .serverId
         assertThrows<HttpClientResponseException> {
-            client.updateServer(
-                serverId = serverId,
-                request =
-                ServerApi.UpdateServerApi.Request(
-                    name = "newName",
-                    description = "newDescription"
-                ),
-                authorization = authOf("anotherUser")
-            )
-        }
+                client.updateServer(
+                    serverId = serverId,
+                    request =
+                        ServerApi.UpdateServerApi.Request(
+                            name = "newName",
+                            description = "newDescription"
+                        ),
+                    authorization = authOf("anotherUser")
+                )
+            }
             .let { it.status shouldBe HttpStatus.FORBIDDEN }
     }
 
@@ -105,8 +107,8 @@ class ServerHttpControllerTest : AnnotationSpec() {
                 .body()
                 .serverId
         assertThrows<HttpClientResponseException> {
-            client.deleteServer(serverId = serverId, authorization = authOf("anotherUser"))
-        }
+                client.deleteServer(serverId = serverId, authorization = authOf("anotherUser"))
+            }
             .let { it.status shouldBe HttpStatus.FORBIDDEN }
     }
 
@@ -218,8 +220,8 @@ class ServerHttpControllerTest : AnnotationSpec() {
                 .serverId
         client.addUserToServer(serverId = serverId, authorization = authOf("otherMember"))
         assertThrows<HttpClientResponseException> {
-            client.kickUserFromServer(serverId, "otherMember", authOf("anotherUser"))
-        }
+                client.kickUserFromServer(serverId, "otherMember", authOf("anotherUser"))
+            }
             .let { it.status shouldBe HttpStatus.FORBIDDEN }
     }
 

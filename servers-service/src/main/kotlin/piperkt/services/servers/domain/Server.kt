@@ -47,4 +47,8 @@ class Server(
     fun updateDescription(description: String) {
         this.description = description
     }
+
+    fun isUserAdmin(username: String): Boolean {
+        return this.owner == username
+    }
 }

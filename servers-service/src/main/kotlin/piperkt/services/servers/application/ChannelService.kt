@@ -2,7 +2,6 @@ package piperkt.services.servers.application
 
 import piperkt.common.events.ChannelEvent
 import piperkt.common.events.ChannelEventPublisher
-import piperkt.common.id.ServerId
 import piperkt.services.servers.application.api.ChannelServiceApi
 import piperkt.services.servers.application.api.command.ChannelCommand
 import piperkt.services.servers.application.api.query.ChannelQuery
@@ -21,13 +20,13 @@ open class ChannelService(
         val server =
             serverRepository.findById(request.serverId)
                 ?: return Result.failure(ServerService.ServerNotFoundException())
-        return if (isUserAdmin(request.serverId, request.requestFrom)) {
+        return if (server.isUserAdmin(request.requestFrom)) {
             val channel =
                 ChannelFactory.createFromType(
-                    name = request.channelName,
-                    description = request.channelDescription,
-                    type = request.channelType
-                )
+                        name = request.channelName,
+                        description = request.channelDescription,
+                        type = request.channelType
+                    )
                     .also {
                         server.addChannel(it)
                         serverRepository.update(server)
@@ -45,7 +44,7 @@ open class ChannelService(
         val server =
             serverRepository.findById(request.serverId)
                 ?: return Result.failure(ServerService.ServerNotFoundException())
-        return if (isUserAdmin(request.serverId, request.requestFrom)) {
+        return if (server.isUserAdmin(request.requestFrom)) {
             val channel =
                 server.channels
                     .find { it.id == request.channelId }
@@ -77,7 +76,7 @@ open class ChannelService(
         val server =
             serverRepository.findById(request.serverId)
                 ?: return Result.failure(ServerService.ServerNotFoundException())
-        return if (isUserAdmin(request.serverId, request.requestFrom)) {
+        return if (server.isUserAdmin(request.requestFrom)) {
             server.channels
                 .find { it.id == request.channelId }
                 .let {
@@ -156,12 +155,5 @@ open class ChannelService(
         serverRepository.update(server)
         eventPublisher.publish(ChannelEvent.MessageInChannelEvent(request.channelId, message.id))
         return Result.success(ChannelCommand.AddMessageInChannel.Response(message.id))
-    }
-
-    private fun isUserAdmin(serverId: ServerId, username: String): Boolean {
-        serverRepository.findById(serverId)?.let {
-            return it.owner == username
-        }
-        return false
     }
 }

@@ -25,4 +25,3 @@ fun authOf(username: String): String {
     val req = HttpRequest.GET<Any>("/").basicAuth(username, "")
     return req.headers.get(HttpHeaders.AUTHORIZATION)!!
 }
-
