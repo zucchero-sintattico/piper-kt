@@ -140,7 +140,7 @@ open class ChannelService(
     override fun addMessageInChannel(
         request: ChannelCommand.AddMessageInChannel.Request
     ): Result<ChannelCommand.AddMessageInChannel.Response> {
-        if (!serverRepository.isUserInServer(request.serverId, request.sender)) {
+        if (!serverRepository.isUserInServer(request.serverId, request.requestFrom)) {
             return Result.failure(ServerService.UserNotInServerException())
         }
         val server =
@@ -151,7 +151,7 @@ open class ChannelService(
             return Result.failure(ServerService.ChannelNotFoundException())
         }
         val message =
-            MessageFactory.createMessage(content = request.content, sender = request.sender)
+            MessageFactory.createMessage(content = request.content, sender = request.requestFrom)
         channel.addMessage(message)
         serverRepository.update(server)
         eventPublisher.publish(ChannelEvent.MessageInChannelEvent(request.channelId, message.id))

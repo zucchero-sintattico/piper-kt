@@ -50,8 +50,7 @@ sealed interface ChannelCommand {
             val serverId: ServerId,
             val channelId: ChannelId,
             val content: String,
-            val sender: String,
-            override val requestFrom: String = sender
+            override val requestFrom: String,
         ) : AddMessageInChannel, ServiceRequest
 
         data class Response(val messageId: MessageId) : AddMessageInChannel

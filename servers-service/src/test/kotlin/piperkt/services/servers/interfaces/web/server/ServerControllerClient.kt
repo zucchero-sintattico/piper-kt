@@ -1,4 +1,4 @@
-package piperkt.services.servers.interfaces.web
+package piperkt.services.servers.interfaces.web.server
 
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpRequest
@@ -13,6 +13,7 @@ import io.micronaut.http.annotation.Put
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.retry.annotation.Retryable
 import piperkt.services.servers.interfaces.web.api.interactions.ServerApi
+import piperkt.services.servers.interfaces.web.authOf
 
 @Client("/servers")
 @Retryable
@@ -68,7 +69,3 @@ interface ServerControllerClient {
     ): HttpResponse<ServerApi.KickUserFromServerApi.Response>
 }
 
-fun authOf(username: String): String {
-    val req = HttpRequest.GET<Any>("/").basicAuth(username, "")
-    return req.headers.get(HttpHeaders.AUTHORIZATION)!!
-}

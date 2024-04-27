@@ -1,4 +1,4 @@
-package piperkt.services.servers.interfaces.web
+package piperkt.services.servers.interfaces.web.server
 
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
@@ -12,7 +12,8 @@ import piperkt.services.servers.interfaces.web.api.interactions.ServerApi
 @MicronautTest
 class ServerHttpControllerTest : AnnotationSpec() {
 
-    @Inject lateinit var client: ServerControllerClient
+    @Inject
+    lateinit var client: ServerControllerClient
 
     @Test
     fun `should create server`() {
@@ -34,10 +35,10 @@ class ServerHttpControllerTest : AnnotationSpec() {
             client.updateServer(
                 serverId = createResponse.body().serverId,
                 request =
-                    ServerApi.UpdateServerApi.Request(
-                        name = "newName",
-                        description = "newDescription"
-                    )
+                ServerApi.UpdateServerApi.Request(
+                    name = "newName",
+                    description = "newDescription"
+                )
             )
         updateResponse.status() shouldBe HttpStatus.OK
     }
@@ -62,16 +63,16 @@ class ServerHttpControllerTest : AnnotationSpec() {
                 .body()
                 .serverId
         assertThrows<HttpClientResponseException> {
-                client.updateServer(
-                    serverId = serverId,
-                    request =
-                        ServerApi.UpdateServerApi.Request(
-                            name = "newName",
-                            description = "newDescription"
-                        ),
-                    authorization = authOf("anotherUser")
-                )
-            }
+            client.updateServer(
+                serverId = serverId,
+                request =
+                ServerApi.UpdateServerApi.Request(
+                    name = "newName",
+                    description = "newDescription"
+                ),
+                authorization = authOf("anotherUser")
+            )
+        }
             .let { it.status shouldBe HttpStatus.FORBIDDEN }
     }
 
@@ -104,8 +105,8 @@ class ServerHttpControllerTest : AnnotationSpec() {
                 .body()
                 .serverId
         assertThrows<HttpClientResponseException> {
-                client.deleteServer(serverId = serverId, authorization = authOf("anotherUser"))
-            }
+            client.deleteServer(serverId = serverId, authorization = authOf("anotherUser"))
+        }
             .let { it.status shouldBe HttpStatus.FORBIDDEN }
     }
 
@@ -217,8 +218,8 @@ class ServerHttpControllerTest : AnnotationSpec() {
                 .serverId
         client.addUserToServer(serverId = serverId, authorization = authOf("otherMember"))
         assertThrows<HttpClientResponseException> {
-                client.kickUserFromServer(serverId, "otherMember", authOf("anotherUser"))
-            }
+            client.kickUserFromServer(serverId, "otherMember", authOf("anotherUser"))
+        }
             .let { it.status shouldBe HttpStatus.FORBIDDEN }
     }
 

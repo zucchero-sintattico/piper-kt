@@ -9,7 +9,7 @@ data class MessageDTO(
     val id: String,
     val sender: String,
     val content: String,
-    val timestamp: String,
+    val timestamp: String = java.time.Instant.now().toString(),
 ) {
     fun toDomain(): Message {
         return Message(
