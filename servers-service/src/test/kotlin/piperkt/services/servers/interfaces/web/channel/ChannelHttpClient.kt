@@ -48,7 +48,7 @@ interface ChannelHttpClient {
         @Header(HttpHeaders.AUTHORIZATION) authorization: String = authOf("user")
     ): HttpResponse<ChannelApi.DeleteChannelApi.Response>
 
-    @Post("/{serverId}/channels/")
+    @Get("/{serverId}/channels/")
     fun getChannelsFromServer(
         @PathVariable serverId: String,
         @Header(HttpHeaders.AUTHORIZATION) authorization: String = authOf("user")
