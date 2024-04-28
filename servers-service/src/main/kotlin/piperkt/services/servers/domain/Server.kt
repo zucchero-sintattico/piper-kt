@@ -4,7 +4,7 @@ import piperkt.common.AggregateRoot
 import piperkt.common.id.ServerId
 
 class Server(
-    id: ServerId = ServerId(),
+    override val id: ServerId = ServerId(),
     var name: String,
     var description: String = "",
     val owner: String,
@@ -38,14 +38,6 @@ class Server(
 
     fun removeChannel(channel: Channel) {
         this.channels.remove(channel)
-    }
-
-    fun updateName(name: String) {
-        this.name = name
-    }
-
-    fun updateDescription(description: String) {
-        this.description = description
     }
 
     fun isUserAdmin(username: String): Boolean {

@@ -8,20 +8,24 @@ import io.micronaut.http.annotation.Produces
 import io.micronaut.http.annotation.Status
 import io.micronaut.http.server.exceptions.ExceptionHandler
 import jakarta.inject.Singleton
-import piperkt.services.servers.application.exceptions.ServerService
+import piperkt.services.servers.application.exceptions.ServerServiceException
 
 @Produces
 @Singleton
-@Requires(classes = [ServerService.UserNotInServerException::class, ExceptionHandler::class])
-class UserNotInServer : ExceptionHandler<ServerService.UserNotInServerException, ErrorResponse> {
+@Requires(
+    classes =
+        [ServerServiceException.UserNotInServerExceptionException::class, ExceptionHandler::class]
+)
+class UserNotInServer :
+    ExceptionHandler<ServerServiceException.UserNotInServerExceptionException, ErrorResponse> {
     @Error(
         global = true,
-        exception = ServerService.UserNotInServerException::class,
+        exception = ServerServiceException.UserNotInServerExceptionException::class,
     )
     @Status(HttpStatus.FORBIDDEN)
     override fun handle(
         request: HttpRequest<*>?,
-        exception: ServerService.UserNotInServerException?
+        exception: ServerServiceException.UserNotInServerExceptionException?
     ): ErrorResponse {
         return ErrorResponse(exception!!.message)
     }

@@ -29,9 +29,9 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
             channelService
                 .createNewChannelInServer(
                     ChannelCommand.CreateNewChannelInServer.Request(
-                        channelName = request.name,
-                        channelDescription = request.description,
-                        channelType = request.type,
+                        name = request.name,
+                        description = request.description,
+                        type = request.type,
                         requestFrom = principal.name,
                         serverId = ServerId(serverId)
                     )
@@ -52,16 +52,16 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
                 .updateChannelInServer(
                     ChannelCommand.UpdateChannelInServer.Request(
                         channelId = ChannelId(channelId),
-                        channelName = request.name,
-                        channelDescription = request.description,
+                        newName = request.name,
+                        newDescription = request.description,
                         requestFrom = principal.name,
                         serverId = ServerId(serverId)
                     )
                 )
                 .getOrThrow()
         return ChannelApi.UpdateChannelApi.Response(
-            name = response.channelName,
-            description = response.channelDescription
+            name = response.newName,
+            description = response.newDescription
         )
     }
 

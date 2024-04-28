@@ -78,7 +78,4 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
     override fun findByMember(username: String): List<Server> {
         return serverModelRepository.findByUsersContains(username).map { it.toDomain() }
     }
-
-    // Extension method to create server from serverEntity
-
 }

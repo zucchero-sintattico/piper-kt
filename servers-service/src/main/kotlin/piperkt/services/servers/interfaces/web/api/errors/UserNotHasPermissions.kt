@@ -8,21 +8,24 @@ import io.micronaut.http.annotation.Produces
 import io.micronaut.http.annotation.Status
 import io.micronaut.http.server.exceptions.ExceptionHandler
 import jakarta.inject.Singleton
-import piperkt.services.servers.application.exceptions.ServerService
+import piperkt.services.servers.application.exceptions.ServerServiceException
 
 @Produces
 @Singleton
-@Requires(classes = [ServerService.UserNotHasPermissionsException::class, ExceptionHandler::class])
+@Requires(
+    classes =
+        [ServerServiceException.UserNotHasPermissionsException::class, ExceptionHandler::class]
+)
 class UserNotHasPermissions :
-    ExceptionHandler<ServerService.UserNotHasPermissionsException, ErrorResponse> {
+    ExceptionHandler<ServerServiceException.UserNotHasPermissionsException, ErrorResponse> {
     @Error(
         global = true,
-        exception = ServerService.UserNotHasPermissionsException::class,
+        exception = ServerServiceException.UserNotHasPermissionsException::class,
     )
     @Status(HttpStatus.FORBIDDEN)
     override fun handle(
         request: HttpRequest<*>?,
-        exception: ServerService.UserNotHasPermissionsException?
+        exception: ServerServiceException.UserNotHasPermissionsException?
     ): ErrorResponse {
         return ErrorResponse(exception!!.message)
     }

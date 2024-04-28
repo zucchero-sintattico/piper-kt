@@ -9,7 +9,6 @@ import jakarta.inject.Inject
 import org.junit.jupiter.api.assertThrows
 import piperkt.services.servers.interfaces.web.api.interactions.ServerApi
 import piperkt.services.servers.interfaces.web.authOf
-import piperkt.services.servers.interfaces.web.channel.ServerHttpClient
 
 @MicronautTest
 class ServerHttpControllerTest : AnnotationSpec() {

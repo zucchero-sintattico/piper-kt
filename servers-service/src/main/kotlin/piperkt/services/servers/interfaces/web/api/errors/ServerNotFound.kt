@@ -8,20 +8,24 @@ import io.micronaut.http.annotation.Produces
 import io.micronaut.http.annotation.Status
 import io.micronaut.http.server.exceptions.ExceptionHandler
 import jakarta.inject.Singleton
-import piperkt.services.servers.application.exceptions.ServerService
+import piperkt.services.servers.application.exceptions.ServerServiceException
 
 @Produces
 @Singleton
-@Requires(classes = [ServerService.ServerNotFoundException::class, ExceptionHandler::class])
-class ServerNotFound : ExceptionHandler<ServerService.ServerNotFoundException, ErrorResponse> {
+@Requires(
+    classes =
+        [ServerServiceException.ServerNotFoundExceptionException::class, ExceptionHandler::class]
+)
+class ServerNotFound :
+    ExceptionHandler<ServerServiceException.ServerNotFoundExceptionException, ErrorResponse> {
     @Error(
         global = true,
-        exception = ServerService.ServerNotFoundException::class,
+        exception = ServerServiceException.ServerNotFoundExceptionException::class,
     )
     @Status(HttpStatus.NOT_FOUND)
     override fun handle(
         request: HttpRequest<*>?,
-        exception: ServerService.ServerNotFoundException?
+        exception: ServerServiceException.ServerNotFoundExceptionException?
     ): ErrorResponse {
         return ErrorResponse(exception!!.message)
     }

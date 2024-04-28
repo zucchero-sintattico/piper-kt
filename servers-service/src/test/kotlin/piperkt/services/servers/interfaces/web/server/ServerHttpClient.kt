@@ -1,4 +1,4 @@
-package piperkt.services.servers.interfaces.web.channel
+package piperkt.services.servers.interfaces.web.server
 
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpResponse

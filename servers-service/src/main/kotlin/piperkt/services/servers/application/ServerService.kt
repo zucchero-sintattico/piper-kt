@@ -5,7 +5,7 @@ import piperkt.common.events.ServerEventPublisher
 import piperkt.services.servers.application.api.ServerServiceApi
 import piperkt.services.servers.application.api.command.ServerCommand
 import piperkt.services.servers.application.api.query.ServerQuery
-import piperkt.services.servers.application.exceptions.ServerService
+import piperkt.services.servers.application.exceptions.ServerServiceException
 import piperkt.services.servers.domain.factory.ServerFactory
 
 open class ServerService(
@@ -32,10 +32,10 @@ open class ServerService(
                 eventPublisher.publish(ServerEvent.ServerDeletedEvent(request.serverId))
                 Result.success(ServerCommand.DeleteServer.Response(request.serverId))
             } else {
-                return Result.failure(ServerService.UserNotHasPermissionsException())
+                return Result.failure(ServerServiceException.UserNotHasPermissionsException())
             }
         } else {
-            Result.failure(ServerService.ServerNotFoundException())
+            Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         }
     }
 
@@ -45,8 +45,8 @@ open class ServerService(
         val server = serverRepository.findById(request.serverId)
         return if (server != null) {
             if (server.isUserAdmin(request.requestFrom)) {
-                request.name?.let { server.updateName(it) }
-                request.description?.let { server.updateDescription(it) }
+                request.name?.let { server.name = it }
+                request.description?.let { server.description = it }
                 serverRepository.update(server)
                 eventPublisher.publish(ServerEvent.ServerUpdatedEvent(request.serverId))
                 Result.success(
@@ -57,10 +57,10 @@ open class ServerService(
                     )
                 )
             } else {
-                Result.failure(ServerService.UserNotHasPermissionsException())
+                Result.failure(ServerServiceException.UserNotHasPermissionsException())
             }
         } else {
-            Result.failure(ServerService.ServerNotFoundException())
+            Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         }
     }
 
@@ -74,7 +74,7 @@ open class ServerService(
             eventPublisher.publish(ServerEvent.ServerUserAddedEvent(server.id, request.requestFrom))
             Result.success(ServerCommand.AddUserToServer.Response(server.id, request.requestFrom))
         } else {
-            Result.failure(ServerService.ServerNotFoundException())
+            Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         }
     }
 
@@ -84,7 +84,7 @@ open class ServerService(
         val server = serverRepository.findById(request.serverId)
         if (server != null) {
             if (!server.users.contains(request.requestFrom)) {
-                return Result.failure(ServerService.UserNotInServerException())
+                return Result.failure(ServerServiceException.UserNotInServerExceptionException())
             }
             server.removeUser(request.requestFrom)
             serverRepository.update(server)
@@ -95,7 +95,7 @@ open class ServerService(
                 ServerCommand.RemoveUserFromServer.Response(server.id, request.requestFrom)
             )
         } else {
-            return Result.failure(ServerService.ServerNotFoundException())
+            return Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         }
     }
 
@@ -105,10 +105,10 @@ open class ServerService(
         val server = serverRepository.findById(request.serverId)
         if (server != null) {
             if (!server.isUserAdmin(request.requestFrom)) {
-                return Result.failure(ServerService.UserNotHasPermissionsException())
+                return Result.failure(ServerServiceException.UserNotHasPermissionsException())
             }
             if (!server.users.contains(request.username)) {
-                return Result.failure(ServerService.UserNotInServerException())
+                return Result.failure(ServerServiceException.UserNotInServerExceptionException())
             }
             server.removeUser(request.username)
             serverRepository.update(server)
@@ -117,7 +117,7 @@ open class ServerService(
                 ServerCommand.KickUserFromServer.Response(server.id, request.username)
             )
         } else {
-            return Result.failure(ServerService.ServerNotFoundException())
+            return Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         }
     }
 
@@ -129,10 +129,10 @@ open class ServerService(
             if (server.users.contains(request.requestFrom)) {
                 Result.success(ServerQuery.GetServerUsers.Response(server.users))
             } else {
-                Result.failure(ServerService.UserNotInServerException())
+                Result.failure(ServerServiceException.UserNotInServerExceptionException())
             }
         } else {
-            Result.failure(ServerService.ServerNotFoundException())
+            Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         }
     }
 
