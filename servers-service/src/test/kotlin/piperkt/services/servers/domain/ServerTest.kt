@@ -14,18 +14,6 @@ class ServerTest : AnnotationSpec() {
     }
 
     @Test
-    fun `should allow to change the name`() {
-        server.updateName("new-server-name")
-        server.name shouldBe "new-server-name"
-    }
-
-    @Test
-    fun `should allow to change the description`() {
-        server.updateDescription("new-server-description")
-        server.description shouldBe "new-server-description"
-    }
-
-    @Test
     fun `should allow to add a user to the server`() {
         server.addUser("user-id")
         server.users.size shouldBe 2

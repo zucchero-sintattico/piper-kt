@@ -106,7 +106,7 @@ open class ChannelService(
             Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         } else {
             if (!server.users.contains(request.requestFrom)) {
-                Result.failure(ServerServiceException.UserNotInServerExceptionException())
+                Result.failure(ServerServiceException.UserNotHasPermissionsException())
             } else {
                 Result.success(ChannelQuery.GetChannelByServerId.Response(server.channels))
             }
@@ -117,7 +117,7 @@ open class ChannelService(
         request: ChannelQuery.GetMessagesFromChannelId.Request
     ): Result<ChannelQuery.GetMessagesFromChannelId.Response> {
         if (!serverRepository.isUserInServer(request.serverId, request.requestFrom)) {
-            return Result.failure(ServerServiceException.UserNotInServerExceptionException())
+            return Result.failure(ServerServiceException.UserNotHasPermissionsException())
         }
         val server =
             serverRepository.findById(request.serverId)
@@ -140,7 +140,7 @@ open class ChannelService(
         request: ChannelCommand.AddMessageInChannel.Request
     ): Result<ChannelCommand.AddMessageInChannel.Response> {
         if (!serverRepository.isUserInServer(request.serverId, request.requestFrom)) {
-            return Result.failure(ServerServiceException.UserNotInServerExceptionException())
+            return Result.failure(ServerServiceException.UserNotHasPermissionsException())
         }
         val server =
             serverRepository.findById(request.serverId)

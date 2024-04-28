@@ -193,7 +193,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 content = "content",
                 requestFrom = "sender"
             )
-        ) shouldBe Result.failure(ServerServiceException.UserNotInServerExceptionException())
+        ) shouldBe Result.failure(ServerServiceException.UserNotHasPermissionsException())
         verifyNoInteractions(eventPublisher)
     }
 }

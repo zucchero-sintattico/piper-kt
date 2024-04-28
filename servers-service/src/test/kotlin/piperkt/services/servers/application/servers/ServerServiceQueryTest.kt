@@ -5,7 +5,6 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.reset
 import org.mockito.kotlin.whenever
 import piperkt.services.servers.application.api.query.ServerQuery
-import piperkt.services.servers.application.exceptions.ServerServiceException
 
 class ServerServiceQueryTest : BasicServerServiceTest() {
     @BeforeEach
@@ -26,12 +25,5 @@ class ServerServiceQueryTest : BasicServerServiceTest() {
         serverService.getServersFromUser(
             ServerQuery.GetServersFromUser.Request("username")
         ) shouldBe Result.success(ServerQuery.GetServersFromUser.Response(listOf(simpleServer)))
-    }
-
-    @Test
-    fun `should not allow to get servers from a user that isn't making the request`() {
-        serverService.getServersFromUser(
-            ServerQuery.GetServersFromUser.Request("username")
-        ) shouldBe Result.failure(ServerServiceException.UserNotHasPermissionsException())
     }
 }

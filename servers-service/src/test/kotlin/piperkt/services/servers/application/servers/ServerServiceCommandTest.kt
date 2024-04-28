@@ -144,6 +144,9 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
     @Test
     fun `should allow user to leave the server`() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer)
+        serverService.addUserToServer(
+            ServerCommand.AddUserToServer.Request(simpleServerId, "member")
+        ) shouldBe Result.success(ServerCommand.AddUserToServer.Response(simpleServerId, "member"))
         serverService.removeUserFromServer(
             ServerCommand.RemoveUserFromServer.Request(simpleServerId, "member")
         ) shouldBe
@@ -154,6 +157,11 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
     @Test
     fun `should allow the admin to kick a user`() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer)
+        // Add user to server
+        serverService.addUserToServer(
+            ServerCommand.AddUserToServer.Request(simpleServerId, "member")
+        ) shouldBe Result.success(ServerCommand.AddUserToServer.Response(simpleServerId, "member"))
+        // And then kick the user
         serverService.kickUserFromServer(
             ServerCommand.KickUserFromServer.Request(simpleServerId, "member", "owner")
         ) shouldBe
@@ -163,6 +171,7 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
 
     @Test
     fun `should not allow non-admin to kick a user`() {
+        whenever(serverRepository.findById(any())).thenReturn(simpleServer)
         serverService.kickUserFromServer(
             ServerCommand.KickUserFromServer.Request(simpleServerId, "member", "member")
         ) shouldBe Result.failure(ServerServiceException.UserNotHasPermissionsException())
