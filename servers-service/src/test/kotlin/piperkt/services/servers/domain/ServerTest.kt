@@ -1,11 +1,11 @@
 package piperkt.services.servers.domain
 
-import io.kotest.core.spec.style.AnnotationSpec
+import base.UnitTest
 import io.kotest.matchers.shouldBe
 import piperkt.services.servers.domain.factory.ChannelFactory
 import piperkt.services.servers.domain.factory.ServerFactory
 
-class ServerTest : AnnotationSpec() {
+class ServerTest : UnitTest() {
     private lateinit var server: Server
 
     @BeforeEach

@@ -1,19 +1,17 @@
 package piperkt.services.servers.interfaces.web.channel
 
+import base.IntegrationTest
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.exceptions.HttpClientResponseException
-import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import jakarta.inject.Inject
 import org.junit.jupiter.api.assertThrows
 import piperkt.services.servers.interfaces.web.api.interactions.ChannelApi
 import piperkt.services.servers.interfaces.web.api.interactions.ServerApi
 import piperkt.services.servers.interfaces.web.authOf
 
-@MicronautTest
-class ChannelHttpControllerTest : AnnotationSpec() {
+class ChannelHttpControllerTest : IntegrationTest() {
 
     @Inject lateinit var client: ChannelHttpClient
 

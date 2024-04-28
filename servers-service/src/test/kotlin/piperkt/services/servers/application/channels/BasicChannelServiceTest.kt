@@ -1,6 +1,6 @@
 package piperkt.services.servers.application.channels
 
-import io.kotest.core.spec.style.AnnotationSpec
+import base.UnitTest
 import org.mockito.kotlin.mock
 import piperkt.common.events.ChannelEventPublisher
 import piperkt.common.id.ChannelId
@@ -15,7 +15,7 @@ import piperkt.services.servers.domain.factory.ChannelFactory
 import piperkt.services.servers.domain.factory.MessageFactory
 import piperkt.services.servers.domain.factory.ServerFactory
 
-open class BasicChannelServiceTest : AnnotationSpec() {
+open class BasicChannelServiceTest : UnitTest() {
 
     protected val serverRepository = mock<ServerRepository>()
     protected val eventPublisher = mock<ChannelEventPublisher>()
