@@ -21,7 +21,7 @@ class UserController(private val userService: UserService) {
 
     @Get("/whoami")
     fun whoami(principal: Principal): UserDTO {
-        println("The principal is: ${principal.name}")
+        println("The user is: ${principal.name}")
         return userService.getUser(principal.name).toDTO()
     }
 }

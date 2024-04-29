@@ -5,20 +5,20 @@ import piperkt.common.EventPublisher
 
 sealed interface UserEvent : DomainEvent {
     data class UserCreated(
-        val username: Username,
+        val username: String,
         val description: String,
         val profilePicture: ByteArray
     ) : UserEvent
 
     data class UserUpdated(
-        val username: Username,
+        val username: String,
         val description: String? = null,
         val profilePicture: ByteArray? = null
     ) : UserEvent
 
-    data class UserLoggedIn(val username: Username) : UserEvent
+    data class UserLoggedIn(val username: String) : UserEvent
 
-    data class UserLoggedOut(val username: Username) : UserEvent
+    data class UserLoggedOut(val username: String) : UserEvent
 }
 
 interface UserEventPublisher : EventPublisher<UserEvent>

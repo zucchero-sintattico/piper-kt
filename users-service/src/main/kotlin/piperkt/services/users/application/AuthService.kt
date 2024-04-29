@@ -4,17 +4,10 @@ import org.mindrot.jbcrypt.BCrypt.*
 import piperkt.common.orThrow
 import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserError
-import piperkt.services.users.domain.user.UserEvent.*
+import piperkt.services.users.domain.user.UserEvent
 import piperkt.services.users.domain.user.UserEventPublisher
 import piperkt.services.users.domain.user.UserRepository
 import piperkt.services.users.domain.user.Username
-
-data class RegisterRequest(
-    val username: String,
-    val password: String,
-    val description: String = "",
-    val photo: ByteArray = byteArrayOf()
-)
 
 open class AuthService(
     private val userRepository: UserRepository,
@@ -33,17 +26,21 @@ open class AuthService(
         return user
     }
 
-    fun register(request: RegisterRequest): User {
-        if (userRepository.findByUsername(request.username) != null) {
-            throw UserError.UserAlreadyExists(Username(request.username))
+    fun register(
+        username: String,
+        password: String,
+        description: String = "",
+        photo: ByteArray = byteArrayOf()
+    ): User {
+        if (userRepository.findByUsername(username) != null) {
+            throw UserError.UserAlreadyExists(Username(username))
         }
         val salt = gensalt()
-        val hashedPassword = hashpw(request.password, salt)
-        val user =
-            User(Username(request.username), hashedPassword, request.description, request.photo)
+        val hashedPassword = hashpw(password, salt)
+        val user = User(Username(username), hashedPassword, description, photo)
         userRepository.save(user)
         userEventPublisher.publish(
-            UserCreated(user.username, user.description, user.profilePicture)
+            UserEvent.UserCreated(user.username.value, user.description, user.profilePicture)
         )
         return user
     }
@@ -53,7 +50,7 @@ open class AuthService(
         if (!checkpw(password, user.password)) {
             throw UserError.InvalidPassword(password)
         }
-        userEventPublisher.publish(UserLoggedIn(user.username))
+        userEventPublisher.publish(UserEvent.UserLoggedIn(user.username.value))
         return user
     }
 
@@ -66,10 +63,5 @@ open class AuthService(
         return userRepository
             .findByRefreshToken(refreshToken)
             .orThrow(UserError.RefreshTokenNotFound(refreshToken))
-    }
-
-    fun logout(username: String) {
-        updateUser(Username(username)) { clearRefreshToken() }
-        userEventPublisher.publish(UserLoggedOut(Username(username)))
     }
 }

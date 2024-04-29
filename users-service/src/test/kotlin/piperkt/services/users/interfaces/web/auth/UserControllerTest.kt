@@ -1,23 +1,28 @@
 package piperkt.services.users.interfaces.web.auth
 
 import base.IntegrationTest
+import io.kotest.matchers.shouldBe
 import io.micronaut.http.HttpHeaders
-import io.micronaut.http.HttpRequest
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Header
 import io.micronaut.http.client.annotation.Client
+import piperkt.services.users.interfaces.web.auth.TestUtils.authOf
 
 @Client("/")
 interface UserControllerClient {
-    @Get("whoami") fun whoami(@Header(HttpHeaders.AUTHORIZATION) authorization: String)
-}
+    val auth: String
+        get() = authOf("user")
 
-fun authOf(username: String): String {
-    val req = HttpRequest.GET<Any>("/").basicAuth(username, "")
-    return req.headers.get(HttpHeaders.AUTHORIZATION)!!
+    @Get("whoami") fun whoami(@Header(HttpHeaders.AUTHORIZATION) authorization: String = auth)
+
+    @Get("users/{username}")
+    fun getUser(username: String, @Header(HttpHeaders.AUTHORIZATION) authorization: String = auth)
 }
 
 class UserControllerTest(private val userControllerClient: UserControllerClient) :
     IntegrationTest.FunSpec({
-        // userControllerClient.whoami(authOf("user"))
+        test("whoami") {
+            val response = userControllerClient.whoami()
+            response shouldBe "user"
+        }
     })

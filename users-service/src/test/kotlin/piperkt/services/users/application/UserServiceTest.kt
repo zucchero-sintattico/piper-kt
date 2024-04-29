@@ -45,7 +45,7 @@ class UserServiceTest :
             val updatedUser = userRepository.findByUsername(username.value)!!
             updatedUser.description shouldBe newDescription
             userEventPublisher.publishedEvents shouldBe
-                listOf(UserUpdated(user.username, description = newDescription))
+                listOf(UserUpdated(user.username.value, description = newDescription))
         }
 
         test("updateUserDescription throws UserNotFound") {
@@ -60,7 +60,7 @@ class UserServiceTest :
             val updatedUser = userRepository.findByUsername(username.value)!!
             updatedUser.profilePicture shouldBe newProfilePicture
             userEventPublisher.publishedEvents shouldBe
-                listOf(UserUpdated(user.username, profilePicture = newProfilePicture))
+                listOf(UserUpdated(user.username.value, profilePicture = newProfilePicture))
         }
 
         test("updateUserProfilePicture throws UserNotFound") {
