@@ -10,9 +10,9 @@ sealed interface ChannelCommand {
     sealed interface CreateNewChannelInServer : ChannelCommand {
         data class Request(
             val serverId: ServerId,
-            val channelName: String,
-            val channelDescription: String,
-            val channelType: String,
+            val name: String,
+            val description: String,
+            val type: String,
             override val requestFrom: String
         ) : CreateNewChannelInServer, ServiceRequest
 
@@ -23,12 +23,16 @@ sealed interface ChannelCommand {
         data class Request(
             val serverId: ServerId,
             val channelId: ChannelId,
-            val channelName: String?,
-            val channelDescription: String?,
+            val newName: String?,
+            val newDescription: String?,
             override val requestFrom: String
         ) : UpdateChannelInServer, ServiceRequest
 
-        data object Response : UpdateChannelInServer
+        data class Response(
+            val channelId: ChannelId,
+            val newName: String,
+            val newDescription: String
+        ) : UpdateChannelInServer
     }
 
     sealed interface DeleteChannelInServer : ChannelCommand {
@@ -38,7 +42,7 @@ sealed interface ChannelCommand {
             override val requestFrom: String
         ) : DeleteChannelInServer, ServiceRequest
 
-        data object Response : DeleteChannelInServer
+        data class Response(val channelId: ChannelId) : DeleteChannelInServer
     }
 
     sealed interface AddMessageInChannel : ChannelCommand {
@@ -46,8 +50,7 @@ sealed interface ChannelCommand {
             val serverId: ServerId,
             val channelId: ChannelId,
             val content: String,
-            val sender: String,
-            override val requestFrom: String = sender
+            override val requestFrom: String,
         ) : AddMessageInChannel, ServiceRequest
 
         data class Response(val messageId: MessageId) : AddMessageInChannel

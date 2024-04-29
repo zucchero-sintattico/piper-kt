@@ -9,10 +9,10 @@ enum class ChannelType {
 }
 
 open class Channel(
+    override val id: ChannelId = ChannelId(),
     var name: String,
     val type: ChannelType,
     var description: String,
-    id: ChannelId = ChannelId(),
     val messages: MutableList<Message> = mutableListOf()
 ) : Entity<ChannelId>(id) {
     override fun equals(other: Any?): Boolean {

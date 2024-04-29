@@ -6,7 +6,7 @@ import piperkt.common.events.ServerEvent
 import piperkt.common.events.ServerEventPublisher
 
 @KafkaClient
-interface KafkaServerEventPublisher : ServerEventPublisher {
+abstract class KafkaServerEventPublisher : ServerEventPublisher {
     override fun publish(event: ServerEvent) {
         when (event) {
             is ServerEvent.ServerCreatedEvent -> publish(event)
@@ -18,15 +18,15 @@ interface KafkaServerEventPublisher : ServerEventPublisher {
         }
     }
 
-    @Topic("server-events") fun publish(event: ServerEvent.ServerCreatedEvent)
+    @Topic("server-events") abstract fun publish(event: ServerEvent.ServerCreatedEvent)
 
-    @Topic("server-events") fun publish(event: ServerEvent.ServerDeletedEvent)
+    @Topic("server-events") abstract fun publish(event: ServerEvent.ServerDeletedEvent)
 
-    @Topic("server-events") fun publish(event: ServerEvent.ServerUpdatedEvent)
+    @Topic("server-events") abstract fun publish(event: ServerEvent.ServerUpdatedEvent)
 
-    @Topic("server-events") fun publish(event: ServerEvent.ServerUserAddedEvent)
+    @Topic("server-events") abstract fun publish(event: ServerEvent.ServerUserAddedEvent)
 
-    @Topic("server-events") fun publish(event: ServerEvent.ServerUserRemovedEvent)
+    @Topic("server-events") abstract fun publish(event: ServerEvent.ServerUserRemovedEvent)
 
-    @Topic("server-events") fun publish(event: ServerEvent.ServerUserKickedEvent)
+    @Topic("server-events") abstract fun publish(event: ServerEvent.ServerUserKickedEvent)
 }

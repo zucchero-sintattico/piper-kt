@@ -6,7 +6,7 @@ import piperkt.common.events.ChannelEvent
 import piperkt.common.events.ChannelEventPublisher
 
 @KafkaClient
-interface KafkaChannelEventPublisher : ChannelEventPublisher {
+abstract class KafkaChannelEventPublisher : ChannelEventPublisher {
     override fun publish(event: ChannelEvent) {
         when (event) {
             is ChannelEvent.ChannelCreatedEvent -> publish(event)
@@ -16,11 +16,11 @@ interface KafkaChannelEventPublisher : ChannelEventPublisher {
         }
     }
 
-    @Topic("channel-events") fun publish(event: ChannelEvent.ChannelCreatedEvent)
+    @Topic("channel-events") abstract fun publish(event: ChannelEvent.ChannelCreatedEvent)
 
-    @Topic("channel-events") fun publish(event: ChannelEvent.ChannelDeletedEvent)
+    @Topic("channel-events") abstract fun publish(event: ChannelEvent.ChannelDeletedEvent)
 
-    @Topic("channel-events") fun publish(event: ChannelEvent.ChannelUpdatedEvent)
+    @Topic("channel-events") abstract fun publish(event: ChannelEvent.ChannelUpdatedEvent)
 
-    @Topic("channel-events") fun publish(event: ChannelEvent.MessageInChannelEvent)
+    @Topic("channel-events") abstract fun publish(event: ChannelEvent.MessageInChannelEvent)
 }

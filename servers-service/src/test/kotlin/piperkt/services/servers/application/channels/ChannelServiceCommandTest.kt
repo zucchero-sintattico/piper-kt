@@ -8,9 +8,7 @@ import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 import piperkt.common.events.ChannelEvent
 import piperkt.services.servers.application.api.command.ChannelCommand
-import piperkt.services.servers.application.exceptions.ServerOrChannelNotFoundException
-import piperkt.services.servers.application.exceptions.UserNotHasPermissionsException
-import piperkt.services.servers.application.exceptions.UserNotInServerException
+import piperkt.services.servers.application.exceptions.ServerServiceException
 
 class ChannelServiceCommandTest : BasicChannelServiceTest() {
 
@@ -25,9 +23,9 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         val request =
             ChannelCommand.CreateNewChannelInServer.Request(
                 serverId = simpleServerId,
-                channelName = "channelName",
-                channelDescription = "channelDescription",
-                channelType = "TEXT",
+                name = "channelName",
+                description = "channelDescription",
+                type = "TEXT",
                 requestFrom = "owner"
             )
         val response = channelService.createNewChannelInServer(request)
@@ -44,13 +42,13 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         val request =
             ChannelCommand.CreateNewChannelInServer.Request(
                 serverId = simpleServerId,
-                channelName = "channelName",
-                channelDescription = "channelDescription",
-                channelType = "TEXT",
+                name = "channelName",
+                description = "channelDescription",
+                type = "TEXT",
                 requestFrom = "owner"
             )
         channelService.createNewChannelInServer(request) shouldBe
-            Result.failure(ServerOrChannelNotFoundException())
+            Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -60,13 +58,13 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         val request =
             ChannelCommand.CreateNewChannelInServer.Request(
                 serverId = simpleServerId,
-                channelName = "channelName",
-                channelDescription = "channelDescription",
-                channelType = "TEXT",
+                name = "channelName",
+                description = "channelDescription",
+                type = "TEXT",
                 requestFrom = "notOwner"
             )
         channelService.createNewChannelInServer(request) shouldBe
-            Result.failure(UserNotHasPermissionsException())
+            Result.failure(ServerServiceException.UserNotHasPermissionsException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -77,26 +75,33 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
             ChannelCommand.UpdateChannelInServer.Request(
                 serverId = simpleServerId,
                 channelId = simpleChannelId,
-                channelName = "newChannelName",
-                channelDescription = "channelDescription",
+                newName = "newChannelName",
+                newDescription = "channelDescription",
                 requestFrom = "owner"
             )
-        ) shouldBe Result.success(ChannelCommand.UpdateChannelInServer.Response)
+        ) shouldBe
+            Result.success(
+                ChannelCommand.UpdateChannelInServer.Response(
+                    channelId = simpleChannelId,
+                    newName = "newChannelName",
+                    newDescription = "channelDescription"
+                )
+            )
         verify(eventPublisher).publish(ChannelEvent.ChannelUpdatedEvent(simpleChannelId))
     }
 
     @Test
-    fun `should not allow to update a channel if server or channel don't exist`() {
+    fun `should not allow to update a channel if channel doesn't exist`() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer)
         channelService.updateChannelInServer(
             ChannelCommand.UpdateChannelInServer.Request(
                 serverId = simpleServerId,
                 channelId = simpleChannelId,
-                channelName = "channelName",
-                channelDescription = "channelDescription",
+                newName = "channelName",
+                newDescription = "channelDescription",
                 requestFrom = "owner"
             )
-        ) shouldBe Result.failure(ServerOrChannelNotFoundException("Server or Channel not found"))
+        ) shouldBe Result.failure(ServerServiceException.ChannelNotFoundException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -107,11 +112,11 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
             ChannelCommand.UpdateChannelInServer.Request(
                 serverId = simpleServerId,
                 channelId = simpleChannelId,
-                channelName = "channelName",
-                channelDescription = "channelDescription",
+                newName = "channelName",
+                newDescription = "channelDescription",
                 requestFrom = "notOwner"
             )
-        ) shouldBe Result.failure(UserNotHasPermissionsException())
+        ) shouldBe Result.failure(ServerServiceException.UserNotHasPermissionsException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -124,12 +129,15 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 channelId = simpleChannelId,
                 requestFrom = "owner"
             )
-        ) shouldBe Result.success(ChannelCommand.DeleteChannelInServer.Response)
+        ) shouldBe
+            Result.success(
+                ChannelCommand.DeleteChannelInServer.Response(channelId = simpleChannelId)
+            )
         verify(eventPublisher).publish(ChannelEvent.ChannelDeletedEvent(simpleChannelId))
     }
 
     @Test
-    fun `should not allow to delete a channel if server or channel don't exist`() {
+    fun `should not allow to delete a channel if channel doesn't exist`() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer)
         channelService.deleteChannelInServer(
             ChannelCommand.DeleteChannelInServer.Request(
@@ -137,7 +145,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 channelId = simpleChannelId,
                 requestFrom = "owner"
             )
-        ) shouldBe Result.failure(ServerOrChannelNotFoundException("Server or Channel not found"))
+        ) shouldBe Result.failure(ServerServiceException.ChannelNotFoundException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -150,7 +158,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 channelId = simpleChannelId,
                 requestFrom = "notOwner"
             )
-        ) shouldBe Result.failure(UserNotHasPermissionsException())
+        ) shouldBe Result.failure(ServerServiceException.UserNotHasPermissionsException())
         verifyNoInteractions(eventPublisher)
     }
 
@@ -165,7 +173,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                     serverId = simpleServerId,
                     channelId = simpleChannelId,
                     content = "content",
-                    sender = "sender"
+                    requestFrom = "sender"
                 )
             )
         response.isSuccess shouldBe true
@@ -183,9 +191,9 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 serverId = simpleServerId,
                 channelId = simpleChannelId,
                 content = "content",
-                sender = "sender"
+                requestFrom = "sender"
             )
-        ) shouldBe Result.failure(UserNotInServerException())
+        ) shouldBe Result.failure(ServerServiceException.UserNotHasPermissionsException())
         verifyNoInteractions(eventPublisher)
     }
 }

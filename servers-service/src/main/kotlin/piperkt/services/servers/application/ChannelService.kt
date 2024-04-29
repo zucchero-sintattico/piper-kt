@@ -2,13 +2,10 @@ package piperkt.services.servers.application
 
 import piperkt.common.events.ChannelEvent
 import piperkt.common.events.ChannelEventPublisher
-import piperkt.common.id.ServerId
 import piperkt.services.servers.application.api.ChannelServiceApi
 import piperkt.services.servers.application.api.command.ChannelCommand
 import piperkt.services.servers.application.api.query.ChannelQuery
-import piperkt.services.servers.application.exceptions.ServerOrChannelNotFoundException
-import piperkt.services.servers.application.exceptions.UserNotHasPermissionsException
-import piperkt.services.servers.application.exceptions.UserNotInServerException
+import piperkt.services.servers.application.exceptions.ServerServiceException
 import piperkt.services.servers.domain.factory.ChannelFactory
 import piperkt.services.servers.domain.factory.MessageFactory
 
@@ -22,13 +19,13 @@ open class ChannelService(
     ): Result<ChannelCommand.CreateNewChannelInServer.Response> {
         val server =
             serverRepository.findById(request.serverId)
-                ?: return Result.failure(ServerOrChannelNotFoundException())
-        return if (isUserAdmin(request.serverId, request.requestFrom)) {
+                ?: return Result.failure(ServerServiceException.ServerNotFoundExceptionException())
+        return if (server.isUserAdmin(request.requestFrom)) {
             val channel =
                 ChannelFactory.createFromType(
-                        name = request.channelName,
-                        description = request.channelDescription,
-                        type = request.channelType
+                        name = request.name,
+                        description = request.description,
+                        type = request.type
                     )
                     .also {
                         server.addChannel(it)
@@ -37,7 +34,7 @@ open class ChannelService(
             eventPublisher.publish(ChannelEvent.ChannelCreatedEvent(channel.id))
             Result.success(ChannelCommand.CreateNewChannelInServer.Response(channel.id))
         } else {
-            Result.failure(UserNotHasPermissionsException())
+            Result.failure(ServerServiceException.UserNotHasPermissionsException())
         }
     }
 
@@ -46,24 +43,30 @@ open class ChannelService(
     ): Result<ChannelCommand.UpdateChannelInServer.Response> {
         val server =
             serverRepository.findById(request.serverId)
-                ?: return Result.failure(ServerOrChannelNotFoundException())
-        return if (isUserAdmin(request.serverId, request.requestFrom)) {
+                ?: return Result.failure(ServerServiceException.ServerNotFoundExceptionException())
+        return if (server.isUserAdmin(request.requestFrom)) {
             val channel =
                 server.channels
                     .find { it.id == request.channelId }
                     ?.also {
-                        it.name = request.channelName ?: it.name
-                        it.description = request.channelDescription ?: it.description
+                        it.name = request.newName ?: it.name
+                        it.description = request.newDescription ?: it.description
                         serverRepository.update(server)
                     }
             if (channel != null) {
                 eventPublisher.publish(ChannelEvent.ChannelUpdatedEvent(request.channelId))
-                Result.success(ChannelCommand.UpdateChannelInServer.Response)
+                Result.success(
+                    ChannelCommand.UpdateChannelInServer.Response(
+                        channelId = channel.id,
+                        newName = channel.name,
+                        newDescription = channel.description
+                    )
+                )
             } else {
-                Result.failure(ServerOrChannelNotFoundException())
+                Result.failure(ServerServiceException.ChannelNotFoundException())
             }
         } else {
-            Result.failure(UserNotHasPermissionsException())
+            Result.failure(ServerServiceException.UserNotHasPermissionsException())
         }
     }
 
@@ -72,22 +75,26 @@ open class ChannelService(
     ): Result<ChannelCommand.DeleteChannelInServer.Response> {
         val server =
             serverRepository.findById(request.serverId)
-                ?: return Result.failure(ServerOrChannelNotFoundException())
-        return if (isUserAdmin(request.serverId, request.requestFrom)) {
+                ?: return Result.failure(ServerServiceException.ServerNotFoundExceptionException())
+        return if (server.isUserAdmin(request.requestFrom)) {
             server.channels
                 .find { it.id == request.channelId }
                 .let {
                     if (it == null) {
-                        Result.failure(ServerOrChannelNotFoundException())
+                        Result.failure(ServerServiceException.ChannelNotFoundException())
                     } else {
                         server.removeChannel(it)
                         serverRepository.update(server)
                         eventPublisher.publish(ChannelEvent.ChannelDeletedEvent(request.channelId))
-                        Result.success(ChannelCommand.DeleteChannelInServer.Response)
+                        Result.success(
+                            ChannelCommand.DeleteChannelInServer.Response(
+                                channelId = request.channelId
+                            )
+                        )
                     }
                 }
         } else {
-            Result.failure(UserNotHasPermissionsException())
+            Result.failure(ServerServiceException.UserNotHasPermissionsException())
         }
     }
 
@@ -96,29 +103,28 @@ open class ChannelService(
     ): Result<ChannelQuery.GetChannelByServerId.Response> {
         val server = serverRepository.findById(request.serverId)
         return if (server == null) {
-            Result.failure(ServerOrChannelNotFoundException())
+            Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         } else {
             if (!server.users.contains(request.requestFrom)) {
-                Result.failure(UserNotInServerException())
+                Result.failure(ServerServiceException.UserNotHasPermissionsException())
             } else {
                 Result.success(ChannelQuery.GetChannelByServerId.Response(server.channels))
             }
         }
     }
 
-    @Suppress("ReturnCount")
     override fun getMessagesFromChannelId(
         request: ChannelQuery.GetMessagesFromChannelId.Request
     ): Result<ChannelQuery.GetMessagesFromChannelId.Response> {
         if (!serverRepository.isUserInServer(request.serverId, request.requestFrom)) {
-            return Result.failure(UserNotInServerException())
+            return Result.failure(ServerServiceException.UserNotHasPermissionsException())
         }
         val server =
             serverRepository.findById(request.serverId)
-                ?: return Result.failure(ServerOrChannelNotFoundException())
+                ?: return Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         val channel = server.channels.find { it.id == request.channelId }
         if (channel == null) {
-            return Result.failure(ServerOrChannelNotFoundException())
+            return Result.failure(ServerServiceException.ChannelNotFoundException())
         }
         return Result.success(
             ChannelQuery.GetMessagesFromChannelId.Response(
@@ -130,32 +136,24 @@ open class ChannelService(
         )
     }
 
-    @Suppress("ReturnCount")
     override fun addMessageInChannel(
         request: ChannelCommand.AddMessageInChannel.Request
     ): Result<ChannelCommand.AddMessageInChannel.Response> {
-        if (!serverRepository.isUserInServer(request.serverId, request.sender)) {
-            return Result.failure(UserNotInServerException())
+        if (!serverRepository.isUserInServer(request.serverId, request.requestFrom)) {
+            return Result.failure(ServerServiceException.UserNotHasPermissionsException())
         }
         val server =
             serverRepository.findById(request.serverId)
-                ?: return Result.failure(ServerOrChannelNotFoundException())
+                ?: return Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         val channel = server.channels.find { it.id == request.channelId }
         if (channel == null) {
-            return Result.failure(ServerOrChannelNotFoundException())
+            return Result.failure(ServerServiceException.ChannelNotFoundException())
         }
         val message =
-            MessageFactory.createMessage(content = request.content, sender = request.sender)
+            MessageFactory.createMessage(content = request.content, sender = request.requestFrom)
         channel.addMessage(message)
         serverRepository.update(server)
         eventPublisher.publish(ChannelEvent.MessageInChannelEvent(request.channelId, message.id))
         return Result.success(ChannelCommand.AddMessageInChannel.Response(message.id))
-    }
-
-    private fun isUserAdmin(serverId: ServerId, username: String): Boolean {
-        serverRepository.findById(serverId)?.let {
-            return it.owner == username
-        }
-        return false
     }
 }

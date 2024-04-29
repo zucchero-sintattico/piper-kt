@@ -10,7 +10,6 @@ import piperkt.services.servers.domain.Server
 import piperkt.services.servers.infrastructure.persistence.model.ChannelEntity
 import piperkt.services.servers.infrastructure.persistence.model.ServerEntity
 import piperkt.services.servers.infrastructure.persistence.model.ServerModelRepository
-import piperkt.services.servers.infrastructure.persistence.model.toDomain
 
 @Singleton
 @Primary
@@ -79,7 +78,4 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
     override fun findByMember(username: String): List<Server> {
         return serverModelRepository.findByUsersContains(username).map { it.toDomain() }
     }
-
-    // Extension method to create server from serverEntity
-
 }
