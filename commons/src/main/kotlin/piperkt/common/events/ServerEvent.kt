@@ -19,3 +19,6 @@ sealed interface ServerEvent : DomainEvent {
 }
 
 interface ServerEventPublisher : EventPublisher<ServerEvent>
+// interface ServerEventPublisher {
+//    fun publish(event: ServerEvent)
+// }

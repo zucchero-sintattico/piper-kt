@@ -13,6 +13,14 @@ data class MessageEntity(
     val sender: String,
     val timestamp: String = Instant.now().toString()
 ) {
+    fun toDomain() =
+        MessageFactory.createMessage(
+            id = id,
+            content = content,
+            sender = sender,
+            timeStamp = timestamp
+        )
+
     companion object {
         fun fromDomain(message: Message) =
             MessageEntity(
@@ -23,6 +31,3 @@ data class MessageEntity(
             )
     }
 }
-
-fun MessageEntity.toDomain() =
-    MessageFactory.createMessage(id = id, content = content, sender = sender, timeStamp = timestamp)

@@ -2,7 +2,6 @@ package piperkt.services.servers.application
 
 import piperkt.common.events.ServerEvent
 import piperkt.common.events.ServerEventPublisher
-import piperkt.common.id.ServerId
 import piperkt.services.servers.application.api.ServerServiceApi
 import piperkt.services.servers.application.api.command.ServerCommand
 import piperkt.services.servers.application.api.query.ServerQuery
@@ -28,15 +27,15 @@ open class ServerService(
     ): Result<ServerCommand.DeleteServer.Response> {
         val server = serverRepository.findById(request.serverId)
         return if (server != null) {
-            if (isUserAdmin(request.serverId, request.requestFrom)) {
+            if (server.isUserAdmin(request.requestFrom)) {
                 serverRepository.deleteById(request.serverId)
                 eventPublisher.publish(ServerEvent.ServerDeletedEvent(request.serverId))
-                Result.success(ServerCommand.DeleteServer.Response)
+                Result.success(ServerCommand.DeleteServer.Response(request.serverId))
             } else {
                 return Result.failure(ServerServiceException.UserNotHasPermissionsException())
             }
         } else {
-            Result.failure(ServerServiceException.ServerNotFoundException())
+            Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         }
     }
 
@@ -45,17 +44,23 @@ open class ServerService(
     ): Result<ServerCommand.UpdateServer.Response> {
         val server = serverRepository.findById(request.serverId)
         return if (server != null) {
-            if (isUserAdmin(request.serverId, request.requestFrom)) {
-                request.name?.let { server.updateName(it) }
-                request.description?.let { server.updateDescription(it) }
+            if (server.isUserAdmin(request.requestFrom)) {
+                request.name?.let { server.name = it }
+                request.description?.let { server.description = it }
                 serverRepository.update(server)
                 eventPublisher.publish(ServerEvent.ServerUpdatedEvent(request.serverId))
-                Result.success(ServerCommand.UpdateServer.Response)
+                Result.success(
+                    ServerCommand.UpdateServer.Response(
+                        request.serverId,
+                        request.name ?: server.name,
+                        request.description ?: server.description
+                    )
+                )
             } else {
-                return Result.failure(ServerServiceException.UserNotHasPermissionsException())
+                Result.failure(ServerServiceException.UserNotHasPermissionsException())
             }
         } else {
-            Result.failure(ServerServiceException.ServerNotFoundException())
+            Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         }
     }
 
@@ -64,12 +69,12 @@ open class ServerService(
     ): Result<ServerCommand.AddUserToServer.Response> {
         val server = serverRepository.findById(request.serverId)
         return if (server != null) {
-            server.addUser(request.username)
+            server.addUser(request.requestFrom)
             serverRepository.update(server)
-            eventPublisher.publish(ServerEvent.ServerUserAddedEvent(server.id, request.username))
-            Result.success(ServerCommand.AddUserToServer.Response)
+            eventPublisher.publish(ServerEvent.ServerUserAddedEvent(server.id, request.requestFrom))
+            Result.success(ServerCommand.AddUserToServer.Response(server.id, request.requestFrom))
         } else {
-            Result.failure(ServerServiceException.ServerNotFoundException())
+            Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         }
     }
 
@@ -77,67 +82,64 @@ open class ServerService(
         request: ServerCommand.RemoveUserFromServer.Request
     ): Result<ServerCommand.RemoveUserFromServer.Response> {
         val server = serverRepository.findById(request.serverId)
-        return if (server != null) {
-            server.removeUser(request.username)
+        if (server != null) {
+            if (!server.users.contains(request.requestFrom)) {
+                return Result.failure(ServerServiceException.UserNotInServerExceptionException())
+            }
+            server.removeUser(request.requestFrom)
             serverRepository.update(server)
-            eventPublisher.publish(ServerEvent.ServerUserRemovedEvent(server.id, request.username))
-            Result.success(ServerCommand.RemoveUserFromServer.Response)
+            eventPublisher.publish(
+                ServerEvent.ServerUserRemovedEvent(server.id, request.requestFrom)
+            )
+            return Result.success(
+                ServerCommand.RemoveUserFromServer.Response(server.id, request.requestFrom)
+            )
         } else {
-            Result.failure(ServerServiceException.ServerNotFoundException())
+            return Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         }
     }
 
     override fun kickUserFromServer(
         request: ServerCommand.KickUserFromServer.Request
     ): Result<ServerCommand.KickUserFromServer.Response> {
-        if (isUserAdmin(request.serverId, request.requestFrom)) {
-            val server = serverRepository.findById(request.serverId)
-            return if (server != null) {
-                server.removeUser(request.username)
-                serverRepository.update(server)
-                eventPublisher.publish(
-                    ServerEvent.ServerUserKickedEvent(server.id, request.username)
-                )
-                Result.success(ServerCommand.KickUserFromServer.Response)
-            } else {
-                Result.failure(ServerServiceException.ServerNotFoundException())
+        val server = serverRepository.findById(request.serverId)
+        if (server != null) {
+            if (!server.isUserAdmin(request.requestFrom)) {
+                return Result.failure(ServerServiceException.UserNotHasPermissionsException())
             }
+            if (!server.users.contains(request.username)) {
+                return Result.failure(ServerServiceException.UserNotInServerExceptionException())
+            }
+            server.removeUser(request.username)
+            serverRepository.update(server)
+            eventPublisher.publish(ServerEvent.ServerUserKickedEvent(server.id, request.username))
+            return Result.success(
+                ServerCommand.KickUserFromServer.Response(server.id, request.username)
+            )
+        } else {
+            return Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         }
-        return Result.failure(ServerServiceException.UserNotHasPermissionsException())
     }
 
     override fun getServerUsers(
         request: ServerQuery.GetServerUsers.Request
     ): Result<ServerQuery.GetServerUsers.Response> {
-        if (isUserInServer(request.serverId, request.requestFrom)) {
-            val server = serverRepository.findById(request.serverId)
-            return if (server != null) {
+        val server = serverRepository.findById(request.serverId)
+        return if (server != null) {
+            if (server.users.contains(request.requestFrom)) {
                 Result.success(ServerQuery.GetServerUsers.Response(server.users))
             } else {
-                Result.failure(ServerServiceException.ServerNotFoundException())
+                Result.failure(ServerServiceException.UserNotInServerExceptionException())
             }
+        } else {
+            Result.failure(ServerServiceException.ServerNotFoundExceptionException())
         }
-        return Result.failure(ServerServiceException.ServerNotFoundException())
     }
 
     override fun getServersFromUser(
         request: ServerQuery.GetServersFromUser.Request
     ): Result<ServerQuery.GetServersFromUser.Response> {
-        if (request.username == request.requestFrom) {
-            val servers = serverRepository.findByMember(request.username)
-            return Result.success(ServerQuery.GetServersFromUser.Response(servers))
-        }
-        return Result.failure(ServerServiceException.UserNotHasPermissionsException())
-    }
-
-    private fun isUserAdmin(serverId: ServerId, username: String): Boolean {
-        serverRepository.findById(serverId)?.let {
-            return it.owner == username
-        }
-        return false
-    }
-
-    private fun isUserInServer(serverId: ServerId, username: String): Boolean {
-        return serverRepository.isUserInServer(serverId, username)
+        val servers = serverRepository.findByMember(request.requestFrom)
+        return Result.success(ServerQuery.GetServersFromUser.Response(servers))
     }
 }

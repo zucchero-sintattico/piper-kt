@@ -13,19 +13,18 @@ import piperkt.services.servers.application.exceptions.ServerServiceException
 @Produces
 @Singleton
 @Requires(
-    classes =
-        [ServerServiceException.ServerNotFoundExceptionException::class, ExceptionHandler::class]
+    classes = [ServerServiceException.ChannelNotFoundException::class, ExceptionHandler::class]
 )
-class ServerNotFound :
-    ExceptionHandler<ServerServiceException.ServerNotFoundExceptionException, ErrorResponse> {
+class ChannelNotFound :
+    ExceptionHandler<ServerServiceException.ChannelNotFoundException, ErrorResponse> {
     @Error(
         global = true,
-        exception = ServerServiceException.ServerNotFoundExceptionException::class,
+        exception = ServerServiceException.ChannelNotFoundException::class,
     )
     @Status(HttpStatus.NOT_FOUND)
     override fun handle(
         request: HttpRequest<*>?,
-        exception: ServerServiceException.ServerNotFoundExceptionException?
+        exception: ServerServiceException.ChannelNotFoundException?
     ): ErrorResponse {
         return ErrorResponse(exception!!.message)
     }

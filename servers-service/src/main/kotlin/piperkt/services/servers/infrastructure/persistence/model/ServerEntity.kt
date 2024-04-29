@@ -16,6 +16,17 @@ data class ServerEntity(
     val users: List<String> = listOf(owner),
     val channels: List<ChannelEntity> = emptyList(),
 ) {
+
+    fun toDomain() =
+        ServerFactory.createServer(
+            id = id,
+            name = name,
+            owner = owner,
+            description = description,
+            channels = channels.map { it.toDomain() }.toMutableList(),
+            users = users.toMutableList()
+        )
+
     companion object {
         fun fromDomain(server: Server) =
             ServerEntity(
@@ -28,16 +39,6 @@ data class ServerEntity(
             )
     }
 }
-
-fun ServerEntity.toDomain() =
-    ServerFactory.createServer(
-        id = id,
-        name = name,
-        owner = owner,
-        description = description,
-        channels = channels.map { it.toDomain() }.toMutableList(),
-        users = users.toMutableList()
-    )
 
 @MongoRepository
 interface ServerModelRepository : CrudRepository<ServerEntity, String> {

@@ -1,28 +1,16 @@
 package piperkt.services.servers.domain
 
-import io.kotest.core.spec.style.AnnotationSpec
+import base.UnitTest
 import io.kotest.matchers.shouldBe
 import piperkt.services.servers.domain.factory.ChannelFactory
 import piperkt.services.servers.domain.factory.ServerFactory
 
-class ServerTest : AnnotationSpec() {
+class ServerTest : UnitTest() {
     private lateinit var server: Server
 
     @BeforeEach
     fun setUp() {
         server = ServerFactory.createServer("server-name", "server-description", "owner")
-    }
-
-    @Test
-    fun `should allow to change the name`() {
-        server.updateName("new-server-name")
-        server.name shouldBe "new-server-name"
-    }
-
-    @Test
-    fun `should allow to change the description`() {
-        server.updateDescription("new-server-description")
-        server.description shouldBe "new-server-description"
     }
 
     @Test

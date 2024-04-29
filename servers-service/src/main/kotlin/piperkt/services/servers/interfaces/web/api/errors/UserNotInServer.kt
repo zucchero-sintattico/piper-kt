@@ -14,18 +14,18 @@ import piperkt.services.servers.application.exceptions.ServerServiceException
 @Singleton
 @Requires(
     classes =
-        [ServerServiceException.ServerNotFoundExceptionException::class, ExceptionHandler::class]
+        [ServerServiceException.UserNotInServerExceptionException::class, ExceptionHandler::class]
 )
-class ServerNotFound :
-    ExceptionHandler<ServerServiceException.ServerNotFoundExceptionException, ErrorResponse> {
+class UserNotInServer :
+    ExceptionHandler<ServerServiceException.UserNotInServerExceptionException, ErrorResponse> {
     @Error(
         global = true,
-        exception = ServerServiceException.ServerNotFoundExceptionException::class,
+        exception = ServerServiceException.UserNotInServerExceptionException::class,
     )
     @Status(HttpStatus.NOT_FOUND)
     override fun handle(
         request: HttpRequest<*>?,
-        exception: ServerServiceException.ServerNotFoundExceptionException?
+        exception: ServerServiceException.UserNotInServerExceptionException?
     ): ErrorResponse {
         return ErrorResponse(exception!!.message)
     }

@@ -46,6 +46,6 @@ class ChannelServiceQueryTest : BasicChannelServiceTest() {
                 10,
                 "requestFrom"
             )
-        ) shouldBe Result.failure(ServerServiceException.UserNotInServerException())
+        ) shouldBe Result.failure(ServerServiceException.UserNotHasPermissionsException())
     }
 }

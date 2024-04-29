@@ -1,6 +1,6 @@
 package piperkt.services.servers.application.servers
 
-import io.kotest.core.spec.style.AnnotationSpec
+import base.UnitTest
 import org.mockito.kotlin.mock
 import piperkt.common.events.ServerEventPublisher
 import piperkt.common.id.ServerId
@@ -9,7 +9,7 @@ import piperkt.services.servers.application.ServerService
 import piperkt.services.servers.domain.Server
 import piperkt.services.servers.domain.factory.ServerFactory
 
-open class BasicServerServiceTest : AnnotationSpec() {
+open class BasicServerServiceTest : UnitTest() {
     val serverRepository = mock<ServerRepository>()
     val eventPublisher = mock<ServerEventPublisher>()
     val serverService = ServerService(serverRepository, eventPublisher)
