@@ -7,15 +7,9 @@ sealed interface FriendshipApi {
 
     sealed interface SendFriendshipRequest : FriendshipApi {
         @Serdeable
-        data class Request(
-            val firstUser: String,
-            val secondUser: String,
-        ) : SendFriendshipRequest
+        data class Request(val receiver: String, val action: String) : SendFriendshipRequest
 
-        @Serdeable
-        data class Response(
-            val friendshipId: String
-        ) : SendFriendshipRequest
+        @Serdeable data class Response(val response: String) : SendFriendshipRequest
     }
 
     sealed interface AcceptFriendshipRequest : FriendshipApi {
@@ -24,10 +18,7 @@ sealed interface FriendshipApi {
             val receiver: String,
         ) : AcceptFriendshipRequest
 
-        @Serdeable
-        data class Response(
-            val friendshipId: String
-        ) : AcceptFriendshipRequest
+        @Serdeable data class Response(val friendshipId: String) : AcceptFriendshipRequest
     }
 
     sealed interface DeclineFriendshipRequest : FriendshipApi {
@@ -36,10 +27,7 @@ sealed interface FriendshipApi {
             val receiver: String,
         ) : DeclineFriendshipRequest
 
-        @Serdeable
-        data class Response(
-            val response: String
-        ) : DeclineFriendshipRequest
+        @Serdeable data class Response(val response: String) : DeclineFriendshipRequest
     }
 
     sealed interface SendMessage : FriendshipApi {
@@ -48,32 +36,18 @@ sealed interface FriendshipApi {
             val content: String,
         ) : SendMessage
 
-        @Serdeable
-        data class Response(
-            val messageId: String
-        ) : SendMessage
+        @Serdeable data class Response(val messageId: String) : SendMessage
     }
 
     sealed interface GetFriendshipMessages : FriendshipApi {
-        @Serdeable
-        data class Response(
-            val messages: List<MessageDTO>
-        ) : GetFriendshipMessages
+        @Serdeable data class Response(val messages: List<MessageDTO>) : GetFriendshipMessages
     }
 
     sealed interface GetFriendshipRequests : FriendshipApi {
-        @Serdeable
-        data class Response(
-            val requests: List<String>
-        ) : GetFriendshipRequests
+        @Serdeable data class Response(val requests: List<String>) : GetFriendshipRequests
     }
 
     sealed interface GetFriendships : FriendshipApi {
-        @Serdeable
-        data class Response(
-            val friendships: List<String>
-        ) : GetFriendships
+        @Serdeable data class Response(val friendships: List<String>) : GetFriendships
     }
-
-
 }

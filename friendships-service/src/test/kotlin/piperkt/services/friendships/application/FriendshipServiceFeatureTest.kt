@@ -13,7 +13,10 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
     @Test
     fun `should allow to send friend request`() {
         service.sendFriendshipRequest(
-            FriendshipCommand.SendFriendshipRequest.Request(request.from, request.to, request.from)
+            FriendshipCommand.SendFriendshipRequest.Request(
+                receiver = request.to,
+                requestFrom = request.from
+            )
         ) shouldBe Result.success(Unit)
         verify(mockedFriendshipRequestRepository).save(any())
         verify(mockedEventPublisher).publish(any())
@@ -21,11 +24,16 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
 
     @Test
     fun `should allow to accept friend request`() {
-        whenever(mockedFriendshipRequestRepository.findByMembers(request.from, request.to))
+        whenever(mockedFriendshipRequestRepository.findByMembers(request.to, request.from))
             .thenReturn(request)
-        service.acceptFriendshipRequest(
-            FriendshipCommand.AcceptFriendshipRequest.Request(request.from, request.to, request.to)
-        ) shouldBe Result.success(Unit)
+        service
+            .acceptFriendshipRequest(
+                FriendshipCommand.AcceptFriendshipRequest.Request(
+                    receiver = request.from,
+                    requestFrom = request.to
+                )
+            )
+            .isSuccess shouldBe true
         verify(mockedFriendshipRepository).save(any())
         verify(mockedFriendshipRequestRepository).deleteById(any())
         verify(mockedEventPublisher).publish(any())
@@ -36,7 +44,10 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
         whenever(mockedFriendshipRequestRepository.findByMembers(request.from, request.to))
             .thenReturn(request)
         service.declineFriendshipRequest(
-            FriendshipCommand.DeclineFriendshipRequest.Request(request.from, request.to, request.to)
+            FriendshipCommand.DeclineFriendshipRequest.Request(
+                receiver = request.to,
+                requestFrom = request.from
+            )
         ) shouldBe Result.success(Unit)
         verify(mockedFriendshipRequestRepository).deleteById(any())
     }
@@ -46,7 +57,11 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
         whenever(mockedFriendshipRepository.findByMembers(request.from, request.to))
             .thenReturn(friendship)
         service.sendMessage(
-            FriendshipCommand.SendMessage.Request(request.from, request.to, "Hello", request.from)
+            FriendshipCommand.SendMessage.Request(
+                requestFrom = request.from,
+                receiver = request.to,
+                content = "Hello"
+            )
         ) shouldBe Result.success(Unit)
         verify(mockedFriendshipRepository).save(any())
         verify(mockedEventPublisher).publish(any())
@@ -62,7 +77,12 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
         friendship.messages.addAll(fakeMessages)
         whenever(mockedFriendshipRepository.findByMembers(any(), any())).thenReturn(friendship)
         service.getMessages(
-            FriendshipQuery.GetMessages.Request(0, 10, request.from, request.to)
+            FriendshipQuery.GetMessages.Request(
+                0,
+                10,
+                friendship.users.first(),
+                friendship.users.last()
+            )
         ) shouldBe Result.success(FriendshipQuery.GetMessages.Response(fakeMessages))
     }
 
@@ -71,8 +91,8 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
         val friendshipRequests = listOf(request)
         whenever(mockedFriendshipRequestRepository.findByUser(request.to))
             .thenReturn(friendshipRequests)
-        service.getFriendshipRequestsUsers(
-            FriendshipQuery.GetFriendshipRequests.Request(request.to)
+        service.getFriendshipRequests(
+            FriendshipQuery.GetFriendshipRequests.Request(requestFrom = request.to)
         ) shouldBe
             Result.success(
                 FriendshipQuery.GetFriendshipRequests.Response(friendshipRequests.map { it.from })
@@ -83,7 +103,9 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
     fun `should allow to get friendships`() {
         val friendships = listOf(friendship)
         whenever(mockedFriendshipRepository.findByUser(request.to)).thenReturn(friendships)
-        service.getFriendships(FriendshipQuery.GetFriendships.Request(request.to)) shouldBe
+        service.getFriendships(
+            FriendshipQuery.GetFriendships.Request(requestFrom = request.to)
+        ) shouldBe
             Result.success(
                 FriendshipQuery.GetFriendships.Response(
                     friendships =

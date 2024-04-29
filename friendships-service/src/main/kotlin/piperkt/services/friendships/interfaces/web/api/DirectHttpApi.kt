@@ -4,8 +4,8 @@ import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.PathVariable
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
-import piperkt.services.friendships.interfaces.web.api.interactions.FriendshipApi
 import java.security.Principal
+import piperkt.services.friendships.interfaces.web.api.interactions.FriendshipApi
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 interface DirectHttpApi {

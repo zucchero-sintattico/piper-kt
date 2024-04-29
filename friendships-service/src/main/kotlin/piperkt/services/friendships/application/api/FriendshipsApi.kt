@@ -11,7 +11,7 @@ interface FriendshipsApi {
 
     fun acceptFriendshipRequest(
         request: FriendshipCommand.AcceptFriendshipRequest.Request
-    ): Result<Unit>
+    ): Result<FriendshipCommand.AcceptFriendshipRequest.Response>
 
     fun declineFriendshipRequest(
         request: FriendshipCommand.DeclineFriendshipRequest.Request
@@ -23,7 +23,7 @@ interface FriendshipsApi {
         request: FriendshipQuery.GetMessages.Request
     ): Result<FriendshipQuery.GetMessages.Response>
 
-    fun getFriendshipRequestsUsers(
+    fun getFriendshipRequests(
         request: FriendshipQuery.GetFriendshipRequests.Request
     ): Result<FriendshipQuery.GetFriendshipRequests.Response>
 
