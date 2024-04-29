@@ -31,8 +31,8 @@ class FriendshipRequestRepositoryImplTest(
     fun `should find friendship requests from a user`() {
         val friendshipRequest = FriendshipRequestFactory.createFriendshipRequest("alice", "bob")
         friendshipRequestRepository.save(friendshipRequest)
-        friendshipRequestRepository.findByUser("alice").size shouldBe 0
-        friendshipRequestRepository.findByUser("bob").size shouldBe 1
+        friendshipRequestRepository.findByReceiver("alice").size shouldBe 0
+        friendshipRequestRepository.findByReceiver("bob").size shouldBe 1
     }
 
     @Test

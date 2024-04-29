@@ -1,6 +1,8 @@
 package piperkt.services.friendships.interfaces.web.api
 
 import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.PathVariable
+import io.micronaut.http.annotation.QueryValue
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import java.security.Principal
@@ -27,4 +29,17 @@ interface FriendshipHttpApi {
     fun getFriendshipRequests(principal: Principal): FriendshipApi.GetFriendshipRequests.Response
 
     fun getFriendships(principal: Principal): FriendshipApi.GetFriendships.Response
+
+    fun getFriendshipMessages(
+        @PathVariable friendUsername: String,
+        @QueryValue from: Int,
+        @QueryValue limit: Int,
+        principal: Principal
+    ): FriendshipApi.GetFriendshipMessages.Response
+
+    fun sendMessage(
+        @PathVariable friendUsername: String,
+        @Body request: FriendshipApi.SendMessage.Request,
+        principal: Principal
+    ): FriendshipApi.SendMessage.Response
 }

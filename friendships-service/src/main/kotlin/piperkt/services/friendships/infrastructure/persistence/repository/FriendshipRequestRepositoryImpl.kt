@@ -14,7 +14,7 @@ import piperkt.services.friendships.infrastructure.persistence.model.toDomain
 class FriendshipRequestRepositoryImpl(
     private val friendshipRequestModelRepository: FriendshipRequestModelRepository
 ) : FriendshipRequestRepository {
-    override fun findByUser(user: String): List<FriendshipRequest> {
+    override fun findByReceiver(user: String): List<FriendshipRequest> {
         return friendshipRequestModelRepository.findByToUser(user).map { it.toDomain() }
     }
 

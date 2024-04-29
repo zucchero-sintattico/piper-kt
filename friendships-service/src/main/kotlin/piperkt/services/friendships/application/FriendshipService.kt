@@ -24,8 +24,8 @@ open class FriendshipService(
             return Result.failure(FriendshipServiceException.FriendshipAlreadyExistsException())
         }
         // Check if the friendship request already exists
-        friendshipRequestRepository.findByUser(request.requestFrom).forEach {
-            if (it.to == request.receiver) {
+        friendshipRequestRepository.findByReceiver(request.receiver).forEach {
+            if (it.from == request.requestFrom) {
                 return Result.failure(
                     FriendshipServiceException.FriendshipRequestAlreadyExistsException()
                 )
@@ -82,7 +82,7 @@ open class FriendshipService(
         return Result.success(Unit)
     }
 
-    override fun sendMessage(request: FriendshipCommand.SendMessage.Request): Result<Unit> {
+    override fun sendMessage(request: FriendshipCommand.SendMessage.Request): Result<FriendshipCommand.SendMessage.Response> {
         // Check if the friendship exists
         val friendship =
             friendshipRepository.findByMembers(request.requestFrom, request.receiver)
@@ -98,7 +98,7 @@ open class FriendshipService(
                 message.id
             )
         )
-        return Result.success(Unit)
+        return Result.success(FriendshipCommand.SendMessage.Response(message.id.value))
     }
 
     override fun getMessages(
@@ -114,7 +114,7 @@ open class FriendshipService(
         request: FriendshipQuery.GetFriendshipRequests.Request
     ): Result<FriendshipQuery.GetFriendshipRequests.Response> {
         val friendshipRequests =
-            friendshipRequestRepository.findByUser(request.requestFrom).map {
+            friendshipRequestRepository.findByReceiver(request.requestFrom).map {
                 if (it.from == request.requestFrom) {
                     it.to
                 } else {

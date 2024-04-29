@@ -17,7 +17,8 @@ interface FriendshipsApi {
         request: FriendshipCommand.DeclineFriendshipRequest.Request
     ): Result<Unit>
 
-    fun sendMessage(request: FriendshipCommand.SendMessage.Request): Result<Unit>
+    fun sendMessage(request: FriendshipCommand.SendMessage.Request): Result<
+            FriendshipCommand.SendMessage.Response>
 
     fun getMessages(
         request: FriendshipQuery.GetMessages.Request

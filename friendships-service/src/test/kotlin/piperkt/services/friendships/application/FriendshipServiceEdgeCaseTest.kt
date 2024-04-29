@@ -11,7 +11,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
 
     @Test
     fun `should not allow to send friend request if request already exists`() {
-        whenever(mockedFriendshipRequestRepository.findByUser(request.from))
+        whenever(mockedFriendshipRequestRepository.findByReceiver(request.from))
             .thenReturn(listOf(request))
         service.sendFriendshipRequest(
             FriendshipCommand.SendFriendshipRequest.Request(
@@ -19,7 +19,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
                 requestFrom = request.from
             )
         ) shouldBe
-            Result.failure(FriendshipServiceException.FriendshipRequestAlreadyExistsException())
+                Result.failure(FriendshipServiceException.FriendshipRequestAlreadyExistsException())
         verifyNoInteractions(mockedEventPublisher)
     }
 

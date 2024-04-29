@@ -34,5 +34,7 @@ sealed interface FriendshipCommand {
             val content: String,
             override val requestFrom: String
         ) : SendMessage, ServiceRequest
+
+        data class Response(val messageId: String) : SendMessage
     }
 }

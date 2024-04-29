@@ -89,14 +89,14 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
     @Test
     fun `should allow to get friendship requests`() {
         val friendshipRequests = listOf(request)
-        whenever(mockedFriendshipRequestRepository.findByUser(request.to))
+        whenever(mockedFriendshipRequestRepository.findByReceiver(request.to))
             .thenReturn(friendshipRequests)
         service.getFriendshipRequests(
             FriendshipQuery.GetFriendshipRequests.Request(requestFrom = request.to)
         ) shouldBe
-            Result.success(
-                FriendshipQuery.GetFriendshipRequests.Response(friendshipRequests.map { it.from })
-            )
+                Result.success(
+                    FriendshipQuery.GetFriendshipRequests.Response(friendshipRequests.map { it.from })
+                )
     }
 
     @Test
@@ -106,9 +106,9 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
         service.getFriendships(
             FriendshipQuery.GetFriendships.Request(requestFrom = request.to)
         ) shouldBe
-            Result.success(
-                FriendshipQuery.GetFriendships.Response(
-                    friendships =
+                Result.success(
+                    FriendshipQuery.GetFriendships.Response(
+                        friendships =
                         friendships.map {
                             if (it.users.first() == request.to) {
                                 it.users.last()
@@ -116,7 +116,7 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
                                 it.users.first()
                             }
                         }
+                    )
                 )
-            )
     }
 }
