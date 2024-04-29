@@ -44,7 +44,10 @@ open class FriendshipService(
     ): Result<FriendshipCommand.AcceptFriendshipRequest.Response> {
         // Check if the friendship request exists
         val friendshipRequest =
-            friendshipRequestRepository.findByMembers(request.requestFrom, request.receiver)
+            friendshipRequestRepository.findByMembers(
+                from = request.sender,
+                to = request.requestFrom
+            )
                 ?: return Result.failure(
                     FriendshipServiceException.FriendshipRequestNotFoundException()
                 )
@@ -53,7 +56,7 @@ open class FriendshipService(
         friendshipRepository.save(friendship)
         friendshipRequestRepository.deleteById(friendshipRequest.id)
         eventPublisher.publish(
-            FriendshipEvent.FriendshipRequestAcceptedEvent(request.requestFrom, request.receiver)
+            FriendshipEvent.FriendshipRequestAcceptedEvent(request.requestFrom, request.sender)
         )
         return Result.success(
             FriendshipCommand.AcceptFriendshipRequest.Response(friendship.id.value)
@@ -63,20 +66,18 @@ open class FriendshipService(
     override fun declineFriendshipRequest(
         request: FriendshipCommand.DeclineFriendshipRequest.Request
     ): Result<Unit> {
-        // Check if the friendship already exists
-        friendshipRepository.findByMembers(request.requestFrom, request.receiver)?.let {
-            return Result.failure(FriendshipServiceException.FriendshipAlreadyExistsException())
-        }
-
         // Check if the friendship request exists
         val friendshipRequest =
-            friendshipRequestRepository.findByMembers(request.requestFrom, request.receiver)
+            friendshipRequestRepository.findByMembers(
+                from = request.sender,
+                to = request.requestFrom
+            )
                 ?: return Result.failure(
                     FriendshipServiceException.FriendshipRequestNotFoundException()
                 )
         friendshipRequestRepository.deleteById(friendshipRequest.id)
         eventPublisher.publish(
-            FriendshipEvent.FriendshipRequestRejectedEvent(request.requestFrom, request.receiver)
+            FriendshipEvent.FriendshipRequestRejectedEvent(request.requestFrom, request.sender)
         )
         return Result.success(Unit)
     }

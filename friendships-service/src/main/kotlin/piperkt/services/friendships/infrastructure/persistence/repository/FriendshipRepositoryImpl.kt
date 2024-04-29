@@ -34,4 +34,8 @@ class FriendshipRepositoryImpl(private val friendshipModelRepository: Friendship
         friendshipModelRepository.deleteById(id.value)
         return friendship
     }
+
+    override fun deleteAll() {
+        friendshipModelRepository.deleteAll()
+    }
 }

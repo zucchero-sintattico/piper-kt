@@ -29,7 +29,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
             .thenReturn(null)
         service.acceptFriendshipRequest(
             FriendshipCommand.AcceptFriendshipRequest.Request(
-                receiver = request.to,
+                sender = request.to,
                 requestFrom = request.to
             )
         ) shouldBe Result.failure(FriendshipServiceException.FriendshipRequestNotFoundException())
@@ -42,7 +42,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
             .thenReturn(friendship)
         service.acceptFriendshipRequest(
             FriendshipCommand.AcceptFriendshipRequest.Request(
-                receiver = request.to,
+                sender = request.to,
                 requestFrom = request.from
             )
         ) shouldBe Result.failure(FriendshipServiceException.FriendshipRequestNotFoundException())
@@ -55,7 +55,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
             .thenReturn(null)
         service.declineFriendshipRequest(
             FriendshipCommand.DeclineFriendshipRequest.Request(
-                receiver = request.to,
+                sender = request.to,
                 requestFrom = request.from
             )
         ) shouldBe Result.failure(FriendshipServiceException.FriendshipRequestNotFoundException())
@@ -66,7 +66,7 @@ class FriendshipServiceEdgeCaseTest : BasicFriendshipServiceTest() {
         whenever(mockedFriendshipRepository.findByMembers(any(), any())).thenReturn(friendship)
         service.declineFriendshipRequest(
             FriendshipCommand.DeclineFriendshipRequest.Request(
-                receiver = request.from,
+                sender = request.from,
                 requestFrom = request.to
             )
         ) shouldBe Result.failure(FriendshipServiceException.FriendshipAlreadyExistsException())

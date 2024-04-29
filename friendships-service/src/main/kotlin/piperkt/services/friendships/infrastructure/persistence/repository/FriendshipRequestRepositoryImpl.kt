@@ -22,6 +22,10 @@ class FriendshipRequestRepositoryImpl(
         return friendshipRequestModelRepository.findByFromUserAndToUser(from, to)?.toDomain()
     }
 
+    override fun deleteAll() {
+        friendshipRequestModelRepository.deleteAll()
+    }
+
     override fun findById(id: FriendshipRequestId): FriendshipRequest? {
         return friendshipRequestModelRepository
             .findById(id.value)

@@ -1,6 +1,8 @@
 package piperkt.services.friendships.interfaces.web
 
 import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Post
 import java.security.Principal
 import piperkt.services.friendships.application.FriendshipService
 import piperkt.services.friendships.application.api.command.FriendshipCommand
@@ -8,9 +10,11 @@ import piperkt.services.friendships.application.api.query.FriendshipQuery
 import piperkt.services.friendships.interfaces.web.api.FriendshipHttpApi
 import piperkt.services.friendships.interfaces.web.api.interactions.FriendshipApi
 
-@Controller("/friendships")
+@Controller("/friends")
 class FriendshipHttpController(private val friendshipService: FriendshipService) :
     FriendshipHttpApi {
+
+    @Post("/requests/send/")
     override fun sendFriendshipRequest(
         request: FriendshipApi.SendFriendshipRequest.Request,
         principal: Principal
@@ -26,6 +30,7 @@ class FriendshipHttpController(private val friendshipService: FriendshipService)
         return FriendshipApi.SendFriendshipRequest.Response(response = "Request sent successfully")
     }
 
+    @Post("/requests/accept/")
     override fun acceptFriendshipRequest(
         request: FriendshipApi.AcceptFriendshipRequest.Request,
         principal: Principal
@@ -35,13 +40,14 @@ class FriendshipHttpController(private val friendshipService: FriendshipService)
                 .acceptFriendshipRequest(
                     FriendshipCommand.AcceptFriendshipRequest.Request(
                         requestFrom = principal.name,
-                        receiver = request.receiver
+                        sender = request.sender
                     )
                 )
                 .getOrThrow()
         return FriendshipApi.AcceptFriendshipRequest.Response(friendshipId = response.friendshipId)
     }
 
+    @Post("/requests/decline/")
     override fun declineFriendshipRequest(
         request: FriendshipApi.DeclineFriendshipRequest.Request,
         principal: Principal
@@ -50,7 +56,7 @@ class FriendshipHttpController(private val friendshipService: FriendshipService)
             .declineFriendshipRequest(
                 FriendshipCommand.DeclineFriendshipRequest.Request(
                     requestFrom = principal.name,
-                    receiver = request.receiver
+                    sender = request.sender
                 )
             )
             .getOrThrow()
@@ -59,6 +65,7 @@ class FriendshipHttpController(private val friendshipService: FriendshipService)
         )
     }
 
+    @Get("/requests/")
     override fun getFriendshipRequests(
         principal: Principal
     ): FriendshipApi.GetFriendshipRequests.Response {
@@ -71,6 +78,7 @@ class FriendshipHttpController(private val friendshipService: FriendshipService)
         return FriendshipApi.GetFriendshipRequests.Response(requests = response.requests)
     }
 
+    @Get("/")
     override fun getFriendships(principal: Principal): FriendshipApi.GetFriendships.Response {
         val response =
             friendshipService

@@ -17,14 +17,14 @@ sealed interface FriendshipCommand {
     }
 
     sealed interface AcceptFriendshipRequest : FriendshipCommand {
-        data class Request(val receiver: String, override val requestFrom: String) :
+        data class Request(val sender: String, override val requestFrom: String) :
             AcceptFriendshipRequest, ServiceRequest
 
         data class Response(val friendshipId: String) : AcceptFriendshipRequest
     }
 
     sealed interface DeclineFriendshipRequest : FriendshipCommand {
-        data class Request(val receiver: String, override val requestFrom: String) :
+        data class Request(val sender: String, override val requestFrom: String) :
             DeclineFriendshipRequest, ServiceRequest
     }
 

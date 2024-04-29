@@ -6,8 +6,7 @@ import piperkt.services.friendships.interfaces.web.api.dto.MessageDTO
 sealed interface FriendshipApi {
 
     sealed interface SendFriendshipRequest : FriendshipApi {
-        @Serdeable
-        data class Request(val receiver: String, val action: String) : SendFriendshipRequest
+        @Serdeable data class Request(val receiver: String) : SendFriendshipRequest
 
         @Serdeable data class Response(val response: String) : SendFriendshipRequest
     }
@@ -15,7 +14,7 @@ sealed interface FriendshipApi {
     sealed interface AcceptFriendshipRequest : FriendshipApi {
         @Serdeable
         data class Request(
-            val receiver: String,
+            val sender: String,
         ) : AcceptFriendshipRequest
 
         @Serdeable data class Response(val friendshipId: String) : AcceptFriendshipRequest
@@ -24,7 +23,7 @@ sealed interface FriendshipApi {
     sealed interface DeclineFriendshipRequest : FriendshipApi {
         @Serdeable
         data class Request(
-            val receiver: String,
+            val sender: String,
         ) : DeclineFriendshipRequest
 
         @Serdeable data class Response(val response: String) : DeclineFriendshipRequest

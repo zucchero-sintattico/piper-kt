@@ -29,7 +29,7 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
         service
             .acceptFriendshipRequest(
                 FriendshipCommand.AcceptFriendshipRequest.Request(
-                    receiver = request.from,
+                    sender = request.from,
                     requestFrom = request.to
                 )
             )
@@ -45,7 +45,7 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
             .thenReturn(request)
         service.declineFriendshipRequest(
             FriendshipCommand.DeclineFriendshipRequest.Request(
-                receiver = request.to,
+                sender = request.to,
                 requestFrom = request.from
             )
         ) shouldBe Result.success(Unit)

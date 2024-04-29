@@ -6,7 +6,7 @@ import piperkt.common.events.FriendshipEvent
 import piperkt.common.events.FriendshipEventPublisher
 
 @KafkaClient
-interface KafkaFriendshipEventPublisher : FriendshipEventPublisher {
+abstract class KafkaFriendshipEventPublisher : FriendshipEventPublisher {
 
     override fun publish(event: FriendshipEvent) {
         when (event) {
@@ -17,11 +17,15 @@ interface KafkaFriendshipEventPublisher : FriendshipEventPublisher {
         }
     }
 
-    @Topic("friendship-events") fun publish(event: FriendshipEvent.FriendshipRequestSentEvent)
+    @Topic("friendship-events")
+    abstract fun publish(event: FriendshipEvent.FriendshipRequestSentEvent)
 
-    @Topic("friendship-events") fun publish(event: FriendshipEvent.FriendshipRequestAcceptedEvent)
+    @Topic("friendship-events")
+    abstract fun publish(event: FriendshipEvent.FriendshipRequestAcceptedEvent)
 
-    @Topic("friendship-events") fun publish(event: FriendshipEvent.NewMessageInFriendshipEvent)
+    @Topic("friendship-events")
+    abstract fun publish(event: FriendshipEvent.NewMessageInFriendshipEvent)
 
-    @Topic("friendship-events") fun publish(event: FriendshipEvent.FriendshipRequestRejectedEvent)
+    @Topic("friendship-events")
+    abstract fun publish(event: FriendshipEvent.FriendshipRequestRejectedEvent)
 }
