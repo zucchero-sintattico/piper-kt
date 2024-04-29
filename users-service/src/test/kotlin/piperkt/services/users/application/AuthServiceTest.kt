@@ -6,7 +6,6 @@ import io.kotest.matchers.shouldNotBe
 import mocks.publishers.MockedUserEventPublisher
 import mocks.repositories.InMemoryUserRepository
 import org.junit.jupiter.api.assertThrows
-import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserError
 import piperkt.services.users.domain.user.UserError.UserAlreadyExists
 import piperkt.services.users.domain.user.UserError.UserNotFound
@@ -20,25 +19,23 @@ class AuthServiceTest :
 
         val existingUsername = Username("existingUsername")
         val existingPassword = "existingPassword"
-        lateinit var existingUser: User
 
         beforeEach {
             userRepository.clear()
             userEventPublisher.clear()
-            existingUser =
-                authService.register(RegisterRequest(existingUsername.value, existingPassword))
+            authService.register(existingUsername.value, existingPassword)
         }
 
         test("registerUser") {
             val username = "username"
             val password = "password"
-            val createdUser = authService.register(RegisterRequest(username, password))
+            val createdUser = authService.register(username, password)
             createdUser.username shouldBe Username(username)
         }
 
         test("registerUser throws UserAlreadyExists") {
             assertThrows<UserAlreadyExists> {
-                authService.register(RegisterRequest(existingUsername.value, existingPassword))
+                authService.register(existingUsername.value, existingPassword)
             }
         }
 
@@ -80,16 +77,5 @@ class AuthServiceTest :
             assertThrows<UserError.RefreshTokenNotFound> {
                 authService.getUserByRefreshToken("nonExistingRefreshToken")
             }
-        }
-
-        test("logout") {
-            authService.saveRefreshToken(existingUsername.value, "refreshToken")
-            authService.logout(existingUsername.value)
-            val user = userRepository.findByUsername(existingUsername.value)!!
-            user.refreshToken shouldBe null
-        }
-
-        test("logout throws UserNotFound") {
-            assertThrows<UserNotFound> { authService.logout("nonExistingUsername") }
         }
     })

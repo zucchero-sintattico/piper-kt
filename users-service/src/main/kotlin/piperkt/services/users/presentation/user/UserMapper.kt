@@ -13,5 +13,5 @@ object UserMapper {
         User(Username(username), password, description, profilePicture, refreshToken)
 
     fun User.toEntity() =
-        UserEntity(null, username.value, password, description, profilePicture, refreshToken)
+        UserEntity(id = null, username.value, password, description, profilePicture, refreshToken)
 }

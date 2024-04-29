@@ -33,13 +33,13 @@ open class UserService(
 
     fun updateUserDescription(username: String, description: String): User {
         updateUser(Username(username)) { updateDescription(description) }
-        userEventPublisher.publish(UserUpdated(Username(username), description = description))
+        userEventPublisher.publish(UserUpdated(username, description = description))
         return getUser(username)
     }
 
     fun updateUserProfilePicture(username: String, profilePicture: ByteArray): User {
         updateUser(Username(username)) { updateProfilePicture(profilePicture) }
-        userEventPublisher.publish(UserUpdated(Username(username), profilePicture = profilePicture))
+        userEventPublisher.publish(UserUpdated(username, profilePicture = profilePicture))
         return getUser(username)
     }
 }

@@ -1,5 +1,6 @@
 package piperkt.services.users.infrastructure.persistence.model
 
+import io.micronaut.data.annotation.GeneratedValue
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.data.mongodb.annotation.MongoRepository
@@ -7,7 +8,7 @@ import io.micronaut.data.repository.GenericRepository
 
 @MappedEntity
 data class UserEntity(
-    @Id val id: String? = null,
+    @Id @GeneratedValue val id: String? = null,
     val username: String,
     val password: String,
     val description: String,
