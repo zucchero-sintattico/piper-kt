@@ -78,7 +78,7 @@ jobs:
       - name: Produce coverage report
         run: ./gradlew koverXmlReport --parallel
       - name: Push coverage report
-        uses: codecov/codecov-action@v4.3.0
+        uses: codecov/codecov-action@v4.3.1
         with:
           files: ./build/reports/kover/report.xml
           verbose: true
