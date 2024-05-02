@@ -25,4 +25,14 @@ class User(
     fun clearRefreshToken() {
         this.refreshToken = null
     }
+
+    fun copy(
+        username: Username = this.username,
+        password: String = this.password,
+        description: String = this.description,
+        profilePicture: ByteArray = this.profilePicture,
+        refreshToken: String? = this.refreshToken
+    ): User {
+        return User(username, password, description, profilePicture, refreshToken)
+    }
 }

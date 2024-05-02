@@ -1,9 +1,11 @@
 package piperkt.services.users.interfaces.web
 
+import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.Put
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
+import io.micronaut.serde.annotation.Serdeable
 import java.security.Principal
 import piperkt.services.users.application.UserService
 import piperkt.services.users.presentation.user.UserDTO
@@ -13,11 +15,18 @@ import piperkt.services.users.presentation.user.UserMapper.toDTO
 @Secured(SecurityRule.IS_AUTHENTICATED)
 class ProfileController(private val userService: UserService) {
 
-    @Post("/description")
-    fun updateDescription(principal: Principal, description: String): UserDTO =
-        userService.updateUserDescription(principal.name, description).toDTO()
+    @Serdeable data class UpdateDescriptionRequest(val description: String)
 
-    @Post("/photo")
-    fun updateProfilePicture(principal: Principal, profilePicture: ByteArray): UserDTO =
-        userService.updateUserProfilePicture(principal.name, profilePicture).toDTO()
+    @Put("/description")
+    fun updateDescription(principal: Principal, @Body request: UpdateDescriptionRequest): UserDTO =
+        userService.updateUserDescription(principal.name, request.description).toDTO()
+
+    @Serdeable data class UpdateProfilePictureRequest(val profilePicture: ByteArray)
+
+    @Put("/photo")
+    fun updateProfilePicture(
+        principal: Principal,
+        @Body request: UpdateProfilePictureRequest
+    ): UserDTO =
+        userService.updateUserProfilePicture(principal.name, request.profilePicture).toDTO()
 }
