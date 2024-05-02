@@ -64,4 +64,8 @@ open class AuthService(
             .findByRefreshToken(refreshToken)
             .orThrow(UserError.RefreshTokenNotFound(refreshToken))
     }
+
+    fun delete(username: String) {
+        userRepository.deleteById(Username(username))
+    }
 }

@@ -8,6 +8,7 @@ import io.micronaut.http.annotation.Header
 import io.micronaut.http.annotation.Put
 import io.micronaut.http.client.annotation.Client
 import piperkt.services.users.application.AuthService
+import piperkt.services.users.domain.user.User
 import piperkt.services.users.interfaces.web.ProfileController
 import piperkt.services.users.presentation.user.UserDTO
 import piperkt.services.users.presentation.user.UserMapper.toDTO
@@ -33,7 +34,13 @@ class ProfileControllerTest(
     private val authService: AuthService
 ) :
     IntegrationTest.FunSpec({
-        val user = authService.register("user", "password")
+        lateinit var user: User
+
+        beforeEach {
+            user = authService.register("username", "password", "description", byteArrayOf())
+        }
+
+        afterEach { authService.delete(user.username.value) }
 
         test("updateDescription") {
             val response =

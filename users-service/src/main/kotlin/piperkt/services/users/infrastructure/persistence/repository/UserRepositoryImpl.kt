@@ -31,4 +31,8 @@ class UserRepositoryImpl(private val userEntityRepository: UserEntityRepository)
         userEntityRepository.deleteByUsername(id.value)
         return user
     }
+
+    override fun deleteAll() {
+        userEntityRepository.deleteAll()
+    }
 }

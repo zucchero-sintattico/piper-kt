@@ -18,6 +18,7 @@ dependencies {
     annotationProcessor("io.micronaut.security:micronaut-security-annotations")
     implementation("io.micronaut.security:micronaut-security-jwt")
     implementation("io.projectreactor:reactor-core:3.6.5")
+    implementation("io.micronaut.flyway:micronaut-flyway")
 }
 
 detekt { config.from(files("detekt-config.yml")) }

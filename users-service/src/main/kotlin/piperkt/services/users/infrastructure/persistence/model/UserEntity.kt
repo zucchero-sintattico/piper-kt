@@ -25,4 +25,6 @@ interface UserEntityRepository : GenericRepository<UserEntity, String> {
     fun deleteByUsername(username: String)
 
     fun save(entity: UserEntity)
+
+    fun deleteAll()
 }

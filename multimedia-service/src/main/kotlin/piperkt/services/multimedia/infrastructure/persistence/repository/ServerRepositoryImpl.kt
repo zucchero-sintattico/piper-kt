@@ -24,4 +24,8 @@ class ServerRepositoryImpl(private val serverEntityRepository: ServerEntityRepos
         serverEntityRepository.deleteById(id.value)
         return server
     }
+
+    override fun deleteAll() {
+        serverEntityRepository.deleteAll()
+    }
 }
