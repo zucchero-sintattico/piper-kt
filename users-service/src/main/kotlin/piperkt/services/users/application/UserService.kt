@@ -32,14 +32,14 @@ open class UserService(
     }
 
     fun updateUserDescription(username: String, description: String): User {
-        updateUser(Username(username)) { updateDescription(description) }
+        val updated = updateUser(Username(username)) { updateDescription(description) }
         userEventPublisher.publish(UserUpdated(username, description = description))
-        return getUser(username)
+        return updated
     }
 
     fun updateUserProfilePicture(username: String, profilePicture: ByteArray): User {
-        updateUser(Username(username)) { updateProfilePicture(profilePicture) }
+        val updated = updateUser(Username(username)) { updateProfilePicture(profilePicture) }
         userEventPublisher.publish(UserUpdated(username, profilePicture = profilePicture))
-        return getUser(username)
+        return updated
     }
 }
