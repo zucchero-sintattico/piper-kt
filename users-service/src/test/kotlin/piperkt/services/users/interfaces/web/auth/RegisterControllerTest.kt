@@ -4,6 +4,7 @@ import base.IntegrationTest
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import io.micronaut.context.annotation.Property
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Post
@@ -13,6 +14,8 @@ import io.micronaut.security.authentication.UsernamePasswordCredentials
 import io.micronaut.security.endpoints.TokenRefreshRequest
 import io.micronaut.security.token.render.AccessRefreshToken
 import io.micronaut.security.token.render.BearerAccessRefreshToken
+import piperkt.services.users.application.AuthService
+import piperkt.services.users.domain.user.User
 import piperkt.services.users.presentation.user.UserDTO
 
 @Client("/")
@@ -28,14 +31,25 @@ interface AuthClient {
     fun refresh(@Body tokenRefreshRequest: TokenRefreshRequest): AccessRefreshToken
 }
 
-class RegisterControllerTest(private val authClient: AuthClient) :
+@Property(name = "mocked-authentication", value = "false")
+class RegisterControllerTest(
+    private val authClient: AuthClient,
+    private val authService: AuthService,
+) :
     IntegrationTest.FunSpec({
+        lateinit var user: User
+
+        beforeEach { user = authService.register("user", "password") }
+
+        afterEach { authService.delete(user.username.value) }
+
         test("register") {
             val response =
-                authClient.register(RegisterController.RegisterRequest("user", "password"))
-            response.username shouldBe "user"
+                authClient.register(RegisterController.RegisterRequest("newuser", "password"))
+            response.username shouldBe "newuser"
             response.description shouldBe ""
             response.profilePicture shouldBe byteArrayOf()
+            authService.delete("newuser")
         }
 
         test("register with same username should throw UserAlreadyExistsException") {

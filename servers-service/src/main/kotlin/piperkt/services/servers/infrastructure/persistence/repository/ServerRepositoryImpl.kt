@@ -61,6 +61,10 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
             .toDomain()
     }
 
+    override fun deleteAll() {
+        serverModelRepository.deleteAll()
+    }
+
     override fun isUserInServer(serverId: ServerId, username: String): Boolean {
         return serverModelRepository
             .findById(serverId.value)

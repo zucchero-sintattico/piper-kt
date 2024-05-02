@@ -24,4 +24,8 @@ class SessionRepositoryImpl(private val sessionEntityRepository: SessionEntityRe
         sessionEntityRepository.deleteById(id.value)
         return session
     }
+
+    override fun deleteAll() {
+        sessionEntityRepository.deleteAll()
+    }
 }
