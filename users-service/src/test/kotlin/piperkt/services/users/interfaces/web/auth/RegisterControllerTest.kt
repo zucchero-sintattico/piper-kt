@@ -4,7 +4,6 @@ import base.IntegrationTest
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import io.micronaut.context.annotation.Property
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Post
@@ -31,7 +30,7 @@ interface AuthClient {
     fun refresh(@Body tokenRefreshRequest: TokenRefreshRequest): AccessRefreshToken
 }
 
-@Property(name = "mocked-authentication", value = "false")
+@NoMockedAuthentication
 class RegisterControllerTest(
     private val authClient: AuthClient,
     private val authService: AuthService,

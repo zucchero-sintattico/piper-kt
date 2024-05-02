@@ -1,5 +1,6 @@
 package piperkt.services.users.interfaces.web.auth
 
+import io.micronaut.context.annotation.Property
 import io.micronaut.context.annotation.Requires
 import io.micronaut.http.HttpRequest
 import io.micronaut.security.authentication.AuthenticationRequest
@@ -18,3 +19,5 @@ class MockedAuthenticationProvider : HttpRequestAuthenticationProvider<String> {
         return AuthenticationResponse.success(authRequest.identity)
     }
 }
+
+@Property(name = "mocked-authentication", value = "false") annotation class NoMockedAuthentication
