@@ -10,6 +10,8 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.security.authentication.UsernamePasswordCredentials
+import io.micronaut.security.endpoints.TokenRefreshRequest
+import io.micronaut.security.token.render.AccessRefreshToken
 import io.micronaut.security.token.render.BearerAccessRefreshToken
 import piperkt.services.users.presentation.user.UserDTO
 
@@ -21,6 +23,9 @@ interface AuthClient {
     fun login(
         @Body usernamePasswordCredentials: UsernamePasswordCredentials
     ): BearerAccessRefreshToken
+
+    @Post("/oauth/access_token")
+    fun refresh(@Body tokenRefreshRequest: TokenRefreshRequest): AccessRefreshToken
 }
 
 class RegisterControllerTest(private val authClient: AuthClient) :
@@ -69,5 +74,19 @@ class RegisterControllerTest(private val authClient: AuthClient) :
                     it.status shouldBe HttpStatus.UNAUTHORIZED
                     it.message shouldBe "User Not Found"
                 }
+        }
+
+        test("refresh") {
+            val loginResponse = authClient.login(UsernamePasswordCredentials("user", "password"))
+            Thread.sleep(1000) // wait for the iat to be different
+            val response =
+                authClient.refresh(
+                    TokenRefreshRequest(
+                        TokenRefreshRequest.GRANT_TYPE_REFRESH_TOKEN,
+                        loginResponse.refreshToken
+                    )
+                )
+            response.accessToken shouldNotBe loginResponse.accessToken
+            response.refreshToken shouldBe loginResponse.refreshToken
         }
     })

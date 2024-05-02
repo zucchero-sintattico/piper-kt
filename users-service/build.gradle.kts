@@ -17,6 +17,7 @@ dependencies {
     implementation("org.mindrot:jbcrypt:0.4")
     annotationProcessor("io.micronaut.security:micronaut-security-annotations")
     implementation("io.micronaut.security:micronaut-security-jwt")
+    implementation("io.projectreactor:reactor-core:3.6.5")
 }
 
 detekt { config.from(files("detekt-config.yml")) }
