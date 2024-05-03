@@ -18,7 +18,7 @@ class UserServiceTest :
 
         val username = Username("username")
         val description = "description"
-        val profilePicture = ByteArray(0)
+        val profilePicture = ""
         val user =
             User(
                 username = username,
@@ -55,7 +55,7 @@ class UserServiceTest :
         }
 
         test("updateUserProfilePicture") {
-            val newProfilePicture = ByteArray(1)
+            val newProfilePicture = "A"
             userService.updateUserProfilePicture(username.value, newProfilePicture)
             val updatedUser = userRepository.findByUsername(username.value)!!
             updatedUser.profilePicture shouldBe newProfilePicture
@@ -65,7 +65,7 @@ class UserServiceTest :
 
         test("updateUserProfilePicture throws UserNotFound") {
             assertThrows<UserNotFound> {
-                userService.updateUserProfilePicture("nonExistingUsername", ByteArray(1))
+                userService.updateUserProfilePicture("nonExistingUsername", "A")
             }
         }
     })

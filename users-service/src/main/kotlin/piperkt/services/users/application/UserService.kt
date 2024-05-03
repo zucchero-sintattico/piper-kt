@@ -14,11 +14,9 @@ open class UserService(
 ) {
 
     fun getUser(username: String): User {
-        val user =
-            userRepository
-                .findByUsername(username)
-                .orThrow(UserError.UserNotFound(Username(username)))
-        return user
+        return userRepository
+            .findByUsername(username)
+            .orThrow(UserError.UserNotFound(Username(username)))
     }
 
     private fun updateUser(username: Username, update: User.() -> Unit): User {
@@ -31,13 +29,13 @@ open class UserService(
         return user
     }
 
-    fun updateUserDescription(username: String, description: String): User {
+    fun updateUserDescription(username: String, description: String?): User {
         val updated = updateUser(Username(username)) { updateDescription(description) }
         userEventPublisher.publish(UserUpdated(username, description = description))
         return updated
     }
 
-    fun updateUserProfilePicture(username: String, profilePicture: ByteArray): User {
+    fun updateUserProfilePicture(username: String, profilePicture: String?): User {
         val updated = updateUser(Username(username)) { updateProfilePicture(profilePicture) }
         userEventPublisher.publish(UserUpdated(username, profilePicture = profilePicture))
         return updated

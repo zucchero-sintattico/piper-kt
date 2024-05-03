@@ -46,8 +46,8 @@ class RegisterControllerTest(
             val response =
                 authClient.register(RegisterController.RegisterRequest("newuser", "password"))
             response.username shouldBe "newuser"
-            response.description shouldBe ""
-            response.profilePicture shouldBe byteArrayOf()
+            response.description shouldBe null
+            response.profilePicture shouldBe null
             authService.delete("newuser")
         }
 
