@@ -1,3 +1,15 @@
+## [4.1.0](https://github.com/zucchero-sintattico/piper-kt/compare/v4.0.0...v4.1.0) (2024-05-03)
+
+
+### Features
+
+* **services:** added users-service template project ([7705613](https://github.com/zucchero-sintattico/piper-kt/commit/77056137add93d0ae76dec6a6dac57004776a54a))
+* **user-service:** implementing jwt authentication ([42f7a7a](https://github.com/zucchero-sintattico/piper-kt/commit/42f7a7a025b6026075cd21b095dbd640d7a5d79f))
+* **user-service:** removed template stuff and started implementing ([b4f9e55](https://github.com/zucchero-sintattico/piper-kt/commit/b4f9e55c0c6d6430d46e33fadecb0ec5f88bae50))
+* **users-service:** add event publish at application level ([36e7f7d](https://github.com/zucchero-sintattico/piper-kt/commit/36e7f7d57104c408cb6dbd244d546c4441cbc09a))
+* **users-service:** added user events and event publisher with kafka implementation ([46c764f](https://github.com/zucchero-sintattico/piper-kt/commit/46c764fa2f15794b9c841949b9d2b224263de153))
+* **users-service:** implemented auth service and setup of entity and repositories ([cd6de9f](https://github.com/zucchero-sintattico/piper-kt/commit/cd6de9fa13208a70dffd603bfe4b2c6eea0e4b57))
+
 ## [4.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v3.0.0...v4.0.0) (2024-04-29)
 
 
