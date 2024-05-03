@@ -178,12 +178,13 @@ class FriendshipHttpControllerTest : IntegrationTest() {
             .status() shouldBe HttpStatus.OK
     }
 
-    //    @Test
-    //    fun `should not send a message if they are not friends`() {
-    //        client.sendMessage(
-    //            friendUsername = "receiver",
-    //            content = FriendshipApi.SendMessage.Request(content = "Hello")
-    //        ).status() shouldBe HttpStatus.NOT_FOUND
-    //    }
-
+    @Test
+    fun `should not send a message if they are not friends`() {
+        client
+            .sendMessage(
+                friendUsername = "receiver",
+                content = FriendshipApi.SendMessage.Request(content = "Hello")
+            )
+            .status() shouldBe HttpStatus.NOT_FOUND
+    }
 }
