@@ -4,19 +4,16 @@ import base.IntegrationTest
 import io.kotest.matchers.shouldBe
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.exceptions.HttpClientResponseException
-import jakarta.inject.Inject
 import org.junit.jupiter.api.assertThrows
 import piperkt.services.friendships.application.FriendshipRepository
 import piperkt.services.friendships.application.FriendshipRequestRepository
 import piperkt.services.friendships.interfaces.web.api.interactions.FriendshipApi
 
-class FriendshipHttpControllerTest : IntegrationTest() {
-
-    @Inject lateinit var client: FriendshipHttpClient
-
-    @Inject lateinit var requestRepository: FriendshipRequestRepository
-
-    @Inject lateinit var friendshipRepository: FriendshipRepository
+class FriendshipHttpControllerTest(
+    private var client: FriendshipHttpClient,
+    private var requestRepository: FriendshipRequestRepository,
+    private var friendshipRepository: FriendshipRepository
+) : IntegrationTest() {
 
     @BeforeEach
     fun setup() {

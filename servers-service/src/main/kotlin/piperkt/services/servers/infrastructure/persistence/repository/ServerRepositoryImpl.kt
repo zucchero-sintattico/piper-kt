@@ -37,6 +37,10 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
         }
     }
 
+    override fun deleteAll() {
+        serverModelRepository.deleteAll()
+    }
+
     override fun update(entity: Server) {
         val channelEntities =
             entity.channels.map {
