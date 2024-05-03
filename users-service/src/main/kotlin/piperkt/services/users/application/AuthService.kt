@@ -6,6 +6,7 @@ import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserError
 import piperkt.services.users.domain.user.UserEvent
 import piperkt.services.users.domain.user.UserEventPublisher
+import piperkt.services.users.domain.user.UserFactory
 import piperkt.services.users.domain.user.UserRepository
 import piperkt.services.users.domain.user.Username
 
@@ -29,15 +30,15 @@ open class AuthService(
     fun register(
         username: String,
         password: String,
-        description: String = "",
-        photo: ByteArray = byteArrayOf()
+        description: String? = null,
+        photo: String? = null
     ): User {
         if (userRepository.findByUsername(username) != null) {
             throw UserError.UserAlreadyExists(Username(username))
         }
         val salt = gensalt()
         val hashedPassword = hashpw(password, salt)
-        val user = User(Username(username), hashedPassword, description, photo)
+        val user = UserFactory.create(Username(username), hashedPassword, description, photo)
         userRepository.save(user)
         userEventPublisher.publish(
             UserEvent.UserCreated(user.username.value, user.description, user.profilePicture)
@@ -50,7 +51,6 @@ open class AuthService(
         if (!checkpw(password, user.password)) {
             throw UserError.InvalidPassword(password)
         }
-        userEventPublisher.publish(UserEvent.UserLoggedIn(user.username.value))
         return user
     }
 

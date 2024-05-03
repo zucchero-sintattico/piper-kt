@@ -2,16 +2,12 @@ package piperkt.services.users.presentation.user
 
 import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.Username
-import piperkt.services.users.infrastructure.persistence.model.UserEntity
 
+/** User mapper to convert between domain and DTO objects. */
 object UserMapper {
+    /** Convert a user to a user DTO. */
     fun User.toDTO() = UserDTO(username.value, description, profilePicture)
 
+    /** Convert a user DTO to a user. */
     fun UserDTO.toDomain() = User(Username(username), "", description, profilePicture)
-
-    fun UserEntity.toDomain() =
-        User(Username(username), password, description, profilePicture, refreshToken)
-
-    fun User.toEntity() =
-        UserEntity(id = null, username.value, password, description, profilePicture, refreshToken)
 }

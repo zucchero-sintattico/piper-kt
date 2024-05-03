@@ -9,6 +9,7 @@ import io.micronaut.http.annotation.Put
 import io.micronaut.http.client.annotation.Client
 import piperkt.services.users.application.AuthService
 import piperkt.services.users.domain.user.User
+import piperkt.services.users.domain.user.UserFactory
 import piperkt.services.users.interfaces.web.ProfileController
 import piperkt.services.users.presentation.user.UserDTO
 import piperkt.services.users.presentation.user.UserMapper.toDTO
@@ -37,7 +38,7 @@ class ProfileControllerTest(
         lateinit var user: User
 
         beforeEach {
-            user = authService.register("username", "password", "description", byteArrayOf())
+            user = authService.register("username", "password", "description", "profilePicture")
         }
 
         afterEach { authService.delete(user.username.value) }
@@ -48,15 +49,16 @@ class ProfileControllerTest(
                     TestUtils.authOf(user.username.value),
                     ProfileController.UpdateDescriptionRequest("description")
                 )
-            response shouldBe user.copy(description = "description").toDTO()
+            response shouldBe UserFactory.copy(user) { description = "description" }.toDTO()
         }
 
         test("updateProfilePicture") {
             val response =
                 profileControllerClient.updateProfilePicture(
                     TestUtils.authOf(user.username.value),
-                    ProfileController.UpdateProfilePictureRequest(byteArrayOf(1, 2, 3))
+                    ProfileController.UpdateProfilePictureRequest("profilePictureUpdated")
                 )
-            response shouldBe user.copy(profilePicture = byteArrayOf(1, 2, 3)).toDTO()
+            response shouldBe
+                UserFactory.copy(user) { profilePicture = "profilePictureUpdated" }.toDTO()
         }
     })

@@ -10,6 +10,12 @@ import piperkt.services.users.application.AuthService
 import piperkt.services.users.domain.user.UserError
 import piperkt.services.users.domain.user.UserError.UserNotFound
 
+/**
+ * The authentication provider for the users service. It provides the authentication logic for the
+ * users service. It respond to /login requests.
+ *
+ * @param authService The authentication service.
+ */
 @Singleton
 class AuthenticationProvider<B>(private val authService: AuthService) :
     HttpRequestAuthenticationProvider<B> {

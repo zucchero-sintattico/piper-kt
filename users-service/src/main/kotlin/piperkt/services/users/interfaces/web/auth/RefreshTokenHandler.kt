@@ -12,6 +12,11 @@ import piperkt.services.users.domain.user.UserError
 import reactor.core.publisher.Flux
 import reactor.core.publisher.FluxSink
 
+/**
+ * The refresh token handler for the users service. It handles the refresh token events.
+ *
+ * @param authService The authentication service.
+ */
 @Singleton
 class RefreshTokenHandler(private val authService: AuthService) : RefreshTokenPersistence {
 

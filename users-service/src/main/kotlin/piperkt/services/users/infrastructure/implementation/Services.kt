@@ -6,6 +6,7 @@ import piperkt.services.users.application.UserService
 import piperkt.services.users.domain.user.UserEventPublisher
 import piperkt.services.users.domain.user.UserRepository
 
+/** The services implementations powered by Micronaut DI. */
 object Services {
     @Singleton
     class UserServiceImpl(userRepository: UserRepository, userEventPublisher: UserEventPublisher) :
