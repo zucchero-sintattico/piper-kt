@@ -42,4 +42,8 @@ class FriendshipRequestRepositoryImpl(
         friendshipRequestModelRepository.deleteById(id.value)
         return friendshipRequest
     }
+
+    override fun update(entity: FriendshipRequest) {
+        friendshipRequestModelRepository.update(FriendshipRequestEntity.fromDomain(entity))
+    }
 }

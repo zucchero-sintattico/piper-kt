@@ -105,7 +105,6 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
     @Test
     fun `should allow to update a server`() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer)
-        whenever(serverRepository.update(any())).thenReturn(simpleServer)
         serverService.updateServer(
             ServerCommand.UpdateServer.Request(
                 simpleServerId,

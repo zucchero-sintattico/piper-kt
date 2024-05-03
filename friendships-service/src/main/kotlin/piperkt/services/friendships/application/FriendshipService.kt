@@ -82,7 +82,9 @@ open class FriendshipService(
         return Result.success(Unit)
     }
 
-    override fun sendMessage(request: FriendshipCommand.SendMessage.Request): Result<FriendshipCommand.SendMessage.Response> {
+    override fun sendMessage(
+        request: FriendshipCommand.SendMessage.Request
+    ): Result<FriendshipCommand.SendMessage.Response> {
         // Check if the friendship exists
         val friendship =
             friendshipRepository.findByMembers(request.requestFrom, request.receiver)
@@ -90,7 +92,7 @@ open class FriendshipService(
         val message =
             MessageFactory.createMessage(sender = request.requestFrom, content = request.content)
         friendship.addMessage(message)
-        friendshipRepository.save(friendship)
+        friendshipRepository.update(friendship)
         eventPublisher.publish(
             FriendshipEvent.NewMessageInFriendshipEvent(
                 request.requestFrom,

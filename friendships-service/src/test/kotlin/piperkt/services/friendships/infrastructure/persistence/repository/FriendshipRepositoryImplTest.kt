@@ -5,6 +5,7 @@ import io.kotest.matchers.shouldBe
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import piperkt.services.friendships.application.FriendshipRepository
 import piperkt.services.friendships.domain.factory.FriendshipFactory
+import piperkt.services.friendships.domain.factory.MessageFactory
 
 @MicronautTest
 class FriendshipRepositoryImplTest(private val friendshipRepository: FriendshipRepository) :
@@ -45,5 +46,19 @@ class FriendshipRepositoryImplTest(private val friendshipRepository: FriendshipR
         val friendship = FriendshipFactory.createFriendship("alice", "bob")
         friendshipRepository.save(friendship)
         friendshipRepository.findByMembers("alice", "bob") shouldBe friendship
+    }
+
+    @Test
+    fun `should update a friendship after sending a message`() {
+        val friendship = FriendshipFactory.createFriendship("alice", "bob")
+        friendshipRepository.save(friendship)
+        friendship.addMessage(
+            message = MessageFactory.createMessage(sender = "alice", content = "Hello, Bob!")
+        )
+        friendshipRepository.update(friendship)
+        friendshipRepository.findByMembers("alice", "bob")?.let {
+            it.messages.size shouldBe 1
+            it.messages[0].content shouldBe "Hello, Bob!"
+        }
     }
 }

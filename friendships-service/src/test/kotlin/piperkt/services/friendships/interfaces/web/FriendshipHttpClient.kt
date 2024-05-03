@@ -44,7 +44,6 @@ interface FriendshipHttpClient {
         @Header(HttpHeaders.AUTHORIZATION) authorization: String
     ): HttpResponse<FriendshipApi.GetFriendships.Response>
 
-
     @Get("users/{friendUsername}/messages")
     fun getMessages(
         @PathVariable friendUsername: String,

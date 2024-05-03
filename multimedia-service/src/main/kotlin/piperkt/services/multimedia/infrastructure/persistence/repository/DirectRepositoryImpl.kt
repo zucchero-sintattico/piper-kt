@@ -28,4 +28,8 @@ class DirectRepositoryImpl(private val directEntityRepository: DirectEntityRepos
         directEntityRepository.deleteById(id.value.map { it.value }.toSet())
         return direct
     }
+
+    override fun update(entity: Direct) {
+        directEntityRepository.update(DirectEntity.fromDomain(entity))
+    }
 }

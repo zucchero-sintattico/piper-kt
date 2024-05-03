@@ -12,16 +12,13 @@ import piperkt.services.friendships.interfaces.web.api.interactions.FriendshipAp
 
 class FriendshipHttpControllerTest : IntegrationTest() {
 
-    @Inject
-    lateinit var client: FriendshipHttpClient
+    @Inject lateinit var client: FriendshipHttpClient
 
-    @Inject
-    lateinit var requestRepository: FriendshipRequestRepository
+    @Inject lateinit var requestRepository: FriendshipRequestRepository
 
-    @Inject
-    lateinit var friendshipRepository: FriendshipRepository
+    @Inject lateinit var friendshipRepository: FriendshipRepository
 
-    @AfterEach
+    @BeforeEach
     fun setup() {
         requestRepository.deleteAll()
         friendshipRepository.deleteAll()
@@ -42,10 +39,11 @@ class FriendshipHttpControllerTest : IntegrationTest() {
             request = FriendshipApi.SendFriendshipRequest.Request(receiver = "receiver")
         )
         assertThrows<HttpClientResponseException> {
-            client.sendFriendshipRequest(
-                request = FriendshipApi.SendFriendshipRequest.Request(receiver = "receiver")
-            )
-        }.let { it.status shouldBe HttpStatus.CONFLICT }
+                client.sendFriendshipRequest(
+                    request = FriendshipApi.SendFriendshipRequest.Request(receiver = "receiver")
+                )
+            }
+            .let { it.status shouldBe HttpStatus.CONFLICT }
     }
 
     @Test
@@ -58,10 +56,11 @@ class FriendshipHttpControllerTest : IntegrationTest() {
             authorization = authOf("receiver")
         )
         assertThrows<HttpClientResponseException> {
-            client.sendFriendshipRequest(
-                request = FriendshipApi.SendFriendshipRequest.Request(receiver = "receiver")
-            )
-        }.let { it.status shouldBe HttpStatus.CONFLICT }
+                client.sendFriendshipRequest(
+                    request = FriendshipApi.SendFriendshipRequest.Request(receiver = "receiver")
+                )
+            }
+            .let { it.status shouldBe HttpStatus.CONFLICT }
     }
 
     @Test
@@ -72,7 +71,7 @@ class FriendshipHttpControllerTest : IntegrationTest() {
         client.getFriendshipRequests(authorization = authOf("receiver")).let {
             it.status() shouldBe HttpStatus.OK
             it.body() shouldBe
-                    FriendshipApi.GetFriendshipRequests.Response(requests = listOf("user"))
+                FriendshipApi.GetFriendshipRequests.Response(requests = listOf("user"))
         }
     }
 
@@ -140,22 +139,26 @@ class FriendshipHttpControllerTest : IntegrationTest() {
             request = FriendshipApi.AcceptFriendshipRequest.Request(sender = "user"),
             authorization = authOf("receiver")
         )
-        client.getMessages(
-            friendUsername = "receiver",
-            authorization = authOf("user"),
-            from = 0,
-            limit = 10
-        ).status() shouldBe HttpStatus.OK
+        client
+            .getMessages(
+                friendUsername = "receiver",
+                authorization = authOf("user"),
+                from = 0,
+                limit = 10
+            )
+            .status() shouldBe HttpStatus.OK
     }
 
     @Test
     fun `should not get messages if they are not friends`() {
-        client.getMessages(
-            friendUsername = "receiver",
-            authorization = authOf("user"),
-            from = 0,
-            limit = 10
-        ).status() shouldBe HttpStatus.NOT_FOUND
+        client
+            .getMessages(
+                friendUsername = "receiver",
+                authorization = authOf("user"),
+                from = 0,
+                limit = 10
+            )
+            .status() shouldBe HttpStatus.NOT_FOUND
     }
 
     @Test
@@ -167,18 +170,20 @@ class FriendshipHttpControllerTest : IntegrationTest() {
             request = FriendshipApi.AcceptFriendshipRequest.Request(sender = "user"),
             authorization = authOf("receiver")
         )
-        client.sendMessage(
-            friendUsername = "receiver",
-            content = FriendshipApi.SendMessage.Request(content = "Hello")
-        ).status() shouldBe HttpStatus.OK
+        client
+            .sendMessage(
+                friendUsername = "receiver",
+                content = FriendshipApi.SendMessage.Request(content = "Hello")
+            )
+            .status() shouldBe HttpStatus.OK
     }
 
-//    @Test
-//    fun `should not send a message if they are not friends`() {
-//        client.sendMessage(
-//            friendUsername = "receiver",
-//            content = FriendshipApi.SendMessage.Request(content = "Hello")
-//        ).status() shouldBe HttpStatus.NOT_FOUND
-//    }
+    //    @Test
+    //    fun `should not send a message if they are not friends`() {
+    //        client.sendMessage(
+    //            friendUsername = "receiver",
+    //            content = FriendshipApi.SendMessage.Request(content = "Hello")
+    //        ).status() shouldBe HttpStatus.NOT_FOUND
+    //    }
 
 }

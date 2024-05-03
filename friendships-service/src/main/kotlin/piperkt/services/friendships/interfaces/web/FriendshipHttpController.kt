@@ -97,18 +97,19 @@ class FriendshipHttpController(private val friendshipService: FriendshipService)
         limit: Int,
         principal: Principal
     ): FriendshipApi.GetFriendshipMessages.Response {
-        val response = friendshipService.getMessages(
-            FriendshipQuery.GetMessages.Request(
-                friend = friendUsername,
-                requestFrom = principal.name,
-                index = from,
-                offset = limit
-            )
-        ).getOrThrow()
+        val response =
+            friendshipService
+                .getMessages(
+                    FriendshipQuery.GetMessages.Request(
+                        friend = friendUsername,
+                        requestFrom = principal.name,
+                        index = from,
+                        offset = limit
+                    )
+                )
+                .getOrThrow()
         return FriendshipApi.GetFriendshipMessages.Response(
-            messages = response.messages.map {
-                MessageDTO.fromDomain(it)
-            }
+            messages = response.messages.map { MessageDTO.fromDomain(it) }
         )
     }
 
@@ -118,15 +119,16 @@ class FriendshipHttpController(private val friendshipService: FriendshipService)
         request: FriendshipApi.SendMessage.Request,
         principal: Principal
     ): FriendshipApi.SendMessage.Response {
-        val response = friendshipService.sendMessage(
-            FriendshipCommand.SendMessage.Request(
-                requestFrom = principal.name,
-                receiver = friendUsername,
-                content = request.content
-            )
-        ).getOrThrow()
-        return FriendshipApi.SendMessage.Response(
-            response.messageId
-        )
+        val response =
+            friendshipService
+                .sendMessage(
+                    FriendshipCommand.SendMessage.Request(
+                        requestFrom = principal.name,
+                        receiver = friendUsername,
+                        content = request.content
+                    )
+                )
+                .getOrThrow()
+        return FriendshipApi.SendMessage.Response(response.messageId)
     }
 }

@@ -35,6 +35,10 @@ class FriendshipRepositoryImpl(private val friendshipModelRepository: Friendship
         return friendship
     }
 
+    override fun update(entity: Friendship) {
+        friendshipModelRepository.update(FriendshipEntity.fromDomain(entity))
+    }
+
     override fun deleteAll() {
         friendshipModelRepository.deleteAll()
     }

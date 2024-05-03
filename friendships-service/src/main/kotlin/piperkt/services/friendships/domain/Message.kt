@@ -5,7 +5,7 @@ import piperkt.common.Entity
 import piperkt.common.id.MessageId
 
 class Message(
-    id: MessageId = MessageId(),
+    override val id: MessageId = MessageId(),
     val sender: String,
     val content: String,
     val timestamp: Instant,

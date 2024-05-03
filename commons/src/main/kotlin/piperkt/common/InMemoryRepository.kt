@@ -20,4 +20,8 @@ open class InMemoryRepository<I : EntityId<*>, A : AggregateRoot<I>>(
     fun clear() {
         entities = mapOf()
     }
+
+    override fun update(entity: A) {
+        entities += entity.id to entity
+    }
 }

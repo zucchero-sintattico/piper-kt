@@ -39,7 +39,8 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
         serverRepository.save(server)
         server.name = "newServerName"
         server.description = "newServerDescription"
-        serverRepository.update(server).let {
+        serverRepository.update(server)
+        serverRepository.findById(server.id)?.let {
             it.id.value shouldBe it.id.value
             it.name shouldBe "newServerName"
             it.description shouldBe "newServerDescription"
@@ -63,7 +64,8 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
         val server = ServerFactory.createServer("serverName", "serverDescription", "owner")
         val channel = ChannelFactory.createFromType("channelName", "channelDescription", "TEXT")
         server.addChannel(channel)
-        serverRepository.update(server).let {
+        serverRepository.update(server)
+        serverRepository.findById(server.id)?.let {
             it.channels.size shouldBe 1
             it.channels[0].id shouldBe channel.id
             it.channels[0].name shouldBe "channelName"
@@ -77,12 +79,14 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
         val server = ServerFactory.createServer("serverName", "serverDescription", "owner")
         val channel = ChannelFactory.createFromType("channelName", "channelDescription", "TEXT")
         server.addChannel(channel)
-        serverRepository.update(server).let {
+        serverRepository.update(server)
+        serverRepository.findById(server.id)?.let {
             it.channels.size shouldBe 1
             it.channels[0].id shouldBe channel.id
         }
         server.removeChannel(channel)
-        serverRepository.update(server).channels.size shouldBe 0
+        serverRepository.update(server)
+        serverRepository.findById(server.id)?.let { it.channels.size shouldBe 0 }
     }
 
     @Test
@@ -92,7 +96,8 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
         server.addChannel(channel)
         channel.name = "newChannelName"
         channel.description = "newChannelDescription"
-        serverRepository.update(server).let {
+        serverRepository.update(server)
+        serverRepository.findById(server.id)?.let {
             it.channels.size shouldBe 1
             it.channels[0].name shouldBe "newChannelName"
             it.channels[0].description shouldBe "newChannelDescription"
