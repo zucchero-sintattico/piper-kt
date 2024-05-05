@@ -37,9 +37,9 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
         }
     }
 
-    override fun update(server: Server): Server {
+    override fun update(entity: Server) {
         val channelEntities =
-            server.channels.map {
+            entity.channels.map {
                 ChannelEntity(
                     id = it.id.value,
                     name = it.name,
@@ -47,18 +47,16 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
                     channelType = it.type.toString()
                 )
             }
-        return serverModelRepository
-            .update(
-                ServerEntity(
-                    id = server.id.value,
-                    name = server.name,
-                    description = server.description,
-                    owner = server.owner,
-                    users = server.users,
-                    channels = channelEntities
-                )
+        serverModelRepository.update(
+            ServerEntity(
+                id = entity.id.value,
+                name = entity.name,
+                description = entity.description,
+                owner = entity.owner,
+                users = entity.users,
+                channels = channelEntities
             )
-            .toDomain()
+        )
     }
 
     override fun deleteAll() {

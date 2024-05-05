@@ -25,6 +25,10 @@ class SessionRepositoryImpl(private val sessionEntityRepository: SessionEntityRe
         return session
     }
 
+    override fun update(entity: Session) {
+        sessionEntityRepository.update(SessionEntity.fromDomain(entity))
+    }
+
     override fun deleteAll() {
         sessionEntityRepository.deleteAll()
     }

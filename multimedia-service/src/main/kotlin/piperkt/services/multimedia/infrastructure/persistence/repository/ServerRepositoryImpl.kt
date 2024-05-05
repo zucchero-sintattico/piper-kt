@@ -25,6 +25,10 @@ class ServerRepositoryImpl(private val serverEntityRepository: ServerEntityRepos
         return server
     }
 
+    override fun update(entity: Server) {
+        serverEntityRepository.update(ServerEntity.fromDomain(entity))
+    }
+
     override fun deleteAll() {
         serverEntityRepository.deleteAll()
     }

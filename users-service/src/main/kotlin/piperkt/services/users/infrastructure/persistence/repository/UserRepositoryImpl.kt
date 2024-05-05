@@ -32,6 +32,10 @@ class UserRepositoryImpl(private val userEntityRepository: UserEntityRepository)
         return user
     }
 
+    override fun update(entity: User) {
+        userEntityRepository.save(entity.toEntity())
+    }
+
     override fun deleteAll() {
         userEntityRepository.deleteAll()
     }

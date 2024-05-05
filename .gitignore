@@ -7,6 +7,7 @@
 
 .micronaut/
 
+.idea/
 .idea/copilot/
 
 .idea/
@@ -49,6 +50,8 @@
 .idea/modules
 *.iml
 *.ipr
+.idea/.name
+.idea/jsLibraryMappings.xml
 
  # auto-import should work as well without these files
 .idea/kotlinc.xml

@@ -3,6 +3,7 @@ package piperkt.services.servers.infrastructure.persistence.model
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import java.time.Instant
+import piperkt.services.servers.domain.Message
 import piperkt.services.servers.domain.factory.MessageFactory
 
 @MappedEntity
@@ -21,7 +22,7 @@ data class MessageEntity(
         )
 
     companion object {
-        fun fromDomain(message: piperkt.services.servers.domain.Message) =
+        fun fromDomain(message: Message) =
             MessageEntity(
                 id = message.id.value,
                 content = message.content,
