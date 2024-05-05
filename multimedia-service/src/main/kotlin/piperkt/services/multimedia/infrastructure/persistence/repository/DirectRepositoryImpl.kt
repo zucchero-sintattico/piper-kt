@@ -32,4 +32,8 @@ class DirectRepositoryImpl(private val directEntityRepository: DirectEntityRepos
     override fun update(entity: Direct) {
         directEntityRepository.update(DirectEntity.fromDomain(entity))
     }
+
+    override fun deleteAll() {
+        directEntityRepository.deleteAll()
+    }
 }

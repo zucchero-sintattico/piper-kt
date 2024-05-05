@@ -2,7 +2,7 @@ package piperkt.common
 
 interface ValueObject
 
-open class EntityId<Id>(val value: Id) {
+open class EntityId<Id>(open val value: Id) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -44,4 +44,6 @@ interface Repository<Id : EntityId<*>, E : AggregateRoot<Id>> {
     fun deleteById(id: Id): E?
 
     fun update(entity: E)
+
+    fun deleteAll()
 }

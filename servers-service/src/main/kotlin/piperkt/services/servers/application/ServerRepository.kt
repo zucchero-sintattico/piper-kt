@@ -16,6 +16,4 @@ interface ServerRepository : Repository<ServerId, Server> {
     override fun save(entity: Server)
 
     override fun deleteById(id: ServerId): Server?
-
-    fun deleteAll()
 }

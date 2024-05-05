@@ -1,3 +1,41 @@
+## [4.1.0](https://github.com/zucchero-sintattico/piper-kt/compare/v4.0.0...v4.1.0) (2024-05-03)
+
+
+### Features
+
+* **services:** added users-service template project ([7705613](https://github.com/zucchero-sintattico/piper-kt/commit/77056137add93d0ae76dec6a6dac57004776a54a))
+* **user-service:** implementing jwt authentication ([42f7a7a](https://github.com/zucchero-sintattico/piper-kt/commit/42f7a7a025b6026075cd21b095dbd640d7a5d79f))
+* **user-service:** removed template stuff and started implementing ([b4f9e55](https://github.com/zucchero-sintattico/piper-kt/commit/b4f9e55c0c6d6430d46e33fadecb0ec5f88bae50))
+* **users-service:** add event publish at application level ([36e7f7d](https://github.com/zucchero-sintattico/piper-kt/commit/36e7f7d57104c408cb6dbd244d546c4441cbc09a))
+* **users-service:** added user events and event publisher with kafka implementation ([46c764f](https://github.com/zucchero-sintattico/piper-kt/commit/46c764fa2f15794b9c841949b9d2b224263de153))
+* **users-service:** implemented auth service and setup of entity and repositories ([cd6de9f](https://github.com/zucchero-sintattico/piper-kt/commit/cd6de9fa13208a70dffd603bfe4b2c6eea0e4b57))
+
+## [4.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v3.0.0...v4.0.0) (2024-04-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* finished microservice (trigger for major release)
+
+### Features
+
+* **channels:** implement http controller and client ([fc291af](https://github.com/zucchero-sintattico/piper-kt/commit/fc291af12403cc544f9e3a3a90e7f958b2773874))
+* **channels:** implement test for interface layer ([d9d0fac](https://github.com/zucchero-sintattico/piper-kt/commit/d9d0fac81ae6e0f04648986a6a30c2d38efe5912))
+* **controller:** fix kafka event publishing ([60d689e](https://github.com/zucchero-sintattico/piper-kt/commit/60d689e1ccf982678d199cafc87b1eb179776305))
+* **controller:** implement api for channels operation ([bad400e](https://github.com/zucchero-sintattico/piper-kt/commit/bad400e5125c1536eb416372c0facd510b7b7f6a))
+* **controller:** implement api for servers operations ([4695b9f](https://github.com/zucchero-sintattico/piper-kt/commit/4695b9fdf92382d22f78ecb49487aca2f41cb852))
+* **controller:** implement first integration test of servers ([fc0f34b](https://github.com/zucchero-sintattico/piper-kt/commit/fc0f34b2ea3ee7a93144ced27c0016d4341d5ec8))
+* **controller:** implement integration tests for http responses ([42ff503](https://github.com/zucchero-sintattico/piper-kt/commit/42ff50333b254f705e998ebae52ce13d32c99dd5))
+* finished microservice (trigger for major release) ([6048ed9](https://github.com/zucchero-sintattico/piper-kt/commit/6048ed9da345f8b19a43a0c1bbc792089aa6b5ec))
+* **interfaces-web:** add DTO for presentation and developed first enpoints ([fc6ae3a](https://github.com/zucchero-sintattico/piper-kt/commit/fc6ae3aa43a9512bd18da2b3cad45eb2038de261))
+* **server-service:** finish integration tests for channels management ([70dfbeb](https://github.com/zucchero-sintattico/piper-kt/commit/70dfbeb57d7f3a2db95ab239f3d229b96a59da32))
+
+
+### Bug Fixes
+
+* **server-service:** fix all bugs and refuses from prevs refactors ([91f15a1](https://github.com/zucchero-sintattico/piper-kt/commit/91f15a1034ef0383b564df4fefd1bdce237e61f9))
+* **server-test:** adjust http response assertions and return informations ([574766e](https://github.com/zucchero-sintattico/piper-kt/commit/574766e97681363ed8fa2a102a24d106195a45cd))
+
 ## [3.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v2.1.0...v3.0.0) (2024-04-16)
 
 

@@ -24,4 +24,8 @@ open class InMemoryRepository<I : EntityId<*>, A : AggregateRoot<I>>(
     override fun update(entity: A) {
         entities += entity.id to entity
     }
+
+    override fun deleteAll() {
+        clear()
+    }
 }

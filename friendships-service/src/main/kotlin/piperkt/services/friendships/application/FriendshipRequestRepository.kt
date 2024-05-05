@@ -8,6 +8,4 @@ interface FriendshipRequestRepository : Repository<FriendshipRequestId, Friendsh
     fun findByReceiver(user: String): List<FriendshipRequest>
 
     fun findByMembers(from: String, to: String): FriendshipRequest?
-
-    fun deleteAll()
 }

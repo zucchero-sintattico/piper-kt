@@ -8,6 +8,4 @@ interface FriendshipRepository : Repository<FriendshipId, Friendship> {
     fun findByMembers(from: String, to: String): Friendship?
 
     fun findByUser(user: String): List<Friendship>
-
-    fun deleteAll()
 }
