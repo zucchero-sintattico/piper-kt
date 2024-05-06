@@ -76,7 +76,10 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: "adopt"
       - name: Produce coverage report
-        run: ./gradlew koverXmlReport --parallel
+        uses: DanySK/build-check-deploy-gradle-action@2.4.18
+        with:
+          should-run-codecov: false
+          check-command: "./gradlew koverXmlReport --parallel || ./gradlew koverXmlReport --parallel"
       - name: Push coverage report
         uses: codecov/codecov-action@v4.3.1
         with:
