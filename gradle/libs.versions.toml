@@ -2,19 +2,19 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-cucumber-bom = "7.16.1"
-detekt = "1.23.5"
+cucumber-bom = "7.17.0"
+detekt = "1.23.6"
 dokka = "1.9.20"
 gitSemVer = "3.1.4"
 junit-platform = "1.10.2"
-konsist = "0.14.0"
+konsist = "0.15.1"
 kotest = "5.8.1"
 kotlin = "1.9.23"
 kover = "0.7.6"
-ksp = "1.9.23-1.0.19"
-ktfmt = "0.17.0"
-micronaut = "4.3.5"
-micronautBuildTools = "2.4.0"
+ksp = "1.9.23-1.0.20"
+ktfmt = "0.18.0"
+micronaut = "4.3.8"
+micronautBuildTools = "2.5.1"
 shadow = "8.1.1"
 spotless = "6.25.0"
 

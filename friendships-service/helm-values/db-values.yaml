@@ -1,0 +1,45 @@
+# value from: https://github.com/mongodb/mongodb-kubernetes-operator/issues/1420#issuecomment-1790885017
+
+operator:
+  name: friendships-service-operator
+  operatorImageName: mongodb-kubernetes-operator
+  deploymentName: mongodb-kubernetes-operator
+  version: 0.8.1
+  resources:
+    limits:
+      cpu: 200m
+      memory: 200Mi
+    requests:
+      cpu: 200m
+      memory: 200Mi
+agent:
+  name: mongodb-agent
+  version: 12.0.24.7719-1
+versionUpgradeHook:
+  name: mongodb-kubernetes-operator-version-upgrade-post-start-hook
+  version: 1.0.7
+readinessProbe:
+  name: mongodb-kubernetes-readiness
+  version: 1.0.15
+
+registry:
+  agent: docker.io/mohsinonxrm #quay.io/mongodb
+  versionUpgradeHook: docker.io/mohsinonxrm #quay.io/mongodb
+  readinessProbe: docker.io/mohsinonxrm #quay.io/mongodb
+  operator: docker.io/mohsinonxrm #quay.io/mongodb
+
+users:
+  - name: my-user
+    db: admin
+    passwordSecretRef: # a reference to the secret that will be used to generate the user's password
+      name: <secretName>
+    roles:
+      - name: clusterAdmin
+        db: admin
+      - name: userAdminAnyDatabase
+        db: admin
+      - name: readWriteAnyDatabase
+        db: admin
+      - name: dbAdminAnyDatabase
+        db: admin
+    scramCredentialsSecretName: my-scram

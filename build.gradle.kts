@@ -5,6 +5,8 @@
  * To learn more about Gradle by exploring our Samples at https://docs.gradle.org/8.6/samples
  */
 
+
+
 plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.kotlin)
@@ -25,7 +27,7 @@ dependencies {
 }
 
 allprojects {
-    group = "piperchat"
+    group = "piperkt"
 }
 
 subprojects {
@@ -39,3 +41,4 @@ spotless {
         prettier()
     }
 }
+

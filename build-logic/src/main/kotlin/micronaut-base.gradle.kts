@@ -21,17 +21,14 @@ dependencies {
     runtimeOnly(catalog.getLibrary("jackson-kotlin"))
 }
 
-java {
-    sourceCompatibility = JavaVersion.asVersion
-}
+java { sourceCompatibility = JavaVersion.asVersion }
 
-graalvmNative.toolchainDetection.set(false)
 micronaut {
     runtime("netty")
     testRuntime("kotest5")
     processing {
         incremental(true)
-        annotations("micronaut.playground.*")
+        annotations("piperkt.*")
     }
     aot {
         // Please review carefully the optimizations enabled below

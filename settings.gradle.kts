@@ -7,15 +7,9 @@
 
 rootProject.name = "piper-kt"
 
-pluginManagement {
-    includeBuild("build-logic")
-}
+pluginManagement { includeBuild("build-logic") }
 
-dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
-    }
-}
+dependencyResolutionManagement { repositories { mavenCentral() } }
 
 plugins {
     id("org.danilopianini.gradle-pre-commit-git-hooks") version "2.0.4"
@@ -25,19 +19,20 @@ plugins {
 gitHooks {
     // Configuration
     commitMsg { conventionalCommits() }
-    preCommit {
-        tasks("classes",
-            "ktfmtCheck",
-            "detekt",
-            "spotlessCheck",
-            "--parallel")
-    }
+    preCommit { tasks("classes", "ktfmtCheck", "detekt", "spotlessCheck", "--parallel") }
     createHooks(overwriteExisting = true) // actual hooks creation
 }
 
+
 include("bdd")
+
 include("commons")
+
 include("users-service")
+
 include("servers-service")
-include("friendship-service")
+
+//include("multimedia-service")
+
+include("friendships-service")
 
