@@ -1,15 +1,13 @@
 package piperkt.services.friendships.infrastructure.persistence.repository
 
-import io.kotest.core.spec.style.AnnotationSpec
+import base.IntegrationTest
 import io.kotest.matchers.shouldBe
-import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import piperkt.services.friendships.application.FriendshipRequestRepository
 import piperkt.services.friendships.domain.factory.FriendshipRequestFactory
 
-@MicronautTest
 class FriendshipRequestRepositoryImplTest(
     private val friendshipRequestRepository: FriendshipRequestRepository
-) : AnnotationSpec() {
+) : IntegrationTest() {
 
     @Test
     fun `should create a new friendship request`() {
