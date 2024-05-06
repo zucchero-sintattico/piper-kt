@@ -75,12 +75,16 @@ class FriendshipHttpControllerTest(
     @Test
     fun `should accept a friend request`() {
         client.sendFriendshipRequest(
-            request = FriendshipApi.SendFriendshipRequest.Request(receiver = "receiver")
+            request =
+                FriendshipApi.SendFriendshipRequest.Request(receiver = "whoReceivedTheRequest"),
+            authorization = authOf("whoSentTheRequest")
         )
+
         client
             .acceptFriendshipRequest(
-                request = FriendshipApi.AcceptFriendshipRequest.Request(sender = "user"),
-                authorization = authOf("receiver")
+                request =
+                    FriendshipApi.AcceptFriendshipRequest.Request(sender = "whoSentTheRequest"),
+                authorization = authOf("whoReceivedTheRequest")
             )
             .let { it.status() shouldBe HttpStatus.OK }
     }
