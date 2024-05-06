@@ -14,7 +14,7 @@ spec:
     - name: my-user
       db: admin
       passwordSecretRef: # a reference to the secret that will be used to generate the user's password
-        name: my-user-password
+        name: {{.Values.passwordSecretName}}
       roles:
         - name: clusterAdmin
           db: admin
@@ -30,7 +30,7 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: my-user-password
+  name: {{.Values.passwordSecretName}}
 type: Opaque
 stringData:
   password: password

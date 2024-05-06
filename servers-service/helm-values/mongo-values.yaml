@@ -1,1 +1,2 @@
 name: servers-service
+passwordSecretName: servers-service-password

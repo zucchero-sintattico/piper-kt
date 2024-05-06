@@ -1,1 +1,2 @@
 name: friendships-mongo
+passwordSecretName: friendships-mongo-password

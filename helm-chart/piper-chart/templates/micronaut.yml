@@ -3,6 +3,11 @@ kind: Deployment
 metadata:
   namespace: {{.Values.namespace}}
   name: {{.Values.serviceName}}
+  labels:
+    app: {{.Values.serviceName}}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
   selector:
     matchLabels:
@@ -11,6 +16,9 @@ spec:
     metadata:
       labels:
         app: {{.Values.serviceName}}
+        chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
     spec:
       serviceAccountName: micronaut-service # <1>
       containers:
@@ -39,6 +47,11 @@ kind: Service
 metadata:
   namespace: {{.Values.namespace}}
   name: {{.Values.serviceName}}
+  labels:
+    app: {{.Values.serviceName}}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
   selector:
     app: {{.Values.serviceName}}
