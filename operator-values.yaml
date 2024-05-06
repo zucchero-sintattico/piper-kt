@@ -1,7 +1,7 @@
 # value from: https://github.com/mongodb/mongodb-kubernetes-operator/issues/1420#issuecomment-1790885017
 
 operator:
-  name: users-service-operator
+  name: friendships-service-operator
   operatorImageName: mongodb-kubernetes-operator
   deploymentName: mongodb-kubernetes-operator
   version: 0.8.1
@@ -12,6 +12,10 @@ operator:
     requests:
       cpu: 200m
       memory: 200Mi
+
+database:
+  name: mongodb-friendships-database
+
 agent:
   name: mongodb-agent
   version: 12.0.24.7719-1
@@ -42,4 +46,6 @@ users:
         db: admin
       - name: dbAdminAnyDatabase
         db: admin
-    scramCredentialsSecretName: my-scram
+    scramCredentialsSecretName: friendships-scram
+
+createResource: false
