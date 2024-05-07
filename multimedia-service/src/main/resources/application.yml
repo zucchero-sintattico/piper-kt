@@ -1,0 +1,6 @@
+application:
+  name: "Piperkt Users Service"
+  version: "1.0.0"
+mongodb:
+  package-names:
+    - piperkt.services.multimedia.infrastructure.persistence

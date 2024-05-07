@@ -21,8 +21,10 @@ class SocketIOConfiguration {
 
 class MultimediaSocketIOServer(
     private val sessionService: SessionService,
-    val configuration: SocketIOConfiguration = SocketIOConfiguration(),
+    val objectMapper: JsonMapper,
+    val configuration: SocketIOConfiguration = SocketIOConfiguration()
 ) {
+
     private val socketIoConfig =
         Configuration().apply { port = configuration.port }.apply { isNeedClientAuth = false }
     private val server = SocketIOServer(socketIoConfig)
@@ -33,19 +35,26 @@ class MultimediaSocketIOServer(
     fun start() {
         server.addConnectListener { client -> runCatching { onConnect(client) } }
         server.addDisconnectListener { client -> runCatching { onDisconnect(client) } }
-        server.on(JOIN.event) { client, message: MultimediaProtocolMessage.JoinMessage, _ ->
+        server.on(objectMapper, JOIN.event) {
+            client,
+            message: MultimediaProtocolMessage.JoinMessage,
+            _ ->
             events.add(message)
             runCatching { onJoin(client, message) }
         }
-        server.on(OFFER.event) { _, message: MultimediaProtocolMessage.OfferMessage, _ ->
+        server.on(objectMapper, OFFER.event) { _, message: MultimediaProtocolMessage.OfferMessage, _
+            ->
             events.add(message)
             runCatching { onOffer(message) }
         }
-        server.on(ANSWER.event) { _, message: MultimediaProtocolMessage.AnswerMessage, _ ->
+        server.on(objectMapper, ANSWER.event) {
+            _,
+            message: MultimediaProtocolMessage.AnswerMessage,
+            _ ->
             events.add(message)
             runCatching { onAnswer(message) }
         }
-        server.on(ICE_CANDIDATE.event) {
+        server.on(objectMapper, ICE_CANDIDATE.event) {
             _,
             message: MultimediaProtocolMessage.IceCandidateMessage,
             _ ->
@@ -93,7 +102,8 @@ class MultimediaSocketIOServer(
         val username = client.getUsername() ?: return client.notAuthenticated()
         val sessionId = joinMessage.sessionId
         clientToSessionId[username] = sessionId
-        roomOf(sessionId).sendEvent(USER_JOIN.event, UserJoined(sessionId, username).toJson())
+        val serialized = objectMapper.toJson(UserJoined(sessionId, username))
+        roomOf(sessionId).sendEvent(USER_JOIN.event, serialized)
         client.joinRoom(sessionId)
         sessionService.joinSession(JoinSession(SessionId(sessionId), Username(username)))
         println("User $username joined session $sessionId")

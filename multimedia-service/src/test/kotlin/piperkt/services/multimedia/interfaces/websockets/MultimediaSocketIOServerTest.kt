@@ -1,11 +1,12 @@
 package piperkt.services.multimedia.interfaces.websockets
 
-import base.UnitTest
+import base.IntegrationTest
 import data.UsersData.jane
 import data.UsersData.john
 import io.kotest.assertions.fail
 import io.socket.client.IO
 import io.socket.client.Socket
+import jakarta.inject.Inject
 import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.session.SessionService
@@ -13,12 +14,12 @@ import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolEvent.*
 import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolMessage.*
 
-class MultimediaSocketIOServerTest :
-    UnitTest.FunSpec({
+class MultimediaSocketIOServerTest(@Inject private val objectMapper: JsonMapper) :
+    IntegrationTest.FunSpec({
         // Setup
         val sessionRepository = InMemorySessionRepository()
         val sessionService = SessionService(sessionRepository, MockedSessionEventPublisher())
-        val server = MultimediaSocketIOServer(sessionService)
+        val server = MultimediaSocketIOServer(sessionService, objectMapper)
 
         // Setup data
         val johnId = john().id
@@ -39,6 +40,8 @@ class MultimediaSocketIOServerTest :
 
         val johnClient = authorizedClientOf(johnId.value)
         val janeClient = authorizedClientOf(janeId.value)
+
+        fun Any.toJson(): String = objectMapper.toJson(this)
 
         test("should allow client to join") {
             val message = JoinMessage(session.id.value)

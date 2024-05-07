@@ -17,6 +17,7 @@ micronaut = "4.3.8"
 micronautBuildTools = "2.5.1"
 shadow = "8.1.1"
 spotless = "6.25.0"
+mockito-kotlin = "5.3.1"
 
 [libraries]
 cucumber-bom = { module = "io.cucumber:cucumber-bom", version.ref = "cucumber-bom" }
@@ -28,13 +29,20 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 kotlin-stdlibJdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
 kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
 logback = { module = "ch.qos.logback:logback-classic" }
+snakeyaml = { module = "org.yaml:snakeyaml" }
 micronaut-buildtools = { module = "io.micronaut.testresources:micronaut-test-resources-build-tools", version.ref = "micronautBuildTools" }
 micronaut-httpClient = { module = "io.micronaut:micronaut-http-client" }
 micronaut-httpValidation = { module = "io.micronaut:micronaut-http-validation" }
 micronaut-kotlinRuntime = { module = "io.micronaut.kotlin:micronaut-kotlin-runtime" }
 micronaut-serdeJackson = { module = "io.micronaut.serde:micronaut-serde-jackson" }
 micronaut-serdeProcessor = { module = "io.micronaut.serde:micronaut-serde-processor" }
+micronaut-kafka = { module = "io.micronaut.kafka:micronaut-kafka" }
+micronaut-data-mongodb = { module = "io.micronaut.data:micronaut-data-mongodb" }
+micronaut-data-document-processor = { module = "io.micronaut.data:micronaut-data-document-processor" }
+mongodb-driver-sync = { module = "org.mongodb:mongodb-driver-sync" }
+
 
 [plugins]
 allOpen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }
@@ -52,6 +60,6 @@ shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [bundles]
-cucumberJunit = [ "cucumber-java", "cucumber-junit" ]
-micronaut-ksp = [ "micronaut-httpValidation", "micronaut-serdeProcessor" ]
-micronaut-kotlin = [ "kotlin-reflect", "kotlin-stdlibJdk8", "micronaut-kotlinRuntime", "micronaut-serdeJackson", ]
+cucumberJunit = ["cucumber-java", "cucumber-junit"]
+micronaut-ksp = ["micronaut-httpValidation", "micronaut-serdeProcessor"]
+micronaut-kotlin = ["kotlin-reflect", "kotlin-stdlibJdk8", "micronaut-kotlinRuntime", "micronaut-serdeJackson"]

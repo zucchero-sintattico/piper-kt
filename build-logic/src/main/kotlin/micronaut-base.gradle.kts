@@ -1,9 +1,10 @@
 plugins {
     id("kotlin-base")
+    id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.plugin.allopen")
     id("com.google.devtools.ksp")
     id("com.github.johnrengelman.shadow")
-    id("io.micronaut.minimal.application")
+    id("io.micronaut.application")
     id("io.micronaut.aot")
     id("io.micronaut.test-resources")
 }
@@ -17,8 +18,10 @@ dependencies {
         compileOnly(it)
         testImplementation(it)
     }
+    testImplementation(catalog.getLibrary("mockito-kotlin"))
     runtimeOnly(catalog.getLibrary("logback"))
     runtimeOnly(catalog.getLibrary("jackson-kotlin"))
+    runtimeOnly(catalog.getLibrary("snakeyaml"))
 }
 
 java { sourceCompatibility = JavaVersion.asVersion }
@@ -41,4 +44,6 @@ micronaut {
         deduceEnvironment = true
         optimizeNetty = true
     }
+
 }
+

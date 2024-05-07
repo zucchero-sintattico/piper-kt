@@ -1,0 +1,6 @@
+application:
+  name: "Piperkt Servers Service"
+  version: "1.0.0"
+mongodb:
+  package-names:
+    - piperkt.services.servers.infrastructure.persistence
