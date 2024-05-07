@@ -1,3 +1,14 @@
+## [6.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v5.0.0...v6.0.0) (2024-05-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* **project:** cleanup micronaut configurations and dependencies, fixed micronaut problems with serializations
+
+### Features
+
+* **project:** cleanup micronaut configurations and dependencies, fixed micronaut problems with serializations ([9c58d74](https://github.com/zucchero-sintattico/piper-kt/commit/9c58d7461823d05e28796f3eec9d999908e68643))
+
 ## [5.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v4.1.0...v5.0.0) (2024-05-06)
 
 
