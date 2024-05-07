@@ -5,7 +5,7 @@
 cucumber-bom = "7.17.0"
 detekt = "1.23.6"
 dokka = "1.9.20"
-gitSemVer = "3.1.4"
+gitSemVer = "3.1.5"
 junit-platform = "1.10.2"
 konsist = "0.15.1"
 kotest = "5.8.1"
