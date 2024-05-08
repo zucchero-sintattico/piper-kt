@@ -4,3 +4,6 @@ application:
 mongodb:
   package-names:
     - piperkt.services.servers.infrastructure.persistence
+micronaut:
+  openapi:
+    filename: "openapi.yml"

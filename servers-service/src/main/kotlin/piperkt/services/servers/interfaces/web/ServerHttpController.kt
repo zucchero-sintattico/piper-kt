@@ -20,7 +20,6 @@ import piperkt.services.servers.interfaces.web.api.interactions.ServerApi
 class ServerHttpController(private val serverService: ServerService) : ServerHttpControllerApi {
 
     @Post("/")
-    @Status(HttpStatus.OK)
     override fun createServer(
         request: ServerApi.CreateServerApi.Request,
         principal: Principal
