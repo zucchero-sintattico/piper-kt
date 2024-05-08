@@ -1,7 +1,15 @@
 package piperkt.services.multimedia.application.session
 
 import piperkt.common.orThrow
+import piperkt.services.multimedia.domain.direct.DirectErrors
+import piperkt.services.multimedia.domain.direct.DirectId
+import piperkt.services.multimedia.domain.direct.DirectRepository
+import piperkt.services.multimedia.domain.server.ChannelId
+import piperkt.services.multimedia.domain.server.ServerErrors
+import piperkt.services.multimedia.domain.server.ServerId
+import piperkt.services.multimedia.domain.server.ServerRepository
 import piperkt.services.multimedia.domain.session.Session
+import piperkt.services.multimedia.domain.session.SessionErrors
 import piperkt.services.multimedia.domain.session.SessionErrors.SessionNotFound
 import piperkt.services.multimedia.domain.session.SessionEvent.*
 import piperkt.services.multimedia.domain.session.SessionEventPublisher
@@ -12,6 +20,8 @@ import piperkt.services.multimedia.domain.user.Username
 
 open class SessionService(
     private val sessionRepository: SessionRepository,
+    private val serverRepository: ServerRepository,
+    private val directRepository: DirectRepository,
     private val sessionEventPublisher: SessionEventPublisher
 ) {
 
@@ -69,5 +79,31 @@ open class SessionService(
     fun leaveSession(command: Command.LeaveSession) {
         updateSession(command.sessionId) { removeParticipant(command.username) }
         sessionEventPublisher.publish(ParticipantLeft(command.sessionId, command.username))
+    }
+
+    fun getChannelSessionId(author: Username, serverId: ServerId, channelId: ChannelId): SessionId {
+        val server =
+            serverRepository.findById(serverId).orThrow(ServerErrors.ServerNotFound(serverId))
+        if (!server.members().contains(author)) {
+            throw ServerErrors.UserNotInServer(serverId, author)
+        }
+        val channel = server.getChannelById(channelId)
+        return channel.sessionId
+    }
+
+    fun getDirectSessionId(author: Username, target: Username): SessionId {
+        val direct =
+            directRepository
+                .findById(DirectId(setOf(author, target)))
+                .orThrow(DirectErrors.DirectNotFound(DirectId(setOf(author, target))))
+        return direct.sessionId
+    }
+
+    fun getSessionParticipants(author: Username, sessionId: SessionId): Set<Username> {
+        val session = getSession(sessionId)
+        if (!session.allowedUsers().contains(author)) {
+            throw SessionErrors.UserNotAllowed(sessionId, author)
+        }
+        return session.participants()
     }
 }

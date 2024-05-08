@@ -13,8 +13,16 @@ object Services {
     @Singleton
     class SessionServiceImpl(
         sessionRepository: SessionRepository,
+        serverRepository: ServerRepository,
+        directRepository: DirectRepository,
         sessionEventPublisher: SessionEventPublisher
-    ) : SessionService(sessionRepository, sessionEventPublisher)
+    ) :
+        SessionService(
+            sessionRepository,
+            serverRepository,
+            directRepository,
+            sessionEventPublisher
+        )
 
     @Singleton
     class DirectServiceImpl(directRepository: DirectRepository) : DirectService(directRepository)
