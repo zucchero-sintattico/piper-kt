@@ -42,6 +42,7 @@ micronaut-kafka = { module = "io.micronaut.kafka:micronaut-kafka" }
 micronaut-data-mongodb = { module = "io.micronaut.data:micronaut-data-mongodb" }
 micronaut-data-document-processor = { module = "io.micronaut.data:micronaut-data-document-processor" }
 mongodb-driver-sync = { module = "org.mongodb:mongodb-driver-sync" }
+micronaut-jwt = { module = "io.micronaut.security:micronaut-security-jwt" }
 
 
 [plugins]
