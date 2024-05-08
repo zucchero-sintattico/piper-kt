@@ -18,10 +18,14 @@ gitSemVer {
     assignGitSemanticVersion()
 }
 
+val notKotlinProjects = listOf(
+    "notifications-service",
+)
+
 dependencies {
-    project.subprojects.forEach {
-        kover(it)
-    }
+    project.subprojects
+        .filter { it.name !in notKotlinProjects }
+        .forEach { kover(it) }
 }
 
 allprojects {
@@ -29,13 +33,15 @@ allprojects {
 }
 
 subprojects {
-    apply(plugin = "org.jetbrains.dokka")
+    if (name !in notKotlinProjects) {
+        apply(plugin = "org.jetbrains.dokka")
+    }
 }
 
 spotless {
     yaml {
         target("**/*.yml", "**/*.yaml")
-        targetExclude("**/build/**")
+        targetExclude("**/build/**", "**/node_modules/**")
         prettier()
     }
 }
