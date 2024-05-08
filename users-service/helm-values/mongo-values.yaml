@@ -1,2 +1,3 @@
-name: users-service
+name: users-mongo
 passwordSecretName: users-service-password
+scram: scram

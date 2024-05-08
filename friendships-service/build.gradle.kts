@@ -5,10 +5,6 @@ plugins {
 
 application { mainClass.set("piperkt.services.friendships.ApplicationKt") }
 
-detekt {
-    config.setFrom("./detekt-config.yml")
-}
-
 
 dependencies {
     ksp("io.micronaut.data:micronaut-data-document-processor")
@@ -25,5 +21,7 @@ dependencies {
     //kubernetes
     implementation("io.micronaut.kubernetes:micronaut-kubernetes-discovery-client")
 }
+
+detekt { config.from(files("detekt-config.yml")) }
 
 

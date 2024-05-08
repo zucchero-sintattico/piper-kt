@@ -1,7 +1,7 @@
 # value from: https://github.com/mongodb/mongodb-kubernetes-operator/issues/1420#issuecomment-1790885017
 
 operator:
-  name: friendships-service-operator
+  name: service-operator
   operatorImageName: mongodb-kubernetes-operator
   deploymentName: mongodb-kubernetes-operator
   version: 0.8.1
@@ -12,9 +12,6 @@ operator:
     requests:
       cpu: 200m
       memory: 200Mi
-
-database:
-  name: mongodb-friendships-database
 
 agent:
   name: mongodb-agent
@@ -33,7 +30,7 @@ registry:
   operator: docker.io/mohsinonxrm #quay.io/mongodb
 
 users:
-  - name: my-user
+  - name:
     db: admin
     passwordSecretRef: # a reference to the secret that will be used to generate the user's password
       name: <secretName>
@@ -46,6 +43,4 @@ users:
         db: admin
       - name: dbAdminAnyDatabase
         db: admin
-    scramCredentialsSecretName: friendships-scram
-
-createResource: false
+    scramCredentialsSecretName: scram

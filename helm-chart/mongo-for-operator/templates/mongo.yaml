@@ -4,23 +4,23 @@ kind: MongoDBCommunity
 metadata:
   name: {{.Values.name}}
 spec:
-  members: 3
+  members: 2
   type: ReplicaSet
   version: "6.0.5"
   security:
     authentication:
       modes: ["SCRAM"]
   users:
-    - name: my-user
+    - name: {{.Values.name}}
       db: admin
       passwordSecretRef: # a reference to the secret that will be used to generate the user's password
-        name: {{.Values.passwordSecretName}}
+        name: {{.Values.name}}
       roles:
         - name: clusterAdmin
           db: admin
         - name: userAdminAnyDatabase
           db: admin
-      scramCredentialsSecretName: my-scram
+      scramCredentialsSecretName: scram
   additionalMongodConfig:
     storage.wiredTiger.engineConfig.journalCompressor: zlib
 
@@ -30,7 +30,7 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{.Values.passwordSecretName}}
+  name: {{.Values.name}}
 type: Opaque
 stringData:
   password: password
