@@ -22,7 +22,7 @@ class FriendshipHttpControllerTest(
     }
 
     @Test
-    fun `should send a friend request`() {
+    fun `should return a 200 status code when sending a friend request`() {
         val response =
             client.sendFriendshipRequest(
                 request = FriendshipApi.SendFriendshipRequest.Request(receiver = "receiver")
@@ -31,7 +31,7 @@ class FriendshipHttpControllerTest(
     }
 
     @Test
-    fun `should not send a friend request if the request already exists`() {
+    fun `should return a 409 status code when sending a friend request to the same user twice`() {
         client.sendFriendshipRequest(
             request = FriendshipApi.SendFriendshipRequest.Request(receiver = "receiver")
         )
@@ -44,7 +44,7 @@ class FriendshipHttpControllerTest(
     }
 
     @Test
-    fun `should not send a friend request if they are already friends`() {
+    fun `should return a 409 status code when sending a friend request to a friend`() {
         client.sendFriendshipRequest(
             request = FriendshipApi.SendFriendshipRequest.Request(receiver = "receiver")
         )
@@ -61,7 +61,7 @@ class FriendshipHttpControllerTest(
     }
 
     @Test
-    fun `should get friend requests`() {
+    fun `should return a 200 status code when get all friends request`() {
         client.sendFriendshipRequest(
             request = FriendshipApi.SendFriendshipRequest.Request(receiver = "receiver")
         )
@@ -73,7 +73,7 @@ class FriendshipHttpControllerTest(
     }
 
     @Test
-    fun `should accept a friend request`() {
+    fun `should return a 200 status code when accepting a friend request`() {
         client.sendFriendshipRequest(
             request =
                 FriendshipApi.SendFriendshipRequest.Request(receiver = "whoReceivedTheRequest"),
@@ -90,7 +90,7 @@ class FriendshipHttpControllerTest(
     }
 
     @Test
-    fun `should not accept a friend request that does not exist`() {
+    fun `should return a 404 status code when accepting a friend request that does not exist`() {
         client
             .acceptFriendshipRequest(
                 request = FriendshipApi.AcceptFriendshipRequest.Request(sender = "user"),
@@ -100,7 +100,7 @@ class FriendshipHttpControllerTest(
     }
 
     @Test
-    fun `should decline a friend request`() {
+    fun `should return a 200 status code when declining a friend request`() {
         client.sendFriendshipRequest(
             request = FriendshipApi.SendFriendshipRequest.Request(receiver = "receiver"),
             authorization = authOf("user")
@@ -117,7 +117,7 @@ class FriendshipHttpControllerTest(
     }
 
     @Test
-    fun `should not decline a friend request that does not exist`() {
+    fun `should return a 404 status code when declining a friend request that does not exist`() {
         client
             .declineFriendshipRequest(
                 request = FriendshipApi.DeclineFriendshipRequest.Request(sender = "user"),
@@ -127,12 +127,12 @@ class FriendshipHttpControllerTest(
     }
 
     @Test
-    fun `should get friends`() {
+    fun `should return a 200 status code when getting all friends`() {
         client.getFriendships(authorization = authOf("user")).status() shouldBe HttpStatus.OK
     }
 
     @Test
-    fun `should get messages`() {
+    fun `should return a 200 status code when getting all messages from a friendship`() {
         client.sendFriendshipRequest(
             request = FriendshipApi.SendFriendshipRequest.Request(receiver = "receiver")
         )
@@ -151,7 +151,7 @@ class FriendshipHttpControllerTest(
     }
 
     @Test
-    fun `should not get messages if they are not friends`() {
+    fun `should return a 404 status code when getting all messages from a friendship that does not exist`() {
         client
             .getMessages(
                 friendUsername = "receiver",
@@ -163,7 +163,7 @@ class FriendshipHttpControllerTest(
     }
 
     @Test
-    fun `should send a message`() {
+    fun `should return a 200 status code when sending a message to a friend`() {
         client.sendFriendshipRequest(
             request = FriendshipApi.SendFriendshipRequest.Request(receiver = "receiver")
         )
@@ -180,7 +180,7 @@ class FriendshipHttpControllerTest(
     }
 
     @Test
-    fun `should not send a message if they are not friends`() {
+    fun `should return a 404 status code when sending a message to a friend that does not exist`() {
         client
             .sendMessage(
                 friendUsername = "receiver",
