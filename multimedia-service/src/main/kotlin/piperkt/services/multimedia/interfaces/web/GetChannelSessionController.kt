@@ -11,14 +11,15 @@ import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import io.micronaut.serde.annotation.Serdeable
 import java.security.Principal
-import piperkt.services.multimedia.application.server.ServerService
+import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.domain.server.ChannelId
 import piperkt.services.multimedia.domain.server.ServerId
 import piperkt.services.multimedia.domain.session.SessionErrors
+import piperkt.services.multimedia.domain.user.Username
 
 @Controller
 @Secured(SecurityRule.IS_AUTHENTICATED)
-class GetChannelSessionController(private val serverService: ServerService) {
+class GetChannelSessionController(private val sessionService: SessionService) {
 
     @Serdeable data class Response(val sessionId: String)
 
@@ -37,9 +38,13 @@ class GetChannelSessionController(private val serverService: ServerService) {
         @PathVariable serverId: String,
         @PathVariable channelId: String
     ): Response {
-        val server = serverService.getServer(ServerId(serverId))
-        val channel = server.getChannelById(ChannelId(channelId))
-        return Response(channel.sessionId.value)
+        val sessionId =
+            sessionService.getChannelSessionId(
+                author = Username(principal.name),
+                ServerId(serverId),
+                ChannelId(channelId)
+            )
+        return Response(sessionId.value)
     }
 
     @Error(SessionErrors.SessionNotFound::class)

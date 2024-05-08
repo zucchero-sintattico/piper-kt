@@ -6,6 +6,8 @@ import data.UsersData.john
 import io.kotest.matchers.shouldBe
 import java.security.Principal
 import mocks.publishers.MockedSessionEventPublisher
+import mocks.repositories.InMemoryDirectRepository
+import mocks.repositories.InMemoryServerRepository
 import mocks.repositories.InMemorySessionRepository
 import org.junit.jupiter.api.assertThrows
 import piperkt.services.multimedia.application.session.SessionService
@@ -18,7 +20,15 @@ fun String.toPrincipal() = Principal { this }
 class GetSessionParticipantsControllerTest :
     UnitTest.FunSpec({
         val sessionRepository = InMemorySessionRepository()
-        val sessionService = SessionService(sessionRepository, MockedSessionEventPublisher())
+        val serverRepository = InMemoryServerRepository()
+        val directRepository = InMemoryDirectRepository()
+        val sessionService =
+            SessionService(
+                sessionRepository,
+                serverRepository,
+                directRepository,
+                MockedSessionEventPublisher()
+            )
         val getSessionParticipantsController = GetSessionParticipantsController(sessionService)
 
         beforeEach { sessionRepository.clear() }

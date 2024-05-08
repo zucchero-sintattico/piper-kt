@@ -1,7 +1,7 @@
 package architecture
 
-val prefix = "piperkt.services.multimedia"
+const val PREFIX = "piperkt.services.multimedia"
 
-class CleanArchitectureMultimediaTest : CleanArchitectureSpec(prefix)
+class CleanArchitectureMultimediaTest : CleanArchitectureSpec(PREFIX)
 
-class FrameworkIndependenceMultimediaTest : FrameworkIndependenceTest(prefix)
+class FrameworkIndependenceMultimediaTest : FrameworkIndependenceTest(PREFIX)

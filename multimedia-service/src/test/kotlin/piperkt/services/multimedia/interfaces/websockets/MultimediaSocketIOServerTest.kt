@@ -8,6 +8,8 @@ import io.socket.client.IO
 import io.socket.client.Socket
 import jakarta.inject.Inject
 import mocks.publishers.MockedSessionEventPublisher
+import mocks.repositories.InMemoryDirectRepository
+import mocks.repositories.InMemoryServerRepository
 import mocks.repositories.InMemorySessionRepository
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.domain.session.SessionFactory
@@ -18,7 +20,15 @@ class MultimediaSocketIOServerTest(@Inject private val objectMapper: JsonMapper)
     IntegrationTest.FunSpec({
         // Setup
         val sessionRepository = InMemorySessionRepository()
-        val sessionService = SessionService(sessionRepository, MockedSessionEventPublisher())
+        val serverRepository = InMemoryServerRepository()
+        val directRepository = InMemoryDirectRepository()
+        val sessionService =
+            SessionService(
+                sessionRepository,
+                serverRepository,
+                directRepository,
+                MockedSessionEventPublisher()
+            )
         val server = MultimediaSocketIOServer(sessionService, objectMapper)
 
         // Setup data

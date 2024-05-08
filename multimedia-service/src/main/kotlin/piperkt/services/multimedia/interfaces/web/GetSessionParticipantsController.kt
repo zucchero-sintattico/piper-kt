@@ -14,6 +14,7 @@ import java.security.Principal
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.domain.session.SessionErrors
 import piperkt.services.multimedia.domain.session.SessionId
+import piperkt.services.multimedia.domain.user.Username
 
 @Controller
 @Secured(SecurityRule.IS_AUTHENTICATED)
@@ -29,8 +30,9 @@ class GetSessionParticipantsController(private val sessionService: SessionServic
     @Get("/sessions/{sessionId}/users", produces = [MediaType.APPLICATION_JSON])
     @Status(HttpStatus.OK)
     fun get(principal: Principal, @PathVariable sessionId: String): Response {
-        val session = sessionService.getSession(SessionId(sessionId))
-        return Response(session.participants().map { it.value }.toSet())
+        val participants =
+            sessionService.getSessionParticipants(Username(principal.name), SessionId(sessionId))
+        return Response(participants.map { it.value }.toSet())
     }
 
     @Error(SessionErrors.SessionNotFound::class)
