@@ -30,7 +30,7 @@ class ServerHttpControllerTest(
     }
 
     @Test
-    fun `should create server`() {
+    fun `should return a 200 status code when creating a server`() {
         client
             .createServer(
                 request =
@@ -40,7 +40,7 @@ class ServerHttpControllerTest(
     }
 
     @Test
-    fun `should correctly update server`() {
+    fun `should return a 200 status code when an admin tries to update a server`() {
         createSimpleServerAndGetId().let { serverId ->
             val updateResponse =
                 client.updateServer(
@@ -56,7 +56,7 @@ class ServerHttpControllerTest(
     }
 
     @Test
-    fun `should return 404 when trying to update a non-existing server`() {
+    fun `should return a 404 status code when updating a non-existing server`() {
         val response =
             client.updateServer(
                 "serverId",
@@ -66,7 +66,7 @@ class ServerHttpControllerTest(
     }
 
     @Test
-    fun `should return 403 when a non-admin tries to update a server`() {
+    fun `should return a 403 status code when a non-admin tries to update a server`() {
         val serverId = createSimpleServerAndGetId()
 
         assertThrows<HttpClientResponseException> {
@@ -84,7 +84,7 @@ class ServerHttpControllerTest(
     }
 
     @Test
-    fun `should delete server`() {
+    fun `should return a 200 status code when an admin tries to delete a server`() {
         val serverId = createSimpleServerAndGetId()
 
         val response = client.deleteServer(serverId)
@@ -92,13 +92,13 @@ class ServerHttpControllerTest(
     }
 
     @Test
-    fun `should return 404 when delete a non-existing server`() {
+    fun `should return a 404 status code when deleting a non-existing server`() {
         val response = client.deleteServer("serverId")
         response.status() shouldBe HttpStatus.NOT_FOUND
     }
 
     @Test
-    fun `should return 403 when a non-admin tries to delete a server`() {
+    fun `should return a 403 status code when a non-admin tries to delete a server`() {
         val serverId = createSimpleServerAndGetId()
         assertThrows<HttpClientResponseException> {
                 client.deleteServer(serverId = serverId, authorization = authOf("anotherUser"))
@@ -107,7 +107,7 @@ class ServerHttpControllerTest(
     }
 
     @Test
-    fun `should add user to server`() {
+    fun `should return a 200 status code when an admin tries to add a user to server`() {
         val serverId = createSimpleServerAndGetId()
         val response =
             client.addUserToServer(serverId = serverId, authorization = authOf("otherMember"))
@@ -115,14 +115,14 @@ class ServerHttpControllerTest(
     }
 
     @Test
-    fun `should return 404 when trying to add user in a non-existing server`() {
+    fun `should return a 404 status code when adding a user to a non-existing server`() {
         val response =
             client.addUserToServer(serverId = "serverId", authorization = authOf("otherMember"))
         response.status() shouldBe HttpStatus.NOT_FOUND
     }
 
     @Test
-    fun `should remove user from server`() {
+    fun `should return a 200 status code when an user leaves a server`() {
         val serverId = createSimpleServerAndGetId()
         client.addUserToServer(serverId = serverId, authorization = authOf("otherMember"))
         val response =
@@ -131,7 +131,7 @@ class ServerHttpControllerTest(
     }
 
     @Test
-    fun `should return 404 when trying to remove a user from a non-existing server`() {
+    fun `should return a 404 status code when removing a user from a non-existing server`() {
         val response =
             client.removeUserFromServer(
                 serverId = "serverId",
@@ -141,7 +141,7 @@ class ServerHttpControllerTest(
     }
 
     @Test
-    fun `should return 404 when trying to remove non-existing user from a server`() {
+    fun `should return a 404 status code when removing a non-existing user from a server`() {
         val serverId = createSimpleServerAndGetId()
         val response =
             client.removeUserFromServer(serverId = serverId, authorization = authOf("otherMember"))
@@ -149,7 +149,7 @@ class ServerHttpControllerTest(
     }
 
     @Test
-    fun `should kick user from server`() {
+    fun `should return a 200 status code when an admin tries to kick a user from a server`() {
         val serverId = createSimpleServerAndGetId()
         client.addUserToServer(serverId = serverId, authorization = authOf("otherMember"))
         val response =
@@ -161,20 +161,20 @@ class ServerHttpControllerTest(
     }
 
     @Test
-    fun `should return 404 when trying to kick a user from a non-existing server`() {
+    fun `should return a 404 status code when kicking a user from a non-existing server`() {
         val response = client.kickUserFromServer("serverId", "otherMember")
         response.status() shouldBe HttpStatus.NOT_FOUND
     }
 
     @Test
-    fun `should return 404 when trying to kick non-existing user from a server`() {
+    fun `should return a 404 status code when kicking a non-existing user from a server`() {
         val serverId = createSimpleServerAndGetId()
         val response = client.kickUserFromServer(serverId, "otherMember")
         response.status() shouldBe HttpStatus.NOT_FOUND
     }
 
     @Test
-    fun `should return 403 when a non-admin tries to kick a user from a server`() {
+    fun `should return a 403 status code when a non-admin tries to kick a user from a server`() {
         val serverId = createSimpleServerAndGetId()
         client.addUserToServer(serverId = serverId, authorization = authOf("otherMember"))
         assertThrows<HttpClientResponseException> {
@@ -186,14 +186,14 @@ class ServerHttpControllerTest(
     // QUERIES
 
     @Test
-    fun `should return servers from user`() {
+    fun `should return a 200 status code when getting servers from a user`() {
         val response = client.getServersFromUser(authOf("userWithNoServers"))
         response.status() shouldBe HttpStatus.OK
         response.body() shouldBe ServerApi.GetServersFromUserApi.Response(servers = emptyList())
     }
 
     @Test
-    fun `should return 404 when trying to get a non-existing server info`() {
+    fun `should return a 200 status code when getting users from a server`() {
         val response = client.getServerUsers("serverId")
         response.status() shouldBe HttpStatus.NOT_FOUND
     }
