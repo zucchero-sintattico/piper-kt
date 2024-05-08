@@ -1,3 +1,54 @@
+## [6.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v5.0.0...v6.0.0) (2024-05-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* **project:** cleanup micronaut configurations and dependencies, fixed micronaut problems with serializations
+
+### Features
+
+* **project:** cleanup micronaut configurations and dependencies, fixed micronaut problems with serializations ([9c58d74](https://github.com/zucchero-sintattico/piper-kt/commit/9c58d7461823d05e28796f3eec9d999908e68643))
+
+## [5.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v4.1.0...v5.0.0) (2024-05-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* finished microservice
+
+### Features
+
+* finished microservice ([7460f48](https://github.com/zucchero-sintattico/piper-kt/commit/7460f48c801f251b4edd42fa74a70b0e69bd7a6d))
+* **friends-service:** implement accept request feature and refactor tests ([d765196](https://github.com/zucchero-sintattico/piper-kt/commit/d765196ea9ec396f0fc0a66a9f319e434fe6a81e))
+* **friends-service:** implement db mapped entities ([6389fb9](https://github.com/zucchero-sintattico/piper-kt/commit/6389fb90d0d38536e96eb0d53a4bd6a719ebded3))
+* **friends-service:** implement decline requests with its tests ([64c4485](https://github.com/zucchero-sintattico/piper-kt/commit/64c4485026ca811c80a879f7ba5691c5b3d89c0d))
+* **friends-service:** implement event publishing ([cbd2027](https://github.com/zucchero-sintattico/piper-kt/commit/cbd2027fb64d15c252516da5652d1e20ed0b4393))
+* **friends-service:** implement kafka event publisher ([d8cab38](https://github.com/zucchero-sintattico/piper-kt/commit/d8cab38aa709382807efe3dbabde7e3122e0e3e7))
+* **friends-service:** implement last queries with tests and fix detekt issues ([56f91cd](https://github.com/zucchero-sintattico/piper-kt/commit/56f91cd9fc4c65f6862ad469d86ae39192efbaf3))
+* **friends-service:** implement repository ([610e539](https://github.com/zucchero-sintattico/piper-kt/commit/610e5398bcc31c4c9e216aa17fc7178832fdf46c))
+* **friends-service:** implement repository implementation tests for both aggregates ([eceefd0](https://github.com/zucchero-sintattico/piper-kt/commit/eceefd0ae968b8543fbfa32611c986597e2eb6a5))
+* **friends-service:** implement send message with tests ([5fff8e4](https://github.com/zucchero-sintattico/piper-kt/commit/5fff8e42ebe8d70bde898a58f3ea6c45320e87fe))
+* implement api for interfaces-web layer ([1412a64](https://github.com/zucchero-sintattico/piper-kt/commit/1412a64b9645d66ea6ac5e92f4e30b5164064046))
+* implement first http controller for friendships endpoints ([1e0935e](https://github.com/zucchero-sintattico/piper-kt/commit/1e0935ee27d1cd7baffc9189f7f77025d09e83e1))
+* implement integration tests for directs ([67f553e](https://github.com/zucchero-sintattico/piper-kt/commit/67f553e7f76a8148691f6063d68be08e496978ef))
+* implement integration tests for friendship endpoints ([d7ef45b](https://github.com/zucchero-sintattico/piper-kt/commit/d7ef45b01b3b65ce82da60d1e6d3b11b5b04e017))
+* import microservice template ([74d9eb0](https://github.com/zucchero-sintattico/piper-kt/commit/74d9eb0b5415da8326478bbd18a0411dfb668916))
+* merge main into microservice branch ([e605680](https://github.com/zucchero-sintattico/piper-kt/commit/e605680b69a4312c26da36aa39608dc7a5c1c0ba))
+* merge main into microservice branch ([0931190](https://github.com/zucchero-sintattico/piper-kt/commit/09311907038ac5f85a205dd1703374f76585c98a))
+* **service:** implement friendships api ([f5e6711](https://github.com/zucchero-sintattico/piper-kt/commit/f5e67118374996c38402ac2d8e480649ece9acb9))
+
+
+### Bug Fixes
+
+* **channel-service:** fix assertion in test ([2f12f43](https://github.com/zucchero-sintattico/piper-kt/commit/2f12f43e38894670d3b9a4ec4b5c9803c8d484ae))
+* **ci:** try to run test multiple times before failing ([47164d4](https://github.com/zucchero-sintattico/piper-kt/commit/47164d4517724be6e92ee6443b9c98570e53efe5))
+* **friendship-request:** adjust test case of accepting request ([cdbf28a](https://github.com/zucchero-sintattico/piper-kt/commit/cdbf28ac60c3c923f7623711f0a0f9c9b33dcb3a))
+* **friendships-repository:** let query return the aggregate instead of domain entities/valueObjs ([c4dc920](https://github.com/zucchero-sintattico/piper-kt/commit/c4dc920fd6b7dc7c7e21c07faa5815c1ff8fb625))
+* **friendships-service:** fixed micronaut configuration for db entities package ([5c5c941](https://github.com/zucchero-sintattico/piper-kt/commit/5c5c941128e73a0d1abd761d07cf27babe7f3425))
+* **friendships-service:** implement update in repository instead of save and finish integration tests ([1c24252](https://github.com/zucchero-sintattico/piper-kt/commit/1c24252f858d647b1c0bcc85a22bfc05509327a7))
+* **friendships-service:** make test green ([7595ac4](https://github.com/zucchero-sintattico/piper-kt/commit/7595ac4a670446aea0cb952643d3953bee746ebb))
+* **server-service:** add sealed interface to exceptions in channelservice ([57ea7d2](https://github.com/zucchero-sintattico/piper-kt/commit/57ea7d2f02df3788e8ba8ce26cf720166a172860))
+
 ## [4.1.0](https://github.com/zucchero-sintattico/piper-kt/compare/v4.0.0...v4.1.0) (2024-05-03)
 
 

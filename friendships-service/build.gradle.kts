@@ -1,9 +1,9 @@
 plugins {
-    id("micronaut-base")
-    id("java-test-fixtures")
+    id("micronaut-full")
 }
 
 application { mainClass.set("piperkt.services.friendships.ApplicationKt") }
+
 
 
 dependencies {
@@ -18,10 +18,11 @@ dependencies {
     // Jwt
     implementation("io.micronaut.security:micronaut-security-jwt")
     implementation("io.micronaut:micronaut-retry")
-    //kubernetes
-    implementation("io.micronaut.kubernetes:micronaut-kubernetes-discovery-client")
+
+
 }
 
 detekt { config.from(files("detekt-config.yml")) }
+
 
 

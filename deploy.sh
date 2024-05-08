@@ -2,7 +2,7 @@
 
 minikube delete
 minikube config set memory 7000
-minikube config set cpus 6
+minikube config set cpus 8
 minikube start
 
 
@@ -18,14 +18,14 @@ helm install --set image.tag=0.9.0-arm64 community-operator mongodb/community-op
     --set watchNamespaces=piper-kt\
     --values operator-values.yaml
 
-microservice_list=("friendships-service" "users-service" "servers-service")
+microservice_list=("friendships-service" "users-service" "servers-service" "multimedia-service")
 
 for microservice in "${microservice_list[@]}"
 do
   helm install $microservice helm-chart/piper-chart --values $microservice/helm-values/micronaut-values.yaml
 
-#  helm install $microservice helm-chart/mongo-for-operator --namespace piper-kt\
-#      --values $microservice/helm-values/mongo-values.yaml
+  helm install $microservice helm-chart/mongo-for-operator --namespace piper-kt\
+      --values $microservice/helm-values/mongo-values.yaml
 
 done
 

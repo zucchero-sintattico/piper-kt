@@ -1,0 +1,18 @@
+application:
+  name: "Piperkt Users Service"
+  version: "1.0.0"
+mongodb:
+  package-names:
+    - piperkt.services.users.infrastructure.persistence
+micronaut:
+  security:
+    authentication: bearer
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: "pleaseChangeThisSecretForANewOne"
+        generator:
+          refresh-token:
+            secret: "pleaseChangeThisSecretForANewOne"

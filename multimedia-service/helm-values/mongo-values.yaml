@@ -1,1 +1,3 @@
-name: friendships-mongo
+name: multimedia-mongo
+passwordSecretName: multimedia-service-password
+scram: scram

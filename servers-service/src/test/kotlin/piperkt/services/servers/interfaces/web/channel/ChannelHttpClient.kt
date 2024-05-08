@@ -11,13 +11,11 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Put
 import io.micronaut.http.annotation.QueryValue
 import io.micronaut.http.client.annotation.Client
-import io.micronaut.retry.annotation.Retryable
 import piperkt.services.servers.interfaces.web.api.interactions.ChannelApi
 import piperkt.services.servers.interfaces.web.api.interactions.ServerApi
 import piperkt.services.servers.interfaces.web.authOf
 
 @Client("/servers")
-@Retryable
 interface ChannelHttpClient {
 
     @Post("/")

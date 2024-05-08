@@ -1,7 +1,7 @@
 # value from: https://github.com/mongodb/mongodb-kubernetes-operator/issues/1420#issuecomment-1790885017
 
 operator:
-  name: friendships-service-operator
+  name: multimedia-service-operator
   operatorImageName: mongodb-kubernetes-operator
   deploymentName: mongodb-kubernetes-operator
   version: 0.8.1

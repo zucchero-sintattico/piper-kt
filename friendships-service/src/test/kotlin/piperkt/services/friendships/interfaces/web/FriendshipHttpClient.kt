@@ -9,11 +9,9 @@ import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.QueryValue
 import io.micronaut.http.client.annotation.Client
-import io.micronaut.retry.annotation.Retryable
 import piperkt.services.friendships.interfaces.web.api.interactions.FriendshipApi
 
 @Client("/")
-@Retryable
 interface FriendshipHttpClient {
 
     @Post("friends/requests/send/")

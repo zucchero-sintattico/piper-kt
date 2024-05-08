@@ -1,23 +1,23 @@
 package piperkt.services.multimedia.interfaces.websockets
 
-import kotlinx.serialization.Serializable
+import io.micronaut.serde.annotation.Serdeable
 
 sealed interface MultimediaProtocolMessage {
 
-    @Serializable data class JoinMessage(val sessionId: String) : MultimediaProtocolMessage
+    @Serdeable data class JoinMessage(val sessionId: String) : MultimediaProtocolMessage
 
-    @Serializable
+    @Serdeable
     data class OfferMessage(val from: String, val to: String, val offer: String) :
         MultimediaProtocolMessage
 
-    @Serializable
+    @Serdeable
     data class AnswerMessage(val from: String, val to: String, val answer: String) :
         MultimediaProtocolMessage
 
-    @Serializable
+    @Serdeable
     data class IceCandidateMessage(val from: String, val to: String, val candidate: String) :
         MultimediaProtocolMessage
 
-    @Serializable
+    @Serdeable
     data class UserJoined(val sessionId: String, val userId: String) : MultimediaProtocolMessage
 }

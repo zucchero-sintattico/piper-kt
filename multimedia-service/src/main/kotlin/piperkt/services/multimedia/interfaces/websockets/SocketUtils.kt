@@ -2,16 +2,27 @@ package piperkt.services.multimedia.interfaces.websockets
 
 import com.corundumstudio.socketio.SocketIOServer
 import com.corundumstudio.socketio.listener.DataListener
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.serializer
+import io.micronaut.serde.ObjectMapper
+import jakarta.inject.Singleton
 
-inline fun <reified E> E.toJson(): String = Json.encodeToString(serializer(), this)
+@Singleton
+class JsonMapper(private val mapper: ObjectMapper) {
+    fun <E> fromJson(json: String, clazz: Class<E>): E {
+        return mapper.readValue(json, clazz)
+    }
 
-inline fun <reified E> fromJson(json: String): E = Json.decodeFromString(serializer(), json)
+    fun toJson(obj: Any): String {
+        return mapper.writeValueAsString(obj)
+    }
+}
 
-inline fun <reified E> SocketIOServer.on(event: String, listener: DataListener<E>) {
+inline fun <reified E> SocketIOServer.on(
+    mapper: JsonMapper,
+    event: String,
+    listener: DataListener<E>
+) {
     this.addEventListener(event, String::class.java) { client, data, ackRequest ->
-        val message = fromJson<E>(data)
+        val message = mapper.fromJson(data, E::class.java)
         listener.onData(client, message, ackRequest)
     }
 }
