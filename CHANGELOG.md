@@ -1,3 +1,10 @@
+## [6.1.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.0.0...v6.1.0) (2024-05-09)
+
+
+### Features
+
+* **notifications:** import old microservice as is and apply gradle plugin ([2d3de4e](https://github.com/zucchero-sintattico/piper-kt/commit/2d3de4eb80848146aa035fae641f0f8c2a574f5d))
+
 ## [6.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v5.0.0...v6.0.0) (2024-05-07)
 
 
