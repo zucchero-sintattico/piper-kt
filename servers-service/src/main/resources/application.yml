@@ -6,4 +6,4 @@ mongodb:
     - piperkt.services.servers.infrastructure.persistence
 micronaut:
   openapi:
-    filename: "openapi.yml"
+    filename: "openapi-servers"

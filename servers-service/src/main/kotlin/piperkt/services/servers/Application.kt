@@ -4,24 +4,18 @@ import io.micronaut.runtime.Micronaut
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.info.Contact
 import io.swagger.v3.oas.annotations.info.Info
-import io.swagger.v3.oas.annotations.info.License
-
-// fun main(vararg args: String) {
-//    Micronaut.run(*args)
-// }
 
 @OpenAPIDefinition(
     info =
         Info(
-            title = "Piper-kt",
+            title = "Piper-kt Servers API",
             version = "1.0",
-            description = "Piper-kt API",
-            license = License(name = "Apache 2.0", url = "https://foo.bar"),
+            description = "Piper-kt Servers Service API",
             contact =
                 Contact(
-                    url = "https://gigantic-server.com",
-                    name = "Fred",
-                    email = "Fred@gigagantic-server.com"
+                    url = "https://piper-kt.com",
+                    name = "Zucchero Sintattico",
+                    email = "zuccherosintattico@gmail.com"
                 )
         )
 )
