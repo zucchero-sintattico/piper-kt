@@ -1,3 +1,12 @@
+## [6.3.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.2.0...v6.3.0) (2024-05-10)
+
+
+### Features
+
+* **server-service:** add all server endpoints api responses and implemented owner leaving a server management ([435b94f](https://github.com/zucchero-sintattico/piper-kt/commit/435b94faba26ea0a9f1403fa85105657002e7b70))
+* **server-service:** add first endpoint specification ([9f5c31c](https://github.com/zucchero-sintattico/piper-kt/commit/9f5c31ce1e6742af43ef7d044f0c6cb144205f8c))
+* **server-service:** add swagger ([91ac577](https://github.com/zucchero-sintattico/piper-kt/commit/91ac5779829b669fa7e2ee0e25b427a5a74d609d))
+
 ## [6.2.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.1.0...v6.2.0) (2024-05-10)
 
 
