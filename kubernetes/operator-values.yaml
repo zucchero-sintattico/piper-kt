@@ -7,11 +7,11 @@ operator:
   version: 0.8.1
   resources:
     limits:
-      cpu: 200m
-      memory: 200Mi
+      cpu: 100m
+      memory: 100Mi
     requests:
-      cpu: 200m
-      memory: 200Mi
+      cpu: 100m
+      memory: 100Mi
 
 agent:
   name: mongodb-agent
