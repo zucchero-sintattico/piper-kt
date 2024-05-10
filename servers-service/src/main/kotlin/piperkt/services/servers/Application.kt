@@ -26,15 +26,3 @@ object Application {
         Micronaut.run(Application.javaClass)
     }
 }
-// LEVEL -> WHATS -> DEPENDENCIES
-// --------------------------------
-// DOMAIN -> Language:
-// - Entities
-// - Value Objects
-// - Repositories
-// - Factories
-// APPLICATION -> Domain
-// - Services
-// INTERFACES ->
-// - Controller (Indepedent of the framework)
-// INFRASTRUCTURE

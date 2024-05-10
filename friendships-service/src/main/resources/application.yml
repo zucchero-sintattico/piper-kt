@@ -4,3 +4,6 @@ application:
 mongodb:
   package-names:
     - piperkt.services.friendships.infrastructure.persistence
+micronaut:
+  openapi:
+    filename: "openapi-friendships"
