@@ -1,12 +1,10 @@
 package piperkt.services.servers.interfaces.web
 
-import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Delete
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Put
-import io.micronaut.http.annotation.Status
 import java.security.Principal
 import piperkt.common.id.ServerId
 import piperkt.services.servers.application.ServerService
@@ -38,7 +36,6 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
     }
 
     @Get("/{serverId}/users")
-    @Status(HttpStatus.OK)
     override fun getServerUsers(
         serverId: String,
         principal: Principal
@@ -56,7 +53,6 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
     }
 
     @Get("/")
-    @Status(HttpStatus.OK)
     override fun getServersFromUser(
         principal: Principal
     ): ServerApi.GetServersFromUserApi.Response {
@@ -72,7 +68,6 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
     }
 
     @Put("/{serverId}")
-    @Status(HttpStatus.OK)
     override fun updateServer(
         serverId: String,
         request: ServerApi.UpdateServerApi.Request,

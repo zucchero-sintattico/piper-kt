@@ -14,4 +14,8 @@ dependencies {
     // Commons
     implementation(project(":commons"))
     testImplementation(testFixtures(project(":commons")))
+
+    // Swagger
+    ksp(catalog.getLibrary("openapi"))
+    compileOnly(catalog.getLibrary("openapi-annotations"))
 }
