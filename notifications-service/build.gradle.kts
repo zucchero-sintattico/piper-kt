@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.zucchero-sintattico.typescript-gradle-plugin") version "4.1.1"
+    id("io.github.zucchero-sintattico.typescript-gradle-plugin") version "4.2.2"
     alias(libs.plugins.spotless)
 }
 
