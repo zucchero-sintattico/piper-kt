@@ -86,6 +86,9 @@ open class ServerService(
             if (!server.users.contains(request.requestFrom)) {
                 return Result.failure(ServerServiceException.UserNotInServerExceptionException())
             }
+            if (server.owner == request.requestFrom) {
+                return Result.failure(ServerServiceException.OwnerCannotLeaveServerException())
+            }
             server.removeUser(request.requestFrom)
             serverRepository.update(server)
             eventPublisher.publish(

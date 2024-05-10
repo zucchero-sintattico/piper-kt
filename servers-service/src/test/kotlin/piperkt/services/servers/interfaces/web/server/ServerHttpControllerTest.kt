@@ -149,6 +149,15 @@ class ServerHttpControllerTest(
     }
 
     @Test
+    fun `should return a 422 status code when removing the owner from a server`() {
+        val serverId = createSimpleServerAndGetId()
+        assertThrows<HttpClientResponseException> {
+                client.removeUserFromServer(serverId, authOf("user"))
+            }
+            .let { it.status shouldBe HttpStatus.UNPROCESSABLE_ENTITY }
+    }
+
+    @Test
     fun `should return a 200 status code when an admin tries to kick a user from a server`() {
         val serverId = createSimpleServerAndGetId()
         client.addUserToServer(serverId = serverId, authorization = authOf("otherMember"))

@@ -15,4 +15,8 @@ sealed class ServerServiceException : Exception() {
     data class UserNotHasPermissionsException(
         override val message: String = "User not has permissions to perform this action"
     ) : ServerServiceException()
+
+    data class OwnerCannotLeaveServerException(
+        override val message: String = "Owner cannot leave server"
+    ) : ServerServiceException()
 }
