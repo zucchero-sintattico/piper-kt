@@ -19,3 +19,26 @@ spotless {
         prettier()
     }
 }
+
+tasks.register("buildLayers") {
+    dependsOn("compileTypescript")
+    doLast {
+        copy {
+            from("build/dist")
+            into("build/docker/main/dist")
+        }
+        copy {
+            from("node_modules")
+            into("build/docker/main/node_modules")
+        }
+    }
+}
+
+tasks.register("dockerfile") {
+    doLast {
+        copy {
+            from("Dockerfile")
+            into("build/docker/main")
+        }
+    }
+}
