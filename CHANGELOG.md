@@ -1,3 +1,10 @@
+## [6.4.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.3.0...v6.4.0) (2024-05-10)
+
+
+### Features
+
+* **notifications:** add image delivery according to the toolchain ([369e41c](https://github.com/zucchero-sintattico/piper-kt/commit/369e41c54e1a58f71cb2dc6f96b414deb251445b))
+
 ## [6.3.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.2.0...v6.3.0) (2024-05-10)
 
 
