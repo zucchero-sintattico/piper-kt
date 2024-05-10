@@ -1,3 +1,10 @@
+## [6.2.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.1.0...v6.2.0) (2024-05-10)
+
+
+### Features
+
+* **delivery:** add action to delivery service images to dockerhub ([e02a3f5](https://github.com/zucchero-sintattico/piper-kt/commit/e02a3f56d1a2e6e33edcddfec197ab95788d3512))
+
 ## [6.1.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.0.0...v6.1.0) (2024-05-09)
 
 
