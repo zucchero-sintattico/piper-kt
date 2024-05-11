@@ -9,13 +9,13 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [
     vue({ template: { transformAssetUrls } }),
-    quasar({ sassVariables: "src/assets/quasar-variables.sass" }),
+    quasar({ sassVariables: "src/main/vue/assets/quasar-variables.sass" }),
     vueJsx(),
   ],
   resolve: {
     alias: {
-      "@api": fileURLToPath(new URL("./src/api", import.meta.url)),
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "@api": fileURLToPath(new URL("./src/main/vue/api", import.meta.url)),
+      "@": fileURLToPath(new URL("./src/main/vue", import.meta.url)),
     },
   },
   cacheDir: "./node_modules/.vite",

@@ -5,8 +5,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@api/*": ["./src/api/*"],
+      "@/*": ["./src/main/vue/*"],
+      "@api/*": ["./src/main/vue/api/*"],
     }
   }
 }
