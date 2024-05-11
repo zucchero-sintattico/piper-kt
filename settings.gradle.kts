@@ -36,3 +36,5 @@ include("multimedia-service")
 include("friendships-service")
 
 include("notifications-service")
+
+include("frontend-service")
