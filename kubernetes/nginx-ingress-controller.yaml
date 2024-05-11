@@ -12,37 +12,37 @@ spec:
       name: static-assets
   ingressClassName: nginx
   rules:
-  - host: localhost
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: users-service
-            port:
-              number: 8080
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: friendships-service
-            port:
-              number: 8080
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: multimedia-service
-            port:
-              number: 8080
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: servers-service
-            port:
-              number: 8080
+    - host: localhost
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: users-service
+                port:
+                  number: 8080
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: friendships-service
+                port:
+                  number: 8080
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: multimedia-service
+                port:
+                  number: 8080
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: servers-service
+                port:
+                  number: 8080
 
 ---
 apiVersion: networking.k8s.io/v1

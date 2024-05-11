@@ -1,4 +1,3 @@
 name: servers-mongo
 passwordSecretName: servers-service-password
 scram: scram
-

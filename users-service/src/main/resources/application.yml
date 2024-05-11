@@ -4,9 +4,10 @@ application:
 mongodb:
   package-names:
     - piperkt.services.users.infrastructure.persistence
+  uri: mongodb://users-mongo:password@users-mongo-svc.piper-kt.svc.cluster.local:27017/admin?authSource=admin&authMechanism=SCRAM-SHA-256&directConnection=true
 micronaut:
   security:
-    authentication: bearer
+    authentication: bearer  
     token:
       jwt:
         signatures:
