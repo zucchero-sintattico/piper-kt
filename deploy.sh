@@ -2,23 +2,29 @@
 
 minikube delete
 minikube config set memory 6000
-minikube config set cpus 6
+minikube config set cpus 4
 minikube start
 
 
 eval $(minikube docker-env)
 #
-./gradlew dockerBuild
+
 #create namespace
 kubectl create namespace piper-kt
 kubectl apply -f kubernetes/auth.yml
 helm repo add mongodb https://mongodb.github.io/helm-charts
 
+kubectl create -f 'https://strimzi.io/install/latest?namespace=piper-kt' -n piper-kt
+kubectl apply -f kubernetes/kafka.yml --namespace piper-kt     
+
 helm install --set image.tag=0.9.0-arm64 community-operator mongodb/community-operator --namespace piper-kt \
     --set watchNamespaces=piper-kt\
     --values kubernetes/operator-values.yaml
 
-microservice_list=("friendships-service" "users-service" "servers-service" "multimedia-service")
+
+./gradlew dockerBuild
+#microservice_list=("friendships-service" "users-service" "servers-service" "multimedia-service")
+microservice_list=("users-service")
 
 for microservice in "${microservice_list[@]}"
 do
@@ -31,13 +37,10 @@ done
 
 kubectl apply -f kubernetes/nginx-ingress-controller.yaml --namespace piper-kt
 
-minikube addons enable ingress 
+minikube addons enable ingress
 
 minikube tunnel
 
-#helm install services oci://ghcr.io/nginxinc/charts/nginx-ingress --version 1.2.1\
-#    --namespace piper-kt\
-#    --values nginx-values.yaml   
 
 #https://github.com/mongodb/helm-charts/tree/d843c293bf86653d4b9193ab245f04934c93a722/charts/
 

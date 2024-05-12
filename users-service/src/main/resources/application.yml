@@ -7,7 +7,7 @@ mongodb:
   uri: mongodb://users-mongo:password@users-mongo-svc.piper-kt.svc.cluster.local:27017/admin?authSource=admin&authMechanism=SCRAM-SHA-256&directConnection=true
 micronaut:
   security:
-    authentication: bearer  
+    authentication: bearer
     token:
       jwt:
         signatures:
@@ -17,3 +17,6 @@ micronaut:
         generator:
           refresh-token:
             secret: "pleaseChangeThisSecretForANewOne"
+spring:
+  kafka:
+    bootstrap-servers: cluster-kafka-bootstrap.piper-kt.svc.cluster.local:9094
