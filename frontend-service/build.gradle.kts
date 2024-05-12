@@ -2,6 +2,7 @@ import io.github.zuccherosintattico.gradle.BuildCommandExecutable
 
 plugins {
     id("io.github.zucchero-sintattico.typescript-gradle-plugin") version "4.3.0"
+    id("non-micronaut-project")
     alias(libs.plugins.spotless)
 }
 
@@ -23,8 +24,7 @@ spotless {
     }
 }
 
-tasks.register("buildLayers") {
-    dependsOn("compileTypescript")
+tasks.named("buildLayers") {
     doLast {
         copy {
             from("dist")
@@ -33,15 +33,6 @@ tasks.register("buildLayers") {
         copy {
             from("node_modules")
             into("build/docker/main/node_modules")
-        }
-    }
-}
-
-tasks.register("dockerfile") {
-    doLast {
-        copy {
-            from("Dockerfile")
-            into("build/docker/main")
         }
     }
 }
