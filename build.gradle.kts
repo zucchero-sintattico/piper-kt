@@ -19,6 +19,7 @@ gitSemVer {
 }
 
 val notKotlinProjects = listOf(
+    "frontend-service",
     "notifications-service",
 )
 
