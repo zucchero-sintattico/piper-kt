@@ -159,6 +159,7 @@ jobs:
       matrix:
         service:
           - "friendships-service"
+          - "frontend-service"
           - "multimedia-service"
           - "notifications-service"
           - "servers-service"
