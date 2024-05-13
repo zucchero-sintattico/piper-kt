@@ -17,6 +17,7 @@ micronaut:
         generator:
           refresh-token:
             secret: "pleaseChangeThisSecretForANewOne"
-spring:
-  kafka:
-    bootstrap-servers: cluster-kafka-bootstrap.piper-kt.svc.cluster.local:9094
+
+kafka:
+  bootstrap:
+    servers: cluster-kafka-brokers.piper-kt.svc.cluster.local:9092

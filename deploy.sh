@@ -1,22 +1,20 @@
 #!/bin/bash
 
-minikube delete
-minikube config set memory 6000
-minikube config set cpus 4
-minikube start
+# This script is used to deploy the application to a kubernetes cluster
 
 
-eval $(minikube docker-env)
-#
+
 
 #create namespace
 kubectl create namespace piper-kt
 kubectl apply -f kubernetes/auth.yml
 helm repo add mongodb https://mongodb.github.io/helm-charts
 
-kubectl create -f 'https://strimzi.io/install/latest?namespace=piper-kt' -n piper-kt
-kubectl apply -f kubernetes/kafka.yml --namespace piper-kt     
+#kubectl create -f 'https://strimzi.io/install/latest?namespace=piper-kt' -n piper-kt
+#kubectl apply -f kubernetes/kafka.yml --namespace piper-kt
 
+helm install strimzi-cluster-operator --set replicas=1 --set resources.limits.cpu=500 oci://quay.io/strimzi-helm/strimzi-kafka-operator --namespace piper-kt
+kubectl apply -f kubernetes/kafka.yml --namespace piper-kt
 helm install --set image.tag=0.9.0-arm64 community-operator mongodb/community-operator --namespace piper-kt \
     --set watchNamespaces=piper-kt\
     --values kubernetes/operator-values.yaml
@@ -37,9 +35,15 @@ done
 
 kubectl apply -f kubernetes/nginx-ingress-controller.yaml --namespace piper-kt
 
-minikube addons enable ingress
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/aws/deploy.yaml
 
-minikube tunnel
+
+sleep 90
+
+kubectl port-forward svc/ingress-nginx-controller 8080:80 -n ingress-nginx
+#minikube addons enable ingress
+
+#minikube tunnel
 
 
 #https://github.com/mongodb/helm-charts/tree/d843c293bf86653d4b9193ab245f04934c93a722/charts/
