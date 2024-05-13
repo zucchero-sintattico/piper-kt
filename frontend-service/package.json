@@ -6,7 +6,8 @@
     "build:check": "run-p type-check build",
     "start": "serve -s dist",
     "dev": "vite --base /site",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "type-checking": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.6",

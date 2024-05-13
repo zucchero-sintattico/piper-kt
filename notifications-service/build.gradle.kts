@@ -1,3 +1,6 @@
+import com.lordcodes.turtle.shellRun
+import io.github.zuccherosintattico.utils.NodeCommandsExtension.npmCommand
+
 plugins {
     id("io.github.zucchero-sintattico.typescript-gradle-plugin") version "4.3.0"
     id("non-micronaut-project")
@@ -31,5 +34,18 @@ tasks.named("buildLayers") {
             from("node_modules")
             into("build/docker/main/node_modules")
         }
+    }
+}
+
+// This is a patch, the typescript plugin can handle it
+tasks.named("check") {
+    dependsOn("compileTypescript")
+    doLast {
+        runCatching {
+            shellRun(project.projectDir) {
+                npmCommand(project, "run", "type-checking")
+            }
+        }
+            .onFailure { logger.error(it.stackTraceToString()) }
     }
 }
