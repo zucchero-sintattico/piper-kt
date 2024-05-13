@@ -61,21 +61,14 @@ export module GetFriendsRequestsApi {
 export module SendFriendRequestApi {
   export module Request {
     export type Type = Body & Params;
-    export enum FriendRequestAction {
-      send = "send",
-      accept = "accept",
-      deny = "deny",
-    }
     export type Params = Empty;
     export type Body = {
-      to: string;
-      action: FriendRequestAction;
+      receiver: string;
     };
     export const Schema: RequestSchema = {
       Params: {},
       Body: {
-        to: "string",
-        action: "string",
+        receiver: "string",
       },
     };
   }
@@ -84,22 +77,10 @@ export module SendFriendRequestApi {
       statusCode = 200;
       message = "Friend request sent" as const;
     }
-    export class FriendRequestAccepted extends Response {
-      statusCode = 200;
-      message = "Friend request accepted" as const;
-    }
-    export class FriendRequestDenied extends Response {
-      statusCode = 200;
-      message = "Friend request denied" as const;
-    }
 
-    export type Type = Success | FriendRequestAccepted | FriendRequestDenied;
+    export type Type = Success;
   }
   export module Errors {
-    export class UserNotFound extends ErrorResponse {
-      statusCode = 404;
-      error = "User not found" as const;
-    }
     export class InvalidAction extends ErrorResponse {
       statusCode = 400;
       error: string;
@@ -116,17 +97,94 @@ export module SendFriendRequestApi {
       statusCode = 404;
       error = "Friend request not found" as const;
     }
-    export class CannotSendFriendRequestToYourself extends ErrorResponse {
-      statusCode = 400;
-      error = "Cannot send a friend request to yourself" as const;
-    }
 
     export type Type =
-      | UserNotFound
       | InvalidAction
       | FriendRequestAlreadySent
-      | FriendRequestNotFound
-      | CannotSendFriendRequestToYourself;
+      | FriendRequestNotFound;
+  }
+  export type Response = Responses.Type | Errors.Type;
+}
+
+export module AcceptFriendRequestApi {
+  export module Request {
+    export type Type = Body & Params;
+    export type Params = Empty;
+    export type Body = {
+      sender: string;
+    };
+    export const Schema: RequestSchema = {
+      Params: {},
+      Body: {
+        sender: "string",
+      },
+    };
+  }
+  export module Responses {
+    export class FriendRequestAccepted extends Response {
+      statusCode = 200;
+      message = "Friend request accepted succesfully" as const;
+    }
+
+    export type Type = FriendRequestAccepted;
+  }
+  export module Errors {
+    export class InvalidAction extends ErrorResponse {
+      statusCode = 400;
+      error: string;
+      constructor(action: string) {
+        super();
+        this.error = `Invalid 'action' parameter in body: '${action}'`;
+      }
+    }
+    export class FriendRequestNotFound extends ErrorResponse {
+      statusCode = 404;
+      error = "Friend request not found" as const;
+    }
+
+    export type Type = FriendRequestNotFound;
+  }
+  export type Response = Responses.Type | Errors.Type;
+}
+
+export module DeclineFriendRequestApi {
+  export module Request {
+    export type Type = Body & Params;
+    export type Params = Empty;
+    export type Body = {
+      sender: string;
+    };
+    export const Schema: RequestSchema = {
+      Params: {},
+      Body: {
+        sender: "string",
+      },
+    };
+  }
+  export module Responses {
+    export class FriendRequestDenied extends Response {
+      statusCode = 200;
+      message = "Friend request denied successfully" as const;
+    }
+
+    export type Type = FriendRequestDenied;
+  }
+  export module Errors {
+    export class InvalidAction extends ErrorResponse {
+      statusCode = 400;
+      error: string;
+      constructor(action: string) {
+        super();
+        this.error = `Invalid 'action' parameter in body: '${action}'`;
+      }
+    }
+
+    export class FriendRequestNotFound extends ErrorResponse {
+      statusCode = 404;
+      error = "Friend request not found" as const;
+    }
+
+    export type Type = InvalidAction | FriendRequestNotFound;
   }
   export type Response = Responses.Type | Errors.Type;
 }

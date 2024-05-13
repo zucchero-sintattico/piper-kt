@@ -1,7 +1,7 @@
 import { AxiosController } from "@/controllers/axios-controller";
 import type { FriendsController } from "./friends-controller";
 import {
-  SendFriendRequestApi,
+  DeclineFriendRequestApi,
   type GetFriendsApi,
   type GetFriendsRequestsApi,
 } from "@api/users/friends";
@@ -18,37 +18,38 @@ export class FriendsControllerImpl
     return await this.get<GetFriendsRequestsApi.Response>("/friends/requests");
   }
 
-  async sendFriendRequest(to: string): Promise<SendFriendRequestApi.Response> {
-    const body: SendFriendRequestApi.Request.Body = {
-      to: to,
-      action: SendFriendRequestApi.Request.FriendRequestAction.send,
+  async sendFriendRequest(
+    to: string
+  ): Promise<DeclineFriendRequestApi.Response> {
+    const body: DeclineFriendRequestApi.Request.Body = {
+      receiver: to,
     };
-    return await this.post<SendFriendRequestApi.Response>(
-      "/friends/requests",
+    return await this.post<DeclineFriendRequestApi.Response>(
+      "/friends/requests/send",
       body
     );
   }
 
   async acceptFriendRequest(
     to: string
-  ): Promise<SendFriendRequestApi.Response> {
-    const body: SendFriendRequestApi.Request.Body = {
-      to: to,
-      action: SendFriendRequestApi.Request.FriendRequestAction.accept,
+  ): Promise<DeclineFriendRequestApi.Response> {
+    const body: DeclineFriendRequestApi.Request.Body = {
+      sender: to,
     };
-    return await this.post<SendFriendRequestApi.Response>(
-      "/friends/requests",
+    return await this.post<DeclineFriendRequestApi.Response>(
+      "/friends/requests/accept",
       body
     );
   }
 
-  async denyFriendRequest(to: string): Promise<SendFriendRequestApi.Response> {
-    const body: SendFriendRequestApi.Request.Body = {
-      to: to,
-      action: SendFriendRequestApi.Request.FriendRequestAction.deny,
+  async denyFriendRequest(
+    to: string
+  ): Promise<DeclineFriendRequestApi.Response> {
+    const body: DeclineFriendRequestApi.Request.Body = {
+      sender: to,
     };
-    return await this.post<SendFriendRequestApi.Response>(
-      "/friends/requests",
+    return await this.post<DeclineFriendRequestApi.Response>(
+      "/friends/requests/decline",
       body
     );
   }

@@ -1,7 +1,7 @@
 import {
   GetFriendsApi,
   GetFriendsRequestsApi,
-  SendFriendRequestApi,
+  DeclineFriendRequestApi,
 } from "@api/users/friends";
 export interface FriendsController {
   /**
@@ -19,15 +19,15 @@ export interface FriendsController {
   /**
    * Send a friend request to a user.
    */
-  sendFriendRequest(to: string): Promise<SendFriendRequestApi.Response>;
+  sendFriendRequest(to: string): Promise<DeclineFriendRequestApi.Response>;
 
   /**
    * Accept a friend request from a user.
    */
-  acceptFriendRequest(to: string): Promise<SendFriendRequestApi.Response>;
+  acceptFriendRequest(to: string): Promise<DeclineFriendRequestApi.Response>;
 
   /**
    * Deny a friend request from a user.
    */
-  denyFriendRequest(to: string): Promise<SendFriendRequestApi.Response>;
+  denyFriendRequest(to: string): Promise<DeclineFriendRequestApi.Response>;
 }
