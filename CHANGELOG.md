@@ -1,3 +1,11 @@
+## [6.5.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.4.1...v6.5.0) (2024-05-13)
+
+
+### Features
+
+* **frontend:** add frontend project from piperchat and init gradlifing ([cf9a72f](https://github.com/zucchero-sintattico/piper-kt/commit/cf9a72f10cba370dff400c31ed665429f97cf3b3))
+* **frontend:** gradlifing the project and setup delivery tasks ([2322505](https://github.com/zucchero-sintattico/piper-kt/commit/232250593476550af48a20218c056d70b6fbfa91))
+
 ## [6.4.1](https://github.com/zucchero-sintattico/piper-kt/compare/v6.4.0...v6.4.1) (2024-05-10)
 
 
