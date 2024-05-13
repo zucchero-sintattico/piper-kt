@@ -4,7 +4,7 @@ import type { FriendsController } from "@/controllers/users/friends/friends-cont
 import { FriendsControllerImpl } from "@/controllers/users/friends/friends-controller-impl";
 import type {
   GetFriendsApi,
-  SendFriendRequestApi,
+  DeclineFriendRequestApi,
   GetFriendsRequestsApi,
 } from "@api/users/friends";
 
@@ -62,7 +62,7 @@ export const useFriendStore = defineStore(
     async function sendFriendRequest(username: string) {
       const response = await friendsController.sendFriendRequest(username);
       if (response.statusCode !== 200) {
-        const typed = response as SendFriendRequestApi.Errors.Type;
+        const typed = response as DeclineFriendRequestApi.Errors.Type;
         throw new Error(typed.error);
       }
     }
@@ -72,7 +72,7 @@ export const useFriendStore = defineStore(
       if (response.statusCode === 200) {
         await refresh();
       } else {
-        const typed = response as SendFriendRequestApi.Errors.Type;
+        const typed = response as DeclineFriendRequestApi.Errors.Type;
         throw new Error(typed.error);
       }
     }
@@ -82,7 +82,7 @@ export const useFriendStore = defineStore(
       if (response.statusCode === 200) {
         await refresh();
       } else {
-        const typed = response as SendFriendRequestApi.Errors.Type;
+        const typed = response as DeclineFriendRequestApi.Errors.Type;
         throw new Error(typed.error);
       }
     }
