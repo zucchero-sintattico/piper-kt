@@ -1,10 +1,14 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id("micronaut-full")
 }
 
 application { mainClass.set("piperkt.services.friendships.ApplicationKt") }
 
-
+tasks.withType<ShadowJar> {
+    isZip64= true
+}
 
 dependencies {
     ksp("io.micronaut.data:micronaut-data-document-processor")
@@ -23,6 +27,3 @@ dependencies {
 }
 
 detekt { config.from(files("detekt-config.yml")) }
-
-
-
