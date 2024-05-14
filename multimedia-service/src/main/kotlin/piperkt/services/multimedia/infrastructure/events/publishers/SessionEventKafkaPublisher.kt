@@ -2,8 +2,8 @@ package piperkt.services.multimedia.infrastructure.events.publishers
 
 import io.micronaut.configuration.kafka.annotation.KafkaClient
 import io.micronaut.configuration.kafka.annotation.Topic
-import piperkt.services.multimedia.domain.session.SessionEvent
-import piperkt.services.multimedia.domain.session.SessionEventPublisher
+import piperkt.common.events.SessionEvent
+import piperkt.common.events.SessionEventPublisher
 
 @KafkaClient
 interface SessionEventKafkaPublisher : SessionEventPublisher {

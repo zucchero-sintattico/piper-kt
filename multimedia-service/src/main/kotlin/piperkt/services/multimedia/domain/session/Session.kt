@@ -1,7 +1,10 @@
 package piperkt.services.multimedia.domain.session
 
 import piperkt.common.AggregateRoot
+import piperkt.common.UUIDEntityId
 import piperkt.services.multimedia.domain.user.Username
+
+class SessionId(value: String = newId()) : UUIDEntityId(value)
 
 class Session(
     id: SessionId = SessionId(),
@@ -17,7 +20,6 @@ class Session(
         return participants
     }
 
-    @Throws(SessionErrors.UserAlreadyParticipant::class)
     fun addParticipant(participant: Username) {
         if (!allowedUsers.contains(participant)) {
             throw SessionErrors.UserNotAllowed(id, participant)
@@ -28,7 +30,6 @@ class Session(
         participants += participant
     }
 
-    @Throws(SessionErrors.UserNotParticipant::class)
     fun removeParticipant(participant: Username) {
         if (!participants.contains(participant)) {
             throw SessionErrors.UserNotParticipant(id, participant)
@@ -36,7 +37,6 @@ class Session(
         participants -= participant
     }
 
-    @Throws(SessionErrors.UserAlreadyAllowed::class)
     fun addAllowedUser(user: Username) {
         if (allowedUsers.contains(user)) {
             throw SessionErrors.UserAlreadyAllowed(id, user)
@@ -44,7 +44,6 @@ class Session(
         allowedUsers += user
     }
 
-    @Throws(SessionErrors.UserNotAllowed::class)
     fun removeAllowedUser(user: Username) {
         if (!allowedUsers.contains(user)) {
             throw SessionErrors.UserNotAllowed(id, user)

@@ -1,7 +1,7 @@
 package mocks.publishers
 
 import piperkt.common.MockedEventPublisher
-import piperkt.services.multimedia.domain.session.SessionEvent
-import piperkt.services.multimedia.domain.session.SessionEventPublisher
+import piperkt.common.events.SessionEvent
+import piperkt.common.events.SessionEventPublisher
 
 class MockedSessionEventPublisher : SessionEventPublisher, MockedEventPublisher<SessionEvent>()

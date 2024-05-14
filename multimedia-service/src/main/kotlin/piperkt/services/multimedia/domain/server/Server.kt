@@ -1,7 +1,14 @@
 package piperkt.services.multimedia.domain.server
 
 import piperkt.common.AggregateRoot
+import piperkt.common.EntityId
 import piperkt.services.multimedia.domain.user.Username
+
+class ServerId(value: String) : EntityId<String>(value) {
+    companion object {
+        fun empty() = ServerId("")
+    }
+}
 
 class Server(
     id: ServerId = ServerId.empty(),
@@ -17,7 +24,6 @@ class Server(
         return channels
     }
 
-    @Throws(ServerErrors.UserAlreadyInServer::class)
     fun addMember(member: Username) {
         if (members.contains(member)) {
             throw ServerErrors.UserAlreadyInServer(id, member)
@@ -25,7 +31,6 @@ class Server(
         members += member
     }
 
-    @Throws(ServerErrors.UserNotInServer::class)
     fun removeMember(member: Username) {
         if (!members.contains(member)) {
             throw ServerErrors.UserNotInServer(id, member)
@@ -33,7 +38,6 @@ class Server(
         members -= member
     }
 
-    @Throws(ServerErrors.ChannelAlreadyInServer::class)
     fun addChannel(channel: Channel) {
         if (channels.contains(channel)) {
             throw ServerErrors.ChannelAlreadyInServer(id, channel)
@@ -41,7 +45,6 @@ class Server(
         channels += channel
     }
 
-    @Throws(ServerErrors.ChannelNotInServer::class)
     fun removeChannel(channel: Channel) {
         if (!channels.contains(channel)) {
             throw ServerErrors.ChannelNotInServer(id, channel.id)

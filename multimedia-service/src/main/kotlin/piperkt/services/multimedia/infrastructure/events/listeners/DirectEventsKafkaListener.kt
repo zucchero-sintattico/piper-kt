@@ -2,12 +2,12 @@ package piperkt.services.multimedia.infrastructure.events.listeners
 
 import io.micronaut.configuration.kafka.annotation.KafkaListener
 import io.micronaut.configuration.kafka.annotation.Topic
+import piperkt.common.events.FriendshipEvent
 import piperkt.services.multimedia.application.direct.DirectEventsListener
-import piperkt.services.multimedia.domain.direct.DirectEvent
 
 @KafkaListener
 class DirectEventsKafkaListener(private val directEventsListener: DirectEventsListener) {
     @Topic("friend-request-accepted")
-    fun onFriendRequestAccepted(event: DirectEvent.FriendRequestAccepted) =
+    fun onFriendRequestAccepted(event: FriendshipEvent.FriendshipRequestAcceptedEvent) =
         directEventsListener.handle(event)
 }

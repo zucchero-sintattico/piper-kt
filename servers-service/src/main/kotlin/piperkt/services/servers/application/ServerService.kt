@@ -13,23 +13,23 @@ open class ServerService(
     private val eventPublisher: ServerEventPublisher,
 ) : ServerServiceApi {
     override fun createServer(
-        request: ServerCommand.CreateServer.Request
+        request: ServerCommand.CreateServer.Request,
     ): Result<ServerCommand.CreateServer.Response> {
         val server =
             ServerFactory.createServer(request.name, request.description, request.requestFrom)
         serverRepository.save(server)
-        eventPublisher.publish(ServerEvent.ServerCreatedEvent(server.id))
+        eventPublisher.publish(ServerEvent.ServerCreatedEvent(server.id.value, server.owner))
         return Result.success(ServerCommand.CreateServer.Response(server.id))
     }
 
     override fun deleteServer(
-        request: ServerCommand.DeleteServer.Request
+        request: ServerCommand.DeleteServer.Request,
     ): Result<ServerCommand.DeleteServer.Response> {
         val server = serverRepository.findById(request.serverId)
         return if (server != null) {
             if (server.isUserAdmin(request.requestFrom)) {
                 serverRepository.deleteById(request.serverId)
-                eventPublisher.publish(ServerEvent.ServerDeletedEvent(request.serverId))
+                eventPublisher.publish(ServerEvent.ServerDeletedEvent(request.serverId.value))
                 Result.success(ServerCommand.DeleteServer.Response(request.serverId))
             } else {
                 return Result.failure(ServerServiceException.UserNotHasPermissionsException())
@@ -40,7 +40,7 @@ open class ServerService(
     }
 
     override fun updateServer(
-        request: ServerCommand.UpdateServer.Request
+        request: ServerCommand.UpdateServer.Request,
     ): Result<ServerCommand.UpdateServer.Response> {
         val server = serverRepository.findById(request.serverId)
         return if (server != null) {
@@ -48,7 +48,7 @@ open class ServerService(
                 request.name?.let { server.name = it }
                 request.description?.let { server.description = it }
                 serverRepository.update(server)
-                eventPublisher.publish(ServerEvent.ServerUpdatedEvent(request.serverId))
+                eventPublisher.publish(ServerEvent.ServerUpdatedEvent(request.serverId.value))
                 Result.success(
                     ServerCommand.UpdateServer.Response(
                         request.serverId,
@@ -65,13 +65,15 @@ open class ServerService(
     }
 
     override fun addUserToServer(
-        request: ServerCommand.AddUserToServer.Request
+        request: ServerCommand.AddUserToServer.Request,
     ): Result<ServerCommand.AddUserToServer.Response> {
         val server = serverRepository.findById(request.serverId)
         return if (server != null) {
             server.addUser(request.requestFrom)
             serverRepository.update(server)
-            eventPublisher.publish(ServerEvent.ServerUserAddedEvent(server.id, request.requestFrom))
+            eventPublisher.publish(
+                ServerEvent.ServerUserAddedEvent(server.id.value, request.requestFrom)
+            )
             Result.success(ServerCommand.AddUserToServer.Response(server.id, request.requestFrom))
         } else {
             Result.failure(ServerServiceException.ServerNotFoundExceptionException())
@@ -79,7 +81,7 @@ open class ServerService(
     }
 
     override fun removeUserFromServer(
-        request: ServerCommand.RemoveUserFromServer.Request
+        request: ServerCommand.RemoveUserFromServer.Request,
     ): Result<ServerCommand.RemoveUserFromServer.Response> {
         val server = serverRepository.findById(request.serverId)
         if (server != null) {
@@ -92,7 +94,7 @@ open class ServerService(
             server.removeUser(request.requestFrom)
             serverRepository.update(server)
             eventPublisher.publish(
-                ServerEvent.ServerUserRemovedEvent(server.id, request.requestFrom)
+                ServerEvent.ServerUserRemovedEvent(server.id.value, request.requestFrom)
             )
             return Result.success(
                 ServerCommand.RemoveUserFromServer.Response(server.id, request.requestFrom)
@@ -103,7 +105,7 @@ open class ServerService(
     }
 
     override fun kickUserFromServer(
-        request: ServerCommand.KickUserFromServer.Request
+        request: ServerCommand.KickUserFromServer.Request,
     ): Result<ServerCommand.KickUserFromServer.Response> {
         val server = serverRepository.findById(request.serverId)
         if (server != null) {
@@ -115,7 +117,9 @@ open class ServerService(
             }
             server.removeUser(request.username)
             serverRepository.update(server)
-            eventPublisher.publish(ServerEvent.ServerUserKickedEvent(server.id, request.username))
+            eventPublisher.publish(
+                ServerEvent.ServerUserKickedEvent(server.id.value, request.username)
+            )
             return Result.success(
                 ServerCommand.KickUserFromServer.Response(server.id, request.username)
             )
@@ -125,7 +129,7 @@ open class ServerService(
     }
 
     override fun getServerUsers(
-        request: ServerQuery.GetServerUsers.Request
+        request: ServerQuery.GetServerUsers.Request,
     ): Result<ServerQuery.GetServerUsers.Response> {
         val server = serverRepository.findById(request.serverId)
         return if (server != null) {
@@ -140,7 +144,7 @@ open class ServerService(
     }
 
     override fun getServersFromUser(
-        request: ServerQuery.GetServersFromUser.Request
+        request: ServerQuery.GetServersFromUser.Request,
     ): Result<ServerQuery.GetServersFromUser.Response> {
         val servers = serverRepository.findByMember(request.requestFrom)
         return Result.success(ServerQuery.GetServersFromUser.Response(servers))

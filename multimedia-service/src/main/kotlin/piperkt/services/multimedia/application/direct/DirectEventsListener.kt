@@ -1,32 +1,25 @@
 package piperkt.services.multimedia.application.direct
 
 import piperkt.common.EventListener
-import piperkt.services.multimedia.application.direct.DirectService.Command.CreateDirect
+import piperkt.common.events.FriendshipEvent
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.application.session.SessionService.Command.CreateSession
-import piperkt.services.multimedia.domain.direct.DirectEvent
+import piperkt.services.multimedia.domain.direct.Direct
+import piperkt.services.multimedia.domain.direct.DirectId
+import piperkt.services.multimedia.domain.direct.DirectRepository
 import piperkt.services.multimedia.domain.user.Username
 
 open class DirectEventsListener(
-    private val directService: DirectService,
+    private val directRepository: DirectRepository,
     private val sessionService: SessionService,
-) : EventListener<DirectEvent> {
-    override fun handle(event: DirectEvent) {
-        when (event) {
-            is DirectEvent.FriendRequestAccepted -> onFriendRequestAccepted(event)
-        }
-    }
-
-    private fun onFriendRequestAccepted(event: DirectEvent.FriendRequestAccepted) {
+) : EventListener<FriendshipEvent.FriendshipRequestAcceptedEvent> {
+    override fun handle(event: FriendshipEvent.FriendshipRequestAcceptedEvent) {
         val session =
             sessionService.createSession(
-                CreateSession(setOf(Username(event.from), Username(event.to)))
+                CreateSession(setOf(Username(event.fromUser), Username(event.toUser)))
             )
-        directService.createDirect(
-            CreateDirect(
-                users = setOf(Username(event.from), Username(event.to)),
-                sessionId = session.id
-            )
-        )
+        val direct =
+            Direct(DirectId(setOf(Username(event.fromUser), Username(event.toUser))), session.id)
+        directRepository.save(direct)
     }
 }
