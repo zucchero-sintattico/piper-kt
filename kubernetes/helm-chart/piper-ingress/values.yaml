@@ -6,11 +6,6 @@ usersServicePaths:
       - "/photo"
 
 friendshipsServicePaths:
-      - "friends/requests/"
-      - "/friends/requests/send"
-      - "/friends/requests/accept"
-      - "/friends/requests/decline"
-      - "/friends/requests/requests"
       - "/friends"
       - "/users/*/messages"
 
