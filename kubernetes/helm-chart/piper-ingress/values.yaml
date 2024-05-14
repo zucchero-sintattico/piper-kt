@@ -1,0 +1,26 @@
+usersServicePaths:
+      - "/users"
+      - "/whoami"
+      - "/profile"
+      - "/description"
+      - "/photo"
+
+friendshipsServicePaths:
+      - "friends/requests/"
+      - "/friends/requests/send"
+      - "/friends/requests/accept"
+      - "/friends/requests/decline"
+      - "/friends/requests/requests"
+      - "/friends"
+      - "/users/*/messages"
+
+
+multimediaServicePaths:
+      - "/users/*/session"
+      - "/sessions/*/users"
+      - "/servers/*/channels/*/session"
+
+
+serversServicePaths:
+      - "/servers/*/users"
+      - "/servers/*"
