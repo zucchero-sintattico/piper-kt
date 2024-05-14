@@ -11,11 +11,11 @@ import piperkt.services.servers.domain.factory.MessageFactory
 
 open class ChannelService(
     private val serverRepository: ServerRepository,
-    private val eventPublisher: ChannelEventPublisher
+    private val eventPublisher: ChannelEventPublisher,
 ) : ChannelServiceApi {
 
     override fun createNewChannelInServer(
-        request: ChannelCommand.CreateNewChannelInServer.Request
+        request: ChannelCommand.CreateNewChannelInServer.Request,
     ): Result<ChannelCommand.CreateNewChannelInServer.Response> {
         val server =
             serverRepository.findById(request.serverId)
@@ -31,7 +31,9 @@ open class ChannelService(
                         server.addChannel(it)
                         serverRepository.update(server)
                     }
-            eventPublisher.publish(ChannelEvent.ChannelCreatedEvent(channel.id))
+            eventPublisher.publish(
+                ChannelEvent.ChannelCreatedEvent(server.id.value, channel.id.value)
+            )
             Result.success(ChannelCommand.CreateNewChannelInServer.Response(channel.id))
         } else {
             Result.failure(ServerServiceException.UserNotHasPermissionsException())
@@ -39,7 +41,7 @@ open class ChannelService(
     }
 
     override fun updateChannelInServer(
-        request: ChannelCommand.UpdateChannelInServer.Request
+        request: ChannelCommand.UpdateChannelInServer.Request,
     ): Result<ChannelCommand.UpdateChannelInServer.Response> {
         val server =
             serverRepository.findById(request.serverId)
@@ -54,7 +56,9 @@ open class ChannelService(
                         serverRepository.update(server)
                     }
             if (channel != null) {
-                eventPublisher.publish(ChannelEvent.ChannelUpdatedEvent(request.channelId))
+                eventPublisher.publish(
+                    ChannelEvent.ChannelUpdatedEvent(server.id.value, request.channelId.value)
+                )
                 Result.success(
                     ChannelCommand.UpdateChannelInServer.Response(
                         channelId = channel.id,
@@ -71,7 +75,7 @@ open class ChannelService(
     }
 
     override fun deleteChannelInServer(
-        request: ChannelCommand.DeleteChannelInServer.Request
+        request: ChannelCommand.DeleteChannelInServer.Request,
     ): Result<ChannelCommand.DeleteChannelInServer.Response> {
         val server =
             serverRepository.findById(request.serverId)
@@ -85,7 +89,12 @@ open class ChannelService(
                     } else {
                         server.removeChannel(it)
                         serverRepository.update(server)
-                        eventPublisher.publish(ChannelEvent.ChannelDeletedEvent(request.channelId))
+                        eventPublisher.publish(
+                            ChannelEvent.ChannelDeletedEvent(
+                                server.id.value,
+                                request.channelId.value
+                            )
+                        )
                         Result.success(
                             ChannelCommand.DeleteChannelInServer.Response(
                                 channelId = request.channelId
@@ -99,7 +108,7 @@ open class ChannelService(
     }
 
     override fun getChannelsByServerId(
-        request: ChannelQuery.GetChannelByServerId.Request
+        request: ChannelQuery.GetChannelByServerId.Request,
     ): Result<ChannelQuery.GetChannelByServerId.Response> {
         val server = serverRepository.findById(request.serverId)
         return if (server == null) {
@@ -114,7 +123,7 @@ open class ChannelService(
     }
 
     override fun getMessagesFromChannelId(
-        request: ChannelQuery.GetMessagesFromChannelId.Request
+        request: ChannelQuery.GetMessagesFromChannelId.Request,
     ): Result<ChannelQuery.GetMessagesFromChannelId.Response> {
         if (!serverRepository.isUserInServer(request.serverId, request.requestFrom)) {
             return Result.failure(ServerServiceException.UserNotHasPermissionsException())
@@ -137,7 +146,7 @@ open class ChannelService(
     }
 
     override fun addMessageInChannel(
-        request: ChannelCommand.AddMessageInChannel.Request
+        request: ChannelCommand.AddMessageInChannel.Request,
     ): Result<ChannelCommand.AddMessageInChannel.Response> {
         if (!serverRepository.isUserInServer(request.serverId, request.requestFrom)) {
             return Result.failure(ServerServiceException.UserNotHasPermissionsException())
@@ -153,7 +162,13 @@ open class ChannelService(
             MessageFactory.createMessage(content = request.content, sender = request.requestFrom)
         channel.addMessage(message)
         serverRepository.update(server)
-        eventPublisher.publish(ChannelEvent.MessageInChannelEvent(request.channelId, message.id))
+        eventPublisher.publish(
+            ChannelEvent.MessageInChannelEvent(
+                server.id.value,
+                request.channelId.value,
+                message.id.value
+            )
+        )
         return Result.success(ChannelCommand.AddMessageInChannel.Response(message.id))
     }
 }

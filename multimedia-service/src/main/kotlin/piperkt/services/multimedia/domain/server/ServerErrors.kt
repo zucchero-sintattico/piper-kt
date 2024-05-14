@@ -7,8 +7,6 @@ sealed class ServerErrors : Exception() {
 
     data class UserAlreadyInServer(val id: ServerId, val username: Username) : ServerErrors()
 
-    data class UserNotOwner(val id: ServerId, val username: Username) : ServerErrors()
-
     data class UserNotInServer(val id: ServerId, val username: Username) : ServerErrors()
 
     data class ChannelAlreadyInServer(val id: ServerId, val channel: Channel) : ServerErrors()

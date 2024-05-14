@@ -2,24 +2,28 @@ package piperkt.services.multimedia.infrastructure.implementation
 
 import jakarta.inject.Singleton
 import piperkt.services.multimedia.application.direct.DirectEventsListener
-import piperkt.services.multimedia.application.direct.DirectService
 import piperkt.services.multimedia.application.server.ChannelEventsListener
 import piperkt.services.multimedia.application.server.ServerEventsListener
-import piperkt.services.multimedia.application.server.ServerService
 import piperkt.services.multimedia.application.session.SessionService
+import piperkt.services.multimedia.domain.direct.DirectRepository
+import piperkt.services.multimedia.domain.server.ServerRepository
 
 object EventsListeners {
     @Singleton
-    class ServerEventListenerService(serverService: ServerService, sessionService: SessionService) :
-        ServerEventsListener(serverService, sessionService)
+    class ServerEventListenerService(
+        serverRepository: ServerRepository,
+        sessionService: SessionService
+    ) : ServerEventsListener(serverRepository, sessionService)
 
     @Singleton
-    class DirectEventListenerService(directService: DirectService, sessionService: SessionService) :
-        DirectEventsListener(directService, sessionService)
+    class DirectEventListenerService(
+        directRepository: DirectRepository,
+        sessionService: SessionService
+    ) : DirectEventsListener(directRepository, sessionService)
 
     @Singleton
     class ChannelEventListenerService(
-        serverService: ServerService,
+        serverRepository: ServerRepository,
         sessionService: SessionService
-    ) : ChannelEventsListener(serverService, sessionService)
+    ) : ChannelEventsListener(serverRepository, sessionService)
 }

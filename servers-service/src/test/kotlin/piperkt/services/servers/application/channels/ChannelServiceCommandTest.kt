@@ -33,7 +33,12 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         // Only way to test the response is to check if the event was published with the correct
         // channelId
         verify(eventPublisher)
-            .publish(ChannelEvent.ChannelCreatedEvent(response.getOrThrow().channelId))
+            .publish(
+                ChannelEvent.ChannelCreatedEvent(
+                    simpleServerId.value,
+                    response.getOrThrow().channelId.value
+                )
+            )
     }
 
     @Test
@@ -87,7 +92,8 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                     newDescription = "channelDescription"
                 )
             )
-        verify(eventPublisher).publish(ChannelEvent.ChannelUpdatedEvent(simpleChannelId))
+        verify(eventPublisher)
+            .publish(ChannelEvent.ChannelUpdatedEvent(simpleServerId.value, simpleChannelId.value))
     }
 
     @Test
@@ -133,7 +139,8 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
             Result.success(
                 ChannelCommand.DeleteChannelInServer.Response(channelId = simpleChannelId)
             )
-        verify(eventPublisher).publish(ChannelEvent.ChannelDeletedEvent(simpleChannelId))
+        verify(eventPublisher)
+            .publish(ChannelEvent.ChannelDeletedEvent(simpleServerId.value, simpleChannelId.value))
     }
 
     @Test
@@ -179,7 +186,11 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         response.isSuccess shouldBe true
         verify(eventPublisher)
             .publish(
-                ChannelEvent.MessageInChannelEvent(simpleChannelId, response.getOrThrow().messageId)
+                ChannelEvent.MessageInChannelEvent(
+                    simpleServerId.value,
+                    simpleChannelId.value,
+                    response.getOrThrow().messageId.value
+                )
             )
     }
 
