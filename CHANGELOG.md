@@ -1,3 +1,51 @@
+## [6.6.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.5.0...v6.6.0) (2024-05-15)
+
+
+### Features
+
+* **application:** add Kafka configuration for all services to connect to cluster-kafka-brokers.piper-kt.svc.cluster.local:9092 for messaging functionality ([2d1eb12](https://github.com/zucchero-sintattico/piper-kt/commit/2d1eb127eb56bb48ee8851dab932b5015a5703f3))
+* **application:** add Kafka configuration for all services to connect to cluster-kafka-brokers.piper-kt.svc.cluster.local:9092 for messaging functionality ([35c20b0](https://github.com/zucchero-sintattico/piper-kt/commit/35c20b07b6b17da8f36f13bdac8c92d6d20ba8e7))
+* **atlas-operator:** add new helm chart files for mongodb atlas operator ([28554e8](https://github.com/zucchero-sintattico/piper-kt/commit/28554e8b6e93cfd57dcf2a17dbeec25d0a7c0db2))
+* **CleanArchitectureSpec:** add test for verifying clean architecture layers dependencies ([b80a51f](https://github.com/zucchero-sintattico/piper-kt/commit/b80a51fa8730bc894d64a50138daf15022c07619))
+* **community-operator:** add community-operator helm chart ([6a365f0](https://github.com/zucchero-sintattico/piper-kt/commit/6a365f050e2bef4e8af6e45a153415240537856d))
+* **db-values:** add custom user 'my-user' with appropriate roles and password secret reference for MongoDB deployment ([0f20ae0](https://github.com/zucchero-sintattico/piper-kt/commit/0f20ae06691cf05f0d9727afa8f6a4d0317c3dec))
+* **deploy:** add deployment and service creation for frontend-service in Kubernetes ([5b6d9ff](https://github.com/zucchero-sintattico/piper-kt/commit/5b6d9ff9148ee158d69f0350ae10538a01d49ada))
+* **deploy:** add deployment script for helm and kubectl commands ([3cd4f3c](https://github.com/zucchero-sintattico/piper-kt/commit/3cd4f3c37667e55168da02b53e4b36a17c2f087f))
+* **deploy:** add mogno db connection string to connect che services ([1de1291](https://github.com/zucchero-sintattico/piper-kt/commit/1de1291a9af161cf8c103e4a0fcc8606f1605960))
+* **deploy:** add support for nginx-ingress-controller deployment and enable ingress on minikube ([8e3f124](https://github.com/zucchero-sintattico/piper-kt/commit/8e3f124d92c98c1ec206bb5707e2bb80ea37145f))
+* **deploy:** conficure mongos db for microservice ([792bef6](https://github.com/zucchero-sintattico/piper-kt/commit/792bef6b628adca51afd1db581d87c1ef17a0cff))
+* **deploy:** full microservice and database pods deploy ([b134c26](https://github.com/zucchero-sintattico/piper-kt/commit/b134c2672fcafd2fae8d3556e8051b8395a9f1fe))
+* **deploy:** kafka users-service deploy on kubernetes ([afe0ade](https://github.com/zucchero-sintattico/piper-kt/commit/afe0ade69112575a0f4fb310bee5bd7bb46abeb7))
+* **deploy:** update helm install commands to install microservices with specific values ([2832565](https://github.com/zucchero-sintattico/piper-kt/commit/2832565a94cbaaf0a91a4b783966f1bdaae0ae44))
+* **deploy:** update values in db-values.yaml for friendship-service-operator for apple M1,M2,M3 ([441864d](https://github.com/zucchero-sintattico/piper-kt/commit/441864d00a143f04e23449d41984edc5b3f57dc3))
+* **DirectEntity:** add DirectEntity and MessageEntity classes for storing direct messages in the database ([97a37a7](https://github.com/zucchero-sintattico/piper-kt/commit/97a37a715a471b386404dd26f27e936d0f3865dd))
+* **DirectMessage:** create DirectMessage.kt file with Message and Direct data classes for handling direct messages in the friendship service. ([681921c](https://github.com/zucchero-sintattico/piper-kt/commit/681921c0af0aab8d7abd2a1ef16304d401016a2d))
+* **DirectRepository:** add DirectRepository interface with methods for retrieving, creating, and sending direct messages ([486d662](https://github.com/zucchero-sintattico/piper-kt/commit/486d6625e8aff64bdefacfe52521eb75a160b9ba))
+* **DirectService:** add DirectService, DirectServiceApi, and DirectRepository classes to implement direct messaging functionality in the friendship service. ([2a0fa76](https://github.com/zucchero-sintattico/piper-kt/commit/2a0fa76be6fbe84f40eedc0bf04b30d4e0df7731))
+* **FriendsControllerTest:** add test case for getFriendRequests endpoint to return friend requests of authenticated user ([f26c586](https://github.com/zucchero-sintattico/piper-kt/commit/f26c586e829735e198c48ee14a11cede6d42671d))
+* **FriendsControllerTest:** add test case to get empty friend requests to ensure correct behavior of getFriendRequest() method ([df02aa7](https://github.com/zucchero-sintattico/piper-kt/commit/df02aa786a9bd744a9c62ae50dc1b52238283cdb))
+* **friendship-service:** add files for basic configuration ([74f3fca](https://github.com/zucchero-sintattico/piper-kt/commit/74f3fcaaae83b99d362c83f414f8a94b30a0f393))
+* **friendship-service:** add FriendRepositoryImpl and FriendsHTTPController ([17ac896](https://github.com/zucchero-sintattico/piper-kt/commit/17ac8961dc1af7e339c0208ea853c9ab71a9421e))
+* **friendship-service:** add FriendService and FriendServiceApi classes ([7aee2ce](https://github.com/zucchero-sintattico/piper-kt/commit/7aee2ce064f7b3a20fce43013384dae54bb09792))
+* **friendship-service:** add methods to FriendRepository interface ([98fe158](https://github.com/zucchero-sintattico/piper-kt/commit/98fe158acff44bbd8ec8e819d49546d813b53dff))
+* **friendship-service:** add micronaut security dependencies for jwt and aot plugins ([fafd872](https://github.com/zucchero-sintattico/piper-kt/commit/fafd8726804009451e668ad68d2607513a434eac))
+* **friendship-service:** edit from template to have frendship service base ([25626ae](https://github.com/zucchero-sintattico/piper-kt/commit/25626aeb2dccd381d8827b8a142bc28589ef2944))
+* **helm-chart:** add piper-ingress Helm chart with configuration for nginx Ingress controller and service paths for users, friendships, multimedia, and servers services. ([60146c4](https://github.com/zucchero-sintattico/piper-kt/commit/60146c43c378e3e43e38388c489246cfddd21571))
+* **helm-chart:** update values.yaml to include additional paths for friendsServicePaths, multimediaServicePaths, and serversServicePaths ([0abe5e7](https://github.com/zucchero-sintattico/piper-kt/commit/0abe5e7f08a5aecaa852b0c9d4746ec5889ada3a))
+* **k8s:** add Kubernetes deployment and service configuration for friendship-service ([e13f82d](https://github.com/zucchero-sintattico/piper-kt/commit/e13f82d9aa31c4a194ee477eb2e68811c347e50f))
+* **kubernetes:** add Kubernetes YAML file for setting up service account, role, role binding, and secret for micronaut-k8s namespace ([d8afee0](https://github.com/zucchero-sintattico/piper-kt/commit/d8afee0fe65afa6c0068a237afbe6dc7f7446047))
+* **kubernetesNamespce:** update namespace value to use dynamic namespace from values ([819f7fd](https://github.com/zucchero-sintattico/piper-kt/commit/819f7fdc52501107ed4bb35ebc719f5f7b5dbf5b))
+* **mongo-for-operator:** add values.yaml for configuration of MongoDB resources ([6a24428](https://github.com/zucchero-sintattico/piper-kt/commit/6a2442808e93522902e9c25e89f0e1ca8944ba0a))
+* **mongo:** add resource limits and requests for the mongodb-agent container to optimize resource allocation ([8ba89b4](https://github.com/zucchero-sintattico/piper-kt/commit/8ba89b4263429d3221c1e7098daeebeb80ad061e))
+* **piprktChart:** add values.yaml file with ServiceName set to 'service-name' to provide configuration for the chart ([cbbba1b](https://github.com/zucchero-sintattico/piper-kt/commit/cbbba1b90d2137d8f66e9e754730abaeb1877714))
+
+
+### Bug Fixes
+
+* **build-jar:** error on shadow jar with > 65535 files ([41f3448](https://github.com/zucchero-sintattico/piper-kt/commit/41f34483a2f5129354ab0ef16baad59eefb11fb6))
+* **deployment:** add micronaut production environment ([996387b](https://github.com/zucchero-sintattico/piper-kt/commit/996387b5868ebd348253a2e86083ddeb4fd4d564))
+* **jar:** add zip64 extensions for other microservices build ([0869e02](https://github.com/zucchero-sintattico/piper-kt/commit/0869e0290a4cd857a326f9896ce85df5b6e9fcea))
+
 ## [6.5.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.4.1...v6.5.0) (2024-05-13)
 
 
