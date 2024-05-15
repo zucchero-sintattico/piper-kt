@@ -4,6 +4,10 @@ application:
 mongodb:
   package-names:
     - piperkt.services.servers.infrastructure.persistence
+  uri: mongodb://servers-mongo:password@servers-mongo-svc.piper-kt.svc.cluster.local:27017/admin?authSource=admin&authMechanism=SCRAM-SHA-256&directConnection=true
+kafka:
+  bootstrap:
+    servers: cluster-kafka-brokers.piper-kt.svc.cluster.local:9092
 micronaut:
   openapi:
     filename: "openapi-servers"

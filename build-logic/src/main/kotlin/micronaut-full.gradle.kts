@@ -11,6 +11,8 @@ dependencies {
     runtimeOnly(catalog.getLibrary("mongodb-driver-sync"))
     implementation(catalog.getLibrary("micronaut-kafka"))
     implementation(catalog.getLibrary("micronaut-jwt"))
+    implementation(catalog.getLibrary("micronaut-discovery-client"))
+    implementation(catalog.getLibrary("micronaut-management"))
     // Commons
     implementation(project(":commons"))
     testImplementation(testFixtures(project(":commons")))

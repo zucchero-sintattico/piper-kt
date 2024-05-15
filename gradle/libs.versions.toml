@@ -45,7 +45,8 @@ mongodb-driver-sync = { module = "org.mongodb:mongodb-driver-sync" }
 micronaut-jwt = { module = "io.micronaut.security:micronaut-security-jwt" }
 openapi = { module = "io.micronaut.openapi:micronaut-openapi" }
 openapi-annotations = { module = "io.micronaut.openapi:micronaut-openapi-annotations" }
-
+micronaut-discovery-client = { module = "io.micronaut.kubernetes:micronaut-kubernetes-discovery-client" }
+micronaut-management = { module = "io.micronaut:micronaut-management" }
 
 [plugins]
 allOpen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }

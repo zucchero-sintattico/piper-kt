@@ -1,0 +1,3 @@
+serviceName: multimedia-service
+namespace: piper-kt
+port: 8080

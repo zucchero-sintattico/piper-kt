@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{.Values.namespace}}
+  name: {{.Values.serviceName}}
+  labels:
+    app: {{.Values.serviceName}}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      app: {{.Values.serviceName}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.serviceName}}
+        chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
+    spec:
+      serviceAccountName: micronaut-service # <1>
+      containers:
+        - name: {{.Values.serviceName}}
+          image: {{.Values.serviceName}}
+          imagePullPolicy: Never # <3>
+          ports:
+            - name: http
+              containerPort: {{.Values.port}}
+          readinessProbe:
+            httpGet:
+              path: /health/readiness
+              port: {{.Values.port}}
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /health/liveness
+              port: {{.Values.port}}
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 10
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "200m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{.Values.namespace}}
+  name: {{.Values.serviceName}}
+spec:
+  selector:
+    app:  {{.Values.serviceName}}
+  type: LoadBalancer
+  ports:
+    - protocol: "TCP"
+      port: {{.Values.port}}
+      targetPort: {{.Values.port}}
+      name: {{.Values.serviceName}}
+
