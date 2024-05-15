@@ -12,8 +12,8 @@ helm install --set image.tag=0.9.0-arm64 community-operator mongodb/community-op
     --set watchNamespaces=piper-kt\
     --values kubernetes/operator-values.yaml
 
-microservice_list=("friendships-service" "users-service" "servers-service" "multimedia-service")
-
+#microservice_list=("friendships-service" "users-service" "servers-service" "multimedia-service")
+microservice_list=("users-service")
 for microservice in "${microservice_list[@]}"
 do
   helm install $microservice kubernetes/helm-chart/piper-chart --values $microservice/helm-values/micronaut-values.yaml
@@ -21,12 +21,21 @@ do
       --values $microservice/helm-values/mongo-values.yaml
 done
 
-kubectl create deployment frontend-service --image=zuccherosintattico/piperkt-frontend-service --namespace piper-kt
-kubectl expose deployment frontend-service --type=LoadBalancer --port=8080 --target-port=8080 --namespace piper-kt
+
+
+#kubectl create deployment frontend-service --image=zuccherosintattico/piperkt-frontend-service --namespace piper-kt
+
+gradle :frontend-service:dockerfile :frontend-service:buildLayers
+docker build -t frontend-service ./frontend-service/build/docker/main
+kubectl apply -f kubernetes/frontend.yml --namespace piper-kt
+
 helm install nginx-ingress-controller kubernetes/helm-chart/piper-ingress --namespace piper-kt
 sleep 5
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/aws/deploy.yaml
 sleep 90
+kubectl get pods -n piper-kt
+kubectl get deploy -n piper-kt
+kubectl get svc -n piper-kt
 kubectl port-forward svc/ingress-nginx-controller 8080:80 -n ingress-nginx
 
 
