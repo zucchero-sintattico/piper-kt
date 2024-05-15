@@ -18,6 +18,6 @@ dependencies {
     testImplementation(testFixtures(project(":commons")))
 
     // Swagger
-    ksp(catalog.getLibrary("openapi"))
-    compileOnly(catalog.getLibrary("openapi-annotations"))
+    ksp(catalog.getLibrary("micronaut-openapi"))
+    compileOnly(catalog.getLibrary("micronaut-openapi-annotations"))
 }

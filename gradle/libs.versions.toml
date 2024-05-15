@@ -15,6 +15,9 @@ ksp = "1.9.23-1.0.20"
 ktfmt = "0.18.0"
 micronaut = "4.3.8"
 micronautBuildTools = "2.5.2"
+micronautMongo = "4.7.0"
+micronautOpenApi = "6.9.1"
+micronautSerde = "2.9.0"
 shadow = "8.1.1"
 spotless = "6.25.0"
 mockito-kotlin = "5.3.1"
@@ -24,29 +27,29 @@ cucumber-bom = { module = "io.cucumber:cucumber-bom", version.ref = "cucumber-bo
 cucumber-java = { module = "io.cucumber:cucumber-java" }
 cucumber-junit = { module = "io.cucumber:cucumber-junit-platform-engine" }
 junit-platform = { module = "org.junit.platform:junit-platform-suite", version.ref = "junit-platform" }
-jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
+jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version = "2.17.1" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-stdlibJdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
 kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
-logback = { module = "ch.qos.logback:logback-classic" }
-snakeyaml = { module = "org.yaml:snakeyaml" }
+logback = { module = "ch.qos.logback:logback-classic", version = "1.5.6" }
+snakeyaml = { module = "org.yaml:snakeyaml", version = "2.2" }
 micronaut-buildtools = { module = "io.micronaut.testresources:micronaut-test-resources-build-tools", version.ref = "micronautBuildTools" }
-micronaut-httpClient = { module = "io.micronaut:micronaut-http-client" }
-micronaut-httpValidation = { module = "io.micronaut:micronaut-http-validation" }
-micronaut-kotlinRuntime = { module = "io.micronaut.kotlin:micronaut-kotlin-runtime" }
-micronaut-serdeJackson = { module = "io.micronaut.serde:micronaut-serde-jackson" }
-micronaut-serdeProcessor = { module = "io.micronaut.serde:micronaut-serde-processor" }
-micronaut-kafka = { module = "io.micronaut.kafka:micronaut-kafka" }
-micronaut-data-mongodb = { module = "io.micronaut.data:micronaut-data-mongodb" }
-micronaut-data-document-processor = { module = "io.micronaut.data:micronaut-data-document-processor" }
-mongodb-driver-sync = { module = "org.mongodb:mongodb-driver-sync" }
-micronaut-jwt = { module = "io.micronaut.security:micronaut-security-jwt" }
-openapi = { module = "io.micronaut.openapi:micronaut-openapi" }
-openapi-annotations = { module = "io.micronaut.openapi:micronaut-openapi-annotations" }
-micronaut-discovery-client = { module = "io.micronaut.kubernetes:micronaut-kubernetes-discovery-client" }
-micronaut-management = { module = "io.micronaut:micronaut-management" }
+micronaut-httpClient = { module = "io.micronaut:micronaut-http-client", version.ref = "micronaut" }
+micronaut-httpValidation = { module = "io.micronaut:micronaut-http-validation", version.ref = "micronaut" }
+micronaut-kotlinRuntime = { module = "io.micronaut.kotlin:micronaut-kotlin-runtime", version = "4.3.0" }
+micronaut-serdeJackson = { module = "io.micronaut.serde:micronaut-serde-jackson", version.ref = "micronautSerde" }
+micronaut-serdeProcessor = { module = "io.micronaut.serde:micronaut-serde-processor", version.ref = "micronautSerde" }
+micronaut-kafka = { module = "io.micronaut.kafka:micronaut-kafka", version = "5.4.0" }
+micronaut-data-mongodb = { module = "io.micronaut.data:micronaut-data-mongodb", version.ref = "micronautMongo" }
+micronaut-data-document-processor = { module = "io.micronaut.data:micronaut-data-document-processor", version.ref = "micronautMongo" }
+mongodb-driver-sync = { module = "org.mongodb:mongodb-driver-sync", version = "4.11.2" }
+micronaut-jwt = { module = "io.micronaut.security:micronaut-security-jwt", version = "4.7.0" }
+micronaut-openapi = { module = "io.micronaut.openapi:micronaut-openapi", version.ref = "micronautOpenApi" }
+micronaut-openapi-annotations = { module = "io.micronaut.openapi:micronaut-openapi-annotations", version.ref = "micronautOpenApi" }
+micronaut-discovery-client = { module = "io.micronaut.kubernetes:micronaut-kubernetes-discovery-client", version = "6.1.0" }
+micronaut-management = { module = "io.micronaut:micronaut-management", version.ref = "micronaut" }
 
 [plugins]
 allOpen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }
