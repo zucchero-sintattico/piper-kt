@@ -5,6 +5,9 @@ mongodb:
   package-names:
     - piperkt.services.users.infrastructure.persistence
   uri: mongodb://users-mongo:password@users-mongo-svc.piper-kt.svc.cluster.local:27017/admin?authSource=admin&authMechanism=SCRAM-SHA-256&directConnection=true
+kafka:
+  bootstrap:
+    servers: cluster-kafka-brokers.piper-kt.svc.cluster.local:9092
 micronaut:
   security:
     authentication: bearer
@@ -17,7 +20,3 @@ micronaut:
         generator:
           refresh-token:
             secret: "pleaseChangeThisSecretForANewOne"
-
-kafka:
-  bootstrap:
-    servers: cluster-kafka-brokers.piper-kt.svc.cluster.local:9092

@@ -154,6 +154,15 @@ class ServerServiceCommandTest : BasicServerServiceTest() {
     }
 
     @Test
+    fun `should not allow the owner to leave the server`() {
+        whenever(serverRepository.findById(any())).thenReturn(simpleServer)
+        serverService.removeUserFromServer(
+            ServerCommand.RemoveUserFromServer.Request(simpleServerId, "owner")
+        ) shouldBe Result.failure(ServerServiceException.OwnerCannotLeaveServerException())
+        verifyNoInteractions(eventPublisher)
+    }
+
+    @Test
     fun `should allow the admin to kick a user`() {
         whenever(serverRepository.findById(any())).thenReturn(simpleServer)
         // Add user to server

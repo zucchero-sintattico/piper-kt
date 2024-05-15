@@ -5,8 +5,6 @@
  * To learn more about Gradle by exploring our Samples at https://docs.gradle.org/8.6/samples
  */
 
-
-
 plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.kotlin)
@@ -20,10 +18,15 @@ gitSemVer {
     assignGitSemanticVersion()
 }
 
+val notKotlinProjects = listOf(
+    "frontend-service",
+    "notifications-service",
+)
+
 dependencies {
-    project.subprojects.forEach {
-        kover(it)
-    }
+    project.subprojects
+        .filter { it.name !in notKotlinProjects }
+        .forEach { kover(it) }
 }
 
 allprojects {
@@ -31,14 +34,15 @@ allprojects {
 }
 
 subprojects {
-    apply(plugin = "org.jetbrains.dokka")
+    if (name !in notKotlinProjects) {
+        apply(plugin = "org.jetbrains.dokka")
+    }
 }
 
 spotless {
     yaml {
         target("**/*.yml", "**/*.yaml")
-        targetExclude("**/build/**", "**/helm-chart/**", "auth.yml")
+        targetExclude("**/build/**", "**/node_modules/**", "**/helm-chart/**", "auth.yml")
         prettier()
     }
 }
-

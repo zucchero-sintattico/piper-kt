@@ -84,8 +84,6 @@ atlassian-ide-plugin.xml
 # SonarLint plugin
 .idea/sonarlint/
 
-.idea/copilot/
-
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
 crashlytics.properties
@@ -452,6 +450,3 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,gradle,kotlin,macos,node,visualstudiocode,jetbrains
-
-/.idea/
-

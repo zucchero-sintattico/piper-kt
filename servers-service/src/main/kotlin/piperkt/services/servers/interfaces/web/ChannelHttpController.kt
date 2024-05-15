@@ -18,7 +18,6 @@ import piperkt.services.servers.interfaces.web.api.interactions.ChannelApi
 
 @Controller("/servers")
 class ChannelHttpController(private val channelService: ChannelService) : ChannelHttpControllerApi {
-
     @Post("/{serverId}/channels")
     override fun createChannel(
         serverId: String,

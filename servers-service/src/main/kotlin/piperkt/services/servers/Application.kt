@@ -1,20 +1,28 @@
 package piperkt.services.servers
 
-import io.micronaut.runtime.Micronaut.run
+import io.micronaut.runtime.Micronaut
+import io.swagger.v3.oas.annotations.OpenAPIDefinition
+import io.swagger.v3.oas.annotations.info.Contact
+import io.swagger.v3.oas.annotations.info.Info
 
-fun main(vararg args: String) {
-    run(*args)
+@OpenAPIDefinition(
+    info =
+        Info(
+            title = "Piper-kt Servers API",
+            version = "1.0",
+            description = "Piper-kt Servers Service API",
+            contact =
+                Contact(
+                    url = "https://piper-kt.com",
+                    name = "Zucchero Sintattico",
+                    email = "zuccherosintattico@gmail.com"
+                )
+        )
+)
+object Application {
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+        Micronaut.run(Application.javaClass)
+    }
 }
-
-// LEVEL -> WHATS -> DEPENDENCIES
-// --------------------------------
-// DOMAIN -> Language:
-// - Entities
-// - Value Objects
-// - Repositories
-// - Factories
-// APPLICATION -> Domain
-// - Services
-// INTERFACES ->
-// - Controller (Indepedent of the framework)
-// INFRASTRUCTURE

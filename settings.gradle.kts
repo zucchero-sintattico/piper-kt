@@ -23,7 +23,6 @@ gitHooks {
     createHooks(overwriteExisting = true) // actual hooks creation
 }
 
-
 include("bdd")
 
 include("commons")
@@ -36,3 +35,6 @@ include("multimedia-service")
 
 include("friendships-service")
 
+include("notifications-service")
+
+include("frontend-service")

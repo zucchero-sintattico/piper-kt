@@ -8,13 +8,13 @@ dokka = "1.9.20"
 gitSemVer = "3.1.5"
 junit-platform = "1.10.2"
 konsist = "0.15.1"
-kotest = "5.8.1"
+kotest = "5.9.0"
 kotlin = "1.9.23"
 kover = "0.7.6"
 ksp = "1.9.23-1.0.20"
 ktfmt = "0.18.0"
 micronaut = "4.3.8"
-micronautBuildTools = "2.5.1"
+micronautBuildTools = "2.5.2"
 shadow = "8.1.1"
 spotless = "6.25.0"
 mockito-kotlin = "5.3.1"
@@ -43,10 +43,10 @@ micronaut-data-mongodb = { module = "io.micronaut.data:micronaut-data-mongodb" }
 micronaut-data-document-processor = { module = "io.micronaut.data:micronaut-data-document-processor" }
 mongodb-driver-sync = { module = "org.mongodb:mongodb-driver-sync" }
 micronaut-jwt = { module = "io.micronaut.security:micronaut-security-jwt" }
-discoveryClient = { module = "io.micronaut.kubernetes:micronaut-kubernetes-discovery-client" }
+openapi = { module = "io.micronaut.openapi:micronaut-openapi" }
+openapi-annotations = { module = "io.micronaut.openapi:micronaut-openapi-annotations" }
+micronaut-discovery-client = { module = "io.micronaut.kubernetes:micronaut-kubernetes-discovery-client" }
 micronaut-management = { module = "io.micronaut:micronaut-management" }
-
-
 
 [plugins]
 allOpen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }

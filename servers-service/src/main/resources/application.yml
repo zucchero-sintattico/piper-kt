@@ -8,3 +8,6 @@ mongodb:
 kafka:
   bootstrap:
     servers: cluster-kafka-brokers.piper-kt.svc.cluster.local:9092
+micronaut:
+  openapi:
+    filename: "openapi-servers"

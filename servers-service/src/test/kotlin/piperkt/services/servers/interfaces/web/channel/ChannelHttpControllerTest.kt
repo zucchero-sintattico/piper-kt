@@ -5,15 +5,12 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.exceptions.HttpClientResponseException
-import jakarta.inject.Inject
 import org.junit.jupiter.api.assertThrows
 import piperkt.services.servers.interfaces.web.api.interactions.ChannelApi
 import piperkt.services.servers.interfaces.web.api.interactions.ServerApi
 import piperkt.services.servers.interfaces.web.authOf
 
-class ChannelHttpControllerTest : IntegrationTest() {
-
-    @Inject lateinit var client: ChannelHttpClient
+class ChannelHttpControllerTest(private var client: ChannelHttpClient) : IntegrationTest() {
 
     private lateinit var basicServerId: String
 
@@ -44,7 +41,7 @@ class ChannelHttpControllerTest : IntegrationTest() {
     }
 
     @Test
-    fun `should create channel`() {
+    fun `should return a 200 status code when creating a channel`() {
         val response =
             client.createChannel(
                 serverId = basicServerId,
@@ -59,7 +56,7 @@ class ChannelHttpControllerTest : IntegrationTest() {
     }
 
     @Test
-    fun `should correctly update channel`() {
+    fun `should return a 200 status code when an admin tries to update a channel`() {
         val updateResponse =
             createChannelAndGetItsId().let { channelId ->
                 client.updateChannel(
@@ -76,7 +73,7 @@ class ChannelHttpControllerTest : IntegrationTest() {
     }
 
     @Test
-    fun `should not update channel when not found`() {
+    fun `should return a 404 status code when updating a non-existing channel`() {
         val response =
             client.updateChannel(
                 serverId = basicServerId,
@@ -91,7 +88,7 @@ class ChannelHttpControllerTest : IntegrationTest() {
     }
 
     @Test
-    fun `should not update channel when not admin`() {
+    fun `should return a 403 status code when a non-admin tries to update a channel`() {
         val channelId = createChannelAndGetItsId()
         shouldThrow<HttpClientResponseException> {
                 client.updateChannel(
@@ -109,7 +106,7 @@ class ChannelHttpControllerTest : IntegrationTest() {
     }
 
     @Test
-    fun `should delete channel`() {
+    fun `should return a 200 status code when an admin tries to delete a channel`() {
         createChannelAndGetItsId().let { channelId ->
             val response = client.deleteChannel(serverId = basicServerId, channelId = channelId)
             response.status() shouldBe HttpStatus.OK
@@ -117,13 +114,13 @@ class ChannelHttpControllerTest : IntegrationTest() {
     }
 
     @Test
-    fun `should not delete channel when not found`() {
+    fun `should return a 404 status code when deleting a non-existing channel`() {
         val response = client.deleteChannel(serverId = basicServerId, channelId = "channelId")
         response.status() shouldBe HttpStatus.NOT_FOUND
     }
 
     @Test
-    fun `should not delete channel when not admin`() {
+    fun `should return a 403 status code when a non-admin tries to delete a channel`() {
         createChannelAndGetItsId().let { channelId ->
             shouldThrow<HttpClientResponseException> {
                     client.deleteChannel(
@@ -137,7 +134,7 @@ class ChannelHttpControllerTest : IntegrationTest() {
     }
 
     @Test
-    fun `should get channels from server`() {
+    fun `should return a 200 status code when getting channels from server`() {
         val response =
             createChannelAndGetItsId().let {
                 client.getChannelsFromServer(serverId = basicServerId)
@@ -146,13 +143,13 @@ class ChannelHttpControllerTest : IntegrationTest() {
     }
 
     @Test
-    fun `should not get channels from server when not found`() {
+    fun `should return a 404 status code when getting channels from non-existing server`() {
         val response = client.getChannelsFromServer(serverId = "serverId")
         response.status() shouldBe HttpStatus.NOT_FOUND
     }
 
     @Test
-    fun `should not get channels from server when user not in server`() {
+    fun `should return a 403 status code when a user not in the server tries to get channels of the server`() {
         assertThrows<HttpClientResponseException> {
                 createChannelAndGetItsId().let {
                     client.getChannelsFromServer(
@@ -165,7 +162,7 @@ class ChannelHttpControllerTest : IntegrationTest() {
     }
 
     @Test
-    fun `should get channel messages`() {
+    fun `should return a 200 status code when getting channel messages`() {
         val response =
             createChannelAndGetItsId().let {
                 client.getChannelMessages(
@@ -179,7 +176,7 @@ class ChannelHttpControllerTest : IntegrationTest() {
     }
 
     @Test
-    fun `should not get channel messages when channel not found`() {
+    fun `should return a 404 status code when getting channel messages from non-existing channel`() {
         val response =
             client.getChannelMessages(
                 serverId = basicServerId,
@@ -191,7 +188,7 @@ class ChannelHttpControllerTest : IntegrationTest() {
     }
 
     @Test
-    fun `should not get channel messages when user not in server`() {
+    fun `should return a 403 status code when a user not in the server tries to get channel messages`() {
         assertThrows<HttpClientResponseException> {
                 createChannelAndGetItsId().let { channelId ->
                     client.getChannelMessages(
@@ -207,7 +204,7 @@ class ChannelHttpControllerTest : IntegrationTest() {
     }
 
     @Test
-    fun `should send message to channel`() {
+    fun `should return a 200 status code when sending message to channel`() {
         val response =
             createChannelAndGetItsId().let { channelId ->
                 client.sendMessageToChannel(
@@ -220,7 +217,7 @@ class ChannelHttpControllerTest : IntegrationTest() {
     }
 
     @Test
-    fun `should not send message to channel when not found`() {
+    fun `should return a 404 status code when sending message to non-existing channel`() {
         val response =
             client.sendMessageToChannel(
                 serverId = basicServerId,
@@ -228,5 +225,20 @@ class ChannelHttpControllerTest : IntegrationTest() {
                 request = ChannelApi.SendMessageToChannelApi.Request(message = "message")
             )
         response.status() shouldBe HttpStatus.NOT_FOUND
+    }
+
+    @Test
+    fun `should return a 403 status code when a user not in the server tries to send message to channel`() {
+        assertThrows<HttpClientResponseException> {
+                createChannelAndGetItsId().let { channelId ->
+                    client.sendMessageToChannel(
+                        serverId = basicServerId,
+                        channelId = channelId,
+                        request = ChannelApi.SendMessageToChannelApi.Request(message = "message"),
+                        authorization = authOf("anotherUser")
+                    )
+                }
+            }
+            .let { it.status shouldBe HttpStatus.FORBIDDEN }
     }
 }

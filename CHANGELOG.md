@@ -1,3 +1,48 @@
+## [6.5.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.4.1...v6.5.0) (2024-05-13)
+
+
+### Features
+
+* **frontend:** add frontend project from piperchat and init gradlifing ([cf9a72f](https://github.com/zucchero-sintattico/piper-kt/commit/cf9a72f10cba370dff400c31ed665429f97cf3b3))
+* **frontend:** gradlifing the project and setup delivery tasks ([2322505](https://github.com/zucchero-sintattico/piper-kt/commit/232250593476550af48a20218c056d70b6fbfa91))
+
+## [6.4.1](https://github.com/zucchero-sintattico/piper-kt/compare/v6.4.0...v6.4.1) (2024-05-10)
+
+
+### Bug Fixes
+
+* **delivery:** check-command cannot be blank ([cc7ed03](https://github.com/zucchero-sintattico/piper-kt/commit/cc7ed03453adccb9eb4df56a54c8c506374da542))
+
+## [6.4.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.3.0...v6.4.0) (2024-05-10)
+
+
+### Features
+
+* **notifications:** add image delivery according to the toolchain ([369e41c](https://github.com/zucchero-sintattico/piper-kt/commit/369e41c54e1a58f71cb2dc6f96b414deb251445b))
+
+## [6.3.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.2.0...v6.3.0) (2024-05-10)
+
+
+### Features
+
+* **server-service:** add all server endpoints api responses and implemented owner leaving a server management ([435b94f](https://github.com/zucchero-sintattico/piper-kt/commit/435b94faba26ea0a9f1403fa85105657002e7b70))
+* **server-service:** add first endpoint specification ([9f5c31c](https://github.com/zucchero-sintattico/piper-kt/commit/9f5c31ce1e6742af43ef7d044f0c6cb144205f8c))
+* **server-service:** add swagger ([91ac577](https://github.com/zucchero-sintattico/piper-kt/commit/91ac5779829b669fa7e2ee0e25b427a5a74d609d))
+
+## [6.2.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.1.0...v6.2.0) (2024-05-10)
+
+
+### Features
+
+* **delivery:** add action to delivery service images to dockerhub ([e02a3f5](https://github.com/zucchero-sintattico/piper-kt/commit/e02a3f56d1a2e6e33edcddfec197ab95788d3512))
+
+## [6.1.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.0.0...v6.1.0) (2024-05-09)
+
+
+### Features
+
+* **notifications:** import old microservice as is and apply gradle plugin ([2d3de4e](https://github.com/zucchero-sintattico/piper-kt/commit/2d3de4eb80848146aa035fae641f0f8c2a574f5d))
+
 ## [6.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v5.0.0...v6.0.0) (2024-05-07)
 
 
