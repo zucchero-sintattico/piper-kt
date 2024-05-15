@@ -17,7 +17,7 @@ spec:
       http:
         paths:
           {{- range $i, $path := .Values.usersServicePaths }}
-          - pathType: Prefix
+          - pathType: ImplementationSpecific
             path: "{{ $path }}"
             backend:
               service:

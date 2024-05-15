@@ -1,5 +1,5 @@
 usersServicePaths:
-      - /users
+      - /users/[a-zA-Z0-9]
       - /whoami
       - /profile
       - /description
@@ -9,6 +9,10 @@ usersServicePaths:
 
 friendshipsServicePaths:
       - /friends
+      - /friends/requests
+      - /friends/requests/accept
+      - /friends/requests/decline
+      - /friends/requests/send
       - /users/[a-zA-Z0-9]+/messages
 
 multimediaServicePaths:
@@ -17,5 +21,10 @@ multimediaServicePaths:
       - /servers/[a-zA-Z0-9]+/channels/[a-zA-Z0-9]+/session
 
 serversServicePaths:
-      - /servers/[a-zA-Z0-9]/users
       - /servers
+      - /servers/[a-zA-Z0-9]
+      - /servers/[a-zA-Z0-9]+/channels
+      - /servers/[a-zA-Z0-9]+/channels/[a-zA-Z0-9]
+      - /servers/[a-zA-Z0-9]+/channels/[a-zA-Z0-9]+/messages
+      - /servers/[a-zA-Z0-9]+/users
+      - /servers/[a-zA-Z0-9]+/users/[a-zA-Z0-9]
