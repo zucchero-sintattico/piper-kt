@@ -1,21 +1,21 @@
 usersServicePaths:
-      - "/users"
-      - "/whoami"
-      - "/profile"
-      - "/description"
-      - "/photo"
+      - /users
+      - /whoami
+      - /profile
+      - /description
+      - /photo
+      - /register
+      - /login
 
 friendshipsServicePaths:
-      - "/friends"
-      - "/users/*/messages"
-
+      - /friends
+      - /users/[a-zA-Z0-9]+/messages
 
 multimediaServicePaths:
-      - "/users/*/session"
-      - "/sessions/*/users"
-      - "/servers/*/channels/*/session"
-
+      - /users/[a-zA-Z0-9]+/session
+      - /sessions/[a-zA-Z0-9]+/users
+      - /servers/[a-zA-Z0-9]+/channels/[a-zA-Z0-9]+/session
 
 serversServicePaths:
-      - "/servers/*/users"
-      - "/servers/*"
+      - /servers/[a-zA-Z0-9]/users
+      - /servers

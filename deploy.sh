@@ -15,7 +15,7 @@ helm install --set image.tag=0.9.0-arm64 community-operator mongodb/community-op
     --values kubernetes/operator-values.yaml
 
 
-./gradlew dockerBuild
+#./gradlew dockerBuild
 microservice_list=("friendships-service" "users-service" "servers-service" "multimedia-service")
 #microservice_list=("users-service")
 
@@ -28,12 +28,13 @@ do
 
 done
 
-kubectl apply -f kubernetes/nginx-ingress-controller.yaml --namespace piper-kt
+helm install nginx-ingress-controller kubernetes/helm-chart/piper-ingress --namespace piper-kt
+
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/aws/deploy.yaml
 
 
-sleep 90
+sleep 60
 
 kubectl port-forward svc/ingress-nginx-controller 8080:80 -n ingress-nginx
 

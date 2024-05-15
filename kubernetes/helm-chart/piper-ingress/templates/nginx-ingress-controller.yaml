@@ -3,13 +3,14 @@ kind: Ingress
 metadata:
   name: ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   defaultBackend:
     resource:
       apiGroup: v1
       kind: StorageBucket
       name: static-assets
+
   ingressClassName: nginx
   rules:
     - host: localhost
@@ -26,7 +27,7 @@ spec:
 
           {{- end }}
           {{- range $i, $path := .Values.friendshipsServicePaths }}
-          - pathType: Prefix
+          - pathType: ImplementationSpecific
             path: "{{ $path }}"
             backend:
               service:
@@ -35,7 +36,7 @@ spec:
                   number: 8080
           {{- end }}
           {{- range $i, $path := .Values.multimediaServicePaths }}
-          - pathType: Prefix
+          - pathType: ImplementationSpecific
             path: "{{ $path }}"
             backend:
               service:
@@ -44,7 +45,7 @@ spec:
                   number: 8080
           {{- end }}
           {{- range $i, $path := .Values.serversServicePaths }}
-          - pathType: Prefix
+          - pathType: ImplementationSpecific
             path: "{{ $path }}"
             backend:
               service:

@@ -16,7 +16,6 @@ spec:
         size: 20Gi
         deleteClaim: false
 ---
-
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaNodePool
 metadata:
@@ -35,7 +34,6 @@ spec:
         size: 100Gi
         deleteClaim: false
 ---
-
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
