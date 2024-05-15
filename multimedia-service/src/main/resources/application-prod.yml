@@ -1,0 +1,5 @@
+mongodb:
+  uri: mongodb://multimedia-mongo:password@multimedia-mongo-svc.piper-kt.svc.cluster.local:27017/admin?authSource=admin&authMechanism=SCRAM-SHA-256&directConnection=true
+kafka:
+  bootstrap:
+    servers: cluster-kafka-brokers.piper-kt.svc.cluster.local:9092

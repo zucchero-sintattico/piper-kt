@@ -47,3 +47,12 @@ micronaut {
 
 }
 
+
+tasks.named<io.micronaut.gradle.docker.DockerBuildOptions>("dockerfile") {
+    editDockerfile {
+        replace(
+            """ENTRYPOINT ["java", "-jar", "/home/app/application.jar"]""",
+            """ENTRYPOINT ["java", "-Dmicronaut.environments=prod", "-jar", "/home/app/application.jar"]"""
+        )
+    }
+}
