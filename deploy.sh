@@ -28,6 +28,9 @@ do
 
 done
 
+kubectl create deployment frontend-service --image=zuccherosintattico/piperkt-frontend-service --namespace piper-kt
+kubectl expose deployment frontend-service --type=LoadBalancer --port=8080 --target-port=8080 --namespace piper-kt
+
 helm install nginx-ingress-controller kubernetes/helm-chart/piper-ingress --namespace piper-kt
 
 
