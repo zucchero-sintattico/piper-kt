@@ -1,0 +1,3 @@
+serviceName: users-service
+namespace: piper-kt
+port: 8080

@@ -1,0 +1,52 @@
+apiVersion: mongodbcommunity.mongodb.com/v1
+kind: MongoDBCommunity
+metadata:
+  name: {{.Values.name}}
+spec:
+  members: 1
+  type: ReplicaSet
+  version: "6.0.5"
+  security:
+    authentication:
+      modes: ["SCRAM"]
+  users:
+    - name: {{.Values.name}}
+      db: admin
+      passwordSecretRef: # a reference to the secret that will be used to generate the user's password
+        name: {{.Values.name}}
+      roles:
+      - name: clusterAdmin
+        db: admin
+      - name: userAdminAnyDatabase
+        db: admin
+      - name: readWriteAnyDatabase
+        db: admin
+      - name: dbAdminAnyDatabase
+        db: admin
+      scramCredentialsSecretName: scram
+  additionalMongodConfig:
+    storage.wiredTiger.engineConfig.journalCompressor: zlib
+  statefulSet:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: mongodb-agent
+              resources:
+                limits:
+                  cpu: 0.1
+                  memory: 0.2Gi
+                requests:
+                  cpu: 0.05
+                  memory: 0.1Gi
+
+# the user credentials will be generated from this secret
+# once the credentials are generated, this secret is no longer required
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{.Values.name}}
+type: Opaque
+stringData:
+  password: password

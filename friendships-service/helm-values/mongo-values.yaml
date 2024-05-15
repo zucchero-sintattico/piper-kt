@@ -1,0 +1,3 @@
+name: friendships-mongo
+passwordSecretName: friendships-mongo-password
+scram: scram
