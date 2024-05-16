@@ -1,3 +1,10 @@
+## [6.6.1](https://github.com/zucchero-sintattico/piper-kt/compare/v6.6.0...v6.6.1) (2024-05-16)
+
+
+### Bug Fixes
+
+* **openapi:** move api annotation to another object ([e05322f](https://github.com/zucchero-sintattico/piper-kt/commit/e05322f804dacc70e1f67b651d098edd7acbbc6b))
+
 ## [6.6.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.5.0...v6.6.0) (2024-05-15)
 
 
