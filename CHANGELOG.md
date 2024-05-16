@@ -1,3 +1,10 @@
+## [6.8.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.7.0...v6.8.0) (2024-05-16)
+
+
+### Features
+
+* **events:** switched to indipendent type and tested multimedia application layer ([030dd17](https://github.com/zucchero-sintattico/piper-kt/commit/030dd17c0498d445af0d1d9b7b0eb7db8302cefe))
+
 ## [6.7.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.6.1...v6.7.0) (2024-05-16)
 
 
