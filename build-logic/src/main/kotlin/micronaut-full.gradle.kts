@@ -16,7 +16,6 @@ dependencies {
     // Commons
     implementation(project(":commons"))
     testImplementation(testFixtures(project(":commons")))
-
     // Swagger
     ksp(catalog.getLibrary("micronaut-openapi"))
     compileOnly(catalog.getLibrary("micronaut-openapi-annotations"))

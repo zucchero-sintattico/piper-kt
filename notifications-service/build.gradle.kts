@@ -2,9 +2,9 @@ import com.lordcodes.turtle.shellRun
 import io.github.zuccherosintattico.utils.NodeCommandsExtension.npmCommand
 
 plugins {
-    id("io.github.zucchero-sintattico.typescript-gradle-plugin") version "4.3.0"
-    id("non-micronaut-project")
     alias(libs.plugins.spotless)
+    alias(libs.plugins.typescript)
+    id("non-micronaut-project")
 }
 
 typescript {
