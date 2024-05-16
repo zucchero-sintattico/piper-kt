@@ -19,10 +19,8 @@ import io.swagger.v3.oas.annotations.info.Info
                 )
         )
 )
-object Application {
+object Api
 
-    @JvmStatic
-    fun main(args: Array<String>) {
-        run(Application.javaClass)
-    }
+fun main(args: Array<String>) {
+    run(*args)
 }
