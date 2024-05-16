@@ -10,7 +10,6 @@ import mocks.repositories.InMemoryServerRepository
 import mocks.repositories.InMemorySessionRepository
 import piperkt.common.events.FriendshipEvent
 import piperkt.services.multimedia.application.session.SessionService
-import piperkt.services.multimedia.domain.direct.DirectId
 
 class DirectEventListenerTest :
     UnitTest.FunSpec({
@@ -46,7 +45,7 @@ class DirectEventListenerTest :
             directEventListener.handle(event)
 
             // Then
-            val direct = directRepository.findById(DirectId(setOf(john().id, jane().id)))!!
+            val direct = directRepository.findByUsers(setOf(john().id, jane().id))!!
             val session = sessionRepository.findById(direct.sessionId)!!
             session.allowedUsers() shouldBe setOf(john().id, jane().id)
         }

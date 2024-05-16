@@ -1,58 +1,57 @@
 package piperkt.services.multimedia.interfaces.web
 
-import base.UnitTest
+import base.IntegrationTest
 import data.UsersData.jane
 import data.UsersData.john
 import io.kotest.matchers.shouldBe
-import java.security.Principal
-import mocks.publishers.MockedSessionEventPublisher
-import mocks.repositories.InMemoryDirectRepository
-import mocks.repositories.InMemoryServerRepository
-import mocks.repositories.InMemorySessionRepository
+import io.micronaut.http.HttpHeaders
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Header
+import io.micronaut.http.annotation.PathVariable
+import io.micronaut.http.client.annotation.Client
+import io.micronaut.http.client.exceptions.HttpClientResponseException
 import org.junit.jupiter.api.assertThrows
-import piperkt.services.multimedia.application.session.SessionService
-import piperkt.services.multimedia.domain.session.SessionErrors
 import piperkt.services.multimedia.domain.session.SessionFactory
-import piperkt.services.multimedia.domain.session.SessionId
+import piperkt.services.multimedia.domain.session.SessionRepository
+import piperkt.services.multimedia.interfaces.authOf
 
-fun String.toPrincipal() = Principal { this }
+@Client("/")
+interface GetSessionParticipantsControllerClient {
 
-class GetSessionParticipantsControllerTest :
-    UnitTest.FunSpec({
-        val sessionRepository = InMemorySessionRepository()
-        val serverRepository = InMemoryServerRepository()
-        val directRepository = InMemoryDirectRepository()
-        val sessionService =
-            SessionService(
-                sessionRepository,
-                serverRepository,
-                directRepository,
-                MockedSessionEventPublisher()
-            )
-        val getSessionParticipantsController = GetSessionParticipantsController(sessionService)
+    @Get("/sessions/{sessionId}/users")
+    fun getParticipants(
+        @Header(HttpHeaders.AUTHORIZATION) authorization: String,
+        @PathVariable sessionId: String,
+    ): HttpResponse<GetSessionParticipantsController.Response>
+}
 
-        beforeEach { sessionRepository.clear() }
+class GetSessionParticipantsControllerTest(
+    private val sessionRepository: SessionRepository,
+    private val client: GetSessionParticipantsControllerClient,
+) :
+    IntegrationTest.FunSpec({
+        val session = SessionFactory.fromAllowedParticipants(setOf(john().id))
 
-        test("should return users when session exists") {
-            val users = setOf(john().id, jane().id)
-            val session = SessionFactory.fromAllowedParticipants(users)
-            sessionRepository.save(session)
-            val result =
-                getSessionParticipantsController.get(
-                    john().id.value.toPrincipal(),
-                    session.id.value
-                )
-            result shouldBe
-                GetSessionParticipantsController.Response(users.map { it.value }.toSet())
+        beforeEach { sessionRepository.save(session) }
+
+        afterEach { sessionRepository.deleteAll() }
+
+        test("should retrieve the participants of a session") {
+            val response = client.getParticipants(authOf(john().username), session.id.value)
+            response.body().users shouldBe setOf(john().username)
         }
 
-        test("should throw SessionNotFound when session does not exist") {
-            val fakeSessionId = SessionId("nonExistingSessionId")
-            assertThrows<SessionErrors.SessionNotFound> {
-                getSessionParticipantsController.get(
-                    john().id.value.toPrincipal(),
-                    fakeSessionId.value
-                )
-            }
+        test("should return an error when the session does not exist") {
+            val response = client.getParticipants(authOf(john().username), "invalid-session-id")
+            response.status.code shouldBe 404
+        }
+
+        test("should return an error when the user is not allowed") {
+            assertThrows<HttpClientResponseException> {
+                    client.getParticipants(authOf(jane().username), session.id.value)
+                }
+                .let { it.status shouldBe HttpStatus.FORBIDDEN }
         }
     })

@@ -12,7 +12,8 @@ import piperkt.services.multimedia.domain.server.ServerId
 import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.domain.user.Username
 
-data class ChannelEntity(val id: String, val sessionId: String) {
+@MappedEntity
+data class ChannelEntity(@Id val id: String, val sessionId: String) {
     fun toDomain() = Channel(id = ChannelId(id), sessionId = SessionId(sessionId))
 
     companion object {
@@ -25,7 +26,7 @@ data class ChannelEntity(val id: String, val sessionId: String) {
 data class ServerEntity(
     @Id val id: String,
     @NotEmpty val participants: List<String>,
-    val channels: List<ChannelEntity> = emptyList()
+    val channels: List<ChannelEntity> = emptyList(),
 ) {
     fun toDomain() =
         Server(

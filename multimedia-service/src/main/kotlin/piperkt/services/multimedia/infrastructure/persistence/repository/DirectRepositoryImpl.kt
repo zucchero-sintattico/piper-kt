@@ -4,6 +4,7 @@ import jakarta.inject.Singleton
 import piperkt.services.multimedia.domain.direct.Direct
 import piperkt.services.multimedia.domain.direct.DirectId
 import piperkt.services.multimedia.domain.direct.DirectRepository
+import piperkt.services.multimedia.domain.user.Username
 import piperkt.services.multimedia.infrastructure.Utils.asNullable
 import piperkt.services.multimedia.infrastructure.persistence.model.DirectEntity
 import piperkt.services.multimedia.infrastructure.persistence.model.DirectEntityRepository
@@ -11,12 +12,12 @@ import piperkt.services.multimedia.infrastructure.persistence.model.DirectEntity
 @Singleton
 class DirectRepositoryImpl(private val directEntityRepository: DirectEntityRepository) :
     DirectRepository {
+    override fun findByUsers(users: Set<Username>): Direct? {
+        return directEntityRepository.findByUsers(users.map { it.value }.toSet())?.toDomain()
+    }
 
     override fun findById(id: DirectId): Direct? {
-        return directEntityRepository
-            .findById(id.value.map { it.value }.toSet())
-            .asNullable()
-            ?.toDomain()
+        return directEntityRepository.findById(id.value).asNullable()?.toDomain()
     }
 
     override fun save(entity: Direct) {
@@ -25,7 +26,7 @@ class DirectRepositoryImpl(private val directEntityRepository: DirectEntityRepos
 
     override fun deleteById(id: DirectId): Direct? {
         val direct = findById(id)
-        directEntityRepository.deleteById(id.value.map { it.value }.toSet())
+        directEntityRepository.deleteById(id.value)
         return direct
     }
 
