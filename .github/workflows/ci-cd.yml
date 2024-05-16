@@ -133,7 +133,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Create artifacts directory
-        run: mkdir -p ./tmp-site
+        run: |
+          mkdir -p ./tmp-site
+          cp ./resources/index-github-pages.html ./tmp-site/index.html
       - name: Build documentation
         run: |
           ./gradlew -PforceVersion=${{ needs.release.outputs.version }} dokkaHtmlMultiModule --parallel
