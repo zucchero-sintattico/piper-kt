@@ -39,7 +39,7 @@ export const useUserStore = defineStore(
       });
       if (response.statusCode === 200) {
         isLoggedIn.value = true;
-        jwt.value = (response as LoginApi.Responses.Success).jwt;
+        jwt.value = (response as LoginApi.Responses.Success).access_token;
         await whoami();
       } else {
         const typed = response as LoginApi.Errors.Type;
