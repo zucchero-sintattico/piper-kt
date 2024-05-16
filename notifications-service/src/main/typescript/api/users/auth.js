@@ -78,7 +78,7 @@ var LoginApi;
                 this.jwt = jwt;
             }
             send(res) {
-                res.cookie("jwt", this.jwt, { httpOnly: true });
+                res.cookie("access_token", this.jwt, { httpOnly: true });
                 super.send(res);
             }
         }
@@ -114,7 +114,7 @@ var LogoutApi;
                 this.message = "Logged out";
             }
             send(res) {
-                res.clearCookie("jwt");
+                res.clearCookie("access_token");
                 super.send(res);
             }
         }

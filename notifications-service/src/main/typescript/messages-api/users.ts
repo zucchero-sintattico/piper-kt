@@ -3,7 +3,7 @@ export class UserCreatedMessage {
   static routingKey = "user.created";
 
   username: string;
-  email: string;
+  email?: string;
   description?: string;
   profilePicture?: {
     data: Buffer;
@@ -11,7 +11,7 @@ export class UserCreatedMessage {
   };
   constructor(data: {
     username: string;
-    email: string;
+    email?: string;
     description?: string;
     profilePicture?: {
       data: Buffer;

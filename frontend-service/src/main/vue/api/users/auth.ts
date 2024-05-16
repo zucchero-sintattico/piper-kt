@@ -105,7 +105,7 @@ export module LoginApi {
         this.jwt = jwt;
       }
       override send(res: ResponseFacade) {
-        res.cookie("jwt", this.jwt, { httpOnly: true });
+        res.cookie("access_token", this.jwt, { httpOnly: true });
         super.send(res);
       }
     }
@@ -139,7 +139,7 @@ export module LogoutApi {
       statusCode = 200;
       message = "Logged out" as const;
       override send(res: ResponseFacade) {
-        res.clearCookie("jwt");
+        res.clearCookie("access_token");
         super.send(res);
       }
     }
@@ -169,14 +169,14 @@ export module RefreshTokenApi {
   export module Responses {
     export class Success extends Response {
       statusCode = 200;
-      message = "Refreshed token" as const;
+      message = "refresh_token" as const;
       jwt: string;
       constructor(jwt: string) {
         super();
         this.jwt = jwt;
       }
       override send(res: ResponseFacade) {
-        res.cookie("jwt", this.jwt, { httpOnly: true });
+        res.cookie("access_token", this.jwt, { httpOnly: true });
         super.send(res);
       }
     }
