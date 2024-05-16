@@ -30,7 +30,7 @@ metadata:
   name: frontend-service
 spec:
   selector:
-    app:  frontend-service
+    app: frontend-service
   type: LoadBalancer
   ports:
     - protocol: "TCP"
