@@ -99,13 +99,13 @@ export module LoginApi {
     export class Success extends Response {
       statusCode = 200;
       message = "Logged in" as const;
-      jwt: string;
-      constructor(jwt: string) {
+      access_token: string;
+      constructor(access_token: string) {
         super();
-        this.jwt = jwt;
+        this.access_token = access_token;
       }
       override send(res: ResponseFacade) {
-        res.cookie("access_token", this.jwt, { httpOnly: true });
+        res.cookie("access_token", this.access_token, { httpOnly: true });
         super.send(res);
       }
     }
