@@ -12,7 +12,7 @@ import piperkt.services.users.domain.user.UserError.UserNotFound
 
 /**
  * The authentication provider for the users service. It provides the authentication logic for the
- * users service. It respond to /login requests.
+ * users service. It responds to /auth/login requests.
  *
  * @param authService The authentication service.
  */

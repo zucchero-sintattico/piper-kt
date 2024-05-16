@@ -22,7 +22,7 @@ data class Username(override val value: String) : EntityId<String>(value)
 class User(
     val username: Username,
     var password: String,
-    val email: String? = null,
+    var email: String? = null,
     var description: String? = null,
     var profilePicture: String? = null,
     var refreshToken: String? = null,
