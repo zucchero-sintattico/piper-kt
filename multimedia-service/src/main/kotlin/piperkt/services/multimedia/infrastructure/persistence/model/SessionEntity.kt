@@ -13,7 +13,7 @@ import piperkt.services.multimedia.domain.user.Username
 data class SessionEntity(
     @Id val id: String,
     val allowedUsers: List<String>,
-    val participants: List<String>
+    val participants: List<String>,
 ) {
     fun toDomain() =
         SessionFactory.create(

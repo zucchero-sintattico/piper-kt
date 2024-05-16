@@ -1,5 +1,6 @@
 package piperkt.services.multimedia.infrastructure.persistence.model
 
+import io.micronaut.data.annotation.GeneratedValue
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.data.mongodb.annotation.MongoRepository
@@ -10,17 +11,29 @@ import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.domain.user.Username
 
 @MappedEntity
-data class DirectEntity(@Id val users: Set<String>, val sessionId: String) {
+data class DirectEntity(
+    @Id @GeneratedValue val id: String,
+    val users: Set<String>,
+    val sessionId: String
+) {
     fun toDomain() =
-        Direct(id = DirectId(users.map { Username(it) }.toSet()), sessionId = SessionId(sessionId))
+        Direct(
+            id = DirectId(id),
+            users = users.map { Username(it) }.toSet(),
+            sessionId = SessionId(sessionId)
+        )
 
     companion object {
         fun fromDomain(direct: Direct) =
             DirectEntity(
-                users = direct.id.value.map { it.value }.toSet(),
+                id = direct.id.value,
+                users = direct.users.map { it.value }.toSet(),
                 sessionId = direct.sessionId.value
             )
     }
 }
 
-@MongoRepository interface DirectEntityRepository : CrudRepository<DirectEntity, Set<String>>
+@MongoRepository
+interface DirectEntityRepository : CrudRepository<DirectEntity, String> {
+    fun findByUsers(users: Set<String>): DirectEntity?
+}

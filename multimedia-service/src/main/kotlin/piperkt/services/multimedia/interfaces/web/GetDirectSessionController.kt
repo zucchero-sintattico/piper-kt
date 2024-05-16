@@ -12,7 +12,7 @@ import io.micronaut.security.rules.SecurityRule
 import io.micronaut.serde.annotation.Serdeable
 import java.security.Principal
 import piperkt.services.multimedia.application.session.SessionService
-import piperkt.services.multimedia.domain.session.SessionErrors
+import piperkt.services.multimedia.domain.direct.DirectErrors
 import piperkt.services.multimedia.domain.user.Username
 
 @Controller
@@ -34,11 +34,11 @@ class GetDirectSessionController(private val sessionService: SessionService) {
         return Response(directId.value)
     }
 
-    @Error(SessionErrors.SessionNotFound::class)
+    @Error(DirectErrors.DirectNotFound::class)
     @Status(HttpStatus.NOT_FOUND)
     fun onDirectSessionNotFound(
-        exception: SessionErrors.SessionNotFound,
-        @PathVariable username: String
+        exception: DirectErrors.DirectNotFound,
+        @PathVariable username: String,
     ): Errors {
         return Errors.DirectSessionNotFound(username)
     }

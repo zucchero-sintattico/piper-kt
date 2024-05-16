@@ -1,7 +1,6 @@
 package piperkt.services.multimedia.interfaces.web
 
 import io.micronaut.http.HttpStatus
-import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Error
 import io.micronaut.http.annotation.Get
@@ -16,7 +15,7 @@ import piperkt.services.multimedia.domain.session.SessionErrors
 import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.domain.user.Username
 
-@Controller
+@Controller("/")
 @Secured(SecurityRule.IS_AUTHENTICATED)
 class GetSessionParticipantsController(private val sessionService: SessionService) {
 
@@ -25,9 +24,11 @@ class GetSessionParticipantsController(private val sessionService: SessionServic
     @Serdeable
     sealed interface Errors {
         @Serdeable data class SessionNotFound(val sessionId: String) : Errors
+
+        @Serdeable data class UserNotAllowed(val sessionId: String, val username: String) : Errors
     }
 
-    @Get("/sessions/{sessionId}/users", produces = [MediaType.APPLICATION_JSON])
+    @Get("/sessions/{sessionId}/users")
     @Status(HttpStatus.OK)
     fun get(principal: Principal, @PathVariable sessionId: String): Response {
         val participants =
@@ -39,8 +40,19 @@ class GetSessionParticipantsController(private val sessionService: SessionServic
     @Status(HttpStatus.NOT_FOUND)
     fun onSessionNotFound(
         exception: SessionErrors.SessionNotFound,
-        @PathVariable sessionId: String
+        @PathVariable sessionId: String,
     ): Errors {
+        println("Session not found")
         return Errors.SessionNotFound(sessionId)
+    }
+
+    @Error(SessionErrors.UserNotAllowed::class)
+    @Status(HttpStatus.FORBIDDEN)
+    fun onUserNotAllowed(
+        exception: SessionErrors.UserNotAllowed,
+        @PathVariable sessionId: String,
+    ): Errors {
+        println("User not allowed")
+        return Errors.UserNotAllowed(exception.sessionId.value, exception.username.value)
     }
 }

@@ -4,7 +4,6 @@ import piperkt.common.events.SessionEvent.*
 import piperkt.common.events.SessionEventPublisher
 import piperkt.common.orThrow
 import piperkt.services.multimedia.domain.direct.DirectErrors
-import piperkt.services.multimedia.domain.direct.DirectId
 import piperkt.services.multimedia.domain.direct.DirectRepository
 import piperkt.services.multimedia.domain.server.ChannelId
 import piperkt.services.multimedia.domain.server.ServerErrors
@@ -94,6 +93,7 @@ open class SessionService(
     fun getChannelSessionId(author: Username, serverId: ServerId, channelId: ChannelId): SessionId {
         val server =
             serverRepository.findById(serverId).orThrow(ServerErrors.ServerNotFound(serverId))
+        println("Server: ${server.id} - ${server.members()}")
         if (!server.members().contains(author)) {
             throw ServerErrors.UserNotInServer(serverId, author)
         }
@@ -104,12 +104,13 @@ open class SessionService(
     fun getDirectSessionId(author: Username, target: Username): SessionId {
         val direct =
             directRepository
-                .findById(DirectId(setOf(author, target)))
-                .orThrow(DirectErrors.DirectNotFound(DirectId(setOf(author, target))))
+                .findByUsers(setOf(author, target))
+                .orThrow(DirectErrors.DirectNotFound(setOf(author, target)))
         return direct.sessionId
     }
 
     fun getSessionParticipants(author: Username, sessionId: SessionId): Set<Username> {
+        println("Getting session participants for ${sessionId.value}")
         val session = getSession(sessionId)
         if (!session.allowedUsers().contains(author)) {
             throw SessionErrors.UserNotAllowed(sessionId, author)

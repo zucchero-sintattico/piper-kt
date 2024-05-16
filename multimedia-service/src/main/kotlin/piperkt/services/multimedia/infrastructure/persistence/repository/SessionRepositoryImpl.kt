@@ -12,6 +12,9 @@ import piperkt.services.multimedia.infrastructure.persistence.model.SessionEntit
 class SessionRepositoryImpl(private val sessionEntityRepository: SessionEntityRepository) :
     SessionRepository {
     override fun findById(id: SessionId): Session? {
+        println(
+            "SessionRepositoryImpl.findById(${id.value}): ${sessionEntityRepository.findById(id.value)}"
+        )
         return sessionEntityRepository.findById(id.value).asNullable()?.toDomain()
     }
 

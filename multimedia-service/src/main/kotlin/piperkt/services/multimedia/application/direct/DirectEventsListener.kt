@@ -19,7 +19,11 @@ open class DirectEventsListener(
                 CreateSession(setOf(Username(event.fromUser), Username(event.toUser)))
             )
         val direct =
-            Direct(DirectId(setOf(Username(event.fromUser), Username(event.toUser))), session.id)
+            Direct(
+                id = DirectId(),
+                users = setOf(Username(event.fromUser), Username(event.toUser)),
+                session.id
+            )
         directRepository.save(direct)
     }
 }
