@@ -15,7 +15,10 @@ export abstract class AxiosController {
         data: data,
         headers: headers,
       });
-      return response.data;
+      return {
+        statusCode: response.status,
+        ...response.data,
+      } as Response;
     } catch (e: any) {
       if (e.response.data instanceof BadRequest) {
         const errorResponse = e.response.data as BadRequest;

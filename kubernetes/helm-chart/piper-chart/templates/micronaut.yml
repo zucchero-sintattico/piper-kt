@@ -23,8 +23,8 @@ spec:
       serviceAccountName: micronaut-service # <1>
       containers:
         - name: {{.Values.serviceName}}
-          image: {{.Values.serviceName}}
-          imagePullPolicy: Never # <3>
+          image: zuccherosintattico/piper-kt-{{.Values.serviceName}}
+          imagePullPolicy: Always # <3>
           ports:
             - name: http
               containerPort: {{.Values.port}}

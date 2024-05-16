@@ -11,7 +11,7 @@ export module RegisterApi {
     export type Body = {
       username: string;
       password: string;
-      email: string;
+      email?: string;
       description?: string;
       photo?: {
         data: Buffer;
@@ -23,7 +23,7 @@ export module RegisterApi {
       Body: {
         username: "string",
         password: "string",
-        email: "string",
+        email: "string?",
         description: "string?",
         photo: "Buffer?",
       },
@@ -33,7 +33,7 @@ export module RegisterApi {
   export module Responses {
     interface UserLoginResponse {
       username: string;
-      email: string;
+      email?: string;
       description?: string;
       photo?: {
         data: Buffer;

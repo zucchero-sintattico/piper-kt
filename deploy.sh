@@ -1,7 +1,11 @@
 #!/bin/bash
 
 #eval $(minikube docker-env)
+./gradlew clean
 #./gradlew dockerBuild
+
+gradle :frontend-service:dockerfile :frontend-service:buildLayers
+docker build -t frontend-service ./frontend-service/build/docker/main
 
 kubectl create namespace piper-kt
 kubectl apply -f kubernetes/auth.yml
@@ -12,8 +16,7 @@ helm install --set image.tag=0.9.0-arm64 community-operator mongodb/community-op
     --set watchNamespaces=piper-kt\
     --values kubernetes/operator-values.yaml
 
-#microservice_list=("friendships-service" "users-service" "servers-service" "multimedia-service")
-microservice_list=("users-service")
+microservice_list=("friendships-service" "users-service" "servers-service" "multimedia-service")
 for microservice in "${microservice_list[@]}"
 do
   helm install $microservice kubernetes/helm-chart/piper-chart --values $microservice/helm-values/micronaut-values.yaml
@@ -25,8 +28,7 @@ done
 
 #kubectl create deployment frontend-service --image=zuccherosintattico/piperkt-frontend-service --namespace piper-kt
 
-gradle :frontend-service:dockerfile :frontend-service:buildLayers
-docker build -t frontend-service ./frontend-service/build/docker/main
+
 kubectl apply -f kubernetes/frontend.yml --namespace piper-kt
 
 helm install nginx-ingress-controller kubernetes/helm-chart/piper-ingress --namespace piper-kt
