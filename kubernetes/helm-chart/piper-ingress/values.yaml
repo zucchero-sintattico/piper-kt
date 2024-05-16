@@ -4,8 +4,9 @@ usersServicePaths:
       - /profile
       - /description
       - /photo
-      - /register
-      - /login
+      - /auth/register
+      - /auth/login
+      - /oauth/access_token
 
 friendshipsServicePaths:
       - /friends
