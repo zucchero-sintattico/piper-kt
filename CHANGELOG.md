@@ -1,3 +1,10 @@
+## [6.7.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.6.1...v6.7.0) (2024-05-16)
+
+
+### Features
+
+* **openapi:** add task to build openapi site for deployment ([c5a844a](https://github.com/zucchero-sintattico/piper-kt/commit/c5a844a6e23b31dd15d4178f029eac7df30cabd6))
+
 ## [6.6.1](https://github.com/zucchero-sintattico/piper-kt/compare/v6.6.0...v6.6.1) (2024-05-16)
 
 
