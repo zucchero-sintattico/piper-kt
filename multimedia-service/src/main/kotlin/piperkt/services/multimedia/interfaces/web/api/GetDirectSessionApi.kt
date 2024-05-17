@@ -35,5 +35,5 @@ interface GetDirectSessionApi {
     fun onDirectSessionNotFound(
         exception: DirectErrors.DirectNotFound,
         @PathVariable username: String,
-    ): Errors.DirectSessionNotFound
+    ): Errors.DirectSessionNotFound = Errors.DirectSessionNotFound(username)
 }

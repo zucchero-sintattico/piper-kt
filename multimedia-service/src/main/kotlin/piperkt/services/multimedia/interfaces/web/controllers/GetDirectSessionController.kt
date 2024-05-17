@@ -3,7 +3,6 @@ package piperkt.services.multimedia.interfaces.web.controllers
 import io.micronaut.http.annotation.Controller
 import java.security.Principal
 import piperkt.services.multimedia.application.session.SessionService
-import piperkt.services.multimedia.domain.direct.DirectErrors
 import piperkt.services.multimedia.domain.user.Username
 import piperkt.services.multimedia.interfaces.web.api.GetDirectSessionApi
 
@@ -14,12 +13,5 @@ class GetDirectSessionController(private val sessionService: SessionService) : G
         val directId =
             sessionService.getDirectSessionId(Username(principal.name), Username(username))
         return GetDirectSessionApi.Response(directId.value)
-    }
-
-    override fun onDirectSessionNotFound(
-        exception: DirectErrors.DirectNotFound,
-        username: String,
-    ): GetDirectSessionApi.Errors.DirectSessionNotFound {
-        return GetDirectSessionApi.Errors.DirectSessionNotFound(username)
     }
 }

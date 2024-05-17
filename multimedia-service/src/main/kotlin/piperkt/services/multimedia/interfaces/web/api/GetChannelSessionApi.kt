@@ -27,7 +27,7 @@ interface GetChannelSessionApi {
         data class UserNotAllowed(
             val serverId: String,
             val channelId: String,
-            val username: String
+            val username: String,
         ) : Errors
     }
 
@@ -41,15 +41,15 @@ interface GetChannelSessionApi {
     fun get(
         principal: Principal,
         @PathVariable serverId: String,
-        @PathVariable channelId: String
+        @PathVariable channelId: String,
     ): Response
 
     @Error(ServerErrors.ServerNotFound::class)
     @Status(HttpStatus.NOT_FOUND)
     fun onServerNotFound(
         exception: ServerErrors.ServerNotFound,
-        @PathVariable serverId: String
-    ): Errors.ServerNotFound
+        @PathVariable serverId: String,
+    ): Errors.ServerNotFound = Errors.ServerNotFound(serverId)
 
     @Error(ServerErrors.ChannelNotInServer::class)
     @Status(HttpStatus.NOT_FOUND)
@@ -57,7 +57,7 @@ interface GetChannelSessionApi {
         exception: ServerErrors.ChannelNotInServer,
         @PathVariable serverId: String,
         @PathVariable channelId: String,
-    ): Errors.ChannelNotFound
+    ): Errors.ChannelNotFound = Errors.ChannelNotFound(serverId, channelId)
 
     @Error(ServerErrors.UserNotInServer::class)
     @Status(HttpStatus.FORBIDDEN)
@@ -65,5 +65,5 @@ interface GetChannelSessionApi {
         exception: ServerErrors.UserNotInServer,
         @PathVariable serverId: String,
         @PathVariable channelId: String,
-    ): Errors.UserNotAllowed
+    ): Errors.UserNotAllowed = Errors.UserNotAllowed(serverId, channelId, exception.username.value)
 }
