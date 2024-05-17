@@ -1,7 +1,6 @@
-package piperkt.services.multimedia.interfaces.web
+package piperkt.services.multimedia.interfaces.web.api
 
 import io.micronaut.http.HttpStatus
-import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Error
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
@@ -10,18 +9,13 @@ import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import io.micronaut.serde.annotation.Serdeable
 import java.security.Principal
-import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.domain.session.SessionErrors
-import piperkt.services.multimedia.domain.session.SessionId
-import piperkt.services.multimedia.domain.user.Username
 
-@Controller("/")
 @Secured(SecurityRule.IS_AUTHENTICATED)
-class GetSessionParticipantsController(private val sessionService: SessionService) {
+interface GetSessionParticipantsApi {
 
     @Serdeable data class Response(val users: Set<String>)
 
-    @Serdeable
     sealed interface Errors {
         @Serdeable data class SessionNotFound(val sessionId: String) : Errors
 
@@ -30,29 +24,19 @@ class GetSessionParticipantsController(private val sessionService: SessionServic
 
     @Get("/sessions/{sessionId}/users")
     @Status(HttpStatus.OK)
-    fun get(principal: Principal, @PathVariable sessionId: String): Response {
-        val participants =
-            sessionService.getSessionParticipants(Username(principal.name), SessionId(sessionId))
-        return Response(participants.map { it.value }.toSet())
-    }
+    fun get(principal: Principal, @PathVariable sessionId: String): Response
 
     @Error(SessionErrors.SessionNotFound::class)
     @Status(HttpStatus.NOT_FOUND)
     fun onSessionNotFound(
         exception: SessionErrors.SessionNotFound,
         @PathVariable sessionId: String,
-    ): Errors {
-        println("Session not found")
-        return Errors.SessionNotFound(sessionId)
-    }
+    ): Errors.SessionNotFound
 
     @Error(SessionErrors.UserNotAllowed::class)
     @Status(HttpStatus.FORBIDDEN)
     fun onUserNotAllowed(
         exception: SessionErrors.UserNotAllowed,
         @PathVariable sessionId: String,
-    ): Errors {
-        println("User not allowed")
-        return Errors.UserNotAllowed(exception.sessionId.value, exception.username.value)
-    }
+    ): Errors.UserNotAllowed
 }

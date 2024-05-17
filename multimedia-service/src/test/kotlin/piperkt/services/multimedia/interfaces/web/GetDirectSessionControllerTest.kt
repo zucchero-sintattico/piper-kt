@@ -17,6 +17,7 @@ import piperkt.services.multimedia.domain.direct.DirectRepository
 import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionRepository
 import piperkt.services.multimedia.interfaces.authOf
+import piperkt.services.multimedia.interfaces.web.api.GetDirectSessionApi
 
 @Client("/")
 interface GetDirectSessionControllerClient {
@@ -25,7 +26,7 @@ interface GetDirectSessionControllerClient {
     fun get(
         @Header(HttpHeaders.AUTHORIZATION) authorization: String,
         @PathVariable username: String,
-    ): HttpResponse<GetDirectSessionController.Response>
+    ): HttpResponse<GetDirectSessionApi.Response>
 }
 
 class GetDirectSessionControllerTest(

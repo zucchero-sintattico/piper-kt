@@ -20,6 +20,7 @@ import piperkt.services.multimedia.domain.server.ServerRepository
 import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionRepository
 import piperkt.services.multimedia.interfaces.authOf
+import piperkt.services.multimedia.interfaces.web.api.GetChannelSessionApi
 
 @Client("/")
 interface GetChannelSessionControllerClient {
@@ -29,7 +30,7 @@ interface GetChannelSessionControllerClient {
         @Header(HttpHeaders.AUTHORIZATION) authorization: String,
         @PathVariable serverId: String,
         @PathVariable channelId: String,
-    ): HttpResponse<GetChannelSessionController.Response>
+    ): HttpResponse<GetChannelSessionApi.Response>
 }
 
 class GetChannelSessionControllerTest(
