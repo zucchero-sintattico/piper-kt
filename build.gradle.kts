@@ -57,7 +57,9 @@ spotless {
 
 val openApiProjects = listOf(
     "friendships-service",
+    "multimedia-service",
     "servers-service",
+    "users-service",
 )
 
 tasks.register<Copy>("buildOpenApiSite") {
