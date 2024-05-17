@@ -1,3 +1,10 @@
+## [6.9.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.8.0...v6.9.0) (2024-05-17)
+
+
+### Features
+
+* **report:** add Hugo for report and ci deployment ([b4d125c](https://github.com/zucchero-sintattico/piper-kt/commit/b4d125c63c5e6dbc0923600b3a0159d653a8babe))
+
 ## [6.8.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.7.0...v6.8.0) (2024-05-16)
 
 
