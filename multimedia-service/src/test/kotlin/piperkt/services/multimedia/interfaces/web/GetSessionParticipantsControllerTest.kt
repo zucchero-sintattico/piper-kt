@@ -16,6 +16,7 @@ import org.junit.jupiter.api.assertThrows
 import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionRepository
 import piperkt.services.multimedia.interfaces.authOf
+import piperkt.services.multimedia.interfaces.web.api.GetSessionParticipantsApi
 
 @Client("/")
 interface GetSessionParticipantsControllerClient {
@@ -24,7 +25,7 @@ interface GetSessionParticipantsControllerClient {
     fun getParticipants(
         @Header(HttpHeaders.AUTHORIZATION) authorization: String,
         @PathVariable sessionId: String,
-    ): HttpResponse<GetSessionParticipantsController.Response>
+    ): HttpResponse<GetSessionParticipantsApi.Response>
 }
 
 class GetSessionParticipantsControllerTest(
