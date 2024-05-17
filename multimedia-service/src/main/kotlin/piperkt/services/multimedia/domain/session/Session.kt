@@ -1,7 +1,7 @@
 package piperkt.services.multimedia.domain.session
 
-import piperkt.common.AggregateRoot
-import piperkt.common.UUIDEntityId
+import piperkt.common.ddd.AggregateRoot
+import piperkt.common.ddd.UUIDEntityId
 import piperkt.services.multimedia.domain.user.Username
 
 class SessionId(value: String = newId()) : UUIDEntityId(value)

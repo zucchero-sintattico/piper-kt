@@ -1,8 +1,5 @@
 package piperkt.common.events
 
-import piperkt.common.DomainEvent
-import piperkt.common.EventPublisher
-
 sealed interface SessionEvent : DomainEvent {
 
     data class SessionCreated(val sessionId: String, val allowedUsers: Set<String>) : SessionEvent

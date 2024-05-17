@@ -1,7 +1,7 @@
 package piperkt.services.users.domain.user
 
-import piperkt.common.DomainEvent
-import piperkt.common.EventPublisher
+import piperkt.common.events.DomainEvent
+import piperkt.common.events.EventPublisher
 
 /** User domain event. */
 sealed interface UserEvent : DomainEvent {
@@ -16,7 +16,7 @@ sealed interface UserEvent : DomainEvent {
     data class UserCreated(
         val username: String,
         val description: String? = null,
-        val profilePicture: String? = null
+        val profilePicture: String? = null,
     ) : UserEvent
 
     /**
@@ -29,7 +29,7 @@ sealed interface UserEvent : DomainEvent {
     data class UserUpdated(
         val username: String,
         val description: String? = null,
-        val profilePicture: String? = null
+        val profilePicture: String? = null,
     ) : UserEvent
 }
 

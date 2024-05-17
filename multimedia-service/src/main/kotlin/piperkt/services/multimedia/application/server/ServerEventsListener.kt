@@ -1,8 +1,8 @@
 package piperkt.services.multimedia.application.server
 
-import piperkt.common.EventListener
+import piperkt.common.events.EventListener
 import piperkt.common.events.ServerEvent
-import piperkt.common.orThrow
+import piperkt.common.utils.orThrow
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.application.session.SessionService.Command.AddAllowedUser
 import piperkt.services.multimedia.application.session.SessionService.Command.RemoveAllowedUser
@@ -14,7 +14,7 @@ import piperkt.services.multimedia.domain.user.Username
 
 open class ServerEventsListener(
     private val serverRepository: ServerRepository,
-    private val sessionService: SessionService
+    private val sessionService: SessionService,
 ) : EventListener<ServerEvent> {
 
     override fun handle(event: ServerEvent) {

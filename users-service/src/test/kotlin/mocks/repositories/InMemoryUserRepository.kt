@@ -1,6 +1,6 @@
 package mocks.repositories
 
-import piperkt.common.InMemoryRepository
+import piperkt.common.mocks.InMemoryRepository
 import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserRepository
 import piperkt.services.users.domain.user.Username

@@ -1,7 +1,5 @@
 package piperkt.common.events
 
-import piperkt.common.DomainEvent
-import piperkt.common.EventPublisher
 import piperkt.common.id.MessageId
 
 sealed interface FriendshipEvent : DomainEvent {

@@ -1,8 +1,5 @@
 package piperkt.common.events
 
-import piperkt.common.DomainEvent
-import piperkt.common.EventPublisher
-
 sealed interface ServerEvent : DomainEvent {
     data class ServerCreatedEvent(val serverId: String, val owner: String) : ServerEvent
 

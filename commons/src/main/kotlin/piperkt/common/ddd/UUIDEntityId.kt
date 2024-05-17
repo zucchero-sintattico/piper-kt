@@ -1,4 +1,4 @@
-package piperkt.common
+package piperkt.common.ddd
 
 import java.util.*
 

@@ -1,4 +1,4 @@
-package piperkt.common
+package piperkt.common.utils
 
 fun success() = success(Unit)
 

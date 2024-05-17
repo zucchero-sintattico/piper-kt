@@ -1,7 +1,7 @@
 package piperkt.services.multimedia.domain.server
 
-import piperkt.common.AggregateRoot
-import piperkt.common.UUIDEntityId
+import piperkt.common.ddd.AggregateRoot
+import piperkt.common.ddd.UUIDEntityId
 import piperkt.services.multimedia.domain.user.Username
 
 class ServerId(value: String = newId()) : UUIDEntityId(value)

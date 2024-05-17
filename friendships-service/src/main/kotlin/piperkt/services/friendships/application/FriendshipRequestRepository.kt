@@ -1,6 +1,6 @@
 package piperkt.services.friendships.application
 
-import piperkt.common.Repository
+import piperkt.common.ddd.Repository
 import piperkt.common.id.FriendshipRequestId
 import piperkt.services.friendships.domain.FriendshipRequest
 

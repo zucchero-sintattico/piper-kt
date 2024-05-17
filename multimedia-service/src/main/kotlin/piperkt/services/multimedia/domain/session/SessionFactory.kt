@@ -1,6 +1,6 @@
 package piperkt.services.multimedia.domain.session
 
-import piperkt.common.Factory
+import piperkt.common.ddd.Factory
 import piperkt.services.multimedia.domain.user.Username
 
 object SessionFactory : Factory<Session> {
@@ -8,7 +8,7 @@ object SessionFactory : Factory<Session> {
     fun create(
         id: SessionId = SessionId(),
         allowedUsers: Set<Username> = emptySet(),
-        participants: Set<Username> = emptySet()
+        participants: Set<Username> = emptySet(),
     ): Session {
         return Session(id, allowedUsers, participants)
     }

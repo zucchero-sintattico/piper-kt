@@ -1,7 +1,7 @@
 package piperkt.services.users.application
 
 import org.mindrot.jbcrypt.BCrypt.*
-import piperkt.common.orThrow
+import piperkt.common.utils.orThrow
 import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserError
 import piperkt.services.users.domain.user.UserEvent
@@ -12,7 +12,7 @@ import piperkt.services.users.domain.user.Username
 
 open class AuthService(
     private val userRepository: UserRepository,
-    private val userEventPublisher: UserEventPublisher
+    private val userEventPublisher: UserEventPublisher,
 ) {
 
     private fun getUserOrThrow(username: String, error: (Username) -> UserError): User {
@@ -31,7 +31,7 @@ open class AuthService(
         username: String,
         password: String,
         description: String? = null,
-        photo: String? = null
+        photo: String? = null,
     ): User {
         if (userRepository.findByUsername(username) != null) {
             throw UserError.UserAlreadyExists(Username(username))

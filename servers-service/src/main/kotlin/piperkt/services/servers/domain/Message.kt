@@ -1,7 +1,7 @@
 package piperkt.services.servers.domain
 
 import java.time.Instant
-import piperkt.common.Entity
+import piperkt.common.ddd.Entity
 import piperkt.common.id.MessageId
 
 class Message(

@@ -1,6 +1,6 @@
 package piperkt.services.servers.domain
 
-import piperkt.common.Entity
+import piperkt.common.ddd.Entity
 import piperkt.common.id.ChannelId
 
 enum class ChannelType {
@@ -13,7 +13,7 @@ open class Channel(
     var name: String,
     val type: ChannelType,
     var description: String,
-    val messages: MutableList<Message> = mutableListOf()
+    val messages: MutableList<Message> = mutableListOf(),
 ) : Entity<ChannelId>(id) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

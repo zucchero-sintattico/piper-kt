@@ -1,6 +1,6 @@
 package mocks.repositories
 
-import piperkt.common.InMemoryRepository
+import piperkt.common.mocks.InMemoryRepository
 import piperkt.services.multimedia.domain.direct.Direct
 import piperkt.services.multimedia.domain.direct.DirectId
 import piperkt.services.multimedia.domain.direct.DirectRepository
