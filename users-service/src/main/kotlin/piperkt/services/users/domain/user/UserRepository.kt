@@ -1,6 +1,6 @@
 package piperkt.services.users.domain.user
 
-import piperkt.common.Repository
+import piperkt.common.ddd.Repository
 
 /** User repository. */
 interface UserRepository : Repository<Username, User> {

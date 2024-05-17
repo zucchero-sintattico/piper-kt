@@ -1,6 +1,6 @@
 package piperkt.services.multimedia.domain.direct
 
-import piperkt.common.Repository
+import piperkt.common.ddd.Repository
 import piperkt.services.multimedia.domain.user.Username
 
 interface DirectRepository : Repository<DirectId, Direct> {

@@ -1,6 +1,6 @@
 package piperkt.services.servers.domain
 
-import piperkt.common.AggregateRoot
+import piperkt.common.ddd.AggregateRoot
 import piperkt.common.id.ServerId
 
 class Server(

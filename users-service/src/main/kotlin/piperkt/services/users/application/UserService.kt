@@ -1,6 +1,6 @@
 package piperkt.services.users.application
 
-import piperkt.common.orThrow
+import piperkt.common.utils.orThrow
 import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserError
 import piperkt.services.users.domain.user.UserEvent.UserUpdated
@@ -10,7 +10,7 @@ import piperkt.services.users.domain.user.Username
 
 open class UserService(
     private val userRepository: UserRepository,
-    private val userEventPublisher: UserEventPublisher
+    private val userEventPublisher: UserEventPublisher,
 ) {
 
     fun getUser(username: String): User {

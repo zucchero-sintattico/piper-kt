@@ -1,6 +1,6 @@
 package piperkt.services.servers.application
 
-import piperkt.common.Repository
+import piperkt.common.ddd.Repository
 import piperkt.common.id.ServerId
 import piperkt.services.servers.domain.Server
 

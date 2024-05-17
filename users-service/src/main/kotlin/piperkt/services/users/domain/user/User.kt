@@ -1,7 +1,7 @@
 package piperkt.services.users.domain.user
 
-import piperkt.common.AggregateRoot
-import piperkt.common.EntityId
+import piperkt.common.ddd.AggregateRoot
+import piperkt.common.ddd.EntityId
 
 /**
  * Username entity.
@@ -24,7 +24,7 @@ class User(
     var password: String,
     var description: String? = null,
     var profilePicture: String? = null,
-    var refreshToken: String? = null
+    var refreshToken: String? = null,
 ) : AggregateRoot<Username>(username) {
 
     /**

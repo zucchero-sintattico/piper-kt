@@ -1,12 +1,12 @@
 package piperkt.services.friendships.domain
 
-import piperkt.common.AggregateRoot
+import piperkt.common.ddd.AggregateRoot
 import piperkt.common.id.FriendshipId
 
 class Friendship(
     id: FriendshipId = FriendshipId(),
     val users: Set<String> = mutableSetOf(),
-    val messages: MutableList<Message> = mutableListOf()
+    val messages: MutableList<Message> = mutableListOf(),
 ) : AggregateRoot<FriendshipId>(id) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

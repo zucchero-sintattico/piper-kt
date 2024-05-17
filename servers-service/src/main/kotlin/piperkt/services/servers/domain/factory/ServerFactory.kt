@@ -1,6 +1,6 @@
 package piperkt.services.servers.domain.factory
 
-import piperkt.common.Factory
+import piperkt.common.ddd.Factory
 import piperkt.common.id.ServerId
 import piperkt.services.servers.domain.Channel
 import piperkt.services.servers.domain.Server
@@ -14,7 +14,7 @@ object ServerFactory : Factory<Server> {
         owner: String,
         channels: List<Channel> = emptyList(),
         users: List<String> = listOf(owner),
-        id: String = ServerId().value
+        id: String = ServerId().value,
     ): Server {
         return Server(
             id = ServerId(id),

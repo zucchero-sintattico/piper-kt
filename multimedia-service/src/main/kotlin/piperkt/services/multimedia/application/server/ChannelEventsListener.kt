@@ -1,8 +1,8 @@
 package piperkt.services.multimedia.application.server
 
-import piperkt.common.EventListener
 import piperkt.common.events.ChannelEvent
-import piperkt.common.orThrow
+import piperkt.common.events.EventListener
+import piperkt.common.utils.orThrow
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.application.session.SessionService.Command.CreateSession
 import piperkt.services.multimedia.application.session.SessionService.Command.DeleteSession
@@ -14,7 +14,7 @@ import piperkt.services.multimedia.domain.server.ServerRepository
 
 open class ChannelEventsListener(
     private val serverRepository: ServerRepository,
-    private val sessionService: SessionService
+    private val sessionService: SessionService,
 ) : EventListener<ChannelEvent> {
 
     override fun handle(event: ChannelEvent) {

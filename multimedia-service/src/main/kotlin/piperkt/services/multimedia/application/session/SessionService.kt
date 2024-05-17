@@ -2,7 +2,7 @@ package piperkt.services.multimedia.application.session
 
 import piperkt.common.events.SessionEvent.*
 import piperkt.common.events.SessionEventPublisher
-import piperkt.common.orThrow
+import piperkt.common.utils.orThrow
 import piperkt.services.multimedia.domain.direct.DirectErrors
 import piperkt.services.multimedia.domain.direct.DirectRepository
 import piperkt.services.multimedia.domain.server.ChannelId

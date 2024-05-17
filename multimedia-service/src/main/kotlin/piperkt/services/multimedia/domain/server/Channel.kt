@@ -1,7 +1,7 @@
 package piperkt.services.multimedia.domain.server
 
-import piperkt.common.Entity
-import piperkt.common.UUIDEntityId
+import piperkt.common.ddd.Entity
+import piperkt.common.ddd.UUIDEntityId
 import piperkt.services.multimedia.domain.session.SessionId
 
 class ChannelId(value: String = newId()) : UUIDEntityId(value)

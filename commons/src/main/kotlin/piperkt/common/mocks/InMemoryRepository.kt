@@ -1,7 +1,11 @@
-package piperkt.common
+package piperkt.common.mocks
+
+import piperkt.common.ddd.AggregateRoot
+import piperkt.common.ddd.EntityId
+import piperkt.common.ddd.Repository
 
 open class InMemoryRepository<I : EntityId<*>, A : AggregateRoot<I>>(
-    var entities: Map<I, A> = mapOf()
+    var entities: Map<I, A> = mapOf(),
 ) : Repository<I, A> {
     override fun findById(id: I): A? {
         return entities[id]
