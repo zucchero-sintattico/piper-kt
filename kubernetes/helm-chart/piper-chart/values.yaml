@@ -1,4 +1,3 @@
 serviceName: service-name
 namespace: piper-kt
-port: 3000
-mongoUri: mongodb://mongo:27017
+port: 8080
