@@ -1,4 +1,7 @@
-package piperkt.common.events
+package piperkt.events
+
+import piperkt.common.events.DomainEvent
+import piperkt.common.events.EventPublisher
 
 sealed interface SessionEvent : DomainEvent {
 

@@ -3,7 +3,7 @@ package piperkt.services.friendships.application
 import io.kotest.core.spec.style.AnnotationSpec
 import org.mockito.Mockito.reset
 import org.mockito.kotlin.mock
-import piperkt.common.events.FriendshipEventPublisher
+import piperkt.events.FriendshipEventPublisher
 import piperkt.services.friendships.domain.Friendship
 import piperkt.services.friendships.domain.FriendshipRequest
 import piperkt.services.friendships.domain.factory.FriendshipRequestFactory

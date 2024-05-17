@@ -2,10 +2,10 @@ package piperkt.services.users.application
 
 import org.mindrot.jbcrypt.BCrypt.*
 import piperkt.common.utils.orThrow
+import piperkt.events.UserEvent
+import piperkt.events.UserEventPublisher
 import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserError
-import piperkt.services.users.domain.user.UserEvent
-import piperkt.services.users.domain.user.UserEventPublisher
 import piperkt.services.users.domain.user.UserFactory
 import piperkt.services.users.domain.user.UserRepository
 import piperkt.services.users.domain.user.Username

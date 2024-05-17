@@ -27,6 +27,8 @@ include("bdd")
 
 include("commons")
 
+include("events")
+
 include("users-service")
 
 include("servers-service")

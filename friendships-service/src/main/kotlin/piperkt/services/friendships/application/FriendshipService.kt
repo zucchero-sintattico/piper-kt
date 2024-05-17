@@ -1,7 +1,7 @@
 package piperkt.services.friendships.application
 
-import piperkt.common.events.FriendshipEvent
-import piperkt.common.events.FriendshipEventPublisher
+import piperkt.events.FriendshipEvent
+import piperkt.events.FriendshipEventPublisher
 import piperkt.services.friendships.application.api.FriendshipsApi
 import piperkt.services.friendships.application.api.command.FriendshipCommand
 import piperkt.services.friendships.application.api.query.FriendshipQuery
@@ -13,11 +13,11 @@ import piperkt.services.friendships.domain.toFriendship
 open class FriendshipService(
     private val friendshipRequestRepository: FriendshipRequestRepository,
     private val friendshipRepository: FriendshipRepository,
-    private val eventPublisher: FriendshipEventPublisher
+    private val eventPublisher: FriendshipEventPublisher,
 ) : FriendshipsApi {
 
     override fun sendFriendshipRequest(
-        request: FriendshipCommand.SendFriendshipRequest.Request
+        request: FriendshipCommand.SendFriendshipRequest.Request,
     ): Result<Unit> {
         // Check if they are already friends
         friendshipRepository.findByMembers(request.requestFrom, request.receiver)?.let {
@@ -40,7 +40,7 @@ open class FriendshipService(
     }
 
     override fun acceptFriendshipRequest(
-        request: FriendshipCommand.AcceptFriendshipRequest.Request
+        request: FriendshipCommand.AcceptFriendshipRequest.Request,
     ): Result<FriendshipCommand.AcceptFriendshipRequest.Response> {
         // Check if the friendship request exists
         val friendshipRequest =
@@ -64,7 +64,7 @@ open class FriendshipService(
     }
 
     override fun declineFriendshipRequest(
-        request: FriendshipCommand.DeclineFriendshipRequest.Request
+        request: FriendshipCommand.DeclineFriendshipRequest.Request,
     ): Result<Unit> {
         // Check if the friendship request exists
         val friendshipRequest =
@@ -83,7 +83,7 @@ open class FriendshipService(
     }
 
     override fun sendMessage(
-        request: FriendshipCommand.SendMessage.Request
+        request: FriendshipCommand.SendMessage.Request,
     ): Result<FriendshipCommand.SendMessage.Response> {
         // Check if the friendship exists
         val friendship =
@@ -104,7 +104,7 @@ open class FriendshipService(
     }
 
     override fun getMessages(
-        request: FriendshipQuery.GetMessages.Request
+        request: FriendshipQuery.GetMessages.Request,
     ): Result<FriendshipQuery.GetMessages.Response> {
         val friendship =
             friendshipRepository.findByMembers(request.requestFrom, request.friend)
@@ -113,7 +113,7 @@ open class FriendshipService(
     }
 
     override fun getFriendshipRequests(
-        request: FriendshipQuery.GetFriendshipRequests.Request
+        request: FriendshipQuery.GetFriendshipRequests.Request,
     ): Result<FriendshipQuery.GetFriendshipRequests.Response> {
         val friendshipRequests =
             friendshipRequestRepository.findByReceiver(request.requestFrom).map {
@@ -127,7 +127,7 @@ open class FriendshipService(
     }
 
     override fun getFriendships(
-        request: FriendshipQuery.GetFriendships.Request
+        request: FriendshipQuery.GetFriendships.Request,
     ): Result<FriendshipQuery.GetFriendships.Response> {
         val friendships =
             friendshipRepository.findByUser(request.requestFrom).map {

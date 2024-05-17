@@ -3,8 +3,8 @@ package piperkt.services.servers.infrastructure.events
 import io.micronaut.configuration.kafka.annotation.KafkaClient
 import io.micronaut.configuration.kafka.annotation.Topic
 import jakarta.inject.Singleton
-import piperkt.common.events.ChannelEvent
-import piperkt.common.events.ChannelEventPublisher
+import piperkt.events.ChannelEvent
+import piperkt.events.ChannelEventPublisher
 
 @KafkaClient
 interface KafkaChannelEventPublisher {
@@ -20,7 +20,7 @@ interface KafkaChannelEventPublisher {
 
 @Singleton
 class ChannelEventPublisherImpl(
-    private val kafkaChannelEventPublisher: KafkaChannelEventPublisher
+    private val kafkaChannelEventPublisher: KafkaChannelEventPublisher,
 ) : ChannelEventPublisher {
     override fun publish(event: ChannelEvent) {
         when (event) {

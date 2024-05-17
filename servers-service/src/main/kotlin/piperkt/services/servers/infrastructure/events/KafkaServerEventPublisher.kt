@@ -3,8 +3,8 @@ package piperkt.services.servers.infrastructure.events
 import io.micronaut.configuration.kafka.annotation.KafkaClient
 import io.micronaut.configuration.kafka.annotation.Topic
 import jakarta.inject.Singleton
-import piperkt.common.events.ServerEvent
-import piperkt.common.events.ServerEventPublisher
+import piperkt.events.ServerEvent
+import piperkt.events.ServerEventPublisher
 
 @KafkaClient
 interface KafkaServerEventPublisher {

@@ -4,8 +4,8 @@ import io.micronaut.configuration.kafka.annotation.KafkaClient
 import io.micronaut.configuration.kafka.annotation.Topic
 import io.micronaut.serde.annotation.SerdeImport
 import jakarta.inject.Singleton
-import piperkt.services.users.domain.user.UserEvent
-import piperkt.services.users.domain.user.UserEventPublisher
+import piperkt.events.UserEvent
+import piperkt.events.UserEventPublisher
 
 @SerdeImport(UserEvent.UserCreated::class)
 @SerdeImport(UserEvent.UserUpdated::class)

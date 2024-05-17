@@ -1,8 +1,8 @@
 package piperkt.services.multimedia.application.server
 
-import piperkt.common.events.ChannelEvent
 import piperkt.common.events.EventListener
 import piperkt.common.utils.orThrow
+import piperkt.events.ChannelEvent
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.application.session.SessionService.Command.CreateSession
 import piperkt.services.multimedia.application.session.SessionService.Command.DeleteSession

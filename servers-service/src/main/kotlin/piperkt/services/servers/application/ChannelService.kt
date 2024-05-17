@@ -1,7 +1,7 @@
 package piperkt.services.servers.application
 
-import piperkt.common.events.ChannelEvent
-import piperkt.common.events.ChannelEventPublisher
+import piperkt.events.ChannelEvent
+import piperkt.events.ChannelEventPublisher
 import piperkt.services.servers.application.api.ChannelServiceApi
 import piperkt.services.servers.application.api.command.ChannelCommand
 import piperkt.services.servers.application.api.query.ChannelQuery

@@ -2,10 +2,10 @@ package piperkt.services.servers.application.channels
 
 import base.UnitTest
 import org.mockito.kotlin.mock
-import piperkt.common.events.ChannelEventPublisher
 import piperkt.common.id.ChannelId
 import piperkt.common.id.MessageId
 import piperkt.common.id.ServerId
+import piperkt.events.ChannelEventPublisher
 import piperkt.services.servers.application.ChannelService
 import piperkt.services.servers.application.ServerRepository
 import piperkt.services.servers.domain.Channel
