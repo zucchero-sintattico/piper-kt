@@ -19,9 +19,10 @@ import piperkt.services.users.domain.user.UserError.UserNotFound
 @Singleton
 class AuthenticationProvider<B>(private val authService: AuthService) :
     HttpRequestAuthenticationProvider<B> {
+
     override fun authenticate(
         requestContext: HttpRequest<B>?,
-        authRequest: AuthenticationRequest<String, String>
+        authRequest: AuthenticationRequest<String, String>,
     ): AuthenticationResponse {
         val username = authRequest.identity
         val password = authRequest.secret

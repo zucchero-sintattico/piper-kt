@@ -10,7 +10,7 @@ import io.micronaut.http.client.annotation.Client
 import piperkt.services.users.application.AuthService
 import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserFactory
-import piperkt.services.users.interfaces.web.ProfileController
+import piperkt.services.users.interfaces.web.api.ProfileApi
 import piperkt.services.users.presentation.user.UserDTO
 import piperkt.services.users.presentation.user.UserMapper.toDTO
 
@@ -20,19 +20,19 @@ interface ProfileControllerClient {
     @Put("profile/description")
     fun updateDescription(
         @Header(HttpHeaders.AUTHORIZATION) authorization: String,
-        @Body request: ProfileController.UpdateDescriptionRequest
+        @Body request: ProfileApi.UpdateDescriptionRequest,
     ): UserDTO
 
     @Put("profile/photo")
     fun updateProfilePicture(
         @Header(HttpHeaders.AUTHORIZATION) authorization: String,
-        @Body request: ProfileController.UpdateProfilePictureRequest
+        @Body request: ProfileApi.UpdateProfilePictureRequest,
     ): UserDTO
 }
 
 class ProfileControllerTest(
     private val profileControllerClient: ProfileControllerClient,
-    private val authService: AuthService
+    private val authService: AuthService,
 ) :
     IntegrationTest.FunSpec({
         lateinit var user: User
@@ -47,7 +47,7 @@ class ProfileControllerTest(
             val response =
                 profileControllerClient.updateDescription(
                     TestUtils.authOf(user.username.value),
-                    ProfileController.UpdateDescriptionRequest("description")
+                    ProfileApi.UpdateDescriptionRequest("description")
                 )
             response shouldBe UserFactory.copy(user) { description = "description" }.toDTO()
         }
@@ -56,7 +56,7 @@ class ProfileControllerTest(
             val response =
                 profileControllerClient.updateProfilePicture(
                     TestUtils.authOf(user.username.value),
-                    ProfileController.UpdateProfilePictureRequest("profilePictureUpdated")
+                    ProfileApi.UpdateProfilePictureRequest("profilePictureUpdated")
                 )
             response shouldBe
                 UserFactory.copy(user) { profilePicture = "profilePictureUpdated" }.toDTO()

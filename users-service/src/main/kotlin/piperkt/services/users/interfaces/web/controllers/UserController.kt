@@ -1,12 +1,9 @@
-package piperkt.services.users.interfaces.web
+package piperkt.services.users.interfaces.web.controllers
 
 import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.PathVariable
-import io.micronaut.security.annotation.Secured
-import io.micronaut.security.rules.SecurityRule
 import java.security.Principal
 import piperkt.services.users.application.UserService
+import piperkt.services.users.interfaces.web.api.UserApi
 import piperkt.services.users.presentation.user.UserDTO
 import piperkt.services.users.presentation.user.UserMapper.toDTO
 
@@ -16,8 +13,7 @@ import piperkt.services.users.presentation.user.UserMapper.toDTO
  * @param userService The service to handle the user operations.
  */
 @Controller
-@Secured(SecurityRule.IS_AUTHENTICATED)
-class UserController(private val userService: UserService) {
+class UserController(private val userService: UserService) : UserApi {
 
     /**
      * Get a user by username.
@@ -25,8 +21,7 @@ class UserController(private val userService: UserService) {
      * @param username The username of the user to get.
      * @return The user with the given username.
      */
-    @Get("/users/{username}")
-    fun getUser(@PathVariable username: String): UserDTO {
+    override fun getUser(username: String): UserDTO {
         return userService.getUser(username).toDTO()
     }
 
@@ -36,8 +31,7 @@ class UserController(private val userService: UserService) {
      * @param principal The username of the current user.
      * @return The current user.
      */
-    @Get("/whoami")
-    fun whoami(principal: Principal): UserDTO {
+    override fun whoami(principal: Principal): UserDTO {
         return userService.getUser(principal.name).toDTO()
     }
 }

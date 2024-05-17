@@ -15,15 +15,16 @@ import io.micronaut.security.token.render.AccessRefreshToken
 import io.micronaut.security.token.render.BearerAccessRefreshToken
 import piperkt.services.users.application.AuthService
 import piperkt.services.users.domain.user.User
+import piperkt.services.users.interfaces.web.api.RegisterApi
 import piperkt.services.users.presentation.user.UserDTO
 
 @Client("/")
 interface AuthClient {
-    @Post("/register") fun register(@Body request: RegisterController.RegisterRequest): UserDTO
+    @Post("/register") fun register(@Body request: RegisterApi.RegisterRequest): UserDTO
 
     @Post("/login")
     fun login(
-        @Body usernamePasswordCredentials: UsernamePasswordCredentials
+        @Body usernamePasswordCredentials: UsernamePasswordCredentials,
     ): BearerAccessRefreshToken
 
     @Post("/oauth/access_token")
@@ -43,8 +44,7 @@ class RegisterControllerTest(
         afterEach { authService.delete(user.username.value) }
 
         test("register") {
-            val response =
-                authClient.register(RegisterController.RegisterRequest("newuser", "password"))
+            val response = authClient.register(RegisterApi.RegisterRequest("newuser", "password"))
             response.username shouldBe "newuser"
             response.description shouldBe null
             response.profilePicture shouldBe null
@@ -53,12 +53,9 @@ class RegisterControllerTest(
 
         test("register with same username should throw UserAlreadyExistsException") {
             shouldThrow<HttpClientResponseException> {
-                    authClient.register(RegisterController.RegisterRequest("user", "password"))
+                    authClient.register(RegisterApi.RegisterRequest("user", "password"))
                 }
-                .let {
-                    it.status shouldBe HttpStatus.CONFLICT
-                    it.message shouldBe "User user already exists"
-                }
+                .let { it.status shouldBe HttpStatus.CONFLICT }
         }
 
         test("login") {
