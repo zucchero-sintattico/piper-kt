@@ -31,12 +31,12 @@ interface GetSessionParticipantsApi {
     fun onSessionNotFound(
         exception: SessionErrors.SessionNotFound,
         @PathVariable sessionId: String,
-    ): Errors.SessionNotFound
+    ): Errors.SessionNotFound = Errors.SessionNotFound(sessionId)
 
     @Error(SessionErrors.UserNotAllowed::class)
     @Status(HttpStatus.FORBIDDEN)
     fun onUserNotAllowed(
         exception: SessionErrors.UserNotAllowed,
         @PathVariable sessionId: String,
-    ): Errors.UserNotAllowed
+    ): Errors.UserNotAllowed = Errors.UserNotAllowed(sessionId, exception.username.value)
 }
