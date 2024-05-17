@@ -5,9 +5,9 @@ import io.kotest.matchers.shouldBe
 import mocks.publishers.MockedUserEventPublisher
 import mocks.repositories.InMemoryUserRepository
 import org.junit.jupiter.api.assertThrows
+import piperkt.events.UserEvent.UserUpdated
 import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserError.UserNotFound
-import piperkt.services.users.domain.user.UserEvent.UserUpdated
 import piperkt.services.users.domain.user.Username
 
 class UserServiceTest :

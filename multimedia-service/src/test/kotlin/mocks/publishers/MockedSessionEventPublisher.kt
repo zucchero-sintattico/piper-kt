@@ -1,7 +1,7 @@
 package mocks.publishers
 
-import piperkt.common.events.SessionEvent
-import piperkt.common.events.SessionEventPublisher
 import piperkt.common.mocks.MockedEventPublisher
+import piperkt.events.SessionEvent
+import piperkt.events.SessionEventPublisher
 
 class MockedSessionEventPublisher : SessionEventPublisher, MockedEventPublisher<SessionEvent>()

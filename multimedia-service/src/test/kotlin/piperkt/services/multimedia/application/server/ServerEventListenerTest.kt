@@ -6,7 +6,7 @@ import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemoryDirectRepository
 import mocks.repositories.InMemoryServerRepository
 import mocks.repositories.InMemorySessionRepository
-import piperkt.common.events.ServerEvent
+import piperkt.events.ServerEvent
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.domain.server.Server
 import piperkt.services.multimedia.domain.server.ServerId

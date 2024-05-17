@@ -2,7 +2,7 @@ package piperkt.services.multimedia.infrastructure.events.listeners
 
 import io.micronaut.configuration.kafka.annotation.KafkaListener
 import io.micronaut.configuration.kafka.annotation.Topic
-import piperkt.common.events.FriendshipEvent
+import piperkt.events.FriendshipEvent
 import piperkt.services.multimedia.application.direct.DirectEventsListener
 
 @KafkaListener

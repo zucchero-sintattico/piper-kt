@@ -3,8 +3,8 @@ package piperkt.services.friendships.infrastructure.events
 import io.micronaut.configuration.kafka.annotation.KafkaClient
 import io.micronaut.configuration.kafka.annotation.Topic
 import jakarta.inject.Singleton
-import piperkt.common.events.FriendshipEvent
-import piperkt.common.events.FriendshipEventPublisher
+import piperkt.events.FriendshipEvent
+import piperkt.events.FriendshipEventPublisher
 
 @KafkaClient
 interface KafkaFriendshipEventPublisher {
@@ -20,7 +20,7 @@ interface KafkaFriendshipEventPublisher {
 
 @Singleton
 class FriendshipEventPublisherImpl(
-    private val kafkaFriendshipEventPublisher: KafkaFriendshipEventPublisher
+    private val kafkaFriendshipEventPublisher: KafkaFriendshipEventPublisher,
 ) : FriendshipEventPublisher {
     override fun publish(event: FriendshipEvent) {
         when (event) {

@@ -1,7 +1,7 @@
 package piperkt.services.servers.application
 
-import piperkt.common.events.ServerEvent
-import piperkt.common.events.ServerEventPublisher
+import piperkt.events.ServerEvent
+import piperkt.events.ServerEventPublisher
 import piperkt.services.servers.application.api.ServerServiceApi
 import piperkt.services.servers.application.api.command.ServerCommand
 import piperkt.services.servers.application.api.query.ServerQuery

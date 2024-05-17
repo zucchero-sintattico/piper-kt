@@ -1,7 +1,7 @@
 package piperkt.services.multimedia.application.direct
 
 import piperkt.common.events.EventListener
-import piperkt.common.events.FriendshipEvent
+import piperkt.events.FriendshipEvent
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.application.session.SessionService.Command.CreateSession
 import piperkt.services.multimedia.domain.direct.Direct

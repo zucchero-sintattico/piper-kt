@@ -1,8 +1,8 @@
 package piperkt.services.servers.infrastructure.events
 
 import io.micronaut.serde.annotation.SerdeImport
-import piperkt.common.events.ChannelEvent
-import piperkt.common.events.ServerEvent
+import piperkt.events.ChannelEvent
+import piperkt.events.ServerEvent
 
 @SerdeImport(ServerEvent::class) object SerializableServerEvents
 

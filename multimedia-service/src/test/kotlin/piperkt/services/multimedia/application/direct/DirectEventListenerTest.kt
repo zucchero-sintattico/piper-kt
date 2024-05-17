@@ -8,7 +8,7 @@ import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemoryDirectRepository
 import mocks.repositories.InMemoryServerRepository
 import mocks.repositories.InMemorySessionRepository
-import piperkt.common.events.FriendshipEvent
+import piperkt.events.FriendshipEvent
 import piperkt.services.multimedia.application.session.SessionService
 
 class DirectEventListenerTest :

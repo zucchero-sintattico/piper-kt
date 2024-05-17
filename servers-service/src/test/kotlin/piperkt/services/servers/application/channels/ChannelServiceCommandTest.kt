@@ -6,7 +6,7 @@ import org.mockito.kotlin.reset
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
-import piperkt.common.events.ChannelEvent
+import piperkt.events.ChannelEvent
 import piperkt.services.servers.application.api.command.ChannelCommand
 import piperkt.services.servers.application.exceptions.ServerServiceException
 

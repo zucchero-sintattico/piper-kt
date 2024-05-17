@@ -9,8 +9,7 @@ import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemoryDirectRepository
 import mocks.repositories.InMemoryServerRepository
 import mocks.repositories.InMemorySessionRepository
-import piperkt.common.events.SessionEvent
-import piperkt.common.events.SessionEvent.SessionCreated
+import piperkt.events.SessionEvent
 import piperkt.services.multimedia.domain.session.SessionErrors
 import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionId
@@ -55,7 +54,12 @@ class SessionServiceTest :
             val session = sessionService.createSession(command)
             sessionRepository.findById(session.id) shouldBe session
             sessionEventPublisher.publishedEvents shouldBe
-                listOf(SessionCreated(session.id.value, allowedUsers.map { it.value }.toSet()))
+                listOf(
+                    SessionEvent.SessionCreated(
+                        session.id.value,
+                        allowedUsers.map { it.value }.toSet()
+                    )
+                )
         }
 
         test("should delete a session") {

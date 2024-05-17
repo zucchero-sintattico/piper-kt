@@ -1,9 +1,9 @@
 package piperkt.services.users.infrastructure.implementation
 
 import jakarta.inject.Singleton
+import piperkt.events.UserEventPublisher
 import piperkt.services.users.application.AuthService
 import piperkt.services.users.application.UserService
-import piperkt.services.users.domain.user.UserEventPublisher
 import piperkt.services.users.domain.user.UserRepository
 
 /** The services implementations powered by Micronaut DI. */

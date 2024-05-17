@@ -1,8 +1,8 @@
 package piperkt.services.multimedia.application.server
 
 import piperkt.common.events.EventListener
-import piperkt.common.events.ServerEvent
 import piperkt.common.utils.orThrow
+import piperkt.events.ServerEvent
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.application.session.SessionService.Command.AddAllowedUser
 import piperkt.services.multimedia.application.session.SessionService.Command.RemoveAllowedUser
