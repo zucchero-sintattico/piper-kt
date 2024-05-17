@@ -1,0 +1,3 @@
+[submodule "resources/report/themes/hugo-book"]
+	path = resources/report/themes/hugo-book
+	url = https://github.com/alex-shpak/hugo-book

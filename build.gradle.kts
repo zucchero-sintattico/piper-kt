@@ -44,7 +44,13 @@ subprojects {
 spotless {
     yaml {
         target("**/*.yml", "**/*.yaml")
-        targetExclude("**/build/**", "**/node_modules/**", "**/helm-chart/**", "auth.yml")
+        targetExclude(
+            "**/build/**",
+            "**/node_modules/**",
+            "**/helm-chart/**",
+            "auth.yml",
+            "resources/report/**",
+        )
         prettier()
     }
 }
