@@ -77,11 +77,11 @@ export const useUserStore = defineStore(
       try {
         const response =
           (await userController.whoami()) as WhoamiApi.Responses.Success;
-        username.value = response.user.username;
-        email.value = response.user.email;
+        username.value = response.username;
+        email.value = response.email;
       } catch (e) {
         logout();
-        console.log("automatic logout");
+        console.log("automatic logout", e);
       }
     }
 

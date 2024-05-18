@@ -21,10 +21,12 @@ export module WhoamiApi {
 
     export class Success extends Response {
       statusCode = 200;
-      user: WhoamiUser;
+      username: string;
+      email: string;
       constructor(user: WhoamiUser) {
         super();
-        this.user = user;
+        this.username = user.username;
+        this.email = user.email;
       }
     }
     export type Type = Success;

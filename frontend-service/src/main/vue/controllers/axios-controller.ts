@@ -2,11 +2,24 @@ import { BadRequest, InternalServerError } from "@api/errors";
 import axios from "axios";
 
 export abstract class AxiosController {
+  protected axiosInstance = axios.create();
+
+  constructor() {
+    const userStorage = localStorage.getItem("user");
+    const user = userStorage ? JSON.parse(userStorage) : null;
+    const accessToken = user ? user.jwt : null;
+    if (accessToken) {
+      this.axiosInstance.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${accessToken}`;
+    }
+  }
+
   private async request<Response>(
     method: string,
     path: string,
     data: object,
-    headers: object = {}
+    headers: object = this.axiosInstance.defaults.headers
   ): Promise<Response> {
     try {
       const response = await axios.request<Response>({
