@@ -1,3 +1,14 @@
+## [7.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.9.0...v7.0.0) (2024-05-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **users:** added email field and updated auth paths
+
+### Features
+
+* **users:** added email field and updated auth paths ([3433028](https://github.com/zucchero-sintattico/piper-kt/commit/3433028febf57156329f874d6e70744767bef3c0))
+
 ## [6.9.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.8.0...v6.9.0) (2024-05-17)
 
 
