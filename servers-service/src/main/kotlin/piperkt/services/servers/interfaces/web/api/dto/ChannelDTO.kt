@@ -19,7 +19,7 @@ data class ChannelDTO(
     companion object {
         fun fromDomain(channel: Channel): ChannelDTO {
             return ChannelDTO(
-                id = channel.id.toString(),
+                id = channel.id.value,
                 name = channel.name,
                 type = channel.type.toString(),
                 description = channel.description,

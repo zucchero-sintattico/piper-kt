@@ -25,7 +25,7 @@ data class ServerDTO(
     companion object {
         fun fromDomain(server: Server): ServerDTO {
             return ServerDTO(
-                id = server.id.toString(),
+                id = server.id.value,
                 name = server.name,
                 description = server.description,
                 owner = server.owner,
