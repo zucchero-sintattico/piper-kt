@@ -15,6 +15,7 @@ sealed interface UserEvent : DomainEvent {
      */
     data class UserCreated(
         val username: String,
+        val email: String? = null,
         val description: String? = null,
         val profilePicture: String? = null,
     ) : UserEvent
@@ -28,6 +29,7 @@ sealed interface UserEvent : DomainEvent {
      */
     data class UserUpdated(
         val username: String,
+        val email: String? = null,
         val description: String? = null,
         val profilePicture: String? = null,
     ) : UserEvent

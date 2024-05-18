@@ -20,9 +20,9 @@ import piperkt.services.users.presentation.user.UserDTO
 
 @Client("/")
 interface AuthClient {
-    @Post("/register") fun register(@Body request: RegisterApi.RegisterRequest): UserDTO
+    @Post("/auth/register") fun register(@Body request: RegisterApi.RegisterRequest): UserDTO
 
-    @Post("/login")
+    @Post("/auth/login")
     fun login(
         @Body usernamePasswordCredentials: UsernamePasswordCredentials,
     ): BearerAccessRefreshToken

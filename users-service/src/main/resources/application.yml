@@ -6,6 +6,9 @@ mongodb:
     - piperkt.services.users.infrastructure.persistence
 micronaut:
   security:
+    endpoints:
+      login:
+        path: /auth/login
     authentication: bearer
     token:
       jwt:

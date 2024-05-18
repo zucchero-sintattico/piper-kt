@@ -30,6 +30,7 @@ open class AuthService(
     fun register(
         username: String,
         password: String,
+        email: String? = null,
         description: String? = null,
         photo: String? = null,
     ): User {
@@ -38,10 +39,15 @@ open class AuthService(
         }
         val salt = gensalt()
         val hashedPassword = hashpw(password, salt)
-        val user = UserFactory.create(Username(username), hashedPassword, description, photo)
+        val user = UserFactory.create(Username(username), hashedPassword, email, description, photo)
         userRepository.save(user)
         userEventPublisher.publish(
-            UserEvent.UserCreated(user.username.value, user.description, user.profilePicture)
+            UserEvent.UserCreated(
+                user.username.value,
+                user.email,
+                user.description,
+                user.profilePicture
+            )
         )
         return user
     }
