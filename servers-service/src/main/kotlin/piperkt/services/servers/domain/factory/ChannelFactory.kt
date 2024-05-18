@@ -1,8 +1,8 @@
 package piperkt.services.servers.domain.factory
 
 import piperkt.common.ddd.Factory
-import piperkt.common.id.ChannelId
 import piperkt.services.servers.domain.Channel
+import piperkt.services.servers.domain.ChannelId
 import piperkt.services.servers.domain.ChannelType
 import piperkt.services.servers.domain.Message
 

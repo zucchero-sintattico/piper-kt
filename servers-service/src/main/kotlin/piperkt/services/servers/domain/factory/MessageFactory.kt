@@ -2,8 +2,8 @@ package piperkt.services.servers.domain.factory
 
 import java.time.Instant
 import piperkt.common.ddd.Factory
-import piperkt.common.id.MessageId
 import piperkt.services.servers.domain.Message
+import piperkt.services.servers.domain.MessageId
 
 object MessageFactory : Factory<Message> {
 

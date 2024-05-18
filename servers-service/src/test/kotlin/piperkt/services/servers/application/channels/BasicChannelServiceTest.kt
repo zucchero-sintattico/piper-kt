@@ -2,15 +2,15 @@ package piperkt.services.servers.application.channels
 
 import base.UnitTest
 import org.mockito.kotlin.mock
-import piperkt.common.id.ChannelId
-import piperkt.common.id.MessageId
-import piperkt.common.id.ServerId
 import piperkt.events.ChannelEventPublisher
 import piperkt.services.servers.application.ChannelService
 import piperkt.services.servers.application.ServerRepository
 import piperkt.services.servers.domain.Channel
+import piperkt.services.servers.domain.ChannelId
 import piperkt.services.servers.domain.Message
+import piperkt.services.servers.domain.MessageId
 import piperkt.services.servers.domain.Server
+import piperkt.services.servers.domain.ServerId
 import piperkt.services.servers.domain.factory.ChannelFactory
 import piperkt.services.servers.domain.factory.MessageFactory
 import piperkt.services.servers.domain.factory.ServerFactory

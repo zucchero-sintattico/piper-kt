@@ -4,8 +4,8 @@ import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.data.mongodb.annotation.MongoRepository
 import io.micronaut.data.repository.CrudRepository
-import piperkt.common.id.FriendshipRequestId
 import piperkt.services.friendships.domain.FriendshipRequest
+import piperkt.services.friendships.domain.FriendshipRequestId
 
 @MappedEntity
 data class FriendshipRequestEntity(

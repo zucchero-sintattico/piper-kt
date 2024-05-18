@@ -1,9 +1,9 @@
 package piperkt.services.servers.application.api.command
 
-import piperkt.common.id.ChannelId
-import piperkt.common.id.MessageId
-import piperkt.common.id.ServerId
 import piperkt.services.servers.application.api.ServiceRequest
+import piperkt.services.servers.domain.ChannelId
+import piperkt.services.servers.domain.MessageId
+import piperkt.services.servers.domain.ServerId
 
 sealed interface ChannelCommand {
 
@@ -13,7 +13,7 @@ sealed interface ChannelCommand {
             val name: String,
             val description: String,
             val type: String,
-            override val requestFrom: String
+            override val requestFrom: String,
         ) : CreateNewChannelInServer, ServiceRequest
 
         data class Response(val channelId: ChannelId) : CreateNewChannelInServer
@@ -25,13 +25,13 @@ sealed interface ChannelCommand {
             val channelId: ChannelId,
             val newName: String?,
             val newDescription: String?,
-            override val requestFrom: String
+            override val requestFrom: String,
         ) : UpdateChannelInServer, ServiceRequest
 
         data class Response(
             val channelId: ChannelId,
             val newName: String,
-            val newDescription: String
+            val newDescription: String,
         ) : UpdateChannelInServer
     }
 
@@ -39,7 +39,7 @@ sealed interface ChannelCommand {
         data class Request(
             val serverId: ServerId,
             val channelId: ChannelId,
-            override val requestFrom: String
+            override val requestFrom: String,
         ) : DeleteChannelInServer, ServiceRequest
 
         data class Response(val channelId: ChannelId) : DeleteChannelInServer

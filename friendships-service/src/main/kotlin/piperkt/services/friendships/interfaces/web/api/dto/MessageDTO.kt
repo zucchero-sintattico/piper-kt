@@ -1,8 +1,8 @@
 package piperkt.services.friendships.interfaces.web.api.dto
 
 import io.micronaut.serde.annotation.Serdeable
-import piperkt.common.id.MessageId
 import piperkt.services.friendships.domain.Message
+import piperkt.services.friendships.domain.MessageId
 
 @Serdeable
 data class MessageDTO(

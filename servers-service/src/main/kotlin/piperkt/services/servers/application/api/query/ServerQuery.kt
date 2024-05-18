@@ -1,8 +1,8 @@
 package piperkt.services.servers.application.api.query
 
-import piperkt.common.id.ServerId
 import piperkt.services.servers.application.api.ServiceRequest
 import piperkt.services.servers.domain.Server
+import piperkt.services.servers.domain.ServerId
 
 sealed interface ServerQuery {
     sealed interface GetServerUsers : ServerQuery {

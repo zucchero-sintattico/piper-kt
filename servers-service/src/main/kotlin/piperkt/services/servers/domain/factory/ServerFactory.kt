@@ -1,9 +1,9 @@
 package piperkt.services.servers.domain.factory
 
 import piperkt.common.ddd.Factory
-import piperkt.common.id.ServerId
 import piperkt.services.servers.domain.Channel
 import piperkt.services.servers.domain.Server
+import piperkt.services.servers.domain.ServerId
 
 object ServerFactory : Factory<Server> {
 

@@ -2,7 +2,6 @@ package piperkt.services.servers.domain
 
 import java.time.Instant
 import piperkt.common.ddd.Entity
-import piperkt.common.id.MessageId
 
 class Message(
     override val id: MessageId = MessageId(),

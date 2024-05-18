@@ -1,7 +1,6 @@
 package piperkt.services.friendships.domain
 
 import piperkt.common.ddd.AggregateRoot
-import piperkt.common.id.FriendshipId
 
 class Friendship(
     id: FriendshipId = FriendshipId(),

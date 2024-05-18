@@ -2,9 +2,9 @@ package piperkt.services.friendships.infrastructure.persistence.repository
 
 import io.micronaut.context.annotation.Primary
 import jakarta.inject.Singleton
-import piperkt.common.id.FriendshipRequestId
 import piperkt.services.friendships.application.FriendshipRequestRepository
 import piperkt.services.friendships.domain.FriendshipRequest
+import piperkt.services.friendships.domain.FriendshipRequestId
 import piperkt.services.friendships.infrastructure.persistence.model.FriendshipRequestEntity
 import piperkt.services.friendships.infrastructure.persistence.model.FriendshipRequestModelRepository
 import piperkt.services.friendships.infrastructure.persistence.model.toDomain
@@ -12,7 +12,7 @@ import piperkt.services.friendships.infrastructure.persistence.model.toDomain
 @Singleton
 @Primary
 class FriendshipRequestRepositoryImpl(
-    private val friendshipRequestModelRepository: FriendshipRequestModelRepository
+    private val friendshipRequestModelRepository: FriendshipRequestModelRepository,
 ) : FriendshipRequestRepository {
     override fun findByReceiver(user: String): List<FriendshipRequest> {
         return friendshipRequestModelRepository.findByToUser(user).map { it.toDomain() }

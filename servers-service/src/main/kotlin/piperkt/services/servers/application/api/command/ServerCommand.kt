@@ -1,14 +1,14 @@
 package piperkt.services.servers.application.api.command
 
-import piperkt.common.id.ServerId
 import piperkt.services.servers.application.api.ServiceRequest
+import piperkt.services.servers.domain.ServerId
 
 sealed interface ServerCommand {
     sealed interface CreateServer : ServerCommand {
         data class Request(
             val name: String,
             val description: String,
-            override val requestFrom: String
+            override val requestFrom: String,
         ) : CreateServer, ServiceRequest
 
         data class Response(val serverId: ServerId) : CreateServer
@@ -19,7 +19,7 @@ sealed interface ServerCommand {
             val serverId: ServerId,
             val name: String?,
             val description: String?,
-            override val requestFrom: String
+            override val requestFrom: String,
         ) : UpdateServer, ServiceRequest
 
         data class Response(val serverId: ServerId, val name: String, val description: String) :
@@ -51,7 +51,7 @@ sealed interface ServerCommand {
         data class Request(
             val serverId: ServerId,
             val username: String,
-            override val requestFrom: String
+            override val requestFrom: String,
         ) : KickUserFromServer, ServiceRequest
 
         data class Response(val serverId: ServerId, val username: String) : KickUserFromServer
