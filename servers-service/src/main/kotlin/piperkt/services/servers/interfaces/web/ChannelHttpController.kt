@@ -6,11 +6,11 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Put
 import java.security.Principal
-import piperkt.common.id.ChannelId
-import piperkt.common.id.ServerId
 import piperkt.services.servers.application.ChannelService
 import piperkt.services.servers.application.api.command.ChannelCommand
 import piperkt.services.servers.application.api.query.ChannelQuery
+import piperkt.services.servers.domain.ChannelId
+import piperkt.services.servers.domain.ServerId
 import piperkt.services.servers.interfaces.web.api.ChannelHttpControllerApi
 import piperkt.services.servers.interfaces.web.api.dto.ChannelDTO
 import piperkt.services.servers.interfaces.web.api.dto.MessageDTO
@@ -22,7 +22,7 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
     override fun createChannel(
         serverId: String,
         request: ChannelApi.CreateChannelApi.Request,
-        principal: Principal
+        principal: Principal,
     ): ChannelApi.CreateChannelApi.Response {
         val response =
             channelService
@@ -44,7 +44,7 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
         serverId: String,
         channelId: String,
         request: ChannelApi.UpdateChannelApi.Request,
-        principal: Principal
+        principal: Principal,
     ): ChannelApi.UpdateChannelApi.Response {
         val response =
             channelService
@@ -68,7 +68,7 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
     override fun deleteChannel(
         serverId: String,
         channelId: String,
-        principal: Principal
+        principal: Principal,
     ): ChannelApi.DeleteChannelApi.Response {
         val response =
             channelService
@@ -86,7 +86,7 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
     @Get("/{serverId}/channels")
     override fun getChannelsFromServer(
         serverId: String,
-        principal: Principal
+        principal: Principal,
     ): ChannelApi.GetChannelsFromServerApi.Response {
         val response =
             channelService
@@ -108,7 +108,7 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
         channelId: String,
         from: Int,
         to: Int,
-        principal: Principal
+        principal: Principal,
     ): ChannelApi.GetChannelMessagesApi.Response {
         val response =
             channelService
@@ -132,7 +132,7 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
         serverId: String,
         channelId: String,
         request: ChannelApi.SendMessageToChannelApi.Request,
-        principal: Principal
+        principal: Principal,
     ): ChannelApi.SendMessageToChannelApi.Response {
         val response =
             channelService

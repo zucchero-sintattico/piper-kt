@@ -2,7 +2,6 @@ package piperkt.events
 
 import piperkt.common.events.DomainEvent
 import piperkt.common.events.EventPublisher
-import piperkt.common.id.MessageId
 
 sealed interface FriendshipEvent : DomainEvent {
 
@@ -18,7 +17,7 @@ sealed interface FriendshipEvent : DomainEvent {
     class NewMessageInFriendshipEvent(
         val fromUser: String,
         val toUser: String,
-        val messageId: MessageId,
+        val messageId: String,
     ) : FriendshipEvent
 }
 

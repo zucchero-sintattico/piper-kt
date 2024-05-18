@@ -2,8 +2,8 @@ package piperkt.services.friendships.domain.factory
 
 import java.time.Instant
 import piperkt.common.ddd.Factory
-import piperkt.common.id.MessageId
 import piperkt.services.friendships.domain.Message
+import piperkt.services.friendships.domain.MessageId
 
 object MessageFactory : Factory<Message> {
 

@@ -2,11 +2,11 @@ package piperkt.services.servers.application.servers
 
 import base.UnitTest
 import org.mockito.kotlin.mock
-import piperkt.common.id.ServerId
 import piperkt.events.ServerEventPublisher
 import piperkt.services.servers.application.ServerRepository
 import piperkt.services.servers.application.ServerService
 import piperkt.services.servers.domain.Server
+import piperkt.services.servers.domain.ServerId
 import piperkt.services.servers.domain.factory.ServerFactory
 
 open class BasicServerServiceTest : UnitTest() {

@@ -1,4 +1,4 @@
-package piperkt.common.id
+package piperkt.services.servers.domain
 
 import piperkt.common.ddd.UUIDEntityId
 

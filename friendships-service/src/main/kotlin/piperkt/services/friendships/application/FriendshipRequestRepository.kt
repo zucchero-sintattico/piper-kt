@@ -1,8 +1,8 @@
 package piperkt.services.friendships.application
 
 import piperkt.common.ddd.Repository
-import piperkt.common.id.FriendshipRequestId
 import piperkt.services.friendships.domain.FriendshipRequest
+import piperkt.services.friendships.domain.FriendshipRequestId
 
 interface FriendshipRequestRepository : Repository<FriendshipRequestId, FriendshipRequest> {
     fun findByReceiver(user: String): List<FriendshipRequest>

@@ -1,7 +1,6 @@
 package piperkt.services.servers.domain
 
 import piperkt.common.ddd.AggregateRoot
-import piperkt.common.id.ServerId
 
 class Server(
     override val id: ServerId = ServerId(),

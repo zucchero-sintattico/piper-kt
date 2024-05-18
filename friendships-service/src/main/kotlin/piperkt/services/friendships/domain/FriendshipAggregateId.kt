@@ -1,4 +1,4 @@
-package piperkt.common.id
+package piperkt.services.friendships.domain
 
 import piperkt.common.ddd.UUIDEntityId
 

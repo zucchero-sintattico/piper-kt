@@ -4,14 +4,14 @@ import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.data.mongodb.annotation.MongoRepository
 import io.micronaut.data.repository.CrudRepository
-import piperkt.common.id.FriendshipId
 import piperkt.services.friendships.domain.Friendship
+import piperkt.services.friendships.domain.FriendshipId
 
 @MappedEntity
 data class FriendshipEntity(
     @Id val id: String,
     val users: Set<String>,
-    val messages: List<MessageEntity> = emptyList()
+    val messages: List<MessageEntity> = emptyList(),
 ) {
     companion object {
         fun fromDomain(friendship: Friendship) =

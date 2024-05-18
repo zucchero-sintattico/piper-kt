@@ -97,7 +97,7 @@ open class FriendshipService(
             FriendshipEvent.NewMessageInFriendshipEvent(
                 request.requestFrom,
                 request.receiver,
-                message.id
+                message.id.value
             )
         )
         return Result.success(FriendshipCommand.SendMessage.Response(message.id.value))

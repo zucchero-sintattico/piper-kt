@@ -1,7 +1,6 @@
 package piperkt.services.friendships.domain
 
 import piperkt.common.ddd.AggregateRoot
-import piperkt.common.id.FriendshipRequestId
 
 class FriendshipRequest(
     override val id: FriendshipRequestId = FriendshipRequestId(),

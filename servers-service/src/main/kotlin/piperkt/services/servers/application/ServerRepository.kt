@@ -1,8 +1,8 @@
 package piperkt.services.servers.application
 
 import piperkt.common.ddd.Repository
-import piperkt.common.id.ServerId
 import piperkt.services.servers.domain.Server
+import piperkt.services.servers.domain.ServerId
 
 interface ServerRepository : Repository<ServerId, Server> {
     fun findAll(): List<Server>

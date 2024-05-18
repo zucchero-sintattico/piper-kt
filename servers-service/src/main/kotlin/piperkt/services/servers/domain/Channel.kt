@@ -1,7 +1,6 @@
 package piperkt.services.servers.domain
 
 import piperkt.common.ddd.Entity
-import piperkt.common.id.ChannelId
 
 enum class ChannelType {
     TEXT,
