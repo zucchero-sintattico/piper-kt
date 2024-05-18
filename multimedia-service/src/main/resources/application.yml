@@ -4,3 +4,15 @@ application:
 mongodb:
   package-names:
     - piperkt.services.multimedia.infrastructure.persistence
+micronaut:
+  security:
+    authentication: bearer
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: "pleaseChangeThisSecretForANewOne"
+        generator:
+          refresh-token:
+            secret: "pleaseChangeThisSecretForANewOne"
