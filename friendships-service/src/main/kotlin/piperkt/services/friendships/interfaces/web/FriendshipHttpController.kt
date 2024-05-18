@@ -87,7 +87,7 @@ class FriendshipHttpController(private val friendshipService: FriendshipService)
                     FriendshipQuery.GetFriendships.Request(requestFrom = principal.name)
                 )
                 .getOrThrow()
-        return FriendshipApi.GetFriendships.Response(friendships = response.friendships)
+        return FriendshipApi.GetFriendships.Response(friends = response.friendships)
     }
 
     @Get("users/{friendUsername}/messages")

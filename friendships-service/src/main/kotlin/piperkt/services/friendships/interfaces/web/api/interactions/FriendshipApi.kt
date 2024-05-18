@@ -47,6 +47,6 @@ sealed interface FriendshipApi {
     }
 
     sealed interface GetFriendships : FriendshipApi {
-        @Serdeable data class Response(val friendships: List<String>) : GetFriendships
+        @Serdeable data class Response(val friends: List<String>) : GetFriendships
     }
 }
