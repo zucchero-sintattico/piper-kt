@@ -1,3 +1,20 @@
+## [7.1.0](https://github.com/zucchero-sintattico/piper-kt/compare/v7.0.0...v7.1.0) (2024-05-18)
+
+
+### Features
+
+* **auth:** rename jwt variable to access_token ([4a57076](https://github.com/zucchero-sintattico/piper-kt/commit/4a5707668586c05d910084ec5ca36a857c5cba47))
+* **AuthService:** add email field to register method for users to provide their email during registration ([d4a2d6a](https://github.com/zucchero-sintattico/piper-kt/commit/d4a2d6ae218c272b8a5d3a4e3a286761beb54abf))
+* **axios-controller:** move axios instance creation to class constructor and set Authorization header based on user jwt token ([73a6088](https://github.com/zucchero-sintattico/piper-kt/commit/73a6088fe62211d4a178adb9c2062ac2718f2028))
+* **frontend:** add status code to the body of the responce ([f7bc38e](https://github.com/zucchero-sintattico/piper-kt/commit/f7bc38e436d33b5717a85f26dc3daa75a2e44cfe))
+* **ingress-controller:** update nginx-ingress-controller to use frontend-service as default backend ([4e3b0ff](https://github.com/zucchero-sintattico/piper-kt/commit/4e3b0ff75cd324bb6dd340ff7f17303a955bcd0c))
+* **pathValues:** update paths for user service to /auth/register and /auth/login, add /oauth/access_token ([b68733d](https://github.com/zucchero-sintattico/piper-kt/commit/b68733d8e89bbf15c007acbff712ff57bb49654b))
+
+
+### Bug Fixes
+
+* **users:** fixed presentation mapping ([e7fb354](https://github.com/zucchero-sintattico/piper-kt/commit/e7fb3548242fdf66a1ea6fcec9ea7d6fc2eb8e9f))
+
 ## [7.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v6.9.0...v7.0.0) (2024-05-18)
 
 
