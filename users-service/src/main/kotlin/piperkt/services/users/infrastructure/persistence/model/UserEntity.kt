@@ -10,7 +10,8 @@ data class UserEntity(
     @Id @GeneratedValue val id: String? = null,
     val username: String,
     val password: String,
+    val email: String? = null,
     val description: String? = null,
     val profilePicture: String? = null,
-    val refreshToken: String? = null
+    val refreshToken: String? = null,
 )

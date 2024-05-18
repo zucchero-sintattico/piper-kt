@@ -12,6 +12,7 @@ import io.micronaut.serde.annotation.Serdeable
 @Serdeable
 data class UserDTO(
     val username: String,
+    val email: String? = null,
     val description: String? = null,
-    val profilePicture: String? = null
+    val profilePicture: String? = null,
 )

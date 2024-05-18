@@ -15,10 +15,11 @@ object UserFactory {
     fun create(
         username: Username,
         password: String,
+        email: String? = null,
         description: String? = null,
-        profilePicture: String? = null
+        profilePicture: String? = null,
     ): User {
-        return User(username, password, description, profilePicture)
+        return User(username, password, email, description, profilePicture)
     }
 
     /**
@@ -29,7 +30,13 @@ object UserFactory {
      * @return The copied user.
      */
     fun copy(from: User, change: User.() -> Unit = {}): User {
-        return create(from.username, from.password, from.description, from.profilePicture)
+        return create(
+                from.username,
+                from.password,
+                from.email,
+                from.description,
+                from.profilePicture
+            )
             .apply(change)
     }
 }

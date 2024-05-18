@@ -18,6 +18,7 @@ interface RegisterApi {
     data class RegisterRequest(
         val username: String,
         val password: String,
+        val email: String? = null,
         val description: String? = null,
         val profilePicture: String? = null,
     )
@@ -26,7 +27,7 @@ interface RegisterApi {
         @Serdeable data class UserAlreadyExists(val username: String) : Errors
     }
 
-    @Post("/register") fun register(@Body request: RegisterRequest): UserDTO
+    @Post("/auth/register") fun register(@Body request: RegisterRequest): UserDTO
 
     @Error(UserError.UserAlreadyExists::class)
     @Status(HttpStatus.CONFLICT)
