@@ -7,3 +7,14 @@ mongodb:
 micronaut:
   openapi:
     filename: "openapi-friendships"
+  security:
+    authentication: bearer
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: "pleaseChangeThisSecretForANewOne"
+        generator:
+          refresh-token:
+            secret: "pleaseChangeThisSecretForANewOne"
