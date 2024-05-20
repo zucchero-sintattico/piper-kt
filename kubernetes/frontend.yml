@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: frontend-service
-          image: frontend-service
-          imagePullPolicy: Never
+          image: zuccherosintattico/piperkt-frontend-service
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 8080

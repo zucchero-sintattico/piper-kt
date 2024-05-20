@@ -64,12 +64,8 @@ export const useUserStore = defineStore(
     }
 
     async function logout() {
-      try {
-        await authController.logout();
-        isLoggedIn.value = false;
-      } catch (e) {
-        console.log(e);
-      }
+      console.log("Logging out");
+      localStorage.clear();
     }
 
     // ==================== USER ==================== //
