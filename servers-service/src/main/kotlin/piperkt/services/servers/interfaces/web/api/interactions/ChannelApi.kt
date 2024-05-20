@@ -9,7 +9,7 @@ sealed interface ChannelApi {
     sealed interface CreateChannelApi : ChannelApi {
 
         @Serdeable
-        data class Request(val name: String, val description: String, val type: String) :
+        data class Request(val name: String, val description: String, val channelType: String) :
             CreateChannelApi
 
         @Serdeable data class Response(val channelId: String) : CreateChannelApi
