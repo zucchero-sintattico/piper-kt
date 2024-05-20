@@ -56,7 +56,7 @@ export module SendDirectMessageApi {
       username: string;
     };
     export type Body = {
-      message: string;
+      content: string;
     };
     export type Query = Empty;
     export const Schema: RequestSchema = {
