@@ -23,7 +23,7 @@ data class MessageDTO(
     companion object {
         fun fromDomain(message: Message): MessageDTO {
             return MessageDTO(
-                id = message.id.toString(),
+                id = message.id.value,
                 sender = message.sender,
                 content = message.content,
                 timestamp = message.timestamp.toString()
