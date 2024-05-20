@@ -19,6 +19,7 @@ class RegisterController(private val authService: AuthService) : RegisterApi {
             .register(
                 request.username,
                 request.password,
+                request.email,
                 request.description,
                 request.profilePicture
             )
