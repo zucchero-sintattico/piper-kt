@@ -1,3 +1,15 @@
+## [7.2.0](https://github.com/zucchero-sintattico/piper-kt/compare/v7.1.1...v7.2.0) (2024-05-20)
+
+
+### Features
+
+* **users-api:** exposed login and refresh endpoint in openapi ([7d0a040](https://github.com/zucchero-sintattico/piper-kt/commit/7d0a040960475ca99d7749632ad5212397213289))
+
+
+### Bug Fixes
+
+* **users:** added email field in controller that was unused ([55b7ac6](https://github.com/zucchero-sintattico/piper-kt/commit/55b7ac63d5944f73cb8cc68d2132494c4061031a))
+
 ## [7.1.1](https://github.com/zucchero-sintattico/piper-kt/compare/v7.1.0...v7.1.1) (2024-05-20)
 
 
