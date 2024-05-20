@@ -23,6 +23,8 @@ gitHooks {
     createHooks(overwriteExisting = true) // actual hooks creation
 }
 
+include("architecture-tests")
+
 include("bdd")
 
 include("commons")
