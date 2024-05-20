@@ -76,7 +76,7 @@ export const useUserStore = defineStore(
         username.value = response.username;
         email.value = response.email;
       } catch (e) {
-        logout();
+        await logout();
         console.log("automatic logout", e);
       }
     }
