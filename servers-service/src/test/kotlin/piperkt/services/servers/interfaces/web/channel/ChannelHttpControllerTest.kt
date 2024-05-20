@@ -33,7 +33,7 @@ class ChannelHttpControllerTest(private var client: ChannelHttpClient) : Integra
                     ChannelApi.CreateChannelApi.Request(
                         name = "name",
                         description = "description",
-                        type = "TEXT"
+                        channelType = "TEXT"
                     )
             )
             .body()
@@ -49,7 +49,7 @@ class ChannelHttpControllerTest(private var client: ChannelHttpClient) : Integra
                     ChannelApi.CreateChannelApi.Request(
                         name = "name",
                         description = "description",
-                        type = "TEXT"
+                        channelType = "TEXT"
                     )
             )
         response.status() shouldBe HttpStatus.OK

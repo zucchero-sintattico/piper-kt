@@ -30,7 +30,7 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
                     ChannelCommand.CreateNewChannelInServer.Request(
                         name = request.name,
                         description = request.description,
-                        type = request.type,
+                        type = request.channelType,
                         requestFrom = principal.name,
                         serverId = ServerId(serverId)
                     )
