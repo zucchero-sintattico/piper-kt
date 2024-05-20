@@ -7,7 +7,7 @@
     "start": "serve -s dist",
     "dev": "vite --base /site",
     "preview": "vite preview",
-    "type-checking": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
+    "type-checking": "vue-tsc --noEmit -p tsconfig.json --composite false"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.11",
