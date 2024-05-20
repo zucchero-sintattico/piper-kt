@@ -24,6 +24,17 @@ spotless {
     }
 }
 
+tasks.named("npmDependencies") {
+    // events package generate js library for notifications -- should be brought in
+    dependsOn(":events:jsNodeProductionLibraryDistribution")
+    doFirst {
+        copy {
+            from("../events/build/dist/js/productionLibrary")
+            into(layout.buildDirectory.dir("piper-kt-events"))
+        }
+    }
+}
+
 tasks.named("buildLayers") {
     doLast {
         copy {
@@ -33,6 +44,10 @@ tasks.named("buildLayers") {
         copy {
             from("node_modules")
             into("build/docker/main/node_modules")
+        }
+        copy {
+            from(layout.buildDirectory.dir("piper-kt-events"))
+            into("build/docker/main/build/piper-kt-events")
         }
     }
 }
