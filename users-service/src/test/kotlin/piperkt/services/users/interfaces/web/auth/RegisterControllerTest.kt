@@ -44,9 +44,13 @@ class RegisterControllerTest(
         afterEach { authService.delete(user.username.value) }
 
         test("register") {
-            val response = authClient.register(RegisterApi.RegisterRequest("newuser", "password"))
+            val response =
+                authClient.register(
+                    RegisterApi.RegisterRequest("newuser", "password", "email", "description")
+                )
             response.username shouldBe "newuser"
-            response.description shouldBe null
+            response.description shouldBe "description"
+            response.email shouldBe "email"
             response.profilePicture shouldBe null
             authService.delete("newuser")
         }

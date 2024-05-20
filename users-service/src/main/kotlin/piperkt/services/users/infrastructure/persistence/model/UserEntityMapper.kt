@@ -7,17 +7,24 @@ import piperkt.services.users.domain.user.Username
 object UserEntityMapper {
     /** Convert a user entity to a user. */
     fun UserEntity.toDomain() =
-        User(Username(username), password, email, description, profilePicture, refreshToken)
+        User(
+            username = Username(username),
+            password = password,
+            email = email,
+            description = description,
+            profilePicture = profilePicture,
+            refreshToken = refreshToken
+        )
 
     /** Convert a user to a user entity. */
     fun User.toEntity() =
         UserEntity(
             id = null,
-            username.value,
-            password,
-            email,
-            description,
-            profilePicture,
-            refreshToken
+            username = username.value,
+            password = password,
+            email = email,
+            description = description,
+            profilePicture = profilePicture,
+            refreshToken = refreshToken
         )
 }
