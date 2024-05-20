@@ -1,6 +1,9 @@
 package piperkt.services.users
 
+import io.micronaut.openapi.annotation.OpenAPIInclude
 import io.micronaut.runtime.Micronaut.run
+import io.micronaut.security.endpoints.LoginController
+import io.micronaut.security.endpoints.OauthController
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.info.Contact
 import io.swagger.v3.oas.annotations.info.Info
@@ -18,6 +21,13 @@ import io.swagger.v3.oas.annotations.info.Info
                     email = "zuccherosintattico@gmail.com"
                 )
         )
+)
+@OpenAPIInclude(
+    classes =
+        [
+            OauthController::class,
+            LoginController::class,
+        ]
 )
 object Application
 
