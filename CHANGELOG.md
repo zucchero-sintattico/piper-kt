@@ -1,3 +1,15 @@
+## [7.3.0](https://github.com/zucchero-sintattico/piper-kt/compare/v7.2.0...v7.3.0) (2024-05-20)
+
+
+### Features
+
+* **user:** simplify logout function by removing unnecessary try-catch block and directly clear localStorage on logout ([144ab11](https://github.com/zucchero-sintattico/piper-kt/commit/144ab118d4798fd2447c30d6d2016722914a3186))
+
+
+### Bug Fixes
+
+* **axios-controller:** getAuthorizationToken method to return headers object instead of directly modifying axiosInstance headers ([8b507b8](https://github.com/zucchero-sintattico/piper-kt/commit/8b507b8343e8a70ba85482f732cdac2bce4c1d6c))
+
 ## [7.2.0](https://github.com/zucchero-sintattico/piper-kt/compare/v7.1.1...v7.2.0) (2024-05-20)
 
 
