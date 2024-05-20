@@ -5,7 +5,7 @@ interface ValueObject
 open class EntityId<Id>(open val value: Id) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (javaClass != other?.javaClass) return false
+        if (other == null || this::class != other::class) return false
 
         other as EntityId<*>
 
@@ -20,7 +20,7 @@ open class EntityId<Id>(open val value: Id) {
 open class Entity<Id : EntityId<*>>(open val id: Id) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (javaClass != other?.javaClass) return false
+        if (other == null || this::class != other::class) return false
 
         other as Entity<*>
 
