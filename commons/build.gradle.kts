@@ -1,9 +1,11 @@
 plugins {
-    id("kotlin-base")
+    kotlin("multiplatform")
     id("java-test-fixtures")
 }
 
-dependencies {
-    implementation(libs.kotest)
-    implementation(libs.konsist)
+kotlin {
+    jvm()
+    js {
+        nodejs()
+    }
 }
