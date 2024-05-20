@@ -1,3 +1,12 @@
+## [7.1.1](https://github.com/zucchero-sintattico/piper-kt/compare/v7.1.0...v7.1.1) (2024-05-20)
+
+
+### Bug Fixes
+
+* **friendships-service:** fix http response body field to match frontend controller specification ([5937a23](https://github.com/zucchero-sintattico/piper-kt/commit/5937a231449e8c8caa5c1f72354ed6ca4ebc3837))
+* **friendships-service:** return id.value instead of object id in http responses ([751af4b](https://github.com/zucchero-sintattico/piper-kt/commit/751af4b9ff71b639d63455ed17c04326f262fb02))
+* **server-service:** fix ids in http dto in order to return id value instead object ref ([dae977a](https://github.com/zucchero-sintattico/piper-kt/commit/dae977a3c58d38c574a2df97f4472dc5759637ab))
+
 ## [7.1.0](https://github.com/zucchero-sintattico/piper-kt/compare/v7.0.0...v7.1.0) (2024-05-18)
 
 
