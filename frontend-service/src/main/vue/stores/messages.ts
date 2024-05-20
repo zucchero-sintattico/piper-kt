@@ -94,7 +94,7 @@ export const useMessageStore = defineStore("message", () => {
       } else {
         const info = currentSectionInfo.value as { username: string };
         response = await directController.sendDirectMessage({
-          message: content,
+          content: content,
           username: info.username,
         });
       }
