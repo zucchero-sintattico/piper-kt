@@ -169,7 +169,7 @@ class ChannelHttpControllerTest(private var client: ChannelHttpClient) : Integra
                     serverId = basicServerId,
                     channelId = it,
                     from = 0,
-                    to = 10
+                    limit = 10
                 )
             }
         response.status() shouldBe HttpStatus.OK
@@ -182,7 +182,7 @@ class ChannelHttpControllerTest(private var client: ChannelHttpClient) : Integra
                 serverId = basicServerId,
                 channelId = "channelId",
                 from = 0,
-                to = 10
+                limit = 10
             )
         response.status() shouldBe HttpStatus.NOT_FOUND
     }
@@ -195,7 +195,7 @@ class ChannelHttpControllerTest(private var client: ChannelHttpClient) : Integra
                         serverId = basicServerId,
                         channelId = channelId,
                         from = 0,
-                        to = 10,
+                        limit = 10,
                         authorization = authOf("anotherUser")
                     )
                 }

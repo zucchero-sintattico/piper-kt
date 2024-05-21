@@ -57,7 +57,7 @@ interface ChannelHttpClient {
         @PathVariable serverId: String,
         @PathVariable channelId: String,
         @QueryValue from: Int,
-        @QueryValue to: Int,
+        @QueryValue limit: Int,
         @Header(HttpHeaders.AUTHORIZATION) authorization: String = authOf("user")
     ): HttpResponse<ChannelApi.GetChannelMessagesApi.Response>
 

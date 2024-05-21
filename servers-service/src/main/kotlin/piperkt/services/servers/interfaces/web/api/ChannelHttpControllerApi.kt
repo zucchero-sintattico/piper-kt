@@ -76,7 +76,7 @@ interface ChannelHttpControllerApi {
         @PathVariable serverId: String,
         @PathVariable channelId: String,
         @QueryValue from: Int,
-        @QueryValue to: Int,
+        @QueryValue limit: Int,
         principal: Principal
     ): ChannelApi.GetChannelMessagesApi.Response
 
