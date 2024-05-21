@@ -31,13 +31,13 @@ export const useAppStore = defineStore(
       () =>
         (selectedDirect.value !== null && !inDirectCall.value) ||
         (selectedChannel.value !== null &&
-          selectedChannel.value.channelType !== "multimedia")
+          selectedChannel.value.type !== "multimedia")
     );
 
     const isVideoSection = computed(
       () =>
         (selectedChannel.value !== null &&
-          selectedChannel.value.channelType == "multimedia") ||
+          selectedChannel.value.type == "multimedia") ||
         (selectedDirect.value !== null && inDirectCall.value)
     );
 
