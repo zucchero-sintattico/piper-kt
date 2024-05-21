@@ -25,7 +25,7 @@ kotlin {
 }
 
 npmPublish {
-    organization = "zucchero-sintattico-piperkt"
+    organization = "zucchero-sintattico"
     registries {
         register("npmjs") {
             uri.set("https://registry.npmjs.org")
