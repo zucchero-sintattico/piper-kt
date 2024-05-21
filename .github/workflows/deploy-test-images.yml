@@ -1,7 +1,9 @@
-name: Deploy test images to Docker Hub
+name: Deploy test images to Docker Hub -- Patch for development
 
 on:
   push:
+    branches:
+      - merge/frontend
   workflow_dispatch:
 
 jobs:
