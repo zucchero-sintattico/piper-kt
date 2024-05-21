@@ -23,13 +23,16 @@ export module GetChannelsApi {
       channelType: string;
       description?: string;
     }
+
     export class Success extends Response {
       statusCode = 200;
       message = "Channels retrieved successfully";
+
       constructor(public channels: Channel[]) {
         super();
       }
     }
+
     export type Type = Success;
   }
   export module Errors {
@@ -37,10 +40,12 @@ export module GetChannelsApi {
       statusCode = 404;
       error = "Server not found" as const;
     }
+
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
       error = "User not authorized" as const;
     }
+
     export type Type = ServerNotFound | UserNotAuthorized;
   }
   export type Response = Responses.Type | Errors.Type;
@@ -69,13 +74,16 @@ export module GetChannelByIdApi {
       channelType: string;
       description?: string;
     }
+
     export class Success extends Response {
       statusCode = 200;
       message = "Channels retrieved successfully";
+
       constructor(public channel: Channel) {
         super();
       }
     }
+
     export type Type = Success;
   }
   export module Errors {
@@ -83,6 +91,7 @@ export module GetChannelByIdApi {
       statusCode = 404;
       error = "Channel not found" as const;
     }
+
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
       error = "User not authorized" as const;
@@ -100,9 +109,10 @@ export module GetChannelByIdApi {
 
 export module CreateChannelApi {
   export enum ChannelType {
-    Messages = "messages",
-    Multimedia = "multimedia",
+    Messages = "TEXT",
+    Multimedia = "MULTIMEDIA",
   }
+
   export module Request {
     export type Type = Body & Params;
     export type Params = {
@@ -132,15 +142,18 @@ export module CreateChannelApi {
       channelType: string;
       description?: string;
     }
+
     export class Success extends Response {
       statusCode = 200;
       message = "Channel created successfully";
       channel: Channel;
+
       constructor(channel: Channel) {
         super();
         this.channel = channel;
       }
     }
+
     export type Type = Success;
   }
   export module Errors {
@@ -148,6 +161,7 @@ export module CreateChannelApi {
       statusCode = 404;
       error = "Server not found" as const;
     }
+
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
       error = "User not authorized" as const;
@@ -199,6 +213,7 @@ export module UpdateChannelApi {
       statusCode = 200;
       message = "Channel updated successfully";
     }
+
     export type Type = Success;
   }
   export module Errors {
@@ -206,10 +221,12 @@ export module UpdateChannelApi {
       statusCode = 404;
       error = "Server not found" as const;
     }
+
     export class ChannelNotFound extends ErrorResponse {
       statusCode = 404;
       error = "Channel not found" as const;
     }
+
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
       error = "User not authorized" as const;
@@ -219,6 +236,7 @@ export module UpdateChannelApi {
       statusCode = 409;
       error = "Channel already exists" as const;
     }
+
     export type Type =
       | ServerNotFound
       | ChannelNotFound
@@ -249,6 +267,7 @@ export module DeleteChannelApi {
       statusCode = 200;
       message = "Channel deleted successfully";
     }
+
     export type Type = Success;
   }
   export module Errors {
@@ -256,14 +275,17 @@ export module DeleteChannelApi {
       statusCode = 404;
       error = "Server not found" as const;
     }
+
     export class ChannelNotFound extends ErrorResponse {
       statusCode = 404;
       error = "Channel not found" as const;
     }
+
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
       error = "User not authorized" as const;
     }
+
     export type Type = ServerNotFound | ChannelNotFound | UserNotAuthorized;
   }
   export type Response = Responses.Type | Errors.Type;
