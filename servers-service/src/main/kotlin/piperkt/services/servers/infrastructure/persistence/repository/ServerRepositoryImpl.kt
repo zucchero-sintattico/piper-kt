@@ -8,6 +8,7 @@ import piperkt.services.servers.application.ServerRepository
 import piperkt.services.servers.domain.Server
 import piperkt.services.servers.domain.ServerId
 import piperkt.services.servers.infrastructure.persistence.model.ChannelEntity
+import piperkt.services.servers.infrastructure.persistence.model.MessageEntity
 import piperkt.services.servers.infrastructure.persistence.model.ServerEntity
 import piperkt.services.servers.infrastructure.persistence.model.ServerModelRepository
 
@@ -44,7 +45,8 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
                     id = it.id.value,
                     name = it.name,
                     description = it.description,
-                    channelType = it.type.toString()
+                    channelType = it.type.toString(),
+                    messages = it.messages.map(MessageEntity::fromDomain)
                 )
             }
         serverModelRepository.update(
@@ -54,7 +56,7 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
                 description = entity.description,
                 owner = entity.owner,
                 users = entity.users,
-                channels = channelEntities
+                channels = channelEntities,
             )
         )
     }
