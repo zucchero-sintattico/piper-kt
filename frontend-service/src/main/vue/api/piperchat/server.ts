@@ -299,7 +299,7 @@ export module GetServersApi {
       id: string;
       name: string;
       createdAt: Date;
-      channelType: string;
+      type: string;
       description?: string;
     }
     export interface Server {
