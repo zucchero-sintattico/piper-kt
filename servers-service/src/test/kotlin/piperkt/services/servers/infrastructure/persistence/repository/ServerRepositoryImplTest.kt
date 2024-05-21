@@ -5,6 +5,7 @@ import io.kotest.matchers.shouldBe
 import piperkt.services.servers.application.ServerRepository
 import piperkt.services.servers.domain.ChannelType
 import piperkt.services.servers.domain.factory.ChannelFactory
+import piperkt.services.servers.domain.factory.MessageFactory
 import piperkt.services.servers.domain.factory.ServerFactory
 
 class ServerRepositoryImplTest(private val serverRepository: ServerRepository) : IntegrationTest() {
@@ -94,6 +95,7 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
         val server = ServerFactory.createServer("serverName", "serverDescription", "owner")
         val channel = ChannelFactory.createFromType("channelName", "channelDescription", "TEXT")
         server.addChannel(channel)
+        serverRepository.save(server)
         channel.name = "newChannelName"
         channel.description = "newChannelDescription"
         serverRepository.update(server)
@@ -101,6 +103,24 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
             it.channels.size shouldBe 1
             it.channels[0].name shouldBe "newChannelName"
             it.channels[0].description shouldBe "newChannelDescription"
+        }
+    }
+
+    @Test
+    fun `should add a message to a channel`() {
+        val server = ServerFactory.createServer("serverName", "serverDescription", "owner")
+        val channel = ChannelFactory.createFromType("channelName", "channelDescription", "TEXT")
+        server.addChannel(channel)
+        serverRepository.save(server)
+        val message = MessageFactory.createMessage(sender = "sender", content = "content")
+        channel.addMessage(message)
+        serverRepository.update(server)
+        serverRepository.findById(server.id)?.let {
+            it.channels.size shouldBe 1
+            it.channels[0].messages.size shouldBe 1
+            it.channels[0].messages[0].id shouldBe message.id
+            it.channels[0].messages[0].sender shouldBe "sender"
+            it.channels[0].messages[0].content shouldBe "content"
         }
     }
 }
