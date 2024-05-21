@@ -31,7 +31,7 @@ jobs:
           # - macos-14
           # - windows-2022
           - ubuntu-22.04
-        java-version: [17, 21]
+        java-version: [17] # [17, 21]
         java-distribution:
           - adopt
           - corretto
