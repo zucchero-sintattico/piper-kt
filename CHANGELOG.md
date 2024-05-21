@@ -1,3 +1,11 @@
+## [7.4.1](https://github.com/zucchero-sintattico/piper-kt/compare/v7.4.0...v7.4.1) (2024-05-21)
+
+
+### Bug Fixes
+
+* **image:** adjust dockerfile file copying ([6536fc6](https://github.com/zucchero-sintattico/piper-kt/commit/6536fc63e5f6bed1afa9bdeb2e0da88422565c2d))
+* **npm:** registry org name ([e5d493d](https://github.com/zucchero-sintattico/piper-kt/commit/e5d493d919da6d3f3739ec8d9445a80fe697e7aa))
+
 ## [7.4.0](https://github.com/zucchero-sintattico/piper-kt/compare/v7.3.0...v7.4.0) (2024-05-21)
 
 
