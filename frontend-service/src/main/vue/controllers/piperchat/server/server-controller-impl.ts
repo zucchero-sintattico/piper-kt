@@ -59,7 +59,7 @@ export class ServerControllerImpl
   ): Promise<GetServerParticipantsApi.Response> {
     const params = request as GetServerParticipantsApi.Request.Params;
     return await this.get<GetServerParticipantsApi.Response>(
-      `/servers/${params.serverId}/participants`
+      `/servers/${params.serverId}/users`
     );
   }
 
@@ -68,7 +68,7 @@ export class ServerControllerImpl
   ): Promise<JoinServerApi.Response> {
     const params = request as JoinServerApi.Request.Params;
     return await this.post<JoinServerApi.Response>(
-      `/servers/${params.serverId}/participants`
+      `/servers/${params.serverId}/users`
     );
   }
 
@@ -77,7 +77,7 @@ export class ServerControllerImpl
   ): Promise<LeaveServerApi.Response> {
     const params = request as LeaveServerApi.Request.Params;
     return await this.delete<LeaveServerApi.Response>(
-      `/servers/${params.serverId}/participants`
+      `/servers/${params.serverId}/users`
     );
   }
 
@@ -87,7 +87,7 @@ export class ServerControllerImpl
     const params = request as KickUserFromServerApi.Request.Params;
     const body = request as KickUserFromServerApi.Request.Body;
     return await this.delete<KickUserFromServerApi.Response>(
-      `/servers/${params.serverId}/participants/${params.username}`,
+      `/servers/${params.serverId}/users/${params.username}`,
       body
     );
   }
