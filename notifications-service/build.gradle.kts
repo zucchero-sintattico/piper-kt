@@ -16,10 +16,12 @@ node {
     version = "22.1.0"
 }
 
+val piperKtEventCompiledPath = "src/main/typescript/events"
+
 spotless {
     typescript {
         target("**/*.ts")
-        targetExclude("**/build/**", "**/node_modules/**")
+        targetExclude("**/build/**", "**/node_modules/**", "$piperKtEventCompiledPath/**")
         prettier()
     }
 }
@@ -30,7 +32,7 @@ tasks.named("npmDependencies") {
     doFirst {
         copy {
             from("../events/build/dist/js/productionLibrary")
-            into(layout.buildDirectory.dir("piper-kt-events"))
+            into(piperKtEventCompiledPath)
         }
     }
 }
@@ -44,10 +46,6 @@ tasks.named("buildLayers") {
         copy {
             from("node_modules")
             into("build/docker/main/node_modules")
-        }
-        copy {
-            from(layout.buildDirectory.dir("piper-kt-events"))
-            into("build/docker/main/build/piper-kt-events")
         }
     }
 }
