@@ -1,7 +1,6 @@
 package piperkt.services.servers.application
 
-import piperkt.events.ServerEvent
-import piperkt.events.ServerEventPublisher
+import piperkt.events.*
 import piperkt.services.servers.application.api.ServerServiceApi
 import piperkt.services.servers.application.api.command.ServerCommand
 import piperkt.services.servers.application.api.query.ServerQuery
@@ -18,7 +17,7 @@ open class ServerService(
         val server =
             ServerFactory.createServer(request.name, request.description, request.requestFrom)
         serverRepository.save(server)
-        eventPublisher.publish(ServerEvent.ServerCreatedEvent(server.id.value, server.owner))
+        eventPublisher.publish(ServerCreatedEvent(server.id.value, server.owner))
         return Result.success(ServerCommand.CreateServer.Response(server.id))
     }
 
@@ -29,7 +28,7 @@ open class ServerService(
         return if (server != null) {
             if (server.isUserAdmin(request.requestFrom)) {
                 serverRepository.deleteById(request.serverId)
-                eventPublisher.publish(ServerEvent.ServerDeletedEvent(request.serverId.value))
+                eventPublisher.publish(ServerDeletedEvent(request.serverId.value))
                 Result.success(ServerCommand.DeleteServer.Response(request.serverId))
             } else {
                 return Result.failure(ServerServiceException.UserNotHasPermissionsException())
@@ -48,7 +47,7 @@ open class ServerService(
                 request.name?.let { server.name = it }
                 request.description?.let { server.description = it }
                 serverRepository.update(server)
-                eventPublisher.publish(ServerEvent.ServerUpdatedEvent(request.serverId.value))
+                eventPublisher.publish(ServerUpdatedEvent(request.serverId.value))
                 Result.success(
                     ServerCommand.UpdateServer.Response(
                         request.serverId,
@@ -71,9 +70,7 @@ open class ServerService(
         return if (server != null) {
             server.addUser(request.requestFrom)
             serverRepository.update(server)
-            eventPublisher.publish(
-                ServerEvent.ServerUserAddedEvent(server.id.value, request.requestFrom)
-            )
+            eventPublisher.publish(ServerUserAddedEvent(server.id.value, request.requestFrom))
             Result.success(ServerCommand.AddUserToServer.Response(server.id, request.requestFrom))
         } else {
             Result.failure(ServerServiceException.ServerNotFoundExceptionException())
@@ -93,9 +90,7 @@ open class ServerService(
             }
             server.removeUser(request.requestFrom)
             serverRepository.update(server)
-            eventPublisher.publish(
-                ServerEvent.ServerUserRemovedEvent(server.id.value, request.requestFrom)
-            )
+            eventPublisher.publish(ServerUserRemovedEvent(server.id.value, request.requestFrom))
             return Result.success(
                 ServerCommand.RemoveUserFromServer.Response(server.id, request.requestFrom)
             )
@@ -117,9 +112,7 @@ open class ServerService(
             }
             server.removeUser(request.username)
             serverRepository.update(server)
-            eventPublisher.publish(
-                ServerEvent.ServerUserKickedEvent(server.id.value, request.username)
-            )
+            eventPublisher.publish(ServerUserKickedEvent(server.id.value, request.username))
             return Result.success(
                 ServerCommand.KickUserFromServer.Response(server.id, request.username)
             )

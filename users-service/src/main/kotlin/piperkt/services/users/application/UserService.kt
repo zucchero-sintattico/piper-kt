@@ -1,8 +1,8 @@
 package piperkt.services.users.application
 
 import piperkt.common.utils.orThrow
-import piperkt.events.UserEvent.UserUpdated
 import piperkt.events.UserEventPublisher
+import piperkt.events.UserUpdated
 import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserError
 import piperkt.services.users.domain.user.UserRepository

@@ -6,7 +6,7 @@ import org.mockito.kotlin.reset
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
-import piperkt.events.ChannelEvent
+import piperkt.events.*
 import piperkt.services.servers.application.api.command.ChannelCommand
 import piperkt.services.servers.application.exceptions.ServerServiceException
 
@@ -34,10 +34,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         // channelId
         verify(eventPublisher)
             .publish(
-                ChannelEvent.ChannelCreatedEvent(
-                    simpleServerId.value,
-                    response.getOrThrow().channelId.value
-                )
+                ChannelCreatedEvent(simpleServerId.value, response.getOrThrow().channelId.value)
             )
     }
 
@@ -93,7 +90,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 )
             )
         verify(eventPublisher)
-            .publish(ChannelEvent.ChannelUpdatedEvent(simpleServerId.value, simpleChannelId.value))
+            .publish(ChannelUpdatedEvent(simpleServerId.value, simpleChannelId.value))
     }
 
     @Test
@@ -140,7 +137,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 ChannelCommand.DeleteChannelInServer.Response(channelId = simpleChannelId)
             )
         verify(eventPublisher)
-            .publish(ChannelEvent.ChannelDeletedEvent(simpleServerId.value, simpleChannelId.value))
+            .publish(ChannelDeletedEvent(simpleServerId.value, simpleChannelId.value))
     }
 
     @Test
@@ -186,7 +183,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         response.isSuccess shouldBe true
         verify(eventPublisher)
             .publish(
-                ChannelEvent.MessageInChannelEvent(
+                MessageInChannelEvent(
                     simpleServerId.value,
                     simpleChannelId.value,
                     response.getOrThrow().messageId.value

@@ -2,7 +2,11 @@ package piperkt.services.multimedia.application.server
 
 import piperkt.common.events.EventListener
 import piperkt.common.utils.orThrow
+import piperkt.events.ChannelCreatedEvent
+import piperkt.events.ChannelDeletedEvent
 import piperkt.events.ChannelEvent
+import piperkt.events.ChannelUpdatedEvent
+import piperkt.events.MessageInChannelEvent
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.application.session.SessionService.Command.CreateSession
 import piperkt.services.multimedia.application.session.SessionService.Command.DeleteSession
@@ -19,14 +23,14 @@ open class ChannelEventsListener(
 
     override fun handle(event: ChannelEvent) {
         when (event) {
-            is ChannelEvent.ChannelCreatedEvent -> onChannelCreated(event)
-            is ChannelEvent.ChannelDeletedEvent -> onChannelDeleted(event)
-            is ChannelEvent.ChannelUpdatedEvent -> {}
-            is ChannelEvent.MessageInChannelEvent -> {}
+            is ChannelCreatedEvent -> onChannelCreated(event)
+            is ChannelDeletedEvent -> onChannelDeleted(event)
+            is ChannelUpdatedEvent -> {}
+            is MessageInChannelEvent -> {}
         }
     }
 
-    private fun onChannelCreated(event: ChannelEvent.ChannelCreatedEvent) {
+    private fun onChannelCreated(event: ChannelCreatedEvent) {
         val server =
             serverRepository
                 .findById(ServerId(event.serverId))
@@ -37,7 +41,7 @@ open class ChannelEventsListener(
         serverRepository.save(server)
     }
 
-    private fun onChannelDeleted(event: ChannelEvent.ChannelDeletedEvent) {
+    private fun onChannelDeleted(event: ChannelDeletedEvent) {
         val server =
             serverRepository
                 .findById(ServerId(event.serverId))

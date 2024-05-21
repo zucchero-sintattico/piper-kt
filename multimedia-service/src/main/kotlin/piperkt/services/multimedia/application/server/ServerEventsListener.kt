@@ -2,7 +2,7 @@ package piperkt.services.multimedia.application.server
 
 import piperkt.common.events.EventListener
 import piperkt.common.utils.orThrow
-import piperkt.events.ServerEvent
+import piperkt.events.*
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.application.session.SessionService.Command.AddAllowedUser
 import piperkt.services.multimedia.application.session.SessionService.Command.RemoveAllowedUser
@@ -19,25 +19,25 @@ open class ServerEventsListener(
 
     override fun handle(event: ServerEvent) {
         when (event) {
-            is ServerEvent.ServerCreatedEvent -> onServerCreated(event)
-            is ServerEvent.ServerDeletedEvent -> onServerDeleted(event)
-            is ServerEvent.ServerUserAddedEvent -> onUserJoinedServer(event)
-            is ServerEvent.ServerUserRemovedEvent -> onUserLeftServer(event)
-            is ServerEvent.ServerUserKickedEvent -> onUserKickedFromServer(event)
-            is ServerEvent.ServerUpdatedEvent -> {}
+            is ServerCreatedEvent -> onServerCreated(event)
+            is ServerDeletedEvent -> onServerDeleted(event)
+            is ServerUserAddedEvent -> onUserJoinedServer(event)
+            is ServerUserRemovedEvent -> onUserLeftServer(event)
+            is ServerUserKickedEvent -> onUserKickedFromServer(event)
+            is ServerUpdatedEvent -> {}
         }
     }
 
-    private fun onServerCreated(event: ServerEvent.ServerCreatedEvent) {
+    private fun onServerCreated(event: ServerCreatedEvent) {
         val server = Server(id = ServerId(event.serverId), members = setOf(Username(event.owner)))
         serverRepository.save(server)
     }
 
-    private fun onServerDeleted(event: ServerEvent.ServerDeletedEvent) {
+    private fun onServerDeleted(event: ServerDeletedEvent) {
         serverRepository.deleteById(ServerId(event.serverId))
     }
 
-    private fun onUserJoinedServer(event: ServerEvent.ServerUserAddedEvent) {
+    private fun onUserJoinedServer(event: ServerUserAddedEvent) {
         val server =
             serverRepository
                 .findById(ServerId(event.serverId))
@@ -49,7 +49,7 @@ open class ServerEventsListener(
         }
     }
 
-    private fun onUserLeftServer(event: ServerEvent.ServerUserRemovedEvent) {
+    private fun onUserLeftServer(event: ServerUserRemovedEvent) {
         val server =
             serverRepository
                 .findById(ServerId(event.serverId))
@@ -63,7 +63,9 @@ open class ServerEventsListener(
         }
     }
 
-    private fun onUserKickedFromServer(event: ServerEvent.ServerUserKickedEvent) {
-        onUserLeftServer(ServerEvent.ServerUserRemovedEvent(event.serverId, event.username))
+    private fun onUserKickedFromServer(event: ServerUserKickedEvent) {
+        onUserLeftServer(
+            ServerUserRemovedEvent(serverId = event.serverId, username = event.username)
+        )
     }
 }

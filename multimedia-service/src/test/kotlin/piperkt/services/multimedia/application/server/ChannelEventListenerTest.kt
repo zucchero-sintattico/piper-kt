@@ -7,7 +7,8 @@ import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemoryDirectRepository
 import mocks.repositories.InMemoryServerRepository
 import mocks.repositories.InMemorySessionRepository
-import piperkt.events.ChannelEvent
+import piperkt.events.ChannelCreatedEvent
+import piperkt.events.ChannelDeletedEvent
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.application.session.SessionService.Command.CreateSession
 import piperkt.services.multimedia.domain.server.Channel
@@ -43,8 +44,7 @@ class ChannelEventListenerTest :
             serverRepository.save(server)
 
             val channelId = "channel-id"
-            val event =
-                ChannelEvent.ChannelCreatedEvent(channelId = channelId, serverId = server.id.value)
+            val event = ChannelCreatedEvent(channelId = channelId, serverId = server.id.value)
 
             // When
             channelEventListener.handle(event)
@@ -69,10 +69,7 @@ class ChannelEventListenerTest :
             serverRepository.save(server)
 
             val event =
-                ChannelEvent.ChannelDeletedEvent(
-                    channelId = channel.id.value,
-                    serverId = server.id.value
-                )
+                ChannelDeletedEvent(channelId = channel.id.value, serverId = server.id.value)
 
             // When
             channelEventListener.handle(event)

@@ -9,7 +9,7 @@ import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemoryDirectRepository
 import mocks.repositories.InMemoryServerRepository
 import mocks.repositories.InMemorySessionRepository
-import piperkt.events.SessionEvent
+import piperkt.events.*
 import piperkt.services.multimedia.domain.session.SessionErrors
 import piperkt.services.multimedia.domain.session.SessionFactory
 import piperkt.services.multimedia.domain.session.SessionId
@@ -54,12 +54,7 @@ class SessionServiceTest :
             val session = sessionService.createSession(command)
             sessionRepository.findById(session.id) shouldBe session
             sessionEventPublisher.publishedEvents shouldBe
-                listOf(
-                    SessionEvent.SessionCreated(
-                        session.id.value,
-                        allowedUsers.map { it.value }.toSet()
-                    )
-                )
+                listOf(SessionCreated(session.id.value, allowedUsers.map { it.value }.toSet()))
         }
 
         test("should delete a session") {
@@ -86,7 +81,7 @@ class SessionServiceTest :
             val updatedSession = sessionRepository.findById(session.id)!!
             updatedSession.allowedUsers() shouldBe setOf(john().id)
             sessionEventPublisher.publishedEvents shouldBe
-                listOf(SessionEvent.AllowedUserAdded(session.id.value, john().id.value))
+                listOf(AllowedUserAdded(session.id.value, john().id.value))
         }
 
         test(
@@ -121,7 +116,7 @@ class SessionServiceTest :
             val updatedSession = sessionRepository.findById(session.id)!!
             updatedSession.allowedUsers() shouldBe emptySet()
             sessionEventPublisher.publishedEvents shouldBe
-                listOf(SessionEvent.AllowedUserRemoved(session.id.value, john().id.value))
+                listOf(AllowedUserRemoved(session.id.value, john().id.value))
         }
 
         test(
@@ -156,7 +151,7 @@ class SessionServiceTest :
             val updatedSession = sessionRepository.findById(session.id)!!
             updatedSession.participants() shouldBe setOf(john().id)
             sessionEventPublisher.publishedEvents shouldBe
-                listOf(SessionEvent.ParticipantJoined(session.id.value, john().id.value))
+                listOf(ParticipantJoined(session.id.value, john().id.value))
         }
 
         test("should throw an exception when trying to join a non-existing session") {
@@ -195,7 +190,7 @@ class SessionServiceTest :
             val updatedSessionAfterLeave = sessionRepository.findById(session.id)!!
             updatedSessionAfterLeave.participants() shouldBe emptySet()
             sessionEventPublisher.publishedEvents shouldBe
-                listOf(SessionEvent.ParticipantLeft(session.id.value, john().id.value))
+                listOf(ParticipantLeft(session.id.value, john().id.value))
         }
 
         test("should throw an exception when trying to leave a non-existing session") {
