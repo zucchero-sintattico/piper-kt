@@ -171,7 +171,6 @@ export module GetServerApi {
     export interface Channel {
       id: string;
       name: string;
-      createdAt: Date;
       channelType: string;
       description?: string;
     }
@@ -180,8 +179,7 @@ export module GetServerApi {
       name: string;
       description: string;
       owner: string;
-      participants: string[];
-      createdAt: Date;
+      users: string[];
       channels: Channel[];
     }
     export class Success extends Response {
