@@ -107,7 +107,7 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
         serverId: String,
         channelId: String,
         from: Int,
-        to: Int,
+        limit: Int,
         principal: Principal,
     ): ChannelApi.GetChannelMessagesApi.Response {
         val response =
@@ -118,7 +118,7 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
                         channelId = ChannelId(channelId),
                         serverId = ServerId(serverId),
                         from = from,
-                        to = to
+                        limit = limit
                     )
                 )
                 .getOrThrow()

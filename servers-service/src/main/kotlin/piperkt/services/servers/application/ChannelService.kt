@@ -137,7 +137,7 @@ open class ChannelService(
             ChannelQuery.GetMessagesFromChannelId.Response(
                 channel.messages.subList(
                     request.from,
-                    request.to.coerceAtMost(channel.messages.size)
+                    request.limit.coerceAtMost(channel.messages.size)
                 )
             )
         )

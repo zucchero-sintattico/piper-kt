@@ -12,7 +12,7 @@ sealed interface ChannelQuery {
             val serverId: ServerId,
             val channelId: ChannelId,
             val from: Int,
-            val to: Int,
+            val limit: Int,
             override val requestFrom: String,
         ) : GetMessagesFromChannelId, ServiceRequest
 
