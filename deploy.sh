@@ -4,7 +4,7 @@
 kubectl create namespace piper-kt
 kubectl apply -f kubernetes/auth.yml
 helm repo add mongodb https://mongodb.github.io/helm-charts
-helm install strimzi-cluster-operator --set replicas=1 --set resources.limits.cpu=500 oci://quay.io/strimzi-helm/strimzi-kafka-operator --namespace piper-kt
+helm install strimzi-cluster-operator --set replicas=1 --set resources.limits.cpu=700 oci://quay.io/strimzi-helm/strimzi-kafka-operator --namespace piper-kt
 kubectl apply -f kubernetes/kafka.yml --namespace piper-kt
 helm install --set image.tag=0.9.0-arm64 community-operator mongodb/community-operator --namespace piper-kt \
     --set watchNamespaces=piper-kt\
@@ -12,7 +12,6 @@ helm install --set image.tag=0.9.0-arm64 community-operator mongodb/community-op
 
 
 microservice_list=("friendships-service" "users-service" "servers-service" "multimedia-service")
-#microservice_list=("users-service")
 for microservice in "${microservice_list[@]}"
 do
   helm install $microservice kubernetes/helm-chart/piper-chart --values $microservice/helm-values/micronaut-values.yaml
