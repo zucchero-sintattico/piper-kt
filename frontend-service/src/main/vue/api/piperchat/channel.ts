@@ -70,8 +70,7 @@ export module GetChannelByIdApi {
     export interface Channel {
       id: string;
       name: string;
-      createdAt: Date;
-      channelType: string;
+      type: string;
       description?: string;
     }
 
