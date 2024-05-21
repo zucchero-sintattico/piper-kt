@@ -24,8 +24,6 @@ dependencies {
     runtimeOnly(catalog.getLibrary("snakeyaml"))
 }
 
-java { sourceCompatibility = JavaVersion.asVersion }
-
 micronaut {
     runtime("netty")
     testRuntime("kotest5")
