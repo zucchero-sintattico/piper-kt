@@ -1,6 +1,5 @@
 plugins {
-    kotlin("multiplatform")
-    id("java-test-fixtures")
+    id("kotlin-multiplatform")
 }
 
 kotlin {

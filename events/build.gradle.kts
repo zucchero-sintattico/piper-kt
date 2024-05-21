@@ -1,5 +1,5 @@
 plugins {
-    kotlin("multiplatform")
+    id("kotlin-multiplatform")
     alias(libs.plugins.npmPublish)
 }
 
