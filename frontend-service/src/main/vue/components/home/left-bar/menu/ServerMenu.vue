@@ -236,7 +236,7 @@ onMounted(() => {
             <div class="text-h4">Partecipants</div>
             <!-- Display only partecipants, not the owner -->
             <q-list
-              v-for="user in appStore.selectedServer?.participants.filter(
+              v-for="user in appStore.selectedServer?.users.filter(
                 (p) => p !== userStore.username
               )"
               :key="user"

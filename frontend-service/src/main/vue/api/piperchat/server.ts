@@ -307,7 +307,7 @@ export module GetServersApi {
       name: string;
       description: string;
       owner: string;
-      participants: string[];
+      users: string[];
       createdAt: Date;
       channels: Channel[];
     }
