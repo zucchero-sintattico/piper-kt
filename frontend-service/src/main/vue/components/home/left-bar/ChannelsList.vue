@@ -136,7 +136,7 @@ function leaveServer() {
           separator
           class="text-white text-h5"
           v-for="channel in appStore.selectedServer?.channels?.filter(
-            (c) => c.channelType == CreateChannelApi.ChannelType.Multimedia
+            (c) => c.type == CreateChannelApi.ChannelType.Multimedia
           )"
           :key="channel.id"
         >
