@@ -6,7 +6,7 @@ import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemoryDirectRepository
 import mocks.repositories.InMemoryServerRepository
 import mocks.repositories.InMemorySessionRepository
-import piperkt.events.ServerEvent
+import piperkt.events.*
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.domain.server.Server
 import piperkt.services.multimedia.domain.server.ServerId
@@ -36,7 +36,7 @@ class ServerEventListenerTest :
 
         test("should react to ServerCreatedEvent") {
             // Given
-            val event = ServerEvent.ServerCreatedEvent(serverId = "server-id", owner = "owner")
+            val event = ServerCreatedEvent(serverId = "server-id", owner = "owner")
 
             // When
             serverEventListener.handle(event)
@@ -48,7 +48,7 @@ class ServerEventListenerTest :
 
         test("should react to ServerDeletedEvent") {
             // Given
-            val event = ServerEvent.ServerDeletedEvent(serverId = "server-id")
+            val event = ServerDeletedEvent(serverId = "server-id")
             serverRepository.save(Server(ServerId("server-id"), setOf(Username("owner"))))
 
             // When
@@ -60,7 +60,7 @@ class ServerEventListenerTest :
 
         test("should react to ServerUserAddedEvent") {
             // Given
-            val event = ServerEvent.ServerUserAddedEvent(serverId = "server-id", username = "user")
+            val event = ServerUserAddedEvent(serverId = "server-id", username = "user")
 
             serverRepository.save(Server(ServerId("server-id"), setOf(Username("owner"))))
 
@@ -79,8 +79,7 @@ class ServerEventListenerTest :
 
         test("should react to ServerUserRemovedEvent") {
             // Given
-            val event =
-                ServerEvent.ServerUserRemovedEvent(serverId = "server-id", username = "user")
+            val event = ServerUserRemovedEvent(serverId = "server-id", username = "user")
 
             serverRepository.save(
                 Server(ServerId("server-id"), setOf(Username("owner"), Username("user")))
@@ -101,7 +100,7 @@ class ServerEventListenerTest :
 
         test("should react to ServerUserKickedEvent") {
             // Given
-            val event = ServerEvent.ServerUserKickedEvent(serverId = "server-id", username = "user")
+            val event = ServerUserKickedEvent(serverId = "server-id", username = "user")
 
             serverRepository.save(
                 Server(ServerId("server-id"), setOf(Username("owner"), Username("user")))

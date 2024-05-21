@@ -1,8 +1,7 @@
 package piperkt.services.multimedia.application.session
 
 import piperkt.common.utils.orThrow
-import piperkt.events.SessionEvent
-import piperkt.events.SessionEventPublisher
+import piperkt.events.*
 import piperkt.services.multimedia.domain.direct.DirectErrors
 import piperkt.services.multimedia.domain.direct.DirectRepository
 import piperkt.services.multimedia.domain.server.ChannelId
@@ -47,10 +46,7 @@ open class SessionService(
         val session = SessionFactory.fromAllowedUsers(command.allowedUsers)
         sessionRepository.save(session)
         sessionEventPublisher.publish(
-            SessionEvent.SessionCreated(
-                session.id.value,
-                session.allowedUsers().map { it.value }.toSet()
-            )
+            SessionCreated(session.id.value, session.allowedUsers().map { it.value }.toSet())
         )
         return session
     }
@@ -68,28 +64,28 @@ open class SessionService(
     fun addAllowedUser(command: Command.AddAllowedUser) {
         updateSession(command.sessionId) { addAllowedUser(command.username) }
         sessionEventPublisher.publish(
-            SessionEvent.AllowedUserAdded(command.sessionId.value, command.username.value)
+            AllowedUserAdded(command.sessionId.value, command.username.value)
         )
     }
 
     fun removeAllowedUser(command: Command.RemoveAllowedUser) {
         updateSession(command.sessionId) { removeAllowedUser(command.username) }
         sessionEventPublisher.publish(
-            SessionEvent.AllowedUserRemoved(command.sessionId.value, command.username.value)
+            AllowedUserRemoved(command.sessionId.value, command.username.value)
         )
     }
 
     fun joinSession(command: Command.JoinSession) {
         updateSession(command.sessionId) { addParticipant(command.username) }
         sessionEventPublisher.publish(
-            SessionEvent.ParticipantJoined(command.sessionId.value, command.username.value)
+            ParticipantJoined(command.sessionId.value, command.username.value)
         )
     }
 
     fun leaveSession(command: Command.LeaveSession) {
         updateSession(command.sessionId) { removeParticipant(command.username) }
         sessionEventPublisher.publish(
-            SessionEvent.ParticipantLeft(command.sessionId.value, command.username.value)
+            ParticipantLeft(command.sessionId.value, command.username.value)
         )
     }
 

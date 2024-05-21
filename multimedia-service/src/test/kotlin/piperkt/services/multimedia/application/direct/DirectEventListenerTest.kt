@@ -8,7 +8,7 @@ import mocks.publishers.MockedSessionEventPublisher
 import mocks.repositories.InMemoryDirectRepository
 import mocks.repositories.InMemoryServerRepository
 import mocks.repositories.InMemorySessionRepository
-import piperkt.events.FriendshipEvent
+import piperkt.events.FriendshipRequestAcceptedEvent
 import piperkt.services.multimedia.application.session.SessionService
 
 class DirectEventListenerTest :
@@ -36,10 +36,7 @@ class DirectEventListenerTest :
         test("should react to FriendshipRequestAcceptedEvent") {
             // Given
             val event =
-                FriendshipEvent.FriendshipRequestAcceptedEvent(
-                    fromUser = john().id.value,
-                    toUser = jane().id.value
-                )
+                FriendshipRequestAcceptedEvent(fromUser = john().id.value, toUser = jane().id.value)
 
             // When
             directEventListener.handle(event)

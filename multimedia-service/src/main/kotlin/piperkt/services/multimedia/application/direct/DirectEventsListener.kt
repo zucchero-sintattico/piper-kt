@@ -1,7 +1,7 @@
 package piperkt.services.multimedia.application.direct
 
 import piperkt.common.events.EventListener
-import piperkt.events.FriendshipEvent
+import piperkt.events.FriendshipRequestAcceptedEvent
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.application.session.SessionService.Command.CreateSession
 import piperkt.services.multimedia.domain.direct.Direct
@@ -12,8 +12,8 @@ import piperkt.services.multimedia.domain.user.Username
 open class DirectEventsListener(
     private val directRepository: DirectRepository,
     private val sessionService: SessionService,
-) : EventListener<FriendshipEvent.FriendshipRequestAcceptedEvent> {
-    override fun handle(event: FriendshipEvent.FriendshipRequestAcceptedEvent) {
+) : EventListener<FriendshipRequestAcceptedEvent> {
+    override fun handle(event: FriendshipRequestAcceptedEvent) {
         val session =
             sessionService.createSession(
                 CreateSession(setOf(Username(event.fromUser), Username(event.toUser)))

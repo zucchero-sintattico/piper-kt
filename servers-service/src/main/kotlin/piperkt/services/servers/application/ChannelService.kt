@@ -1,7 +1,10 @@
 package piperkt.services.servers.application
 
-import piperkt.events.ChannelEvent
+import piperkt.events.ChannelCreatedEvent
+import piperkt.events.ChannelDeletedEvent
 import piperkt.events.ChannelEventPublisher
+import piperkt.events.ChannelUpdatedEvent
+import piperkt.events.MessageInChannelEvent
 import piperkt.services.servers.application.api.ChannelServiceApi
 import piperkt.services.servers.application.api.command.ChannelCommand
 import piperkt.services.servers.application.api.query.ChannelQuery
@@ -31,9 +34,7 @@ open class ChannelService(
                         server.addChannel(it)
                         serverRepository.update(server)
                     }
-            eventPublisher.publish(
-                ChannelEvent.ChannelCreatedEvent(server.id.value, channel.id.value)
-            )
+            eventPublisher.publish(ChannelCreatedEvent(server.id.value, channel.id.value))
             Result.success(ChannelCommand.CreateNewChannelInServer.Response(channel.id))
         } else {
             Result.failure(ServerServiceException.UserNotHasPermissionsException())
@@ -57,7 +58,7 @@ open class ChannelService(
                     }
             if (channel != null) {
                 eventPublisher.publish(
-                    ChannelEvent.ChannelUpdatedEvent(server.id.value, request.channelId.value)
+                    ChannelUpdatedEvent(server.id.value, request.channelId.value)
                 )
                 Result.success(
                     ChannelCommand.UpdateChannelInServer.Response(
@@ -90,10 +91,7 @@ open class ChannelService(
                         server.removeChannel(it)
                         serverRepository.update(server)
                         eventPublisher.publish(
-                            ChannelEvent.ChannelDeletedEvent(
-                                server.id.value,
-                                request.channelId.value
-                            )
+                            ChannelDeletedEvent(server.id.value, request.channelId.value)
                         )
                         Result.success(
                             ChannelCommand.DeleteChannelInServer.Response(
@@ -163,11 +161,7 @@ open class ChannelService(
         channel.addMessage(message)
         serverRepository.update(server)
         eventPublisher.publish(
-            ChannelEvent.MessageInChannelEvent(
-                server.id.value,
-                request.channelId.value,
-                message.id.value
-            )
+            MessageInChannelEvent(server.id.value, request.channelId.value, message.id.value)
         )
         return Result.success(ChannelCommand.AddMessageInChannel.Response(message.id))
     }

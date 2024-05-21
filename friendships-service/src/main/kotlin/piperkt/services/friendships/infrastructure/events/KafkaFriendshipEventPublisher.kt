@@ -3,19 +3,18 @@ package piperkt.services.friendships.infrastructure.events
 import io.micronaut.configuration.kafka.annotation.KafkaClient
 import io.micronaut.configuration.kafka.annotation.Topic
 import jakarta.inject.Singleton
-import piperkt.events.FriendshipEvent
-import piperkt.events.FriendshipEventPublisher
+import piperkt.events.*
 
 @KafkaClient
 interface KafkaFriendshipEventPublisher {
 
-    @Topic("friendship-events") fun publish(event: FriendshipEvent.FriendshipRequestSentEvent)
+    @Topic("friendship-events") fun publish(event: FriendshipRequestSentEvent)
 
-    @Topic("friendship-events") fun publish(event: FriendshipEvent.FriendshipRequestAcceptedEvent)
+    @Topic("friendship-events") fun publish(event: FriendshipRequestAcceptedEvent)
 
-    @Topic("friendship-events") fun publish(event: FriendshipEvent.NewMessageInFriendshipEvent)
+    @Topic("friendship-events") fun publish(event: NewMessageInFriendshipEvent)
 
-    @Topic("friendship-events") fun publish(event: FriendshipEvent.FriendshipRequestRejectedEvent)
+    @Topic("friendship-events") fun publish(event: FriendshipRequestRejectedEvent)
 }
 
 @Singleton
@@ -24,14 +23,10 @@ class FriendshipEventPublisherImpl(
 ) : FriendshipEventPublisher {
     override fun publish(event: FriendshipEvent) {
         when (event) {
-            is FriendshipEvent.FriendshipRequestAcceptedEvent ->
-                kafkaFriendshipEventPublisher.publish(event)
-            is FriendshipEvent.FriendshipRequestSentEvent ->
-                kafkaFriendshipEventPublisher.publish(event)
-            is FriendshipEvent.NewMessageInFriendshipEvent ->
-                kafkaFriendshipEventPublisher.publish(event)
-            is FriendshipEvent.FriendshipRequestRejectedEvent ->
-                kafkaFriendshipEventPublisher.publish(event)
+            is FriendshipRequestAcceptedEvent -> kafkaFriendshipEventPublisher.publish(event)
+            is FriendshipRequestSentEvent -> kafkaFriendshipEventPublisher.publish(event)
+            is NewMessageInFriendshipEvent -> kafkaFriendshipEventPublisher.publish(event)
+            is FriendshipRequestRejectedEvent -> kafkaFriendshipEventPublisher.publish(event)
         }
     }
 }

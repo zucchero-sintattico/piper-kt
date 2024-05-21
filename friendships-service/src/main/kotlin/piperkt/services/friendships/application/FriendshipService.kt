@@ -1,7 +1,6 @@
 package piperkt.services.friendships.application
 
-import piperkt.events.FriendshipEvent
-import piperkt.events.FriendshipEventPublisher
+import piperkt.events.*
 import piperkt.services.friendships.application.api.FriendshipsApi
 import piperkt.services.friendships.application.api.command.FriendshipCommand
 import piperkt.services.friendships.application.api.query.FriendshipQuery
@@ -33,9 +32,7 @@ open class FriendshipService(
         }
         FriendshipRequestFactory.createFriendshipRequest(request.requestFrom, request.receiver)
             .let { friendshipRequestRepository.save(it) }
-        eventPublisher.publish(
-            FriendshipEvent.FriendshipRequestSentEvent(request.requestFrom, request.receiver)
-        )
+        eventPublisher.publish(FriendshipRequestSentEvent(request.requestFrom, request.receiver))
         return Result.success(Unit)
     }
 
@@ -55,9 +52,7 @@ open class FriendshipService(
         val friendship = friendshipRequest.toFriendship()
         friendshipRepository.save(friendship)
         friendshipRequestRepository.deleteById(friendshipRequest.id)
-        eventPublisher.publish(
-            FriendshipEvent.FriendshipRequestAcceptedEvent(request.requestFrom, request.sender)
-        )
+        eventPublisher.publish(FriendshipRequestAcceptedEvent(request.requestFrom, request.sender))
         return Result.success(
             FriendshipCommand.AcceptFriendshipRequest.Response(friendship.id.value)
         )
@@ -76,9 +71,7 @@ open class FriendshipService(
                     FriendshipServiceException.FriendshipRequestNotFoundException()
                 )
         friendshipRequestRepository.deleteById(friendshipRequest.id)
-        eventPublisher.publish(
-            FriendshipEvent.FriendshipRequestRejectedEvent(request.requestFrom, request.sender)
-        )
+        eventPublisher.publish(FriendshipRequestRejectedEvent(request.requestFrom, request.sender))
         return Result.success(Unit)
     }
 
@@ -94,11 +87,7 @@ open class FriendshipService(
         friendship.addMessage(message)
         friendshipRepository.update(friendship)
         eventPublisher.publish(
-            FriendshipEvent.NewMessageInFriendshipEvent(
-                request.requestFrom,
-                request.receiver,
-                message.id.value
-            )
+            NewMessageInFriendshipEvent(request.requestFrom, request.receiver, message.id.value)
         )
         return Result.success(FriendshipCommand.SendMessage.Response(message.id.value))
     }

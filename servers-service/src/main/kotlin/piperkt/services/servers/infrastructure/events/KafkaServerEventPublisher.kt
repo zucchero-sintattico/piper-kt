@@ -3,23 +3,22 @@ package piperkt.services.servers.infrastructure.events
 import io.micronaut.configuration.kafka.annotation.KafkaClient
 import io.micronaut.configuration.kafka.annotation.Topic
 import jakarta.inject.Singleton
-import piperkt.events.ServerEvent
-import piperkt.events.ServerEventPublisher
+import piperkt.events.*
 
 @KafkaClient
 interface KafkaServerEventPublisher {
 
-    @Topic("server-events") fun publish(event: ServerEvent.ServerCreatedEvent)
+    @Topic("server-events") fun publish(event: ServerCreatedEvent)
 
-    @Topic("server-events") fun publish(event: ServerEvent.ServerDeletedEvent)
+    @Topic("server-events") fun publish(event: ServerDeletedEvent)
 
-    @Topic("server-events") fun publish(event: ServerEvent.ServerUpdatedEvent)
+    @Topic("server-events") fun publish(event: ServerUpdatedEvent)
 
-    @Topic("server-events") fun publish(event: ServerEvent.ServerUserAddedEvent)
+    @Topic("server-events") fun publish(event: ServerUserAddedEvent)
 
-    @Topic("server-events") fun publish(event: ServerEvent.ServerUserRemovedEvent)
+    @Topic("server-events") fun publish(event: ServerUserRemovedEvent)
 
-    @Topic("server-events") fun publish(event: ServerEvent.ServerUserKickedEvent)
+    @Topic("server-events") fun publish(event: ServerUserKickedEvent)
 }
 
 @Singleton
@@ -27,12 +26,12 @@ class ServerEventPublisherImpl(private val kafkaServerEventPublisher: KafkaServe
     ServerEventPublisher {
     override fun publish(event: ServerEvent) {
         when (event) {
-            is ServerEvent.ServerCreatedEvent -> kafkaServerEventPublisher.publish(event)
-            is ServerEvent.ServerDeletedEvent -> kafkaServerEventPublisher.publish(event)
-            is ServerEvent.ServerUpdatedEvent -> kafkaServerEventPublisher.publish(event)
-            is ServerEvent.ServerUserAddedEvent -> kafkaServerEventPublisher.publish(event)
-            is ServerEvent.ServerUserRemovedEvent -> kafkaServerEventPublisher.publish(event)
-            is ServerEvent.ServerUserKickedEvent -> kafkaServerEventPublisher.publish(event)
+            is ServerCreatedEvent -> kafkaServerEventPublisher.publish(event)
+            is ServerDeletedEvent -> kafkaServerEventPublisher.publish(event)
+            is ServerUpdatedEvent -> kafkaServerEventPublisher.publish(event)
+            is ServerUserAddedEvent -> kafkaServerEventPublisher.publish(event)
+            is ServerUserRemovedEvent -> kafkaServerEventPublisher.publish(event)
+            is ServerUserKickedEvent -> kafkaServerEventPublisher.publish(event)
         }
     }
 }

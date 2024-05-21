@@ -2,33 +2,31 @@ package piperkt.services.multimedia.infrastructure.events.publishers
 
 import io.micronaut.configuration.kafka.annotation.KafkaClient
 import io.micronaut.configuration.kafka.annotation.Topic
-import piperkt.events.SessionEvent
-import piperkt.events.SessionEventPublisher
+import piperkt.events.*
 
 @KafkaClient
 interface SessionEventKafkaPublisher : SessionEventPublisher {
 
     override fun publish(event: SessionEvent) {
         when (event) {
-            is SessionEvent.SessionCreated -> publishSessionCreated(event)
-            is SessionEvent.SessionDeleted -> publishSessionDeleted(event)
-            is SessionEvent.AllowedUserAdded -> publishAllowedUserAdded(event)
-            is SessionEvent.AllowedUserRemoved -> publishAllowedUserRemoved(event)
-            is SessionEvent.ParticipantJoined -> publishParticipantJoined(event)
-            is SessionEvent.ParticipantLeft -> publishParticipantLeft(event)
+            is SessionCreated -> publishSessionCreated(event)
+            is SessionDeleted -> publishSessionDeleted(event)
+            is AllowedUserAdded -> publishAllowedUserAdded(event)
+            is AllowedUserRemoved -> publishAllowedUserRemoved(event)
+            is ParticipantJoined -> publishParticipantJoined(event)
+            is ParticipantLeft -> publishParticipantLeft(event)
         }
     }
 
-    @Topic("session-created") fun publishSessionCreated(event: SessionEvent.SessionCreated)
+    @Topic("session-created") fun publishSessionCreated(event: SessionCreated)
 
-    @Topic("session-deleted") fun publishSessionDeleted(event: SessionEvent.SessionDeleted)
+    @Topic("session-deleted") fun publishSessionDeleted(event: SessionDeleted)
 
-    @Topic("allowed-user-added") fun publishAllowedUserAdded(event: SessionEvent.AllowedUserAdded)
+    @Topic("allowed-user-added") fun publishAllowedUserAdded(event: AllowedUserAdded)
 
-    @Topic("allowed-user-removed")
-    fun publishAllowedUserRemoved(event: SessionEvent.AllowedUserRemoved)
+    @Topic("allowed-user-removed") fun publishAllowedUserRemoved(event: AllowedUserRemoved)
 
-    @Topic("participant-joined") fun publishParticipantJoined(event: SessionEvent.ParticipantJoined)
+    @Topic("participant-joined") fun publishParticipantJoined(event: ParticipantJoined)
 
-    @Topic("participant-left") fun publishParticipantLeft(event: SessionEvent.ParticipantLeft)
+    @Topic("participant-left") fun publishParticipantLeft(event: ParticipantLeft)
 }
