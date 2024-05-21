@@ -136,6 +136,10 @@ jobs:
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: "adopt"
+      - name: Deploy to NPM
+        run: ./gradlew -Pversion=${{ needs.release.outputs.version }} :events:publishJsPackageToNpmjsRegistry --parallel
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Create artifacts directory
