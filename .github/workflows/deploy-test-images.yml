@@ -3,7 +3,7 @@ name: Deploy test images to Docker Hub -- Patch for development
 on:
   push:
     branches:
-      - merge/frontend
+      - merge/**
   workflow_dispatch:
 
 jobs:
