@@ -139,7 +139,7 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
                 .addMessageInChannel(
                     ChannelCommand.AddMessageInChannel.Request(
                         channelId = ChannelId(channelId),
-                        content = request.message,
+                        content = request.content,
                         requestFrom = principal.name,
                         serverId = ServerId(serverId)
                     )
@@ -150,7 +150,7 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
             message =
                 MessageDTO(
                     id = response.messageId.value,
-                    content = request.message,
+                    content = request.content,
                     sender = principal.name,
                 )
         )

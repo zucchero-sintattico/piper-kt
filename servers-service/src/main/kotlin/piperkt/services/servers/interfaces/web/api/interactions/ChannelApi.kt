@@ -40,7 +40,7 @@ sealed interface ChannelApi {
 
     sealed interface SendMessageToChannelApi : ChannelApi {
 
-        @Serdeable data class Request(val message: String) : SendMessageToChannelApi
+        @Serdeable data class Request(val content: String) : SendMessageToChannelApi
 
         @Serdeable
         data class Response(val channelId: String, val message: MessageDTO) :

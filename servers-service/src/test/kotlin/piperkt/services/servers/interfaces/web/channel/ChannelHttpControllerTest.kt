@@ -210,7 +210,7 @@ class ChannelHttpControllerTest(private var client: ChannelHttpClient) : Integra
                 client.sendMessageToChannel(
                     serverId = basicServerId,
                     channelId = channelId,
-                    request = ChannelApi.SendMessageToChannelApi.Request(message = "message")
+                    request = ChannelApi.SendMessageToChannelApi.Request(content = "message")
                 )
             }
         response.status() shouldBe HttpStatus.OK
@@ -222,7 +222,7 @@ class ChannelHttpControllerTest(private var client: ChannelHttpClient) : Integra
             client.sendMessageToChannel(
                 serverId = basicServerId,
                 channelId = "channelId",
-                request = ChannelApi.SendMessageToChannelApi.Request(message = "message")
+                request = ChannelApi.SendMessageToChannelApi.Request(content = "message")
             )
         response.status() shouldBe HttpStatus.NOT_FOUND
     }
@@ -234,7 +234,7 @@ class ChannelHttpControllerTest(private var client: ChannelHttpClient) : Integra
                     client.sendMessageToChannel(
                         serverId = basicServerId,
                         channelId = channelId,
-                        request = ChannelApi.SendMessageToChannelApi.Request(message = "message"),
+                        request = ChannelApi.SendMessageToChannelApi.Request(content = "message"),
                         authorization = authOf("anotherUser")
                     )
                 }
