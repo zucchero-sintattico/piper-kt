@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.6
       - name: Build with Gradle
-        uses: DanySK/build-check-deploy-gradle-action@2.4.19
+        uses: DanySK/build-check-deploy-gradle-action@2.4.20
         with:
           java-version: ${{ env.JAVA_VERSION }}
           should-run-codecov: false
@@ -42,7 +42,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.6
-      - uses: DanySK/build-check-deploy-gradle-action@2.4.19
+      - uses: DanySK/build-check-deploy-gradle-action@2.4.20
         with:
           java-version: ${{ matrix.java-version }}
           java-distribution: ${{ matrix.java-distribution }}
@@ -76,7 +76,7 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: "adopt"
       - name: Produce coverage report
-        uses: DanySK/build-check-deploy-gradle-action@2.4.19
+        uses: DanySK/build-check-deploy-gradle-action@2.4.20
         with:
           should-run-codecov: false
           check-command: "./gradlew koverXmlReport --parallel || ./gradlew koverXmlReport --parallel"
@@ -197,7 +197,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Produce Dockerfile for ${{ matrix.service }}
-        uses: DanySK/build-check-deploy-gradle-action@2.4.19
+        uses: DanySK/build-check-deploy-gradle-action@2.4.20
         with:
           should-run-codecov: false
           build-command: "./gradlew :${{ matrix.service }}:buildLayers && ./gradlew :${{ matrix.service }}:dockerfile"
