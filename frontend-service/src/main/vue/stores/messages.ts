@@ -27,7 +27,7 @@ export const useMessageStore = defineStore("message", () => {
   > = computed(() => {
     if (
       appStore.selectedChannel !== null &&
-      appStore.selectedChannel.type !== "multimedia"
+      appStore.selectedChannel.type !== "MULTIMEDIA"
     )
       return ContentArea.Channel;
     if (appStore.selectedDirect !== null) return ContentArea.Direct;
