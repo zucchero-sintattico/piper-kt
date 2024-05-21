@@ -1,3 +1,11 @@
+## [7.4.0](https://github.com/zucchero-sintattico/piper-kt/compare/v7.3.0...v7.4.0) (2024-05-21)
+
+
+### Features
+
+* **commons:** make it a kotlin multiplatform project ([b5df687](https://github.com/zucchero-sintattico/piper-kt/commit/b5df68725abf2d56b7118200d00001755115c202))
+* **events:** make it a kotlin multiplatform project and publish js to npm ([15b3efe](https://github.com/zucchero-sintattico/piper-kt/commit/15b3efece33bcc072ebd5e0e9b141d6876bc3714))
+
 ## [7.3.0](https://github.com/zucchero-sintattico/piper-kt/compare/v7.2.0...v7.3.0) (2024-05-20)
 
 
