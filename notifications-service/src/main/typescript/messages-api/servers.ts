@@ -1,80 +1,34 @@
-export class ServerCreated {
-  static exchange = "server";
-  static routingKey = "server.created";
+import { piperkt } from "../events-lib";
 
-  id: string;
-  name: string;
-  description?: string;
-  owner: string;
-  constructor(data: {
-    id: string;
-    name: string;
-    description?: string;
-    owner: string;
-  }) {
-    this.id = data.id;
-    this.name = data.name;
-    this.description = data.description;
-    this.owner = data.owner;
-  }
+export class ServerCreatedMessage extends piperkt.events.ServerCreatedEvent {
+  static topic = "server";
+  static type = "ServerCreatedEvent";
 }
 
-export class ServerUpdated {
-  static exchange = "server";
-  static routingKey = "server.updated";
-
-  id: string;
-  name?: string;
-  description?: string;
-  constructor(data: { id: string; name?: string; description?: string }) {
-    this.id = data.id;
-    this.name = data.name;
-    this.description = data.description;
-  }
+export class ServerUpdatedMessage extends piperkt.events.ServerUpdatedEvent {
+  static topic = "server";
+  static type = "ServerUpdatedEvent";
 }
 
-export class ServerDeleted {
-  static exchange = "server";
-  static routingKey = "server.deleted";
-
-  id: string;
-  constructor(data: { id: string }) {
-    this.id = data.id;
-  }
+export class ServerDeletedMessage extends piperkt.events.ServerDeletedEvent {
+  static topic = "server";
+  static type = "ServerDeletedEvent";
 }
 
-export class UserJoinedServer {
-  static exchange = "server";
-  static routingKey = "user.joined";
-
-  serverId: string;
-  username: string;
-  constructor(data: { serverId: string; username: string }) {
-    this.serverId = data.serverId;
-    this.username = data.username;
-  }
+// TODO
+export class UserJoinedServerMessage {
+  static topic = "server";
+  static type = "user.joined";
 }
 
-export class UserLeftServer {
-  static exchange = "server";
-  static routingKey = "user.left";
-
-  serverId: string;
-  username: string;
-  constructor(data: { serverId: string; username: string }) {
-    this.serverId = data.serverId;
-    this.username = data.username;
-  }
+// TODO
+export class UserLeftServerMessage {
+  static topic = "server";
+  static type = "user.left";
 }
 
-export class UserKickedFromServer {
-  static exchange = "server";
-  static routingKey = "user.kicked";
-
-  serverId: string;
-  username: string;
-  constructor(data: { serverId: string; username: string }) {
-    this.serverId = data.serverId;
-    this.username = data.username;
-  }
+export class UserKickedFromServerMessage extends piperkt.events
+  .ServerUserKickedEvent {
+  static topic = "server";
+  static type = "ServerUserKickedEvent";
 }

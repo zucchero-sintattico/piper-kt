@@ -1,56 +1,52 @@
 import { EventsConfiguration } from "./commons/events/events-configuration";
 import {
-  ChannelCreated,
-  ChannelDeleted,
-  ChannelUpdated,
-  NewMessageOnChannel,
-} from "./messages-api/channels";
-import { NewMessageOnDirect } from "./messages-api/directs";
+  UserCreatedMessage,
+  UserOfflineMessage,
+  UserOnlineMessage,
+} from "./messages-api/users";
+import { Users } from "./models/user";
 import { notifiableUsers } from "./models/notification-model";
 import {
+  ChannelCreatedNotification,
+  ChannelDeletedNotification,
+  ChannelUpdatedNotification,
   FriendRequestAcceptedNotification,
   FriendRequestNotification,
-  NewMessageOnDirectNotification,
   NewMessageOnChannelNotification,
-  UserOnlineNotification,
-  UserOfflineNotification,
+  NewMessageOnDirectNotification,
   ServerDeletedNotification,
-  UserLeftServerNotification,
-  UserJoinedServerNotification,
   ServerUpdatedNotification,
-  ChannelCreatedNotification,
-  ChannelUpdatedNotification,
-  ChannelDeletedNotification,
+  UserLeftServerNotification,
+  UserOfflineNotification,
+  UserOnlineNotification,
 } from "./api/notifications/messages";
 import {
-  FriendRequestSentMessage,
+  ChannelCreatedMessage,
+  ChannelDeletedMessage,
+  ChannelUpdatedMessage,
+  NewMessageOnChannelMessage,
+} from "./messages-api/channels";
+import { Servers } from "./models/server";
+import { NewMessageInFriendshipMessage } from "./messages-api/directs";
+import {
   FriendRequestAcceptedMessage,
+  FriendRequestSentMessage,
 } from "./messages-api/friends";
 import {
-  ServerCreated,
-  ServerDeleted,
-  UserJoinedServer,
-  UserLeftServer,
-  UserKickedFromServer,
-  ServerUpdated,
+  ServerCreatedMessage,
+  ServerDeletedMessage,
+  ServerUpdatedMessage,
+  UserKickedFromServerMessage,
 } from "./messages-api/servers";
-import {
-  UserOnlineMessage,
-  UserOfflineMessage,
-  UserCreatedMessage,
-  UserDeletedMessage,
-} from "./messages-api/users";
-import { Servers } from "./models/server";
-import { Users } from "./models/user";
 
 export class NotificationsServiceEventsConfiguration extends EventsConfiguration {
   constructor() {
     super();
-    this.listenToServersUpdates();
+    // this.listenToServersUpdates();
     this.listenToFriendsRequest();
     this.listenToMessages();
     this.listenToUserStatus();
-    this.listenToChannelsUpdates();
+    // this.listenToChannelsUpdates();
   }
 
   listenToUserStatus() {
@@ -61,15 +57,15 @@ export class NotificationsServiceEventsConfiguration extends EventsConfiguration
       });
     });
 
-    this.on(UserDeletedMessage, async (event: UserDeletedMessage) => {
-      const user = await Users.findOne({ username: event.username });
-      const friends = user?.friends;
-      await Users.deleteOne({ username: event.username });
-      await Users.updateMany(
-        { username: { $in: friends } },
-        { $pull: { friends: event.username } }
-      );
-    });
+    // this.on(UserDeletedMessage, async (event: UserDeletedMessage) => {
+    //   const user = await Users.findOne({ username: event.username });
+    //   const friends = user?.friends;
+    //   await Users.deleteOne({ username: event.username });
+    //   await Users.updateMany(
+    //     { username: { $in: friends } },
+    //     { $pull: { friends: event.username } }
+    //   );
+    // });
 
     this.on(UserOnlineMessage, async (event: UserOnlineMessage) => {
       const user = await Users.findOne({ username: event.username });
@@ -99,33 +95,39 @@ export class NotificationsServiceEventsConfiguration extends EventsConfiguration
   }
 
   listenToMessages() {
-    this.on(NewMessageOnChannel, async (event: NewMessageOnChannel) => {
-      const server = await Servers.findOne({ _id: event.serverId });
-      const participants = server?.participants.filter(
-        (participant) => participant !== event.sender
-      );
-      participants?.forEach((participant) => {
+    this.on(
+      NewMessageOnChannelMessage,
+      async (event: NewMessageOnChannelMessage) => {
+        const server = await Servers.findOne({ _id: event.serverId });
+        const participants = server?.participants.filter(
+          (participant) => participant !== event.sender
+        );
+        participants?.forEach((participant) => {
+          notifiableUsers.sendIfPresent(
+            participant,
+            new NewMessageOnChannelNotification({
+              from: event.sender,
+              content: event.message,
+              server: event.serverId,
+              channel: event.channelId,
+            })
+          );
+        });
+      }
+    );
+
+    this.on(
+      NewMessageInFriendshipMessage,
+      async (event: NewMessageInFriendshipMessage) => {
         notifiableUsers.sendIfPresent(
-          participant,
-          new NewMessageOnChannelNotification({
-            from: event.sender,
+          event.toUser,
+          new NewMessageOnDirectNotification({
+            from: event.fromUser,
             content: event.message,
-            server: event.serverId,
-            channel: event.channelId,
           })
         );
-      });
-    });
-
-    this.on(NewMessageOnDirect, async (event: NewMessageOnDirect) => {
-      notifiableUsers.sendIfPresent(
-        event.receiver,
-        new NewMessageOnDirectNotification({
-          from: event.sender,
-          content: event.message,
-        })
-      );
-    });
+      }
+    );
   }
 
   listenToFriendsRequest() {
@@ -133,9 +135,9 @@ export class NotificationsServiceEventsConfiguration extends EventsConfiguration
       FriendRequestSentMessage,
       async (event: FriendRequestSentMessage) => {
         notifiableUsers.sendIfPresent(
-          event.to,
+          event.toUser,
           new FriendRequestNotification({
-            from: event.from,
+            from: event.fromUser,
           })
         );
       }
@@ -145,17 +147,17 @@ export class NotificationsServiceEventsConfiguration extends EventsConfiguration
       FriendRequestAcceptedMessage,
       async (event: FriendRequestAcceptedMessage) => {
         await Users.updateOne(
-          { username: event.from },
-          { $push: { friends: event.to } }
+          { username: event.fromUser },
+          { $push: { friends: event.toUser } }
         );
         await Users.updateOne(
-          { username: event.to },
-          { $push: { friends: event.from } }
+          { username: event.toUser },
+          { $push: { friends: event.fromUser } }
         );
         notifiableUsers.sendIfPresent(
-          event.to,
+          event.toUser,
           new FriendRequestAcceptedNotification({
-            from: event.from,
+            from: event.fromUser,
           })
         );
       }
@@ -163,93 +165,96 @@ export class NotificationsServiceEventsConfiguration extends EventsConfiguration
   }
 
   listenToServersUpdates() {
-    this.on(ServerCreated, async (event: ServerCreated) => {
+    this.on(ServerCreatedMessage, async (event: ServerCreatedMessage) => {
       await Servers.create({
-        _id: event.id,
+        _id: event.serverId,
         owner: event.owner,
         participants: [event.owner],
       });
     });
 
-    this.on(ServerDeleted, async (event: ServerDeleted) => {
+    this.on(ServerDeletedMessage, async (event: ServerDeletedMessage) => {
       const server = await Servers.findOne({ _id: event.id });
-      await Servers.deleteOne({ _id: event.id });
+      await Servers.deleteOne({ _id: event.serverId });
       server?.participants.forEach((participant) => {
         notifiableUsers.sendIfPresent(
           participant,
           new ServerDeletedNotification({
-            serverId: event.id,
+            serverId: event.serverId,
           })
         );
       });
     });
 
-    this.on(ServerUpdated, async (event: ServerUpdated) => {
-      const server = await Servers.findOne({ _id: event.id });
+    this.on(ServerUpdatedMessage, async (event: ServerUpdatedMessage) => {
+      const server = await Servers.findOne({ _id: event.serverId });
       server?.participants.forEach((participant) => {
         notifiableUsers.sendIfPresent(
           participant,
           new ServerUpdatedNotification({
-            serverId: event.id,
+            serverId: event.serverId,
           })
         );
       });
     });
 
-    this.on(UserJoinedServer, async (event: UserJoinedServer) => {
-      const server = await Servers.findOne({ _id: event.serverId });
-      await Servers.updateOne(
-        { _id: event.serverId },
-        { $push: { participants: event.username } }
-      );
-      server?.participants.forEach((participant) => {
-        notifiableUsers.sendIfPresent(
-          participant,
-          new UserJoinedServerNotification({
-            serverId: event.serverId,
-            user: event.username,
-          })
-        );
-      });
-    });
+    // this.on(UserJoinedServer, async (event: UserJoinedServer) => {
+    //   const server = await Servers.findOne({ _id: event.serverId });
+    //   await Servers.updateOne(
+    //     { _id: event.serverId },
+    //     { $push: { participants: event.username } }
+    //   );
+    //   server?.participants.forEach((participant) => {
+    //     notifiableUsers.sendIfPresent(
+    //       participant,
+    //       new UserJoinedServerNotification({
+    //         serverId: event.serverId,
+    //         user: event.username,
+    //       })
+    //     );
+    //   });
+    // });
 
-    this.on(UserLeftServer, async (event: UserLeftServer) => {
-      const server = await Servers.findOne({ _id: event.serverId });
-      await Servers.updateOne(
-        { _id: event.serverId },
-        { $pull: { participants: event.username } }
-      );
-      server?.participants.forEach((participant) => {
-        notifiableUsers.sendIfPresent(
-          participant,
-          new UserLeftServerNotification({
-            serverId: event.serverId,
-            user: event.username,
-          })
-        );
-      });
-    });
+    // this.on(UserLeftServer, async (event: UserLeftServer) => {
+    //   const server = await Servers.findOne({ _id: event.serverId });
+    //   await Servers.updateOne(
+    //     { _id: event.serverId },
+    //     { $pull: { participants: event.username } }
+    //   );
+    //   server?.participants.forEach((participant) => {
+    //     notifiableUsers.sendIfPresent(
+    //       participant,
+    //       new UserLeftServerNotification({
+    //         serverId: event.serverId,
+    //         user: event.username,
+    //       })
+    //     );
+    //   });
+    // });
 
-    this.on(UserKickedFromServer, async (event: UserKickedFromServer) => {
-      const server = await Servers.findOne({ _id: event.serverId });
-      await Servers.updateOne(
-        { _id: event.serverId },
-        { $pull: { participants: event.username } }
-      );
-      server?.participants.forEach((participant) => {
-        notifiableUsers.sendIfPresent(
-          participant,
-          new UserLeftServerNotification({
-            serverId: event.serverId,
-            user: event.username,
-          })
+    this.on(
+      UserKickedFromServerMessage,
+      async (event: UserKickedFromServerMessage) => {
+        const server = await Servers.findOne({ _id: event.serverId });
+        await Servers.updateOne(
+          { _id: event.serverId },
+          { $pull: { participants: event.username } }
         );
-      });
-    });
+        server?.participants.forEach((participant) => {
+          notifiableUsers.sendIfPresent(
+            participant,
+            new UserLeftServerNotification({
+              serverId: event.serverId,
+              user: event.username,
+            })
+          );
+        });
+      }
+    );
   }
 
   listenToChannelsUpdates() {
-    this.on(ChannelCreated, async (event: ChannelCreated) => {
+    this.on(ChannelCreatedMessage, async (event: ChannelCreatedMessage) => {
       const server = await Servers.findOne({ _id: event.serverId });
       server?.participants.forEach((participant) => {
         notifiableUsers.sendIfPresent(
@@ -262,7 +267,7 @@ export class NotificationsServiceEventsConfiguration extends EventsConfiguration
       });
     });
 
-    this.on(ChannelUpdated, async (event: ChannelUpdated) => {
+    this.on(ChannelUpdatedMessage, async (event: ChannelUpdatedMessage) => {
       const server = await Servers.findOne({ _id: event.serverId });
       server?.participants.forEach((participant) => {
         notifiableUsers.sendIfPresent(
@@ -275,7 +280,7 @@ export class NotificationsServiceEventsConfiguration extends EventsConfiguration
       });
     });
 
-    this.on(ChannelDeleted, async (event: ChannelDeleted) => {
+    this.on(ChannelDeletedMessage, async (event: ChannelDeletedMessage) => {
       const server = await Servers.findOne({ _id: event.serverId });
       server?.participants.forEach((participant) => {
         notifiableUsers.sendIfPresent(
