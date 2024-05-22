@@ -16,7 +16,7 @@ node {
     version = "22.1.0"
 }
 
-val piperKtEventCompiledPath = "src/main/typescript/events"
+val piperKtEventCompiledPath = "src/main/typescript/events-lib"
 
 spotless {
     typescript {
