@@ -5,7 +5,7 @@ import io.kotest.matchers.shouldBe
 import mocks.publishers.MockedUserEventPublisher
 import mocks.repositories.InMemoryUserRepository
 import org.junit.jupiter.api.assertThrows
-import piperkt.events.UserUpdated
+import piperkt.events.UserUpdatedEvent
 import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserError.UserNotFound
 import piperkt.services.users.domain.user.Username
@@ -45,7 +45,7 @@ class UserServiceTest :
             val updatedUser = userRepository.findByUsername(username.value)!!
             updatedUser.description shouldBe newDescription
             userEventPublisher.publishedEvents shouldBe
-                listOf(UserUpdated(user.username.value, description = newDescription))
+                listOf(UserUpdatedEvent(user.username.value, description = newDescription))
         }
 
         test("updateUserDescription throws UserNotFound") {
@@ -60,7 +60,7 @@ class UserServiceTest :
             val updatedUser = userRepository.findByUsername(username.value)!!
             updatedUser.profilePicture shouldBe newProfilePicture
             userEventPublisher.publishedEvents shouldBe
-                listOf(UserUpdated(user.username.value, profilePicture = newProfilePicture))
+                listOf(UserUpdatedEvent(user.username.value, profilePicture = newProfilePicture))
         }
 
         test("updateUserProfilePicture throws UserNotFound") {

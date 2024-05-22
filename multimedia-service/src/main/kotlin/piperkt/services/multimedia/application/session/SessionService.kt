@@ -46,7 +46,7 @@ open class SessionService(
         val session = SessionFactory.fromAllowedUsers(command.allowedUsers)
         sessionRepository.save(session)
         sessionEventPublisher.publish(
-            SessionCreated(session.id.value, session.allowedUsers().map { it.value }.toSet())
+            SessionCreatedEvent(session.id.value, session.allowedUsers().map { it.value }.toSet())
         )
         return session
     }
@@ -64,28 +64,28 @@ open class SessionService(
     fun addAllowedUser(command: Command.AddAllowedUser) {
         updateSession(command.sessionId) { addAllowedUser(command.username) }
         sessionEventPublisher.publish(
-            AllowedUserAdded(command.sessionId.value, command.username.value)
+            AllowedUserAddedEvent(command.sessionId.value, command.username.value)
         )
     }
 
     fun removeAllowedUser(command: Command.RemoveAllowedUser) {
         updateSession(command.sessionId) { removeAllowedUser(command.username) }
         sessionEventPublisher.publish(
-            AllowedUserRemoved(command.sessionId.value, command.username.value)
+            AllowedUserRemovedEvent(command.sessionId.value, command.username.value)
         )
     }
 
     fun joinSession(command: Command.JoinSession) {
         updateSession(command.sessionId) { addParticipant(command.username) }
         sessionEventPublisher.publish(
-            ParticipantJoined(command.sessionId.value, command.username.value)
+            ParticipantJoinedEvent(command.sessionId.value, command.username.value)
         )
     }
 
     fun leaveSession(command: Command.LeaveSession) {
         updateSession(command.sessionId) { removeParticipant(command.username) }
         sessionEventPublisher.publish(
-            ParticipantLeft(command.sessionId.value, command.username.value)
+            ParticipantLeftEvent(command.sessionId.value, command.username.value)
         )
     }
 

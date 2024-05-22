@@ -2,7 +2,7 @@ package piperkt.services.users.application
 
 import org.mindrot.jbcrypt.BCrypt.*
 import piperkt.common.utils.orThrow
-import piperkt.events.UserCreated
+import piperkt.events.UserCreatedEvent
 import piperkt.events.UserEventPublisher
 import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserError
@@ -42,7 +42,7 @@ open class AuthService(
         val user = UserFactory.create(Username(username), hashedPassword, email, description, photo)
         userRepository.save(user)
         userEventPublisher.publish(
-            UserCreated(user.username.value, user.email, user.description, user.profilePicture)
+            UserCreatedEvent(user.username.value, user.email, user.description, user.profilePicture)
         )
         return user
     }
