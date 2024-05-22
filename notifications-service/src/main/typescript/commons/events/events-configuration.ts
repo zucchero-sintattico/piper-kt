@@ -3,19 +3,17 @@ interface ExchangeConfiguration {
 }
 
 export class EventsConfiguration {
-  exchanges: { [key: string]: ExchangeConfiguration } = {};
+  topics: { [key: string]: ExchangeConfiguration } = {};
   async on<T>(
-    EventType: { exchange: string; routingKey: string },
+    EventType: { topic: string; type: string },
     callback: (message: T) => void
   ) {
-    if (!this.exchanges[EventType.exchange]) {
-      this.exchanges[EventType.exchange] = {
+    if (!this.topics[EventType.topic]) {
+      this.topics[EventType.topic] = {
         events: {},
       };
     }
-    this.exchanges[EventType.exchange].events[EventType.routingKey] = (
-      data: unknown
-    ) => {
+    this.topics[EventType.topic].events[EventType.type] = (data: unknown) => {
       try {
         callback(data as T);
       } catch (error) {

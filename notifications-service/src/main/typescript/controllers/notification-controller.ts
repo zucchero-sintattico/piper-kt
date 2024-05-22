@@ -4,7 +4,7 @@ import {
   UserStatusRepositoryImpl,
 } from "../repositories/user-status-repository";
 import { ClientProxy } from "../models/client-proxy";
-import { RabbitMQ } from "../commons/utils/rabbit-mq";
+import { KafkaClient } from "../commons/utils/kafka-client";
 import { UserOnlineMessage, UserOfflineMessage } from "../messages-api/users";
 
 export interface NotificationController {
@@ -29,9 +29,9 @@ export class NotificationControllerImpl implements NotificationController {
   async subscribe(username: string, clientProxy: ClientProxy): Promise<void> {
     await this.userStatusRepository.setOnline(username);
     notifiableUsers.addUser(username, clientProxy);
-    RabbitMQ.getInstance().publish(
+    await KafkaClient.getInstance().publish(
       UserOnlineMessage,
-      new UserOnlineMessage({ username: username })
+      new UserOnlineMessage(username)
     );
     console.log(`Subscribed ${username} to notifications`);
   }
@@ -39,9 +39,9 @@ export class NotificationControllerImpl implements NotificationController {
   async unsubscribe(username: string): Promise<void> {
     await this.userStatusRepository.setOffline(username);
     notifiableUsers.removeUser(username);
-    RabbitMQ.getInstance().publish(
+    await KafkaClient.getInstance().publish(
       UserOfflineMessage,
-      new UserOfflineMessage({ username: username })
+      new UserOfflineMessage(username)
     );
     console.log(`Unsubscribed ${username} from notifications`);
   }

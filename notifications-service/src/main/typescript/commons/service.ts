@@ -1,12 +1,11 @@
 import express from "express";
 import http from "http";
-import { healthCheckRouter } from "./healthcheck/router";
 import { MongooseUtils } from "./utils/mongoose";
-import { RabbitMQ } from "./utils/rabbit-mq";
 import { EventsConfiguration } from "./events/events-configuration";
 import { ServiceEvents } from "./events/service-events";
 import cookieParser from "cookie-parser";
 import mongoose, { Mongoose } from "mongoose";
+import { KafkaClient } from "./utils/kafka-client";
 
 type GeneralService = {
   start: () => Promise<void>;
@@ -22,7 +21,7 @@ interface ExpressConfiguration {
 
 export interface MicroserviceConfiguration {
   port: number;
-  amqpUri: string;
+  brokerUri: string;
   mongoUri: string;
   expressConfiguration: ExpressConfiguration;
   eventsConfiguration?: EventsConfiguration;
@@ -48,7 +47,6 @@ class ExpressService {
     return new Promise<void>((resolve) => {
       const app = express();
       app.use(...this.middlewares);
-      app.use("/", healthCheckRouter);
       app.use("/", this.serviceRouter);
       this.server = http.createServer(app);
       this.otherServices?.forEach((service) => {
@@ -95,10 +93,10 @@ export class Microservice {
       this.configuration.mongoose || mongoose,
       this.configuration.mongoUri
     );
-    await RabbitMQ.initialize(this.configuration.amqpUri);
+    await KafkaClient.initialize(this.configuration.brokerUri);
     if (this.configuration.eventsConfiguration) {
       await ServiceEvents.initialize(
-        RabbitMQ.getInstance(),
+        KafkaClient.getInstance(),
         this.configuration.eventsConfiguration
       );
     }
@@ -117,7 +115,7 @@ export class Microservice {
   async stop(): Promise<void> {
     await this.app?.stop();
     await MongooseUtils.close(this.configuration.mongoose || mongoose);
-    await RabbitMQ.disconnect();
+    await KafkaClient.disconnect();
     for (const service of this.configuration.otherServices || []) {
       await service.stop();
     }
