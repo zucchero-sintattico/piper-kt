@@ -1,39 +1,32 @@
-import { RabbitMQ } from "../utils/rabbit-mq";
 import { EventsConfiguration } from "./events-configuration";
+import { KafkaClient } from "../utils/kafka-client";
 
 export class ServiceEvents {
   static async initialize(
-    Rabbit: RabbitMQ,
+    kafkaClient: KafkaClient,
     configuration: EventsConfiguration
   ): Promise<void> {
-    const broker = Rabbit;
-    for (const exchange of Object.keys(configuration.exchanges)) {
-      const exchangeConfig = configuration.exchanges[exchange];
-      const channel = broker.getChannel();
-      await channel?.assertExchange(exchange, "fanout", { durable: true });
-      const queue = await channel?.assertQueue("", { exclusive: true });
-      if (!queue) {
-        throw new Error("Could not assert queue");
-      }
-      await channel?.bindQueue(queue.queue, exchange, "");
-      await channel?.consume(
-        queue.queue,
-        (message) => {
-          if (message) {
-            try {
-              const data = JSON.parse(message.content.toString());
-              const routingKey = message.fields.routingKey;
-              const event = exchangeConfig.events[routingKey];
-              if (event) {
-                event(data);
-              }
-            } catch (error) {
-              console.error(error);
-            }
+    const topics = Object.keys(configuration.topics);
+    await kafkaClient
+      .getConsumer()
+      .subscribe({ topics: topics, fromBeginning: false });
+    console.log("[KafkaClient] Subscribed to topics: ", topics);
+    await kafkaClient.getConsumer().run({
+      eachMessage: async ({ topic, message }) => {
+        try {
+          const payload = JSON.parse(message.value?.toString() || "");
+          const event = configuration.topics[topic].events[payload.type];
+          if (event) {
+            event(payload);
+          } else {
+            console.error(
+              `[KafkaClient] No event handler for event ${payload.type}`
+            );
           }
-        },
-        { noAck: true }
-      );
-    }
+        } catch (error) {
+          console.error(error);
+        }
+      },
+    });
   }
 }
