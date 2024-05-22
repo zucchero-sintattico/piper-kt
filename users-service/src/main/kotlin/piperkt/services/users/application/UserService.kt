@@ -2,7 +2,7 @@ package piperkt.services.users.application
 
 import piperkt.common.utils.orThrow
 import piperkt.events.UserEventPublisher
-import piperkt.events.UserUpdated
+import piperkt.events.UserUpdatedEvent
 import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserError
 import piperkt.services.users.domain.user.UserRepository
@@ -31,13 +31,13 @@ open class UserService(
 
     fun updateUserDescription(username: String, description: String?): User {
         val updated = updateUser(Username(username)) { updateDescription(description) }
-        userEventPublisher.publish(UserUpdated(username, description = description))
+        userEventPublisher.publish(UserUpdatedEvent(username, description = description))
         return updated
     }
 
     fun updateUserProfilePicture(username: String, profilePicture: String?): User {
         val updated = updateUser(Username(username)) { updateProfilePicture(profilePicture) }
-        userEventPublisher.publish(UserUpdated(username, profilePicture = profilePicture))
+        userEventPublisher.publish(UserUpdatedEvent(username, profilePicture = profilePicture))
         return updated
     }
 }

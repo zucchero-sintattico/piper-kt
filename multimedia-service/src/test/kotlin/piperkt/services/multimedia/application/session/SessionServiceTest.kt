@@ -54,7 +54,7 @@ class SessionServiceTest :
             val session = sessionService.createSession(command)
             sessionRepository.findById(session.id) shouldBe session
             sessionEventPublisher.publishedEvents shouldBe
-                listOf(SessionCreated(session.id.value, allowedUsers.map { it.value }.toSet()))
+                listOf(SessionCreatedEvent(session.id.value, allowedUsers.map { it.value }.toSet()))
         }
 
         test("should delete a session") {
@@ -81,7 +81,7 @@ class SessionServiceTest :
             val updatedSession = sessionRepository.findById(session.id)!!
             updatedSession.allowedUsers() shouldBe setOf(john().id)
             sessionEventPublisher.publishedEvents shouldBe
-                listOf(AllowedUserAdded(session.id.value, john().id.value))
+                listOf(AllowedUserAddedEvent(session.id.value, john().id.value))
         }
 
         test(
@@ -116,7 +116,7 @@ class SessionServiceTest :
             val updatedSession = sessionRepository.findById(session.id)!!
             updatedSession.allowedUsers() shouldBe emptySet()
             sessionEventPublisher.publishedEvents shouldBe
-                listOf(AllowedUserRemoved(session.id.value, john().id.value))
+                listOf(AllowedUserRemovedEvent(session.id.value, john().id.value))
         }
 
         test(
@@ -151,7 +151,7 @@ class SessionServiceTest :
             val updatedSession = sessionRepository.findById(session.id)!!
             updatedSession.participants() shouldBe setOf(john().id)
             sessionEventPublisher.publishedEvents shouldBe
-                listOf(ParticipantJoined(session.id.value, john().id.value))
+                listOf(ParticipantJoinedEvent(session.id.value, john().id.value))
         }
 
         test("should throw an exception when trying to join a non-existing session") {
@@ -190,7 +190,7 @@ class SessionServiceTest :
             val updatedSessionAfterLeave = sessionRepository.findById(session.id)!!
             updatedSessionAfterLeave.participants() shouldBe emptySet()
             sessionEventPublisher.publishedEvents shouldBe
-                listOf(ParticipantLeft(session.id.value, john().id.value))
+                listOf(ParticipantLeftEvent(session.id.value, john().id.value))
         }
 
         test("should throw an exception when trying to leave a non-existing session") {

@@ -14,7 +14,7 @@ import kotlin.js.JsExport
  * @param description The description of the user.
  * @param profilePicture The profile picture url of the user.
  */
-@JsExport data class UserCreated(
+@JsExport data class UserCreatedEvent(
     val username: String,
     val email: String? = null,
     val description: String? = null,
@@ -28,12 +28,19 @@ import kotlin.js.JsExport
  * @param description The description of the user.
  * @param profilePicture The profile picture of the user.
  */
-@JsExport data class UserUpdated(
+@JsExport data class UserUpdatedEvent(
     val username: String,
     val email: String? = null,
     val description: String? = null,
     val profilePicture: String? = null,
 ) : UserEvent
 
+@JsExport data class UserLoggedInEvent(val username: String) : UserEvent
+
+@JsExport data class UserLoggedOutEvent(val username: String) : UserEvent
+
+@JsExport data class UserOnlineEvent(val username: String) : UserEvent
+
+@JsExport data class UserOfflineEvent(val username: String) : UserEvent
 
 interface UserEventPublisher : EventPublisher<UserEvent>

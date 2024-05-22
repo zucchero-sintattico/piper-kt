@@ -4,19 +4,16 @@ import io.micronaut.configuration.kafka.annotation.KafkaClient
 import io.micronaut.configuration.kafka.annotation.Topic
 import io.micronaut.serde.annotation.SerdeImport
 import jakarta.inject.Singleton
-import piperkt.events.UserCreated
-import piperkt.events.UserEvent
-import piperkt.events.UserEventPublisher
-import piperkt.events.UserUpdated
+import piperkt.events.*
 
-@SerdeImport(UserCreated::class)
-@SerdeImport(UserUpdated::class)
+@SerdeImport(UserCreatedEvent::class)
+@SerdeImport(UserUpdatedEvent::class)
 @KafkaClient
 abstract class UserEventKafkaPublisher {
 
-    @Topic("user-created") abstract fun onUserCreated(event: UserCreated)
+    @Topic("user-created") abstract fun onUserCreated(event: UserCreatedEvent)
 
-    @Topic("user-updated") abstract fun onUserUpdated(event: UserUpdated)
+    @Topic("user-updated") abstract fun onUserUpdatedEvent(event: UserUpdatedEvent)
 }
 
 @Singleton
@@ -24,8 +21,12 @@ class UserEventPublisherImpl(private val userEventKafkaPublisher: UserEventKafka
     UserEventPublisher {
     override fun publish(event: UserEvent) {
         when (event) {
-            is UserCreated -> userEventKafkaPublisher.onUserCreated(event)
-            is UserUpdated -> userEventKafkaPublisher.onUserUpdated(event)
+            is UserCreatedEvent -> userEventKafkaPublisher.onUserCreated(event)
+            is UserUpdatedEvent -> userEventKafkaPublisher.onUserUpdatedEvent(event)
+            is UserLoggedInEvent -> {} // Nothing to do
+            is UserLoggedOutEvent -> {} // Nothing to do
+            is UserOfflineEvent -> {} // Nothing to do
+            is UserOnlineEvent -> {} // Nothing to do
         }
     }
 }
