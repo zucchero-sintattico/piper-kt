@@ -1,35 +1,19 @@
-export class FriendRequestSentMessage {
-  static exchange = "friend";
-  static routingKey = "friend.request.sent";
+import { piperkt } from "../events-lib";
 
-  from: string;
-  to: string;
-  constructor(data: { from: string; to: string }) {
-    this.from = data.from;
-    this.to = data.to;
-  }
+export class FriendRequestSentMessage extends piperkt.events
+  .FriendshipRequestSentEvent {
+  static topic = "friend";
+  static type = "FriendshipRequestSentEvent";
 }
 
-export class FriendRequestAcceptedMessage {
-  static exchange = "friend";
-  static routingKey = "friend.request.accepted";
-
-  from: string;
-  to: string;
-  constructor(data: { from: string; to: string }) {
-    this.from = data.from;
-    this.to = data.to;
-  }
+export class FriendRequestAcceptedMessage extends piperkt.events
+  .FriendshipRequestAcceptedEvent {
+  static topic = "friend";
+  static type = "FriendshipRequestAcceptedEvent";
 }
 
-export class FriendRequestDeniedMessage {
-  static exchange = "friend";
-  static routingKey = "friend.request.denied";
-
-  from: string;
-  to: string;
-  constructor(data: { from: string; to: string }) {
-    this.from = data.from;
-    this.to = data.to;
-  }
+export class FriendRequestDeniedMessage extends piperkt.events
+  .FriendshipRequestRejectedEvent {
+  static topic = "friend";
+  static type = "FriendshipRequestRejectedEvent";
 }

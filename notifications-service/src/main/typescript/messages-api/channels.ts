@@ -1,105 +1,34 @@
-export class ChannelCreated {
-  static exchange = "channel";
-  static routingKey = "channel.created";
+import { piperkt } from "../events-lib";
 
-  serverId: string;
-  channelId: string;
-  name: string;
-  channelType: string;
-  description?: string;
-  constructor(data: {
-    serverId: string;
-    channelId: string;
-    name: string;
-    channelType: string;
-    description?: string;
-  }) {
-    this.serverId = data.serverId;
-    this.channelId = data.channelId;
-    this.name = data.name;
-    this.channelType = data.channelType;
-    this.description = data.description;
-  }
+export class ChannelCreatedMessage extends piperkt.events.ChannelCreatedEvent {
+  static topic = "channel-topics";
+  static type = "ChannelCreatedEvent";
 }
 
-export class ChannelUpdated {
-  static exchange = "channel";
-  static routingKey = "channel.updated";
-
-  serverId: string;
-  channelId: string;
-  name?: string;
-  description?: string;
-  constructor(data: {
-    serverId: string;
-    channelId: string;
-    name?: string;
-    description?: string;
-  }) {
-    this.serverId = data.serverId;
-    this.channelId = data.channelId;
-    this.name = data.name;
-    this.description = data.description;
-  }
+export class ChannelUpdatedMessage extends piperkt.events.ChannelUpdatedEvent {
+  static topic = "channel-topics";
+  static type = "ChannelUpdated";
 }
 
-export class ChannelDeleted {
-  static exchange = "channel";
-  static routingKey = "channel.deleted";
-
-  serverId: string;
-  channelId: string;
-  constructor(data: { serverId: string; channelId: string }) {
-    this.serverId = data.serverId;
-    this.channelId = data.channelId;
-  }
+export class ChannelDeletedMessage extends piperkt.events.ChannelDeletedEvent {
+  static topic = "channel-topics";
+  static type = "ChannelDeleted";
 }
 
-export class NewMessageOnChannel {
-  static exchange = "channel";
-  static routingKey = "message.new";
-
-  serverId: string;
-  channelId: string;
-  sender: string;
-  message: string;
-  constructor(data: {
-    serverId: string;
-    channelId: string;
-    sender: string;
-    message: string;
-  }) {
-    this.serverId = data.serverId;
-    this.channelId = data.channelId;
-    this.sender = data.sender;
-    this.message = data.message;
-  }
+export class NewMessageOnChannelMessage extends piperkt.events
+  .MessageInChannelEvent {
+  static topic = "channel-topics";
+  static type = "MessageInChannelEvent";
 }
 
-export class UserJoinedMultimediaChannel {
-  static exchange = "multimedia";
-  static routingKey = "user.joined";
-
-  serverId: string;
-  channelId: string;
-  username: string;
-  constructor(data: { serverId: string; channelId: string; username: string }) {
-    this.serverId = data.serverId;
-    this.channelId = data.channelId;
-    this.username = data.username;
-  }
+export class UserJoinedMultimediaChannelMessage extends piperkt.events
+  .ParticipantJoinedEvent {
+  static topic = "multimedia";
+  static type = "ParticipantJoined";
 }
 
-export class UserLeftMultimediaChannel {
-  static exchange = "multimedia";
-  static routingKey = "user.left";
-
-  serverId: string;
-  channelId: string;
-  username: string;
-  constructor(data: { serverId: string; channelId: string; username: string }) {
-    this.serverId = data.serverId;
-    this.channelId = data.channelId;
-    this.username = data.username;
-  }
+export class UserLeftMultimediaChannelMessage extends piperkt.events
+  .ParticipantLeftEvent {
+  static topic = "multimedia";
+  static type = "ParticipantLeft";
 }
