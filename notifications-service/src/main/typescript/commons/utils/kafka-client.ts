@@ -35,8 +35,13 @@ export class KafkaClient {
     this.brokersUri = brokersUri;
     this.kafka = new Kafka({ brokers: [this.brokersUri] });
     this.producer = this.kafka.producer();
+    // Random groupId to avoid kafka load balancing
     this.groupId = "groupId-" + Math.random().toString(36);
-    this.consumer = this.kafka.consumer({ groupId: this.groupId });
+    // Allow auto topic creation - a consumer can subscribe to a topic not created yet
+    this.consumer = this.kafka.consumer({
+      groupId: this.groupId,
+      allowAutoTopicCreation: true,
+    });
   }
 
   async connect() {
