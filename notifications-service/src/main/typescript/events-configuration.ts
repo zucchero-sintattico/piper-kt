@@ -41,17 +41,15 @@ import {
   UserKickedFromServerMessage,
   UserLeftServerMessage,
 } from "./messages-api/servers";
-import { piperkt } from "./events-lib";
-import ServerUserAddedEvent = piperkt.events.ServerUserAddedEvent;
 
 export class NotificationsServiceEventsConfiguration extends EventsConfiguration {
   constructor() {
     super();
-    // this.listenToServersUpdates();
+    this.listenToServersUpdates();
     this.listenToFriendsRequest();
     this.listenToMessages();
     this.listenToUserStatus();
-    // this.listenToChannelsUpdates();
+    this.listenToChannelsUpdates();
   }
 
   listenToUserStatus() {
@@ -61,16 +59,6 @@ export class NotificationsServiceEventsConfiguration extends EventsConfiguration
         friends: [],
       });
     });
-
-    // this.on(UserDeletedMessage, async (event: UserDeletedMessage) => {
-    //   const user = await Users.findOne({ username: event.username });
-    //   const friends = user?.friends;
-    //   await Users.deleteOne({ username: event.username });
-    //   await Users.updateMany(
-    //     { username: { $in: friends } },
-    //     { $pull: { friends: event.username } }
-    //   );
-    // });
 
     this.on(UserOnlineMessage, async (event: UserOnlineMessage) => {
       const user = await Users.findOne({ username: event.username });
