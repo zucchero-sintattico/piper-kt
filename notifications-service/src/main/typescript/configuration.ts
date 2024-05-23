@@ -13,7 +13,7 @@ const NotificationService = (server: http.Server) => {
 
 export const NotificationsServiceConfiguration: MicroserviceConfiguration = {
   port: Number.parseInt(process.env.PORT!) || 3000,
-  brokerUri: process.env.BROKER_URI || "localhost:9092",
+  brokerUri: process.env.BROKER_URI || "localhost:9094",
   mongoUri: process.env.MONGO_URI || "mongodb://localhost:27017/",
   eventsConfiguration: new NotificationsServiceEventsConfiguration(),
   expressConfiguration: {
