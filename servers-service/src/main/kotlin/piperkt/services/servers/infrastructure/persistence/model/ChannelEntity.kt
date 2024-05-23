@@ -2,6 +2,7 @@ package piperkt.services.servers.infrastructure.persistence.model
 
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
+import piperkt.services.servers.domain.Channel
 import piperkt.services.servers.domain.factory.ChannelFactory
 
 @MappedEntity
@@ -22,7 +23,7 @@ data class ChannelEntity(
         )
 
     companion object {
-        fun fromDomain(channel: piperkt.services.servers.domain.Channel) =
+        fun fromDomain(channel: Channel) =
             ChannelEntity(
                 id = channel.id.value,
                 name = channel.name,

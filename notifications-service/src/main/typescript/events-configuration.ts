@@ -16,6 +16,7 @@ import {
   NewMessageOnDirectNotification,
   ServerDeletedNotification,
   ServerUpdatedNotification,
+  UserJoinedServerNotification,
   UserLeftServerNotification,
   UserOfflineNotification,
   UserOnlineNotification,
@@ -36,8 +37,12 @@ import {
   ServerCreatedMessage,
   ServerDeletedMessage,
   ServerUpdatedMessage,
+  UserJoinedServerMessage,
   UserKickedFromServerMessage,
+  UserLeftServerMessage,
 } from "./messages-api/servers";
+import { piperkt } from "./events-lib";
+import ServerUserAddedEvent = piperkt.events.ServerUserAddedEvent;
 
 export class NotificationsServiceEventsConfiguration extends EventsConfiguration {
   constructor() {
@@ -107,7 +112,7 @@ export class NotificationsServiceEventsConfiguration extends EventsConfiguration
             participant,
             new NewMessageOnChannelNotification({
               from: event.sender,
-              content: event.message,
+              content: event.content,
               server: event.serverId,
               channel: event.channelId,
             })
@@ -123,7 +128,7 @@ export class NotificationsServiceEventsConfiguration extends EventsConfiguration
           event.toUser,
           new NewMessageOnDirectNotification({
             from: event.fromUser,
-            content: event.message,
+            content: event.content,
           })
         );
       }
@@ -174,7 +179,7 @@ export class NotificationsServiceEventsConfiguration extends EventsConfiguration
     });
 
     this.on(ServerDeletedMessage, async (event: ServerDeletedMessage) => {
-      const server = await Servers.findOne({ _id: event.id });
+      const server = await Servers.findOne({ _id: event.serverId });
       await Servers.deleteOne({ _id: event.serverId });
       server?.participants.forEach((participant) => {
         notifiableUsers.sendIfPresent(
@@ -198,39 +203,39 @@ export class NotificationsServiceEventsConfiguration extends EventsConfiguration
       });
     });
 
-    // this.on(UserJoinedServer, async (event: UserJoinedServer) => {
-    //   const server = await Servers.findOne({ _id: event.serverId });
-    //   await Servers.updateOne(
-    //     { _id: event.serverId },
-    //     { $push: { participants: event.username } }
-    //   );
-    //   server?.participants.forEach((participant) => {
-    //     notifiableUsers.sendIfPresent(
-    //       participant,
-    //       new UserJoinedServerNotification({
-    //         serverId: event.serverId,
-    //         user: event.username,
-    //       })
-    //     );
-    //   });
-    // });
+    this.on(UserJoinedServerMessage, async (event: UserJoinedServerMessage) => {
+      const server = await Servers.findOne({ _id: event.serverId });
+      await Servers.updateOne(
+        { _id: event.serverId },
+        { $push: { participants: event.username } }
+      );
+      server?.participants.forEach((participant) => {
+        notifiableUsers.sendIfPresent(
+          participant,
+          new UserJoinedServerNotification({
+            serverId: event.serverId,
+            user: event.username,
+          })
+        );
+      });
+    });
 
-    // this.on(UserLeftServer, async (event: UserLeftServer) => {
-    //   const server = await Servers.findOne({ _id: event.serverId });
-    //   await Servers.updateOne(
-    //     { _id: event.serverId },
-    //     { $pull: { participants: event.username } }
-    //   );
-    //   server?.participants.forEach((participant) => {
-    //     notifiableUsers.sendIfPresent(
-    //       participant,
-    //       new UserLeftServerNotification({
-    //         serverId: event.serverId,
-    //         user: event.username,
-    //       })
-    //     );
-    //   });
-    // });
+    this.on(UserLeftServerMessage, async (event: UserLeftServerMessage) => {
+      const server = await Servers.findOne({ _id: event.serverId });
+      await Servers.updateOne(
+        { _id: event.serverId },
+        { $pull: { participants: event.username } }
+      );
+      server?.participants.forEach((participant) => {
+        notifiableUsers.sendIfPresent(
+          participant,
+          new UserLeftServerNotification({
+            serverId: event.serverId,
+            user: event.username,
+          })
+        );
+      });
+    });
 
     this.on(
       UserKickedFromServerMessage,
