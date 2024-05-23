@@ -16,7 +16,8 @@ node {
     version = "22.1.0"
 }
 
-val piperKtEventCompiledPath = "src/main/typescript/events-lib"
+val eventLibDirName = "events-lib"
+val piperKtEventCompiledPath = "src/main/typescript/$eventLibDirName"
 
 spotless {
     typescript {
@@ -33,6 +34,15 @@ tasks.named("npmDependencies") {
         copy {
             from("../events/build/dist/js/productionLibrary")
             into(piperKtEventCompiledPath)
+        }
+    }
+}
+
+tasks.named("compileTypescript") {
+    doLast {
+        copy {
+            from(piperKtEventCompiledPath)
+            into("build/dist/$eventLibDirName")
         }
     }
 }
