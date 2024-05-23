@@ -35,8 +35,10 @@ declare global {
   }
 }
 
-const ACCESS_TOKEN_SECRET = process.env["ACCESS_TOKEN_SECRET"] || "access";
-const REFRESH_TOKEN_SECRET = process.env["REFRESH_TOKEN_SECRET"] || "refresh";
+const ACCESS_TOKEN_SECRET =
+  process.env["ACCESS_TOKEN_SECRET"] || "pleaseChangeThisSecretForANewOne";
+const REFRESH_TOKEN_SECRET =
+  process.env["REFRESH_TOKEN_SECRET"] || "pleaseChangeThisSecretForANewOne";
 
 /**
  * Generate a JWT Access Token for the user
@@ -120,7 +122,7 @@ export const JWTAuthenticationMiddleware = (
   res: Response,
   next: NextFunction
 ): void => {
-  const accessToken = req.cookies.jwt;
+  const accessToken = req.headers.authorization?.split(" ")[1];
   if (!accessToken) {
     const response = new JwtTokenMissingOrInvalid();
     response.send(res);
