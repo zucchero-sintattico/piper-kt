@@ -45,12 +45,8 @@ export class KafkaClient {
   }
 
   async connect() {
-    try {
-      await this.producer.connect();
-      await this.consumer.connect();
-    } catch (err) {
-      console.error(err);
-    }
+    await this.producer.connect();
+    await this.consumer.connect();
   }
 
   getConsumer(): Consumer {
