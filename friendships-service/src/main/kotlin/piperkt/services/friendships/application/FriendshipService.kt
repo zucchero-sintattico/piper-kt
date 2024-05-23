@@ -87,7 +87,12 @@ open class FriendshipService(
         friendship.addMessage(message)
         friendshipRepository.update(friendship)
         eventPublisher.publish(
-            NewMessageInFriendshipEvent(request.requestFrom, request.receiver, message.id.value)
+            NewMessageInFriendshipEvent(
+                fromUser = request.requestFrom,
+                toUser = request.receiver,
+                messageId = message.id.value,
+                content = message.content
+            )
         )
         return Result.success(FriendshipCommand.SendMessage.Response(message.id.value))
     }

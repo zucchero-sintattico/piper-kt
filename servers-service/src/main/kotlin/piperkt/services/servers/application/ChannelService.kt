@@ -161,7 +161,13 @@ open class ChannelService(
         channel.addMessage(message)
         serverRepository.update(server)
         eventPublisher.publish(
-            MessageInChannelEvent(server.id.value, request.channelId.value, message.id.value)
+            MessageInChannelEvent(
+                serverId = server.id.value,
+                channelId = request.channelId.value,
+                messageId = message.id.value,
+                content = message.content,
+                sender = message.sender
+            )
         )
         return Result.success(ChannelCommand.AddMessageInChannel.Response(message.id))
     }

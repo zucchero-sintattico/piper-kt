@@ -184,9 +184,11 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
         verify(eventPublisher)
             .publish(
                 MessageInChannelEvent(
-                    simpleServerId.value,
-                    simpleChannelId.value,
-                    response.getOrThrow().messageId.value
+                    serverId = simpleServerId.value,
+                    channelId = simpleChannelId.value,
+                    messageId = response.getOrThrow().messageId.value,
+                    content = "content",
+                    sender = "sender"
                 )
             )
     }
