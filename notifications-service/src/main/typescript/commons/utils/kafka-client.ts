@@ -13,7 +13,7 @@ export class KafkaClient {
     if (!KafkaClient.instance) {
       this.instance = new KafkaClient(connectionUri);
       await this.instance.connect();
-      console.log("Connected to RabbitMQ");
+      console.log("Connected to Kafka");
     }
   }
 
