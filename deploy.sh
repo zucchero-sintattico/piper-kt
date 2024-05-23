@@ -20,6 +20,11 @@ do
       --values $microservice/helm-values/mongo-values.yaml
 done
 
+helm install notifications-service kubernetes/helm-chart/mongo-for-operator --namespace piper-kt\
+    --values notifications-service/helm-values/mongo-values.yaml
+
+kubectl apply -f kubernetes/notifications.yml --namespace piper-kt
+
 kubectl apply -f kubernetes/frontend.yml --namespace piper-kt
 
 helm install nginx-ingress-controller kubernetes/helm-chart/piper-ingress --namespace piper-kt
