@@ -1,3 +1,10 @@
+## [7.4.2](https://github.com/zucchero-sintattico/piper-kt/compare/v7.4.1...v7.4.2) (2024-05-24)
+
+
+### Bug Fixes
+
+* **users-service:** avoid duplicate element on db ([bbfb178](https://github.com/zucchero-sintattico/piper-kt/commit/bbfb17818db562f00a1d336403cf7d9646fc254d))
+
 ## [7.4.1](https://github.com/zucchero-sintattico/piper-kt/compare/v7.4.0...v7.4.1) (2024-05-21)
 
 

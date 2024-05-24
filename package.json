@@ -1,6 +1,6 @@
 {
   "name": "piper-kt",
-  "version": "7.4.1",
+  "version": "7.4.2",
   "description": "A microservice chat app, kotlin based.",
   "main": "index.js",
   "scripts": {
