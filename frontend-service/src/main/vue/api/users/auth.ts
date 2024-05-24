@@ -61,12 +61,12 @@ export module RegisterApi {
   export module Errors {
     export class UserAlreadyExists extends ErrorResponse {
       statusCode = 409;
-      error = "User already exists" as const;
+      message = "User already exists" as const;
     }
 
     export class EmailAlreadyExists extends ErrorResponse {
       statusCode = 409;
-      error = "Email already exists" as const;
+      message = "Email already exists" as const;
     }
 
     export type Type = UserAlreadyExists | EmailAlreadyExists;
@@ -116,7 +116,7 @@ export module LoginApi {
   export module Errors {
     export class UsernameOrPasswordIncorrect extends ErrorResponse {
       statusCode = 401;
-      error = "Username or password incorrect" as const;
+      message = "Username or password incorrect" as const;
     }
     export type Type = UsernameOrPasswordIncorrect;
   }
@@ -149,7 +149,7 @@ export module LogoutApi {
   export module Errors {
     export class UserNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "User not found" as const;
+      message = "User not found" as const;
     }
     export type Type = UserNotFound;
   }
@@ -185,11 +185,11 @@ export module RefreshTokenApi {
   export module Errors {
     export class UserNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "User not found" as const;
+      message = "User not found" as const;
     }
     export class InvalidRefreshToken extends ErrorResponse {
       statusCode = 401;
-      error = "Refresh token is missing or invalid" as const;
+      message = "Refresh token is missing or invalid" as const;
     }
     export type Type = UserNotFound | InvalidRefreshToken;
   }

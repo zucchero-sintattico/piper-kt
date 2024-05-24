@@ -42,7 +42,7 @@ export const useUserStore = defineStore(
         jwt.value = (response as LoginApi.Responses.Success).access_token;
       } else {
         const typed = response as LoginApi.Errors.Type;
-        throw new Error(typed.error);
+        throw new Error(typed.message);
       }
     }
 
@@ -58,7 +58,7 @@ export const useUserStore = defineStore(
       });
       if (response.statusCode !== 200) {
         const typed = response as RegisterApi.Errors.Type;
-        throw new Error(typed.error);
+        throw new Error(typed.message);
       }
     }
 

@@ -42,7 +42,7 @@ export module GetDirectMessagesApi {
   export module Errors {
     export class DirectNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Direct not found" as const;
+      message = "Direct not found" as const;
     }
     export type Type = DirectNotFound;
   }
@@ -78,11 +78,11 @@ export module SendDirectMessageApi {
   export module Errors {
     export class DirectNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Direct not found" as const;
+      message = "Direct not found" as const;
     }
     export class CannotSendDirectMessageToYourself extends ErrorResponse {
       statusCode = 400;
-      error = "Cannot send direct message to yourself" as const;
+      message = "Cannot send direct message to yourself" as const;
     }
     export type Type = DirectNotFound | CannotSendDirectMessageToYourself;
   }

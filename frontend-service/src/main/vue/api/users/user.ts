@@ -71,7 +71,7 @@ export module GetUserStatusApi {
   export module Errors {
     export class UserNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "User not found" as const;
+      message = "User not found" as const;
     }
     export type Type = UserNotFound;
   }
@@ -109,7 +109,7 @@ export module GetUserPhotoApi {
   export module Errors {
     export class UserNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "User not found" as const;
+      message = "User not found" as const;
     }
     export type Type = UserNotFound;
   }
@@ -147,7 +147,7 @@ export module GetUserDescriptionApi {
   export module Errors {
     export class UserNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "User not found" as const;
+      message = "User not found" as const;
     }
     export type Type = UserNotFound;
   }

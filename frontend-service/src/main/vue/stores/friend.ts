@@ -63,7 +63,7 @@ export const useFriendStore = defineStore(
       const response = await friendsController.sendFriendRequest(username);
       if (response.statusCode !== 200) {
         const typed = response as DeclineFriendRequestApi.Errors.Type;
-        throw new Error(typed.error);
+        throw new Error(typed.message);
       }
     }
 
@@ -73,7 +73,7 @@ export const useFriendStore = defineStore(
         await refresh();
       } else {
         const typed = response as DeclineFriendRequestApi.Errors.Type;
-        throw new Error(typed.error);
+        throw new Error(typed.message);
       }
     }
 
@@ -83,7 +83,7 @@ export const useFriendStore = defineStore(
         await refresh();
       } else {
         const typed = response as DeclineFriendRequestApi.Errors.Type;
-        throw new Error(typed.error);
+        throw new Error(typed.message);
       }
     }
 

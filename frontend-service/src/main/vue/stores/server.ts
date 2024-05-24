@@ -86,7 +86,7 @@ export const useServerStore = defineStore(
         await refresh();
       } else {
         const typed = response as CreateServerApi.Errors.Type;
-        throw new Error(String(typed.error));
+        throw new Error(String(typed.message));
       }
     }
 
@@ -106,7 +106,7 @@ export const useServerStore = defineStore(
         await refresh();
       } else {
         const typed = response as CreateChannelApi.Errors.Type;
-        throw new Error(String(typed.error));
+        throw new Error(String(typed.message));
       }
     }
 
@@ -116,7 +116,7 @@ export const useServerStore = defineStore(
         await refresh();
       } else {
         const typed = response as JoinServerApi.Errors.Type;
-        throw new Error(String(typed.error));
+        throw new Error(String(typed.message));
       }
     }
 
@@ -126,7 +126,7 @@ export const useServerStore = defineStore(
         await refresh();
       } else {
         const typed = response as JoinServerApi.Errors.Type;
-        throw new Error(String(typed.error));
+        throw new Error(String(typed.message));
       }
     }
 
@@ -139,7 +139,7 @@ export const useServerStore = defineStore(
         await refresh();
       } else {
         const typed = response as KickUserFromServerApi.Errors.Type;
-        throw new Error(String(typed.error));
+        throw new Error(String(typed.message));
       }
     }
 
@@ -152,7 +152,7 @@ export const useServerStore = defineStore(
         await refresh();
       } else {
         const typed = response as KickUserFromServerApi.Errors.Type;
-        throw new Error(String(typed.error));
+        throw new Error(String(typed.message));
       }
     }
 
@@ -170,7 +170,7 @@ export const useServerStore = defineStore(
         await refresh();
       } else {
         const typed = response as UpdateServerApi.Errors.Type;
-        throw new Error(String(typed.error));
+        throw new Error(String(typed.message));
       }
     }
 
@@ -190,7 +190,7 @@ export const useServerStore = defineStore(
         await refresh();
       } else {
         const typed = response as UpdateServerApi.Errors.Type;
-        throw new Error(String(typed.error));
+        throw new Error(String(typed.message));
       }
     }
 

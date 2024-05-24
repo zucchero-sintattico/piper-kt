@@ -16,5 +16,5 @@ export abstract class Response {
 }
 
 export abstract class ErrorResponse extends Response {
-  abstract error: string;
+  abstract message: string;
 }

@@ -2,7 +2,7 @@ import { ErrorResponse } from "./response";
 
 export class InternalServerError extends ErrorResponse {
   statusCode = 500;
-  error = "Internal Server Error" as const;
+  message = "Internal Server Error" as const;
   errorMessage: unknown;
   constructor(e: unknown = "") {
     super();
@@ -12,7 +12,7 @@ export class InternalServerError extends ErrorResponse {
 
 export class BadRequest extends ErrorResponse {
   statusCode = 400;
-  error = "Bad Request" as const;
+  message = "Bad Request" as const;
   missingParams: string[];
   missingBody: string[];
   missingQuery?: string[];
@@ -26,5 +26,5 @@ export class BadRequest extends ErrorResponse {
 
 export class JwtTokenMissingOrInvalid extends ErrorResponse {
   statusCode = 401;
-  error = "JWT Token Missing or Invalid" as const;
+  message = "JWT Token Missing or Invalid" as const;
 }

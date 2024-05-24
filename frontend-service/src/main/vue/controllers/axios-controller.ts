@@ -39,7 +39,10 @@ export abstract class AxiosController {
         const errorResponse = e.response.data as InternalServerError;
         throw new Error(errorResponse.toString());
       } else {
-        return e.response.data as Response;
+        return {
+          statusCode: e.response.status,
+          ...e.response.data,
+        } as Response;
       }
     }
   }
