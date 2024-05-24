@@ -8,6 +8,10 @@ usersServicePaths:
       - /auth/login
       - /oauth/access_token
 
+notificationsServicePaths:
+      - /notification
+      - /users/[a-zA-Z0-9]+/status
+
 friendshipsServicePaths:
       - /friends
       - /friends/requests
