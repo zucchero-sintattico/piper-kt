@@ -10,6 +10,10 @@ import piperkt.services.users.infrastructure.persistence.model.UserEntityReposit
 
 @Singleton
 class UserRepositoryImpl(private val userEntityRepository: UserEntityRepository) : UserRepository {
+    override fun findAll(): List<User> {
+        return userEntityRepository.findAll().map { it.toDomain() }
+    }
+
     override fun findByUsername(username: String): User? {
         return userEntityRepository.findByUsername(username)?.toDomain()
     }
@@ -33,7 +37,8 @@ class UserRepositoryImpl(private val userEntityRepository: UserEntityRepository)
     }
 
     override fun update(entity: User) {
-        userEntityRepository.save(entity.toEntity())
+        val user = userEntityRepository.findByUsername(entity.username.value)
+        userEntityRepository.updateByUsername(user!!.username, entity.toEntity(user.id))
     }
 
     override fun deleteAll() {

@@ -15,6 +15,7 @@ import io.micronaut.security.token.render.AccessRefreshToken
 import io.micronaut.security.token.render.BearerAccessRefreshToken
 import piperkt.services.users.application.AuthService
 import piperkt.services.users.domain.user.User
+import piperkt.services.users.domain.user.UserRepository
 import piperkt.services.users.interfaces.web.api.RegisterApi
 import piperkt.services.users.presentation.user.UserDTO
 
@@ -35,6 +36,7 @@ interface AuthClient {
 class RegisterControllerTest(
     private val authClient: AuthClient,
     private val authService: AuthService,
+    private val userRepository: UserRepository,
 ) :
     IntegrationTest.FunSpec({
         lateinit var user: User
@@ -52,6 +54,7 @@ class RegisterControllerTest(
             response.description shouldBe "description"
             response.email shouldBe "email"
             response.profilePicture shouldBe null
+            userRepository.findAll().size shouldBe 2
             authService.delete("newuser")
         }
 
@@ -68,6 +71,7 @@ class RegisterControllerTest(
             response.refreshToken shouldNotBe null
             response.username shouldBe "user"
             response.roles shouldBe null
+            userRepository.findAll().size shouldBe 2
         }
 
         test("login with invalid password should throw AuthenticationException") {

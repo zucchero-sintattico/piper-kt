@@ -23,7 +23,7 @@ open class AuthService(
         val user =
             userRepository.findByUsername(username.value).orThrow(UserError.UserNotFound(username))
         user.update()
-        userRepository.save(user)
+        userRepository.update(user)
         return user
     }
 
