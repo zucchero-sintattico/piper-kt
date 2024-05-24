@@ -222,10 +222,20 @@ function createNotificationService() {
 }
 
 export function useNotificationService() {
+  const userStorage = localStorage.getItem("user");
+  const user = userStorage ? JSON.parse(userStorage) : null;
+  const accessToken = user ? user.jwt : null;
+  console.log(accessToken);
+  if (!accessToken) {
+    throw new Error("User not logged in");
+  }
   const notificationService = createNotificationService();
   const notificationSocket = io({
     transports: ["websocket"],
     path: "/notification",
+    auth: {
+      token: accessToken,
+    },
   });
 
   notificationSocket.on("connect", () => {
