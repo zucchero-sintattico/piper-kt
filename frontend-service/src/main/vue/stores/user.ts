@@ -23,8 +23,8 @@ export const useUserStore = defineStore(
     async function refresh() {
       if (refreshing) return;
       refreshing = true;
-      console.log("Refreshing user");
       await whoami();
+      console.log("Refreshing user");
       refreshing = false;
     }
 
@@ -40,7 +40,6 @@ export const useUserStore = defineStore(
       if (response.statusCode === 200) {
         isLoggedIn.value = true;
         jwt.value = (response as LoginApi.Responses.Success).access_token;
-        await whoami();
       } else {
         const typed = response as LoginApi.Errors.Type;
         throw new Error(typed.error);
@@ -71,10 +70,15 @@ export const useUserStore = defineStore(
     // ==================== USER ==================== //
     async function whoami() {
       try {
-        const response =
-          (await userController.whoami()) as WhoamiApi.Responses.Success;
-        username.value = response.username;
-        email.value = response.email;
+        const response: WhoamiApi.Response = await userController.whoami();
+        if (response.statusCode === 200) {
+          const typed = response as WhoamiApi.Responses.Success;
+          username.value = typed.username;
+          email.value = typed.email;
+        } else {
+          await logout();
+          console.log("automatic logout");
+        }
       } catch (e) {
         await logout();
         console.log("automatic logout", e);
