@@ -38,12 +38,12 @@ export module GetChannelsApi {
   export module Errors {
     export class ServerNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Server not found" as const;
+      message = "Server not found" as const;
     }
 
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
-      error = "User not authorized" as const;
+      message = "User not authorized" as const;
     }
 
     export type Type = ServerNotFound | UserNotAuthorized;
@@ -88,17 +88,17 @@ export module GetChannelByIdApi {
   export module Errors {
     export class ChannelNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Channel not found" as const;
+      message = "Channel not found" as const;
     }
 
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
-      error = "User not authorized" as const;
+      message = "User not authorized" as const;
     }
 
     export class ServerNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Server not found" as const;
+      message = "Server not found" as const;
     }
 
     export type Type = ChannelNotFound | UserNotAuthorized | ServerNotFound;
@@ -158,22 +158,22 @@ export module CreateChannelApi {
   export module Errors {
     export class ServerNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Server not found" as const;
+      message = "Server not found" as const;
     }
 
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
-      error = "User not authorized" as const;
+      message = "User not authorized" as const;
     }
 
     export class ChannelAlreadyExists extends ErrorResponse {
       statusCode = 409;
-      error = "Channel already exists" as const;
+      message = "Channel already exists" as const;
     }
 
     export class InvalidChannelType extends ErrorResponse {
       statusCode = 400;
-      error = "Invalid channel type" as const;
+      message = "Invalid channel type" as const;
     }
 
     export type Type =
@@ -218,22 +218,22 @@ export module UpdateChannelApi {
   export module Errors {
     export class ServerNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Server not found" as const;
+      message = "Server not found" as const;
     }
 
     export class ChannelNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Channel not found" as const;
+      message = "Channel not found" as const;
     }
 
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
-      error = "User not authorized" as const;
+      message = "User not authorized" as const;
     }
 
     export class ChannelAlreadyExists extends ErrorResponse {
       statusCode = 409;
-      error = "Channel already exists" as const;
+      message = "Channel already exists" as const;
     }
 
     export type Type =
@@ -272,17 +272,17 @@ export module DeleteChannelApi {
   export module Errors {
     export class ServerNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Server not found" as const;
+      message = "Server not found" as const;
     }
 
     export class ChannelNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Channel not found" as const;
+      message = "Channel not found" as const;
     }
 
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
-      error = "User not authorized" as const;
+      message = "User not authorized" as const;
     }
 
     export type Type = ServerNotFound | ChannelNotFound | UserNotAuthorized;

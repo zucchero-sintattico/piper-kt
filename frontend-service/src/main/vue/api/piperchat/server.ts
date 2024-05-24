@@ -27,15 +27,15 @@ export module KickUserFromServerApi {
   export module Errors {
     export class ServerNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Server or user not found" as const;
+      message = "Server or user not found" as const;
     }
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
-      error = "User not authorized" as const;
+      message = "User not authorized" as const;
     }
     export class OwnerCannotLeave extends ErrorResponse {
       statusCode = 405;
-      error = "Owner cannot leave the server" as const;
+      message = "Owner cannot leave the server" as const;
     }
     export type Type = ServerNotFound | UserNotAuthorized | OwnerCannotLeave;
   }
@@ -68,11 +68,11 @@ export module GetServerParticipantsApi {
   export module Errors {
     export class ServerNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Server not found" as const;
+      message = "Server not found" as const;
     }
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
-      error = "User not authorized" as const;
+      message = "User not authorized" as const;
     }
     export type Type = ServerNotFound | UserNotAuthorized;
   }
@@ -103,11 +103,11 @@ export module JoinServerApi {
   export module Errors {
     export class ServerNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Server not found" as const;
+      message = "Server not found" as const;
     }
     export class UserAlreadyJoined extends ErrorResponse {
       statusCode = 403;
-      error = "User already joined" as const;
+      message = "User already joined" as const;
     }
     export type Type = ServerNotFound | UserAlreadyJoined;
   }
@@ -138,15 +138,15 @@ export module LeaveServerApi {
   export module Errors {
     export class ServerNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Server not found" as const;
+      message = "Server not found" as const;
     }
     export class UserNotInServer extends ErrorResponse {
       statusCode = 403;
-      error = "User not in server" as const;
+      message = "User not in server" as const;
     }
     export class OwnerCannotLeave extends ErrorResponse {
       statusCode = 422;
-      error = "Owner cannot leave the server" as const;
+      message = "Owner cannot leave the server" as const;
     }
     export type Type = ServerNotFound | UserNotInServer | OwnerCannotLeave;
   }
@@ -193,11 +193,11 @@ export module GetServerApi {
   export module Errors {
     export class ServerNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Server not found" as const;
+      message = "Server not found" as const;
     }
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
-      error = "User not authorized" as const;
+      message = "User not authorized" as const;
     }
     export type Type = ServerNotFound | UserNotAuthorized;
   }
@@ -234,15 +234,15 @@ export module UpdateServerApi {
   export module Errors {
     export class ServerNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Server not found" as const;
+      message = "Server not found" as const;
     }
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
-      error = "User not authorized" as const;
+      message = "User not authorized" as const;
     }
     export class NameOrDescriptionRequired extends ErrorResponse {
       statusCode = 422;
-      error = "Name or description required" as const;
+      message = "Name or description required" as const;
     }
     export type Type = ServerNotFound | UserNotAuthorized;
   }
@@ -273,11 +273,11 @@ export module DeleteServerApi {
   export module Errors {
     export class ServerNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Server not found" as const;
+      message = "Server not found" as const;
     }
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
-      error = "User not authorized" as const;
+      message = "User not authorized" as const;
     }
     export type Type = ServerNotFound | UserNotAuthorized;
   }
@@ -322,7 +322,7 @@ export module GetServersApi {
   export module Errors {
     export class UserNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "User not found" as const;
+      message = "User not found" as const;
     }
     export type Type = UserNotFound;
   }
@@ -360,7 +360,7 @@ export module CreateServerApi {
   export module Errors {
     export class NameOrDescriptionRequired extends ErrorResponse {
       statusCode = 422;
-      error = "Name or description required" as const;
+      message = "Name or description required" as const;
     }
     export type Type = NameOrDescriptionRequired;
   }

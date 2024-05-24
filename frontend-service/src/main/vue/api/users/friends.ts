@@ -23,7 +23,7 @@ export module GetFriendsApi {
   export module Errors {
     export class UserNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "User not found" as const;
+      message = "User not found" as const;
     }
     export type Type = UserNotFound;
   }
@@ -51,7 +51,7 @@ export module GetFriendsRequestsApi {
   export module Errors {
     export class UserNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "User not found" as const;
+      message = "User not found" as const;
     }
     export type Type = UserNotFound;
   }
@@ -83,19 +83,19 @@ export module SendFriendRequestApi {
   export module Errors {
     export class InvalidAction extends ErrorResponse {
       statusCode = 400;
-      error: string;
+      message: string;
       constructor(action: string) {
         super();
-        this.error = `Invalid 'action' parameter in body: '${action}'`;
+        this.message = `Invalid 'action' parameter in body: '${action}'`;
       }
     }
     export class FriendRequestAlreadySent extends ErrorResponse {
       statusCode = 409;
-      error = "Friend request already sent" as const;
+      message = "Friend request already sent" as const;
     }
     export class FriendRequestNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Friend request not found" as const;
+      message = "Friend request not found" as const;
     }
 
     export type Type =
@@ -131,15 +131,15 @@ export module AcceptFriendRequestApi {
   export module Errors {
     export class InvalidAction extends ErrorResponse {
       statusCode = 400;
-      error: string;
+      message: string;
       constructor(action: string) {
         super();
-        this.error = `Invalid 'action' parameter in body: '${action}'`;
+        this.message = `Invalid 'action' parameter in body: '${action}'`;
       }
     }
     export class FriendRequestNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Friend request not found" as const;
+      message = "Friend request not found" as const;
     }
 
     export type Type = FriendRequestNotFound;
@@ -172,16 +172,16 @@ export module DeclineFriendRequestApi {
   export module Errors {
     export class InvalidAction extends ErrorResponse {
       statusCode = 400;
-      error: string;
+      message: string;
       constructor(action: string) {
         super();
-        this.error = `Invalid 'action' parameter in body: '${action}'`;
+        this.message = `Invalid 'action' parameter in body: '${action}'`;
       }
     }
 
     export class FriendRequestNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Friend request not found" as const;
+      message = "Friend request not found" as const;
     }
 
     export type Type = InvalidAction | FriendRequestNotFound;

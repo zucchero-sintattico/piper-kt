@@ -44,16 +44,16 @@ export module GetChannelMessagesApi {
   export module Errors {
     export class ChannelNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Channel not found" as const;
+      message = "Channel not found" as const;
     }
     export class ServerNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Server not found" as const;
+      message = "Server not found" as const;
     }
 
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
-      error = "User not authorized" as const;
+      message = "User not authorized" as const;
     }
 
     export type Type = ChannelNotFound | ServerNotFound | UserNotAuthorized;
@@ -91,15 +91,15 @@ export module SendMessageInChannelApi {
   export module Errors {
     export class ChannelNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Channel not found" as const;
+      message = "Channel not found" as const;
     }
     export class ServerNotFound extends ErrorResponse {
       statusCode = 404;
-      error = "Server not found" as const;
+      message = "Server not found" as const;
     }
     export class UserNotAuthorized extends ErrorResponse {
       statusCode = 403;
-      error = "User not authorized" as const;
+      message = "User not authorized" as const;
     }
     export type Type = ChannelNotFound | ServerNotFound | UserNotAuthorized;
   }
