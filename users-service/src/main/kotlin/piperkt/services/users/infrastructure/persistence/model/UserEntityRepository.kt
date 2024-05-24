@@ -5,6 +5,9 @@ import io.micronaut.data.repository.GenericRepository
 
 @MongoRepository
 interface UserEntityRepository : GenericRepository<UserEntity, String> {
+
+    fun findAll(): List<UserEntity>
+
     fun findByUsername(username: String): UserEntity?
 
     fun findByRefreshToken(refreshToken: String): UserEntity?
@@ -12,6 +15,8 @@ interface UserEntityRepository : GenericRepository<UserEntity, String> {
     fun deleteByUsername(username: String)
 
     fun save(entity: UserEntity)
+
+    fun updateByUsername(username: String, entity: UserEntity)
 
     fun deleteAll()
 }

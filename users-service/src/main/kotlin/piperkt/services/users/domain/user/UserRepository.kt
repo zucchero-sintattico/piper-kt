@@ -5,6 +5,8 @@ import piperkt.common.ddd.Repository
 /** User repository. */
 interface UserRepository : Repository<Username, User> {
 
+    fun findAll(): List<User>
+
     /**
      * Find a user by username.
      *

@@ -25,7 +25,7 @@ open class UserService(
                 .findByUsername(username.value)
                 .orThrow(UserError.UserNotFound(Username(username.value)))
         user.update()
-        userRepository.save(user)
+        userRepository.update(user)
         return user
     }
 

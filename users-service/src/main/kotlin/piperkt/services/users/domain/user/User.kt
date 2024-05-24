@@ -57,4 +57,14 @@ class User(
 
     /** Clear the refresh token of the user. */
     fun clearRefreshToken() = updateRefreshToken(null)
+
+    override fun toString(): String {
+        return "User(" +
+            "username=$username, " +
+            "password='$password', " +
+            "email=$email, " +
+            "description=$description, " +
+            "profilePicture=$profilePicture, " +
+            "refreshToken=$refreshToken)"
+    }
 }

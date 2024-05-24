@@ -17,9 +17,9 @@ object UserEntityMapper {
         )
 
     /** Convert a user to a user entity. */
-    fun User.toEntity() =
+    fun User.toEntity(actualId: String? = null) =
         UserEntity(
-            id = null,
+            id = actualId,
             username = username.value,
             password = password,
             email = email,
