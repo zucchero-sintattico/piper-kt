@@ -11,6 +11,7 @@ ktfmt {
 
 val catalog: VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
+val javaVersion: String by project
 kotlin {
-    jvmToolchain(JavaVersion.asInt)
+    jvmToolchain(javaVersion.toInt())
 }

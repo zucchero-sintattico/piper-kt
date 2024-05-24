@@ -20,6 +20,7 @@ tasks.test {
     useJUnitPlatform()
 }
 
+val javaVersion: String by project
 kotlin {
-    jvmToolchain(JavaVersion.asInt)
+    jvmToolchain(javaVersion.toInt())
 }

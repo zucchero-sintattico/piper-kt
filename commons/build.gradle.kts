@@ -3,7 +3,14 @@ plugins {
 }
 
 kotlin {
-    jvm()
+    val javaVersion: String by project
+    jvm {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = javaVersion
+            }
+        }
+    }
     js {
         nodejs()
     }
