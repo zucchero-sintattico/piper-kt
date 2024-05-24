@@ -25,10 +25,12 @@ export class NotificationSocketServer {
       path: "/notification",
     });
     this.io.on("connection", async (socket) => {
-      const jwt = this.getTokenFromHeadersCookie(
-        socket.handshake.headers.cookie
-      );
-      await this.validateTokenOrDisconnect(socket, jwt);
+      // const jwt = this.getTokenFromHeadersCookie(
+      //   socket.handshake.headers.cookie
+      // );
+      // await this.validateTokenOrDisconnect(socket, jwt);
+      const jwt = socket.handshake.auth?.token as string | undefined;
+      console.log(jwt);
       const username = decodeAccessToken(jwt!)?.username;
       if (username) {
         const clientProxy = new ClientProxy(socket);
