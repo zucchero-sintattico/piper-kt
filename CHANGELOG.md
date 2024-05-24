@@ -1,3 +1,36 @@
+## [7.5.0](https://github.com/zucchero-sintattico/piper-kt/compare/v7.4.2...v7.5.0) (2024-05-24)
+
+
+### Features
+
+* **deploy:** increase CPU limit to 700 for strimzi-cluster-operator to improve performance ([b01cda1](https://github.com/zucchero-sintattico/piper-kt/commit/b01cda1d0461e7bf9d7185165a4ac2351aab0660))
+* **ingress:** add notifications paths to ingress ([c2ae701](https://github.com/zucchero-sintattico/piper-kt/commit/c2ae701646ce0e6c732ad5b1b42a10459ce023f7))
+* **notifications:** add auth based on new token storage ([0ebf189](https://github.com/zucchero-sintattico/piper-kt/commit/0ebf189822243b3ebe6dc9fc942c5f059f63746a))
+* **notifications:** add deployment and service configuration for notifications-service in Kubernetes ([3cef420](https://github.com/zucchero-sintattico/piper-kt/commit/3cef42064a01f72e68e7693e5af86fd884d40f3a))
+* **notifications:** move to kafka ([7691acd](https://github.com/zucchero-sintattico/piper-kt/commit/7691acd93b15dfc19433215f03b8979f5e2da9ae))
+* **servers-service:** modify request object structure in ChannelApi to use 'content' instead of 'message' ([073aeda](https://github.com/zucchero-sintattico/piper-kt/commit/073aedac9b55aa46db1693241898ff1225a84d33))
+
+
+### Bug Fixes
+
+* add sender and content of messages in Domain Events body for friendship and server services ([e2ea865](https://github.com/zucchero-sintattico/piper-kt/commit/e2ea86560c95f8a14c4884e7476799095f170e89))
+* **api:** change error property to message ([2270c45](https://github.com/zucchero-sintattico/piper-kt/commit/2270c455bc8c4465e155b749efa161ccccac7938))
+* **api:** update property names in Channel and Server  interface ([5552661](https://github.com/zucchero-sintattico/piper-kt/commit/5552661c0a9e1bb4b28d2627b02f67724b748cc5))
+* **channel-service:** fix addMessage into channel ([cc79715](https://github.com/zucchero-sintattico/piper-kt/commit/cc79715a6eeff6562e5495c2de7ccb8f27328aa3))
+* **channel-service:** fix getMessage sublist returned ([93cca51](https://github.com/zucchero-sintattico/piper-kt/commit/93cca51264058e78999a4faf118cab424fa9f682))
+* **ChannelApi:** rename 'type' field to 'channelType' for match with frontend ([5fbd846](https://github.com/zucchero-sintattico/piper-kt/commit/5fbd84667ac5a5a7760628d0f16480bdf9907013))
+* **ci:** restore java version with source compatibility ([e5ddc0c](https://github.com/zucchero-sintattico/piper-kt/commit/e5ddc0ca3d66e3d5791828a0746e1d325abcb5dc))
+* **components:** update 'participants' to 'users' in ServerMenu ([284105e](https://github.com/zucchero-sintattico/piper-kt/commit/284105e71fabb9a3f7341189ce6d42a9bafac528))
+* **frontendApi:** rename 'message' property to 'content' for matching with friendship endpoint ([c23eb7a](https://github.com/zucchero-sintattico/piper-kt/commit/c23eb7a2be40b3be3d9d88c3c8e4e0803eb197ef))
+* **frontend:** change CreateChannelApi request params in order to match backend ones ([4729ae3](https://github.com/zucchero-sintattico/piper-kt/commit/4729ae3dbfd624c02670c30ae166095b22c7b2df))
+* **frontend:** change getChannels response in order to match backend one ([1420db1](https://github.com/zucchero-sintattico/piper-kt/commit/1420db1f029e66913c1cdfaa8954f53397f4c57d))
+* **java-version:** put it in gradle.properties ([fe2f542](https://github.com/zucchero-sintattico/piper-kt/commit/fe2f54236608710e7dea5bc3f2a3865da78f6d25))
+* **notifications:** allow consumer subscribe to topic not created yet ([cfd1806](https://github.com/zucchero-sintattico/piper-kt/commit/cfd1806342b3dc0728d6421cb8e50f8940e0cc51))
+* **notifications:** jwt middleware ([828aee7](https://github.com/zucchero-sintattico/piper-kt/commit/828aee70d92b2f50f45edc9f58aa0a5399db2ab9))
+* **pinia-stores:** update channelType property to type for consistency and improved semantics in store files. ([64efa75](https://github.com/zucchero-sintattico/piper-kt/commit/64efa753fb2264e044b6de5143af2bb99353840a))
+* **servers-service:** rename 'to' parameter to 'limit'. ([1e30ecc](https://github.com/zucchero-sintattico/piper-kt/commit/1e30ecc4211f978430d33273f26b82f343e72027))
+* **vue:** change multimedia to MULTIMEDIA. Remove unnecessary usePhotoStore to simplify the code. ([cc225d6](https://github.com/zucchero-sintattico/piper-kt/commit/cc225d6cbd3d30492cfc01e28808540f21854e02))
+
 ## [7.4.2](https://github.com/zucchero-sintattico/piper-kt/compare/v7.4.1...v7.4.2) (2024-05-24)
 
 
