@@ -24,10 +24,6 @@ dependencies {
     runtimeOnly(catalog.getLibrary("snakeyaml"))
 }
 
-java {
-    sourceCompatibility = JavaVersion.asVersion
-}
-
 micronaut {
     runtime("netty")
     testRuntime("kotest5")
@@ -48,7 +44,6 @@ micronaut {
     }
 
 }
-
 
 tasks.named<io.micronaut.gradle.docker.DockerBuildOptions>("dockerfile") {
     editDockerfile {
