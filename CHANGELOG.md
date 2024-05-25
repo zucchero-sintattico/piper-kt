@@ -1,3 +1,11 @@
+## [7.5.1](https://github.com/zucchero-sintattico/piper-kt/compare/v7.5.0...v7.5.1) (2024-05-25)
+
+
+### Bug Fixes
+
+* **events-serialization:** added serializare for events in servers and friendships services ([fc5c035](https://github.com/zucchero-sintattico/piper-kt/commit/fc5c035f56a297cf2a386ddb011fe8dadd0af5ec))
+* **kafka:** adopt one topic per event ([415d163](https://github.com/zucchero-sintattico/piper-kt/commit/415d163c7e5f42975433d25d49b2c3f05a1ac22d))
+
 ## [7.5.0](https://github.com/zucchero-sintattico/piper-kt/compare/v7.4.2...v7.5.0) (2024-05-24)
 
 
