@@ -7,18 +7,18 @@ import piperkt.services.multimedia.application.server.ServerEventsListener
 
 @KafkaListener
 class ServerEventsKafkaListener(private val serverEventsListener: ServerEventsListener) {
-    @Topic("server-created")
+    @Topic(ServerCreatedEvent.TOPIC)
     fun onServerCreated(event: ServerCreatedEvent) = serverEventsListener.handle(event)
 
-    @Topic("server-deleted")
+    @Topic(ServerDeletedEvent.TOPIC)
     fun onServerDeleted(event: ServerDeletedEvent) = serverEventsListener.handle(event)
 
-    @Topic("user-joined-server")
+    @Topic(ServerUserAddedEvent.TOPIC)
     fun onUserJoinedServer(event: ServerUserAddedEvent) = serverEventsListener.handle(event)
 
-    @Topic("user-left-server")
+    @Topic(ServerUserRemovedEvent.TOPIC)
     fun onUserLeftServer(event: ServerUserRemovedEvent) = serverEventsListener.handle(event)
 
-    @Topic("user-kicked-from-server")
+    @Topic(ServerUserKickedEvent.TOPIC)
     fun onUserKickedFromServer(event: ServerUserKickedEvent) = serverEventsListener.handle(event)
 }

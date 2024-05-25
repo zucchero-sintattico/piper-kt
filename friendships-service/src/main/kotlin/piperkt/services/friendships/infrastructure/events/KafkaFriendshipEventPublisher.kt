@@ -8,13 +8,13 @@ import piperkt.events.*
 @KafkaClient
 interface KafkaFriendshipEventPublisher {
 
-    @Topic("friendship-events") fun publish(event: FriendshipRequestSentEvent)
+    @Topic(FriendshipRequestSentEvent.TOPIC) fun publish(event: FriendshipRequestSentEvent)
 
-    @Topic("friendship-events") fun publish(event: FriendshipRequestAcceptedEvent)
+    @Topic(FriendshipRequestAcceptedEvent.TOPIC) fun publish(event: FriendshipRequestAcceptedEvent)
 
-    @Topic("friendship-events") fun publish(event: NewMessageInFriendshipEvent)
+    @Topic(NewMessageInFriendshipEvent.TOPIC) fun publish(event: NewMessageInFriendshipEvent)
 
-    @Topic("friendship-events") fun publish(event: FriendshipRequestRejectedEvent)
+    @Topic(FriendshipRequestRejectedEvent.TOPIC) fun publish(event: FriendshipRequestRejectedEvent)
 }
 
 @Singleton

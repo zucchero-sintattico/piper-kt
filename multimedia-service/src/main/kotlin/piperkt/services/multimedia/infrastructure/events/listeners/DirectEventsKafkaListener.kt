@@ -7,7 +7,7 @@ import piperkt.services.multimedia.application.direct.DirectEventsListener
 
 @KafkaListener
 class DirectEventsKafkaListener(private val directEventsListener: DirectEventsListener) {
-    @Topic("friend-request-accepted")
+    @Topic(FriendshipRequestAcceptedEvent.TOPIC)
     fun onFriendRequestAccepted(event: FriendshipRequestAcceptedEvent) =
         directEventsListener.handle(event)
 }

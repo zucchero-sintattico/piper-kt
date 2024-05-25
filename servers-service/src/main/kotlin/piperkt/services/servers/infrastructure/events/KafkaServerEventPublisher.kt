@@ -8,17 +8,17 @@ import piperkt.events.*
 @KafkaClient
 interface KafkaServerEventPublisher {
 
-    @Topic("server-events") fun publish(event: ServerCreatedEvent)
+    @Topic(ServerCreatedEvent.TOPIC) fun publish(event: ServerCreatedEvent)
 
-    @Topic("server-events") fun publish(event: ServerDeletedEvent)
+    @Topic(ServerDeletedEvent.TOPIC) fun publish(event: ServerDeletedEvent)
 
-    @Topic("server-events") fun publish(event: ServerUpdatedEvent)
+    @Topic(ServerUpdatedEvent.TOPIC) fun publish(event: ServerUpdatedEvent)
 
-    @Topic("server-events") fun publish(event: ServerUserAddedEvent)
+    @Topic(ServerUserAddedEvent.TOPIC) fun publish(event: ServerUserAddedEvent)
 
-    @Topic("server-events") fun publish(event: ServerUserRemovedEvent)
+    @Topic(ServerUserRemovedEvent.TOPIC) fun publish(event: ServerUserRemovedEvent)
 
-    @Topic("server-events") fun publish(event: ServerUserKickedEvent)
+    @Topic(ServerUserKickedEvent.TOPIC) fun publish(event: ServerUserKickedEvent)
 }
 
 @Singleton

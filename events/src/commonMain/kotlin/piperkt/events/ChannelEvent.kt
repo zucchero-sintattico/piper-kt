@@ -8,13 +8,25 @@ import kotlin.js.JsExport
 sealed interface ChannelEvent : DomainEvent
 
 @JsExport
-data class ChannelCreatedEvent(val serverId: String, val channelId: String) : ChannelEvent
+data class ChannelCreatedEvent(val serverId: String, val channelId: String) : ChannelEvent {
+    companion object {
+        const val TOPIC = "channel-created"
+    }
+}
 
 @JsExport
-data class ChannelUpdatedEvent(val serverId: String, val channelId: String) : ChannelEvent
+data class ChannelUpdatedEvent(val serverId: String, val channelId: String) : ChannelEvent {
+    companion object {
+        const val TOPIC = "channel-updated"
+    }
+}
 
 @JsExport
-data class ChannelDeletedEvent(val serverId: String, val channelId: String) : ChannelEvent
+data class ChannelDeletedEvent(val serverId: String, val channelId: String) : ChannelEvent {
+    companion object {
+        const val TOPIC = "channel-deleted"
+    }
+}
 
 @JsExport
 data class MessageInChannelEvent(
@@ -23,7 +35,11 @@ data class MessageInChannelEvent(
     val messageId: String,
     val sender: String,
     val content: String
-) : ChannelEvent
+) : ChannelEvent {
+    companion object {
+        const val TOPIC = "message-in-channel"
+    }
+}
 
 
 interface ChannelEventPublisher : EventPublisher<ChannelEvent>
