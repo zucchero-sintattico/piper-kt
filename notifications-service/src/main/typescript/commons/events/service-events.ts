@@ -15,7 +15,7 @@ export class ServiceEvents {
       eachMessage: async ({ topic, message }) => {
         try {
           const payload = JSON.parse(message.value?.toString() || "");
-          const event = configuration.topics[topic].events[payload.type];
+          const event = configuration.topics[topic];
           if (event) {
             event(payload);
           } else {

@@ -11,9 +11,9 @@ import piperkt.events.*
 @KafkaClient
 abstract class UserEventKafkaPublisher {
 
-    @Topic("user-created") abstract fun onUserCreated(event: UserCreatedEvent)
+    @Topic(UserCreatedEvent.TOPIC) abstract fun onUserCreated(event: UserCreatedEvent)
 
-    @Topic("user-updated") abstract fun onUserUpdatedEvent(event: UserUpdatedEvent)
+    @Topic(UserUpdatedEvent.TOPIC) abstract fun onUserUpdatedEvent(event: UserUpdatedEvent)
 }
 
 @Singleton

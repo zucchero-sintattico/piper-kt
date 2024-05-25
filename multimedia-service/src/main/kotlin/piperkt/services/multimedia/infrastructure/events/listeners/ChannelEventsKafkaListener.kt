@@ -8,9 +8,9 @@ import piperkt.services.multimedia.application.server.ChannelEventsListener
 
 @KafkaListener
 class ChannelEventsKafkaListener(private val channelEventsListener: ChannelEventsListener) {
-    @Topic("channel-created")
+    @Topic(ChannelCreatedEvent.TOPIC)
     fun onChannelCreated(event: ChannelCreatedEvent) = channelEventsListener.handle(event)
 
-    @Topic("channel-deleted")
+    @Topic(ChannelDeletedEvent.TOPIC)
     fun onChannelDeleted(event: ChannelDeletedEvent) = channelEventsListener.handle(event)
 }

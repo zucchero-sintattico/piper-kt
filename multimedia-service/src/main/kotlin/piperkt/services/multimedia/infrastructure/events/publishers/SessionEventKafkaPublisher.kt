@@ -18,15 +18,16 @@ interface SessionEventKafkaPublisher : SessionEventPublisher {
         }
     }
 
-    @Topic("session-created") fun publishSessionCreated(event: SessionCreatedEvent)
+    @Topic(SessionCreatedEvent.TOPIC) fun publishSessionCreated(event: SessionCreatedEvent)
 
-    @Topic("session-deleted") fun publishSessionDeleted(event: SessionDeletedEvent)
+    @Topic(SessionDeletedEvent.TOPIC) fun publishSessionDeleted(event: SessionDeletedEvent)
 
-    @Topic("allowed-user-added") fun publishAllowedUserAdded(event: AllowedUserAddedEvent)
+    @Topic(AllowedUserAddedEvent.TOPIC) fun publishAllowedUserAdded(event: AllowedUserAddedEvent)
 
-    @Topic("allowed-user-removed") fun publishAllowedUserRemoved(event: AllowedUserRemovedEvent)
+    @Topic(AllowedUserRemovedEvent.TOPIC)
+    fun publishAllowedUserRemoved(event: AllowedUserRemovedEvent)
 
-    @Topic("participant-joined") fun publishParticipantJoined(event: ParticipantJoinedEvent)
+    @Topic(ParticipantJoinedEvent.TOPIC) fun publishParticipantJoined(event: ParticipantJoinedEvent)
 
-    @Topic("participant-left") fun publishParticipantLeft(event: ParticipantLeftEvent)
+    @Topic(ParticipantLeftEvent.TOPIC) fun publishParticipantLeft(event: ParticipantLeftEvent)
 }

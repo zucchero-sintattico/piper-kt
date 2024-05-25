@@ -19,7 +19,11 @@ import kotlin.js.JsExport
     val email: String? = null,
     val description: String? = null,
     val profilePicture: String? = null,
-) : UserEvent
+) : UserEvent {
+    companion object {
+        const val TOPIC = "user-created"
+    }
+}
 
 /**
  * User updated event.
@@ -33,14 +37,34 @@ import kotlin.js.JsExport
     val email: String? = null,
     val description: String? = null,
     val profilePicture: String? = null,
-) : UserEvent
+) : UserEvent {
+    companion object {
+        const val TOPIC = "user-updated"
+    }
+}
 
-@JsExport data class UserLoggedInEvent(val username: String) : UserEvent
+@JsExport data class UserLoggedInEvent(val username: String) : UserEvent {
+    companion object {
+        const val TOPIC = "user-logged-in"
+    }
+}
 
-@JsExport data class UserLoggedOutEvent(val username: String) : UserEvent
+@JsExport data class UserLoggedOutEvent(val username: String) : UserEvent {
+    companion object {
+        const val TOPIC = "user-logged-out"
+    }
+}
 
-@JsExport data class UserOnlineEvent(val username: String) : UserEvent
+@JsExport data class UserOnlineEvent(val username: String) : UserEvent {
+    companion object {
+        const val TOPIC = "user-online"
+    }
+}
 
-@JsExport data class UserOfflineEvent(val username: String) : UserEvent
+@JsExport data class UserOfflineEvent(val username: String) : UserEvent {
+    companion object {
+        const val TOPIC = "user-offline"
+    }
+}
 
 interface UserEventPublisher : EventPublisher<UserEvent>

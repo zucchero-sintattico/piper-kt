@@ -13,13 +13,13 @@ import piperkt.events.MessageInChannelEvent
 @KafkaClient
 interface KafkaChannelEventPublisher {
 
-    @Topic("channel-events") fun publish(event: ChannelCreatedEvent)
+    @Topic(ChannelCreatedEvent.TOPIC) fun publish(event: ChannelCreatedEvent)
 
-    @Topic("channel-events") fun publish(event: ChannelDeletedEvent)
+    @Topic(ChannelDeletedEvent.TOPIC) fun publish(event: ChannelDeletedEvent)
 
-    @Topic("channel-events") fun publish(event: ChannelUpdatedEvent)
+    @Topic(ChannelUpdatedEvent.TOPIC) fun publish(event: ChannelUpdatedEvent)
 
-    @Topic("channel-events") fun publish(event: MessageInChannelEvent)
+    @Topic(MessageInChannelEvent.TOPIC) fun publish(event: MessageInChannelEvent)
 }
 
 @Singleton

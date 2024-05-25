@@ -8,13 +8,25 @@ import kotlin.js.JsExport
 sealed interface FriendshipEvent : DomainEvent
 
 @JsExport
-data class FriendshipRequestSentEvent(val fromUser: String, val toUser: String) : FriendshipEvent
+data class FriendshipRequestSentEvent(val fromUser: String, val toUser: String) : FriendshipEvent {
+    companion object {
+        const val TOPIC: String = "friendship-request-sent"
+    }
+}
 
 @JsExport
-data class FriendshipRequestAcceptedEvent(val fromUser: String, val toUser: String) : FriendshipEvent
+data class FriendshipRequestAcceptedEvent(val fromUser: String, val toUser: String) : FriendshipEvent {
+    companion object {
+        const val TOPIC: String = "friendship-request-accepted"
+    }
+}
 
 @JsExport
-data class FriendshipRequestRejectedEvent(val fromUser: String, val toUser: String) : FriendshipEvent
+data class FriendshipRequestRejectedEvent(val fromUser: String, val toUser: String) : FriendshipEvent {
+    companion object {
+        const val TOPIC: String = "friendship-request-rejected"
+    }
+}
 
 @JsExport
 data class NewMessageInFriendshipEvent(
@@ -22,6 +34,10 @@ data class NewMessageInFriendshipEvent(
     val toUser: String,
     val messageId: String,
     val content: String
-) : FriendshipEvent
+) : FriendshipEvent {
+    companion object {
+        const val TOPIC: String = "new-message-in-friendship"
+    }
+}
 
 interface FriendshipEventPublisher : EventPublisher<FriendshipEvent>
