@@ -7,8 +7,12 @@ import { JwtTokenMissingOrInvalid } from "../../api/errors";
  * @param email Email of the user
  */
 type UserJWTInfo = {
-  username: string;
-  email: string;
+  sub: string;
+  nbf: number;
+  roles: string[];
+  iss: string;
+  exp: number;
+  iat: number;
 };
 
 type UserInfo = {
@@ -46,16 +50,16 @@ const REFRESH_TOKEN_SECRET =
  * @param expiresIn Expiration time, default 1 day
  * @returns JWT Access Token
  */
-export const generateAccessToken = (
-  user: UserInfo,
-  expiresIn: string = "1d"
-) => {
-  return jwt.sign(
-    { username: user.username, email: user.email } as UserJWTInfo,
-    ACCESS_TOKEN_SECRET,
-    { expiresIn: expiresIn }
-  );
-};
+// export const generateAccessToken = (
+//   user: UserInfo,
+//   expiresIn: string = "1d"
+// ) => {
+//   return jwt.sign(
+//     { username: user.username, email: user.email } as UserJWTInfo,
+//     ACCESS_TOKEN_SECRET,
+//     { expiresIn: expiresIn }
+//   );
+// };
 
 /**
  * Generate a JWT Refresh Token for the user
@@ -63,16 +67,16 @@ export const generateAccessToken = (
  * @param expiresIn Expiration time, default 1 week
  * @returns JWT Refresh Token
  */
-export const generateRefreshToken = (
-  user: UserInfo,
-  expiresIn: string = "1w"
-) => {
-  return jwt.sign(
-    { username: user.username, email: user.email } as UserJWTInfo,
-    REFRESH_TOKEN_SECRET,
-    { expiresIn: expiresIn }
-  );
-};
+// export const generateRefreshToken = (
+//   user: UserInfo,
+//   expiresIn: string = "1w"
+// ) => {
+//   return jwt.sign(
+//     { username: user.username, email: user.email } as UserJWTInfo,
+//     REFRESH_TOKEN_SECRET,
+//     { expiresIn: expiresIn }
+//   );
+// };
 
 /**
  * Verify a JWT Access Token
