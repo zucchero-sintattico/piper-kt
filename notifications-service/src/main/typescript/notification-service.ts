@@ -25,13 +25,8 @@ export class NotificationSocketServer {
       path: "/notification",
     });
     this.io.on("connection", async (socket) => {
-      // const jwt = this.getTokenFromHeadersCookie(
-      //   socket.handshake.headers.cookie
-      // );
-      // await this.validateTokenOrDisconnect(socket, jwt);
       const jwt = socket.handshake.auth?.token as string | undefined;
-      console.log(jwt);
-      const username = decodeAccessToken(jwt!)?.username;
+      const username = decodeAccessToken(jwt!).sub;
       if (username) {
         const clientProxy = new ClientProxy(socket);
         socket.on("disconnect", async () => {
@@ -40,23 +35,5 @@ export class NotificationSocketServer {
         await this.notificationController.subscribe(username, clientProxy);
       }
     });
-  }
-
-  private getTokenFromHeadersCookie(headers?: string): string | undefined {
-    return headers
-      ?.split(";")
-      .find((c) => c.includes("jwt"))
-      ?.split("=")[1];
-  }
-
-  private async validateTokenOrDisconnect(
-    socket: Socket,
-    token?: string
-  ): Promise<void> {
-    if (token && !isAccessTokenValid(token)) {
-      console.log("Invalid token");
-      socket.disconnect();
-      return;
-    }
   }
 }

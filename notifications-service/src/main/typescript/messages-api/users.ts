@@ -1,13 +1,11 @@
 import { piperkt } from "../events-lib";
 
 export class UserCreatedMessage extends piperkt.events.UserCreatedEvent {
-  static topic = "user-topics";
-  static type = "UserCreated";
+  static topic = this.Companion.TOPIC;
 }
 
 export class UserUpdatedMessage extends piperkt.events.UserUpdatedEvent {
-  static topic = "user-topics";
-  static type = "UserUpdated";
+  static topic = this.Companion.TOPIC;
 }
 
 // export class UserDeletedMessage extends piperkt.events.UserDeletedEvent {
@@ -16,21 +14,17 @@ export class UserUpdatedMessage extends piperkt.events.UserUpdatedEvent {
 // }
 
 export class UserLoggedInMessage extends piperkt.events.UserLoggedInEvent {
-  static topic = "user-topics";
-  static type = "LoggedIn";
+  static topic = this.Companion.TOPIC;
 }
 
 export class UserLoggedOutMessage extends piperkt.events.UserLoggedOutEvent {
-  static topic = "user-topics";
-  static type = "LoggedOut";
+  static topic = this.Companion.TOPIC;
 }
 
 export class UserOnlineMessage extends piperkt.events.UserOnlineEvent {
-  static topic = "user-topics";
-  static type = "UserOnline";
+  static topic = this.Companion.TOPIC;
 }
 
 export class UserOfflineMessage extends piperkt.events.UserOfflineEvent {
-  static topic = "user-topics";
-  static type = "UserOffline";
+  static topic = this.Companion.TOPIC;
 }

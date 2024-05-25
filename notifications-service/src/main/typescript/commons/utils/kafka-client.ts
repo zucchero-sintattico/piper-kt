@@ -58,10 +58,7 @@ export class KafkaClient {
     await this.consumer.disconnect();
   }
 
-  async publish<T extends object>(
-    EventType: { topic: string; type: string },
-    message: T
-  ) {
+  async publish<T extends object>(EventType: { topic: string }, message: T) {
     await this.producer.send({
       topic: EventType.topic,
       messages: [{ value: JSON.stringify(message) }],
