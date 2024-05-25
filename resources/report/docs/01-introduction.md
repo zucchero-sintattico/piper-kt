@@ -1,9 +1,4 @@
----
-title: Introduction
-type: docs
----
-
-# Piper Kt
+# Introduction
 
 ## Members
 

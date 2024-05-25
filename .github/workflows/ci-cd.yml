@@ -118,7 +118,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     env:
-      HUGO_VERSION: 0.126.1
       TMP_SITE: tmp-site
     runs-on: ubuntu-latest
     permissions:
@@ -156,23 +155,16 @@ jobs:
           cp -r ./build/openapi-site ${{ env.TMP_SITE }}/openapi
       #      - name: Copy features report
       #        run: cp -r ./build/reports/tests/test ${{ env.TMP_SITE }}features
-      - name: Install Hugo CLI
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Build Site with Vitepress
+        working-directory: ./resources/report
         run: |
-          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${{ env.HUGO_VERSION }}/hugo_extended_${{ env.HUGO_VERSION }}_linux-amd64.deb \
-          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
-          sudo snap install dart-sass
-          [[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true
-      - name: Build Hugo report site
-        env:
-          # For maximum backward compatibility with Hugo modules
-          HUGO_ENVIRONMENT: production
-          HUGO_ENV: production
-        run: |
-          hugo \
-            --minify \
-            --source ./resources/report \
-            --destination ../../${{ env.TMP_SITE }}/report \
-            --baseURL "${{ steps.pages.outputs.base_url }}/piper-kt/report/"
+          npm ci
+          npm run docs:build -- --base /piper-kt/report/ --outDir ../../${{ env.TMP_SITE }}/report
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with:
