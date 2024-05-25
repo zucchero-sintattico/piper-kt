@@ -1,3 +1,10 @@
+## [7.6.0](https://github.com/zucchero-sintattico/piper-kt/compare/v7.5.1...v7.6.0) (2024-05-25)
+
+
+### Features
+
+* **docs:** move from Hugo to Vitepress for site gen ([32815b3](https://github.com/zucchero-sintattico/piper-kt/commit/32815b3ff2fc83c317d2be1b1dfff2e6d1582d6b))
+
 ## [7.5.1](https://github.com/zucchero-sintattico/piper-kt/compare/v7.5.0...v7.5.1) (2024-05-25)
 
 
