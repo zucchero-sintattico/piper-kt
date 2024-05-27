@@ -46,6 +46,7 @@ micronaut-kotlinRuntime = { module = "io.micronaut.kotlin:micronaut-kotlin-runti
 micronaut-management = { module = "io.micronaut:micronaut-management" }
 micronaut-openapi = { module = "io.micronaut.openapi:micronaut-openapi" }
 micronaut-openapi-annotations = { module = "io.micronaut.openapi:micronaut-openapi-annotations" }
+micronaut-security = { module = "io.micronaut.security:micronaut-security" }
 micronaut-serdeJackson = { module = "io.micronaut.serde:micronaut-serde-jackson" }
 micronaut-serdeProcessor = { module = "io.micronaut.serde:micronaut-serde-processor" }
 mongodb-driver-sync = { module = "org.mongodb:mongodb-driver-sync", version = "4.11.2" }
@@ -65,6 +66,7 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
 micronaut-app = { id = "io.micronaut.application", version.ref = "micronaut" }
 micronaut-aot = { id = "io.micronaut.aot", version.ref = "micronaut" }
+micronaut-lib = { id = "io.micronaut.library", version.ref = "micronaut" }
 micronaut-test = { id = "io.micronaut.test-resources", version.ref = "micronaut" }
 npmPublish = { id = "dev.petuska.npm.publish", version = "3.4.2" }
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }

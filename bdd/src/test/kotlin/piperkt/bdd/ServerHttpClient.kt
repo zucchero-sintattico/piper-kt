@@ -11,7 +11,6 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Put
 import io.micronaut.http.client.annotation.Client
 import piperkt.services.servers.interfaces.web.api.interactions.ServerApi
-import piperkt.services.servers.interfaces.web.authOf
 
 @Client("/servers")
 interface ServerHttpClient {

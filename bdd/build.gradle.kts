@@ -1,15 +1,18 @@
 plugins {
-    id("kotlin-jvm")
 
+    kotlin("jvm")
+    alias(libs.plugins.micronaut.lib)
 }
 
 dependencies {
     testImplementation(platform(libs.cucumber.bom))
     testImplementation(libs.bundles.cucumberJunit)
     testImplementation(libs.junit.platform)
-    testImplementation(project(":commons"))
-    testImplementation(project(":servers-service"))
 
+    testImplementation(libs.kotest)
+    testImplementation(libs.micronaut.httpClient)
+    testImplementation(libs.micronaut.security)
+    testImplementation(project(":servers-service"))
 }
 
 // https://github.com/cucumber/cucumber-jvm/tree/main/cucumber-junit-platform-engine#gradle
