@@ -1,7 +1,7 @@
 Feature: Server Management
 
   Scenario: User creates a new server
-    Given the user is authenticated in the system
+    Given an authenticated user in the system
     When the user creates a new server with the name "MyServer"
     Then the server "MyServer" should be created successfully
 
