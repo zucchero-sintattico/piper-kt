@@ -6,6 +6,9 @@ import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.domain.direct.DirectRepository
 import piperkt.services.multimedia.domain.server.ServerRepository
 import piperkt.services.multimedia.domain.session.SessionRepository
+import piperkt.services.multimedia.interfaces.websockets.JsonMapper
+import piperkt.services.multimedia.interfaces.websockets.MultimediaService
+import piperkt.services.multimedia.interfaces.websockets.SocketIOConfiguration
 
 object Services {
     @Singleton
@@ -21,4 +24,11 @@ object Services {
             directRepository,
             sessionEventPublisher
         )
+
+    @Singleton
+    class MultimediaServiceImpl(
+        sessionService: SessionService,
+        jsonMapper: JsonMapper,
+        socketIOConfiguration: SocketIOConfiguration,
+    ) : MultimediaService(sessionService, jsonMapper, socketIOConfiguration)
 }
