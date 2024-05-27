@@ -9,6 +9,7 @@ export interface SessionHandler {
     onUserJoin: UserJoinCallback,
     onUserLeave: UserLeaveCallback
   ): void;
+
   stop(): void;
 }
 
@@ -50,7 +51,7 @@ export class SessionHandlerImpl implements SessionHandler {
     this.onUserLeave = onUserLeave;
     this.setupProtocolListener();
     console.log("Joining session", this.sessionId);
-    this.socket.emit("join-session", this.sessionId);
+    this.socket.emit("join", { sessionId: this.sessionId });
   }
 
   stop(): void {
@@ -59,32 +60,35 @@ export class SessionHandlerImpl implements SessionHandler {
   }
 
   private setupProtocolListener() {
-    this.socket.on("user-connected", (username: string) => {
+    this.socket.on("user-join", (data) => {
       try {
-        this.onUserConnected(username);
+        const userId = data.userId as string;
+        this.onUserConnected(userId);
       } catch (e) {
         console.error(e);
       }
     });
-    this.socket.on("user-disconnected", (username: string) => {
+    this.socket.on("user-left", (data) => {
       try {
+        const username = data.userId as string;
         this.onUserDisconnected(username);
       } catch (e) {
         console.error(e);
       }
     });
-    this.socket.on(
-      "offer",
-      (offer: RTCSessionDescriptionInit, from: string) => {
-        try {
-          this.onOffer(offer, from);
-        } catch (e) {
-          console.error(e);
-        }
+    this.socket.on("offer-received", (data) => {
+      try {
+        const from = data.from as string;
+        const to = data.to as string;
+        const offer = data.offer as RTCSessionDescriptionInit;
+
+        this.onOffer(offer, from);
+      } catch (e) {
+        console.error(e);
       }
-    );
+    });
     this.socket.on(
-      "answer",
+      "answer-received",
       (answer: RTCSessionDescriptionInit, from: string) => {
         try {
           this.onAnswer(answer, from);
@@ -94,7 +98,7 @@ export class SessionHandlerImpl implements SessionHandler {
       }
     );
     this.socket.on(
-      "ice-candidate",
+      "candidate-received",
       (candidate: RTCIceCandidate, from: string) => {
         try {
           this.onIceCandidate(candidate, from);
@@ -127,7 +131,7 @@ export class SessionHandlerImpl implements SessionHandler {
     this.peers[username].onicecandidate = (event) => {
       if (event.candidate) {
         console.log("[SessionHandler] Sending ice candidate to:", username);
-        this.socket.emit("ice-candidate", event.candidate, username);
+        this.socket.emit("candidate", event.candidate, username);
       }
     };
   }
@@ -148,7 +152,7 @@ export class SessionHandlerImpl implements SessionHandler {
     this.peers[from].onicecandidate = (event) => {
       if (event.candidate) {
         console.log("[SessionHandler] Sending ice candidate to:", from);
-        this.socket.emit("ice-candidate", event.candidate, from);
+        this.socket.emit("candidate", event.candidate, from);
       }
     };
     this.myStream!.getTracks().forEach((track) => {

@@ -21,8 +21,8 @@ class SocketIOConfiguration {
 
 class MultimediaSocketIOServer(
     private val sessionService: SessionService,
-    val objectMapper: JsonMapper,
-    val configuration: SocketIOConfiguration = SocketIOConfiguration()
+    private val objectMapper: JsonMapper,
+    val configuration: SocketIOConfiguration = SocketIOConfiguration(),
 ) {
 
     private val socketIoConfig =
@@ -38,11 +38,15 @@ class MultimediaSocketIOServer(
         server.on(objectMapper, JOIN.event) {
             client,
             message: MultimediaProtocolMessage.JoinMessage,
-            _ ->
+            _,
+            ->
             events.add(message)
             runCatching { onJoin(client, message) }
         }
-        server.on(objectMapper, OFFER.event) { _, message: MultimediaProtocolMessage.OfferMessage, _
+        server.on(objectMapper, OFFER.event) {
+            _,
+            message: MultimediaProtocolMessage.OfferMessage,
+            _,
             ->
             events.add(message)
             runCatching { onOffer(message) }
@@ -50,14 +54,16 @@ class MultimediaSocketIOServer(
         server.on(objectMapper, ANSWER.event) {
             _,
             message: MultimediaProtocolMessage.AnswerMessage,
-            _ ->
+            _,
+            ->
             events.add(message)
             runCatching { onAnswer(message) }
         }
         server.on(objectMapper, ICE_CANDIDATE.event) {
             _,
             message: MultimediaProtocolMessage.IceCandidateMessage,
-            _ ->
+            _,
+            ->
             events.add(message)
             runCatching { onIceCandidate(message) }
         }
@@ -89,7 +95,8 @@ class MultimediaSocketIOServer(
         println("User $username disconnected")
         clientToSessionId[username]?.let { sessionId ->
             client.leaveRoom(sessionId)
-            roomOf(sessionId).sendEvent(USER_LEFT.event, username)
+            val serialized = objectMapper.toJson(MultimediaProtocolMessage.UserLeft(username))
+            roomOf(sessionId).sendEvent(USER_LEFT.event, serialized)
             sessionService.leaveSession(LeaveSession(SessionId(sessionId), Username(username)))
             println("User $username left session $sessionId")
         }
@@ -102,7 +109,7 @@ class MultimediaSocketIOServer(
         val username = client.getUsername() ?: return client.notAuthenticated()
         val sessionId = joinMessage.sessionId
         clientToSessionId[username] = sessionId
-        val serialized = objectMapper.toJson(UserJoined(sessionId, username))
+        val serialized = objectMapper.toJson(UserJoined(username))
         roomOf(sessionId).sendEvent(USER_JOIN.event, serialized)
         client.joinRoom(sessionId)
         sessionService.joinSession(JoinSession(SessionId(sessionId), Username(username)))

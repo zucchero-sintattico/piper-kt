@@ -1,10 +1,12 @@
 package piperkt.services.multimedia.interfaces.websockets
 
 enum class MultimediaProtocolEvent(val event: String) {
+    // Received
     JOIN("join"),
     OFFER("offer"),
     ANSWER("answer"),
     ICE_CANDIDATE("candidate"),
+
     // Sent
     NOT_AUTHENTICATED("notAuthenticated"),
     USER_JOIN("user-join"),

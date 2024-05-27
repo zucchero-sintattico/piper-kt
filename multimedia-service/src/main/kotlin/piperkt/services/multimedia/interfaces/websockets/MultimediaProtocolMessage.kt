@@ -18,6 +18,7 @@ sealed interface MultimediaProtocolMessage {
     data class IceCandidateMessage(val from: String, val to: String, val candidate: String) :
         MultimediaProtocolMessage
 
-    @Serdeable
-    data class UserJoined(val sessionId: String, val userId: String) : MultimediaProtocolMessage
+    @Serdeable data class UserJoined(val userId: String) : MultimediaProtocolMessage
+
+    @Serdeable data class UserLeft(val userId: String) : MultimediaProtocolMessage
 }
