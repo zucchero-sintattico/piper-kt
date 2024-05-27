@@ -3,7 +3,7 @@
 The Version Control System (VCS) is a system that records changes to a file or set of files over time so that you can recall specific versions later.
 It allows you to revert files back to a previous state, revert the entire project back to a previous state, compare changes over time, see who last modified something that might be causing a problem, who introduced an issue and when, and more.
 
-The project uses **Git** as the VCS.
+The project uses **Git** as VCS.
 
 The project is hosted on GitHub at [piper-kt](https://github.com/zucchero-sintattico/piper-kt).
 
@@ -18,8 +18,6 @@ You can find releases on the [GitHub Releases](https://github.com/zucchero-sinta
 ### Conventional Commits
 
 The project uses [**Conventional Commits**](https://www.conventionalcommits.org) for commit messages.
-This practice allows for automatic versioning and changelog generation.
-
 #### Git Hooks
 
 To enforce the use of Conventional Commits, the project uses a Git hook that checks the commit message format before allowing the commit.
@@ -40,7 +38,10 @@ Every time someone tries to commit, the hook will check if the commit message fo
 
 ### Semantic Release
 
-TODO
+In order to automate the release process, the project uses [**Semantic Release**](https://semantic-release.gitbook.io/semantic-release) plugin to automatically determine the next version number, 
+generate the changelog, and publish the release, whenever a new commit is pushed to the _main_ branch.
+Semantic Release uses the commit messages to determine the type of changes in the codebase. 
+Following formalized conventions for commit messages (Conventional Commits), semantic-release automatically determines the next semantic version number.
 
 ## Repository Management
 
