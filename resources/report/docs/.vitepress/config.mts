@@ -12,13 +12,28 @@ const config = defineConfig({
       { text: 'Report', link: '/01-introduction' },
     ],
 
+    outline: "deep",
+
     sidebar: [
       {
         items: [
           { text: 'Introduction', link: '/01-introduction', },
           { text: 'Requirements', link: '/02-requirements', },
+          { text: 'Design', link: '/03-design', },
+          { text: 'Implementation', link: '/04-implementation', },
         ]
       },
+      {
+        items: [
+          {
+            text: 'DevOps', link: "/05-devops/05-00-devops", collapsed: true,
+            items: [
+              { text: 'Build System', link: '/05-devops/05-1-build-system', },
+              { text: 'VCS & Repo', link: '/05-devops/05-2-version-control', },
+            ]
+          },
+        ]
+      }
     ],
 
     socialLinks: [
