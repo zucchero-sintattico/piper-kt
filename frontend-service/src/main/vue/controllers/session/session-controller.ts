@@ -1,5 +1,4 @@
-import io from "socket.io-client";
-import { Socket } from "socket.io-client";
+import io, { Socket } from "socket.io-client";
 import { type SessionHandler, SessionHandlerImpl } from "./session-handler";
 import { AxiosController } from "../axios-controller";
 import {
@@ -10,9 +9,13 @@ import {
 
 export interface SessionController {
   getUsersInSession(sessionId: string): Promise<string[]>;
+
   getChannelSessionId(serverId: string, channelId: string): Promise<string>;
+
   getDirectSessionId(username: string): Promise<string>;
+
   joinChannel(serverId: string, channelId: string): Promise<SessionHandler>;
+
   joinDirectSession(username: string): Promise<SessionHandler>;
 }
 
@@ -31,7 +34,6 @@ export class SessionControllerImpl
     return new Promise((resolve, reject) => {
       const socket = io({
         transports: ["websocket"],
-        path: "/webrtc",
         auth: {
           token: this.token,
         },
