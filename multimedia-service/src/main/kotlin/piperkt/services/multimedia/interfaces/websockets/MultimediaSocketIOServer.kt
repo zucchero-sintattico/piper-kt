@@ -3,6 +3,7 @@ package piperkt.services.multimedia.interfaces.websockets
 import com.corundumstudio.socketio.Configuration
 import com.corundumstudio.socketio.SocketIOClient
 import com.corundumstudio.socketio.SocketIOServer
+import jakarta.annotation.PostConstruct
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.application.session.SessionService.Command.JoinSession
 import piperkt.services.multimedia.application.session.SessionService.Command.LeaveSession
@@ -12,18 +13,24 @@ import piperkt.services.multimedia.infrastructure.implementation.SocketIOConfigu
 import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolEvent.*
 import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolMessage.UserJoined
 
-class MultimediaSocketIOServer(
+open class MultimediaSocketIOServer(
     private val sessionService: SessionService,
     private val objectMapper: JsonMapper,
     val configuration: SocketIOConfiguration = SocketIOConfiguration(),
 ) {
-
     private val socketIoConfig =
         Configuration().apply { port = configuration.port }.apply { isNeedClientAuth = false }
     private val server = SocketIOServer(socketIoConfig)
     private val clients = mutableMapOf<String, SocketIOClient>()
     private val clientToSessionId = mutableMapOf<String, String>()
     val events = mutableListOf<Any>()
+
+    @PostConstruct
+    fun init() {
+        println("Starting server on port ${configuration.port}")
+        start()
+        println("Server started on port ${configuration.port}")
+    }
 
     fun start() {
         server.addConnectListener { client -> runCatching { onConnect(client) } }

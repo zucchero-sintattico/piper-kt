@@ -12,18 +12,18 @@ object EventsListeners {
     @Singleton
     class ServerEventListenerService(
         serverRepository: ServerRepository,
-        sessionService: SessionService
+        sessionService: SessionService,
     ) : ServerEventsListener(serverRepository, sessionService)
 
     @Singleton
     class DirectEventListenerService(
         directRepository: DirectRepository,
-        sessionService: SessionService
+        sessionService: SessionService,
     ) : DirectEventsListener(directRepository, sessionService)
 
     @Singleton
     class ChannelEventListenerService(
         serverRepository: ServerRepository,
-        sessionService: SessionService
+        sessionService: SessionService,
     ) : ChannelEventsListener(serverRepository, sessionService)
 }

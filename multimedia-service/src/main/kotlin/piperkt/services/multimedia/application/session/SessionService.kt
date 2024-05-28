@@ -1,7 +1,12 @@
 package piperkt.services.multimedia.application.session
 
 import piperkt.common.utils.orThrow
-import piperkt.events.*
+import piperkt.events.AllowedUserAddedEvent
+import piperkt.events.AllowedUserRemovedEvent
+import piperkt.events.ParticipantJoinedEvent
+import piperkt.events.ParticipantLeftEvent
+import piperkt.events.SessionCreatedEvent
+import piperkt.events.SessionEventPublisher
 import piperkt.services.multimedia.domain.direct.DirectErrors
 import piperkt.services.multimedia.domain.direct.DirectRepository
 import piperkt.services.multimedia.domain.server.ChannelId
@@ -22,7 +27,6 @@ open class SessionService(
     private val directRepository: DirectRepository,
     private val sessionEventPublisher: SessionEventPublisher,
 ) {
-
     sealed interface Command {
 
         data class CreateSession(val allowedUsers: Set<Username>) : Command
