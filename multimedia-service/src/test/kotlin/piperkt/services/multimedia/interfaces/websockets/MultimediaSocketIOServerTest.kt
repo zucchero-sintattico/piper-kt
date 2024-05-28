@@ -43,7 +43,7 @@ class MultimediaSocketIOServerTest(@Inject private val objectMapper: JsonMapper)
         fun authorizedClientOf(userId: String): Socket {
             val auth =
                 IO.Options.builder().setExtraHeaders(mapOf("authToken" to listOf(userId))).build()
-            val client = IO.socket("http://localhost:${server.configuration.port}", auth)
+            val client = IO.socket("ws://localhost:${server.configuration.port}", auth)
             client.connect()
             return client!!
         }
@@ -51,12 +51,18 @@ class MultimediaSocketIOServerTest(@Inject private val objectMapper: JsonMapper)
         val johnClient = authorizedClientOf(johnId.value)
         val janeClient = authorizedClientOf(janeId.value)
 
+        while (!johnClient.connected() || !janeClient.connected()) {
+            println("Waiting for clients to connect")
+            Thread.sleep(100)
+        }
+
         fun Any.toJson(): String = objectMapper.toJson(this)
 
         test("should allow client to join") {
             val message = JoinMessage(session.id.value)
             johnClient.emit(JOIN.event, message.toJson())
             johnClient.on(USER_JOIN.event) { args ->
+                println("Received user join event: $args")
                 val received = args[0] as UserJoined
                 if (received.userId != janeId.value) {
                     fail("User id does not match")
