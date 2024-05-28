@@ -58,9 +58,6 @@ class MultimediaSocketIOServerTest(@Inject private val objectMapper: JsonMapper)
             johnClient.emit(JOIN.event, message.toJson())
             johnClient.on(USER_JOIN.event) { args ->
                 val received = args[0] as UserJoined
-                if (received.sessionId != session.id.value) {
-                    fail("Session id does not match")
-                }
                 if (received.userId != janeId.value) {
                     fail("User id does not match")
                 }

@@ -3,21 +3,14 @@ package piperkt.services.multimedia.interfaces.websockets
 import com.corundumstudio.socketio.Configuration
 import com.corundumstudio.socketio.SocketIOClient
 import com.corundumstudio.socketio.SocketIOServer
-import io.micronaut.context.annotation.ConfigurationProperties
-import kotlin.random.Random
-import kotlin.random.nextInt
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.application.session.SessionService.Command.JoinSession
 import piperkt.services.multimedia.application.session.SessionService.Command.LeaveSession
 import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.domain.user.Username
+import piperkt.services.multimedia.infrastructure.implementation.SocketIOConfiguration
 import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolEvent.*
 import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolMessage.UserJoined
-
-@ConfigurationProperties("socketio")
-class SocketIOConfiguration {
-    var port: Int = Random.nextInt(10000..20000)
-}
 
 class MultimediaSocketIOServer(
     private val sessionService: SessionService,

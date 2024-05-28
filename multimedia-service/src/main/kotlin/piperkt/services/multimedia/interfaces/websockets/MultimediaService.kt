@@ -1,14 +1,16 @@
 package piperkt.services.multimedia.interfaces.websockets
 
+import io.micronaut.serde.ObjectMapper
 import piperkt.services.multimedia.application.session.SessionService
+import piperkt.services.multimedia.infrastructure.implementation.SocketIOConfiguration
 
 open class MultimediaService(
     sessionService: SessionService,
-    jsonMapper: JsonMapper,
+    objectMapper: ObjectMapper,
     socketIOConfiguration: SocketIOConfiguration,
 ) {
     private val multimediaSocketIOServer: MultimediaSocketIOServer =
-        MultimediaSocketIOServer(sessionService, jsonMapper, socketIOConfiguration)
+        MultimediaSocketIOServer(sessionService, JsonMapper(objectMapper), socketIOConfiguration)
 
     init {
         multimediaSocketIOServer.start()

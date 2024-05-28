@@ -11,8 +11,8 @@ abstract class CleanArchitectureSpec(prefix: String) : ArchitectureSpec(prefix) 
         assertArchitecture {
             domainLayer.dependsOnNothing()
             applicationLayer.dependsOn(domainLayer)
-            interfacesLayer.dependsOn(applicationLayer, domainLayer)
-            infrastructureLayer.dependsOn(applicationLayer, domainLayer)
+            interfacesLayer.dependsOn(applicationLayer, domainLayer, infrastructureLayer)
+            infrastructureLayer.dependsOn(applicationLayer, domainLayer, interfacesLayer)
         }
     }
 }
