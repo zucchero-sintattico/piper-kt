@@ -4,6 +4,10 @@ application:
 mongodb:
   package-names:
     - piperkt.services.multimedia.infrastructure.persistence
+  uri: mongodb://root:example@localhost:27017/admin?authSource=admin&authMechanism=SCRAM-SHA-256&directConnection=true
+kafka:
+  bootstrap:
+    servers: localhost:9094
 micronaut:
   security:
     authentication: bearer
@@ -16,3 +20,5 @@ micronaut:
         generator:
           refresh-token:
             secret: "pleaseChangeThisSecretForANewOne"
+socket.io:
+  port: 8082

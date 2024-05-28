@@ -14,7 +14,7 @@ import piperkt.services.multimedia.domain.user.Username
 data class DirectEntity(
     @Id @GeneratedValue val id: String,
     val users: Set<String>,
-    val sessionId: String
+    val sessionId: String,
 ) {
     fun toDomain() =
         Direct(

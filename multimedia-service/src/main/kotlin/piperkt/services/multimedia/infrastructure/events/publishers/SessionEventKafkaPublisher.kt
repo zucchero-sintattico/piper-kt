@@ -2,7 +2,14 @@ package piperkt.services.multimedia.infrastructure.events.publishers
 
 import io.micronaut.configuration.kafka.annotation.KafkaClient
 import io.micronaut.configuration.kafka.annotation.Topic
-import piperkt.events.*
+import piperkt.events.AllowedUserAddedEvent
+import piperkt.events.AllowedUserRemovedEvent
+import piperkt.events.ParticipantJoinedEvent
+import piperkt.events.ParticipantLeftEvent
+import piperkt.events.SessionCreatedEvent
+import piperkt.events.SessionDeletedEvent
+import piperkt.events.SessionEvent
+import piperkt.events.SessionEventPublisher
 
 @KafkaClient
 interface SessionEventKafkaPublisher : SessionEventPublisher {
