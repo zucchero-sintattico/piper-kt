@@ -26,8 +26,9 @@ spec:
           image: zuccherosintattico/piperkt-{{.Values.serviceName}}:test
           imagePullPolicy: Always # <3>
           ports:
-            - name: http
-              containerPort: {{.Values.port}}
+            {{- range .Values.containersPorts }}
+            - containerPort: {{.containerPort}}
+            {{- end }}
           readinessProbe:
             httpGet:
               path: /health/readiness
@@ -59,8 +60,9 @@ spec:
     app:  {{.Values.serviceName}}
   type: LoadBalancer
   ports:
-    - protocol: "TCP"
-      port: {{.Values.port}}
-      targetPort: {{.Values.port}}
-      name: {{.Values.serviceName}}
-
+    {{- range .Values.servicePorts }}
+    - name: {{.name}}
+      port: {{.port}}
+      targetPort: {{.targetPort}}
+      protocol: {{.protocol}}
+    {{- end }}

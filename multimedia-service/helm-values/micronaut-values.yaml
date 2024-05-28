@@ -1,1 +1,16 @@
 serviceName: multimedia-service
+containersPorts:
+  - name: http
+    containerPort: 8080
+  - name: socket
+    containerPort: 8082
+
+servicePorts:
+  - name: multimedia-service
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  - name: multimedia-service-socket
+    port: 8082
+    targetPort: 8082
+    protocol: TCP

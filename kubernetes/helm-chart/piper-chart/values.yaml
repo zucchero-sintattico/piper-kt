@@ -1,3 +1,13 @@
 serviceName: service-name
 namespace: piper-kt
 port: 8080
+
+containersPorts:
+  - name: http
+    containerPort: 8080
+    
+servicePorts:
+  - name: service-name
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
