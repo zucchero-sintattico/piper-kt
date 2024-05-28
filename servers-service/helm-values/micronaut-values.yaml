@@ -1,1 +1,6 @@
 serviceName: servers-service
+servicePorts:
+  - name: servers-service
+    port: 8080
+    targetPort: 8080
+    protocol: TCP

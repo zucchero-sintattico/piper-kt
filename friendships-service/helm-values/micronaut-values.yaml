@@ -1,1 +1,6 @@
 serviceName: friendships-service
+servicePorts:
+  - name: friendships-service
+    port: 8080
+    targetPort: 8080
+    protocol: TCP

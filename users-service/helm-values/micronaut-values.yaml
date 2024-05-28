@@ -1,1 +1,6 @@
 serviceName: users-service
+servicePorts:
+  - name: users-service
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
