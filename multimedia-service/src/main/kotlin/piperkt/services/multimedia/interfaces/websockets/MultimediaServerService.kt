@@ -19,7 +19,10 @@ class MultimediaSocketIOServer(
 ) {
 
     private val socketIoConfig =
-        Configuration().apply { port = configuration.port }.apply { isNeedClientAuth = false }
+        Configuration()
+            .apply { port = configuration.port }
+            .apply { isNeedClientAuth = false }
+            .apply { context = "/webrtc" }
     private val server = SocketIOServer(socketIoConfig)
     private val clients = mutableMapOf<String, SocketIOClient>()
     private val clientToSessionId = mutableMapOf<String, String>()
