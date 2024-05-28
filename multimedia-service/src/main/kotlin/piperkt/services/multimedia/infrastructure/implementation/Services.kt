@@ -1,5 +1,6 @@
 package piperkt.services.multimedia.infrastructure.implementation
 
+import io.micronaut.context.annotation.Context
 import io.micronaut.serde.ObjectMapper
 import jakarta.inject.Singleton
 import piperkt.events.SessionEventPublisher
@@ -25,7 +26,7 @@ object Services {
             sessionEventPublisher
         )
 
-    @Singleton
+    @Context
     class MultimediaServiceImpl(
         sessionService: SessionService,
         objectMapper: ObjectMapper,
