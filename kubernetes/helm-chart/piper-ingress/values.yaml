@@ -1,35 +1,36 @@
 usersServicePaths:
-      - /users/[a-zA-Z0-9]
-      - /whoami
-      - /profile
-      - /description
-      - /photo
-      - /auth/register
-      - /auth/login
-      - /oauth/access_token
+  - /users/[a-zA-Z0-9]
+  - /whoami
+  - /profile
+  - /description
+  - /photo
+  - /auth/register
+  - /auth/login
+  - /oauth/access_token
 
 notificationsServicePaths:
-      - /notification
-      - /users/[a-zA-Z0-9]+/status
+  - /notification
+  - /users/[a-zA-Z0-9]+/status
 
 friendshipsServicePaths:
-      - /friends
-      - /friends/requests
-      - /friends/requests/accept
-      - /friends/requests/decline
-      - /friends/requests/send
-      - /users/[a-zA-Z0-9]+/messages
+  - /friends
+  - /friends/requests
+  - /friends/requests/accept
+  - /friends/requests/decline
+  - /friends/requests/send
+  - /users/[a-zA-Z0-9]+/messages
 
 multimediaServicePaths:
-      - /users/[a-zA-Z0-9]+/session
-      - /sessions/[a-zA-Z0-9]+/users
-      - /servers/[a-zA-Z0-9]+/channels/[a-zA-Z0-9]+/session
+  - /webrtc
+  - /users/[a-zA-Z0-9]+/session
+  - /sessions/[a-zA-Z0-9]+/users
+  - /servers/[a-zA-Z0-9]+/channels/[a-zA-Z0-9]+/session
 
 serversServicePaths:
-      - /servers
-      - /servers/[a-zA-Z0-9]
-      - /servers/[a-zA-Z0-9]+/channels
-      - /servers/[a-zA-Z0-9]+/channels/[a-zA-Z0-9]
-      - /servers/[a-zA-Z0-9]+/channels/[a-zA-Z0-9]+/messages
-      - /servers/[a-zA-Z0-9]+/users
-      - /servers/[a-zA-Z0-9]+/users/[a-zA-Z0-9]
+  - /servers
+  - /servers/[a-zA-Z0-9]
+  - /servers/[a-zA-Z0-9]+/channels
+  - /servers/[a-zA-Z0-9]+/channels/[a-zA-Z0-9]
+  - /servers/[a-zA-Z0-9]+/channels/[a-zA-Z0-9]+/messages
+  - /servers/[a-zA-Z0-9]+/users
+  - /servers/[a-zA-Z0-9]+/users/[a-zA-Z0-9]
