@@ -30,6 +30,7 @@ const config = defineConfig({
             items: [
               { text: 'Project Structure', link: '/05-devops/05-1-project-structure', },
               { text: 'VCS & Repo', link: '/05-devops/05-2-version-control', },
+              { text: 'Quality Assurance', link: '/05-devops/05-3-qa', },
             ]
           },
         ]
