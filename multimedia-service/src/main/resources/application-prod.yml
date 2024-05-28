@@ -3,7 +3,7 @@ mongodb:
 kafka:
   bootstrap:
     servers: cluster-kafka-brokers.piper-kt.svc.cluster.local:9092
-socket.io:
+socketio:
   port: 8082
 micronaut:
   security:
