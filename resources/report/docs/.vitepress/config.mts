@@ -28,7 +28,7 @@ const config = defineConfig({
           {
             text: 'DevOps', link: "/05-devops/05-00-devops", collapsed: true,
             items: [
-              { text: 'Build System', link: '/05-devops/05-1-build-system', },
+              { text: 'Project Structure', link: '/05-devops/05-1-project-structure', },
               { text: 'VCS & Repo', link: '/05-devops/05-2-version-control', },
             ]
           },
