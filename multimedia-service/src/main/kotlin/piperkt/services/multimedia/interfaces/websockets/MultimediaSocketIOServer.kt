@@ -84,6 +84,7 @@ open class MultimediaSocketIOServer(
     }
 
     fun onConnect(client: SocketIOClient) {
+
         val username = client.getUsername() ?: return client.notAuthenticated()
         clients[username] = client
         println("User $username connected")
