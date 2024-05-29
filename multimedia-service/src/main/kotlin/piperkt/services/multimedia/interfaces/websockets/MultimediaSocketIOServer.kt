@@ -70,10 +70,11 @@ open class MultimediaSocketIOServer(
         server.start()
     }
 
-    private fun SocketIOClient.getUsername(): String? {
-        println("Handshake data: ${this.handshakeData}")
+    private fun SocketIOClient.getUsername(): String {
+        println("Auth token: ${this.handshakeData.authToken}")
         println("Headers: ${this.handshakeData.httpHeaders}")
-        val token = this.handshakeData.httpHeaders.get("authToken")
+        val token = this.handshakeData.authToken.toString().split("=")[1].replace("}", "")
+        println("Token: $token")
         return token
     }
 
@@ -86,14 +87,13 @@ open class MultimediaSocketIOServer(
     }
 
     private fun onConnect(client: SocketIOClient) {
-
-        val username = client.getUsername() ?: return client.notAuthenticated()
+        val username = client.getUsername()
         clients[username] = client
         println("User $username connected")
     }
 
     private fun onDisconnect(client: SocketIOClient) {
-        val username = client.getUsername() ?: return client.notAuthenticated()
+        val username = client.getUsername()
         clients.remove(username)
         println("User $username disconnected")
         clientToSessionId[username]?.let { sessionId ->
@@ -109,7 +109,7 @@ open class MultimediaSocketIOServer(
         client: SocketIOClient,
         joinMessage: MultimediaProtocolMessage.JoinMessage,
     ) {
-        val username = client.getUsername() ?: return client.notAuthenticated()
+        val username = client.getUsername()
         val sessionId = joinMessage.sessionId
         clientToSessionId[username] = sessionId
         val serialized = objectMapper.toJson(UserJoined(username))
