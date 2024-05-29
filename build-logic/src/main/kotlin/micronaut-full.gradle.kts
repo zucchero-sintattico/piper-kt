@@ -1,9 +1,15 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id("micronaut-base")
     id("java-test-fixtures")
 }
 
 val catalog: VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+tasks.withType<ShadowJar> {
+    isZip64 = true
+}
 
 dependencies {
     ksp(catalog.getLibrary("micronaut-data-document-processor"))

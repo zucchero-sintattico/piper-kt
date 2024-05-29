@@ -7,7 +7,12 @@ import com.lemonappdev.konsist.api.architecture.Layer
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
-abstract class ArchitectureSpec(val prefix: String) : AnnotationSpec() {
+/**
+ * Base class for architecture tests.
+ *
+ * @param prefix The prefix of the package names.
+ */
+abstract class ArchitectureSpec(private val prefix: String) : AnnotationSpec() {
 
     fun assertLayer(name: String): Layer {
         return Layer(name, "$prefix.$name..")
@@ -19,7 +24,7 @@ abstract class ArchitectureSpec(val prefix: String) : AnnotationSpec() {
 
     fun assertPackageDoesNotDependOnFrameworks(
         packageName: String,
-        frameworks: List<String> = emptyList()
+        frameworks: List<String> = emptyList(),
     ) {
         Konsist.scopeFromPackage("$prefix.$packageName..").files.forEach { file ->
             val dependencies = file.imports.map { it.name }

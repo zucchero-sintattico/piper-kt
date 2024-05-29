@@ -7,6 +7,12 @@ import kotlin.js.JsExport
 @JsExport
 sealed interface ChannelEvent : DomainEvent
 
+/**
+ * Channel created event.
+ *
+ * @param serverId The id of the server.
+ * @param channelId The id of the channel.
+ */
 @JsExport
 data class ChannelCreatedEvent(val serverId: String, val channelId: String) : ChannelEvent {
     companion object {
@@ -14,6 +20,12 @@ data class ChannelCreatedEvent(val serverId: String, val channelId: String) : Ch
     }
 }
 
+/**
+ * Channel updated event.
+ *
+ * @param serverId The id of the server.
+ * @param channelId The id of the channel.
+ */
 @JsExport
 data class ChannelUpdatedEvent(val serverId: String, val channelId: String) : ChannelEvent {
     companion object {
@@ -21,6 +33,12 @@ data class ChannelUpdatedEvent(val serverId: String, val channelId: String) : Ch
     }
 }
 
+/**
+ * Channel deleted event.
+ *
+ * @param serverId The id of the server.
+ * @param channelId The id of the channel.
+ */
 @JsExport
 data class ChannelDeletedEvent(val serverId: String, val channelId: String) : ChannelEvent {
     companion object {
@@ -28,13 +46,22 @@ data class ChannelDeletedEvent(val serverId: String, val channelId: String) : Ch
     }
 }
 
+/**
+ * Message in channel event.
+ *
+ * @param serverId The id of the server.
+ * @param channelId The id of the channel.
+ * @param messageId The id of the message.
+ * @param sender The sender of the message.
+ * @param content The content of the message.
+ */
 @JsExport
 data class MessageInChannelEvent(
     val serverId: String,
     val channelId: String,
     val messageId: String,
     val sender: String,
-    val content: String
+    val content: String,
 ) : ChannelEvent {
     companion object {
         const val TOPIC = "message-in-channel"

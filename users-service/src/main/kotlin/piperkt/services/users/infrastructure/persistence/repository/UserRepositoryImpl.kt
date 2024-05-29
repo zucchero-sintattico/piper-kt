@@ -4,9 +4,9 @@ import jakarta.inject.Singleton
 import piperkt.services.users.domain.user.User
 import piperkt.services.users.domain.user.UserRepository
 import piperkt.services.users.domain.user.Username
-import piperkt.services.users.infrastructure.persistence.model.UserEntityMapper.toDomain
-import piperkt.services.users.infrastructure.persistence.model.UserEntityMapper.toEntity
 import piperkt.services.users.infrastructure.persistence.model.UserEntityRepository
+import piperkt.services.users.presentation.user.UserMapper.toDomain
+import piperkt.services.users.presentation.user.UserMapper.toEntity
 
 @Singleton
 class UserRepositoryImpl(private val userEntityRepository: UserEntityRepository) : UserRepository {
