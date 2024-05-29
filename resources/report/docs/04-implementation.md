@@ -56,7 +56,7 @@ class Server(
 ### Application Level
 
 In this level, we have the **Services**, which are responsible for orchestrating the business logic.
-They are the entry points for controllers and are responsible for validating input, executing domain operations, calling event posting methods, and repositories for data persistence.
+They are the entry points for controllers and are responsible for validating input, executing domain operations, calling event publisher methods, and repositories for data persistence.
 
 Each Service, has its own Api and works with the concept of Requests and Responses, which are simple data classes that represent the input and output of the service methods.
 
@@ -106,6 +106,96 @@ open class ServerService(
 
 In this level, we also have declared the **Repositories** interfaces, which are then implemented in the infrastructure level.
 **TOFINISH**
+
+### Infrastructure Level
+
+In this level, we have the implementations of the repositories, event publishers, and other infrastructure components.
+
+**TOFINISH**
+
+### Interfaces Level
+
+In this level, we have the http controllers, which are responsible for receiving the requests from the clients, calling the services to execute the business logic, and returning the http responses to the client.
+
+Every controller has its own Api, which is composed of the request and response data classes, and each controller methods is defined for a specific endpoint.
+
+
+```kotlin
+// Example of Server http controller API
+@Secured(SecurityRule.IS_AUTHENTICATED)
+interface ServerHttpControllerApi {
+
+    // This annotation is used to generate the OpenAPI documentation of the endpoint
+    @ApiResponses(
+        ApiResponse(responseCode = "200", description = "Server created successfully"),
+        ApiResponse(responseCode = "400", description = "Bad request"),
+        ApiResponse(responseCode = "401", description = "Unauthorized"),
+    )
+    fun createServer(
+        @Body request: ServerApi.CreateServerApi.Request,
+        principal: Principal
+    ): ServerApi.CreateServerApi.Response
+
+    // Other methods...
+}
+
+// Http controller implementation
+@Controller("/servers")
+class ServerHttpController(private val serverService: ServerService) : ServerHttpControllerApi {
+
+    @Post("/")
+    override fun createServer(
+        request: ServerApi.CreateServerApi.Request,
+        principal: Principal,
+    ): ServerApi.CreateServerApi.Response {
+        val response =
+            serverService
+                .createServer(
+                    ServerCommand.CreateServer.Request(
+                        name = request.name,
+                        description = request.description,
+                        requestFrom = principal.name
+                    )
+                )
+                .getOrThrow()
+        return ServerApi.CreateServerApi.Response(serverId = response.serverId.value)
+    }
+    // Other methods...
+}
+```
+
+The controllers are very simple, they only call the services methods, and then return the responses to the client.
+
+Regarding error handling, as you can notice, we are using the `getOrThrow()` method, which is an extension function of the Result class, that throws the exception contained in the Result in case of a failure.
+
+Thanks to Micronaut Framework, we can easily define a specific error handler once, and then it will be used for all the controllers in the application.
+
+
+```kotlin
+@Produces
+@Singleton
+@Requires(
+    classes =
+        [ServerServiceException.ServerNotFoundExceptionException::class, ExceptionHandler::class]
+)
+class ServerNotFound :
+    ExceptionHandler<ServerServiceException.ServerNotFoundExceptionException, ErrorResponse> {
+    @Error(
+        global = true,
+        exception = ServerServiceException.ServerNotFoundExceptionException::class,
+    )
+    @Status(HttpStatus.NOT_FOUND)
+    override fun handle(
+        request: HttpRequest<*>?,
+        exception: ServerServiceException.ServerNotFoundExceptionException?
+    ): ErrorResponse {
+        return ErrorResponse(exception!!.message)
+    }
+}
+```
+
+In this case, we defined a specific error handler for the `ServerNotFoundExceptionException`, which returns a `NOT_FOUND` (404) status code to the client.
+
 
 ## Testing
 
@@ -199,7 +289,7 @@ class FrameworkIndependenceMultimediaTest : FrameworkIndependenceTest(PREFIX)
 
 In each microservice, each layer is been tested with Unit / Integration tests.
 
-With regard to the the application layer, we have used the [Mockito](https://site.mockito.org/) library to mock the dependencies of the *services* like repositories and event publishers.
+With regard to the the application layer, we have used the [Mockito](https://site.mockito.org/) library to mock the dependencies of the *services* like **repositories** and **event publishers**.
 
 Using this technique, we can test the *services* components in isolation, without the affect of the dependencies.
 It also allows us to simulate, and then test, the services in different scenarios and edge cases, without the need of deploying the other components of the system.
