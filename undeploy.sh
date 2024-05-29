@@ -6,15 +6,11 @@ helm delete nginx-ingress-controller kubernetes/helm-chart/piper-ingress --names
 
 kubectl delete -f kubernetes/frontend.yml --namespace piper-kt
 
-#### Multimedia ####
-helm delete multimedia-service kubernetes/helm-chart/mongo-for-operator --namespace piper-kt
-kubectl delete -f kubernetes/multimedia.yml --namespace piper-kt
-####################
 kubectl delete -f kubernetes/notifications.yml --namespace piper-kt
 
 helm delete notifications-service kubernetes/helm-chart/mongo-for-operator --namespace piper-kt
 
-microservice_list=("friendships-service" "users-service" "servers-service")
+microservice_list=("friendships-service" "users-service" "servers-service" "multimedia-service")
 for microservice in "${microservice_list[@]}"
 do
   helm delete $microservice kubernetes/helm-chart/piper-chart
