@@ -50,7 +50,7 @@ open class ServerEventsListener(
                 .findById(ServerId(event.serverId))
                 .orThrow(ServerErrors.ServerNotFound(ServerId(event.serverId)))
         server.addMember(Username(event.username))
-        serverRepository.save(server)
+        serverRepository.update(server)
         server.channels().forEach {
             sessionService.addAllowedUser(AddAllowedUser(it.sessionId, Username(event.username)))
         }
@@ -62,7 +62,7 @@ open class ServerEventsListener(
                 .findById(ServerId(event.serverId))
                 .orThrow(ServerErrors.ServerNotFound(ServerId(event.serverId)))
         server.removeMember(Username(event.username))
-        serverRepository.save(server)
+        serverRepository.update(server)
         server.channels().forEach {
             sessionService.removeAllowedUser(
                 RemoveAllowedUser(it.sessionId, Username(event.username))

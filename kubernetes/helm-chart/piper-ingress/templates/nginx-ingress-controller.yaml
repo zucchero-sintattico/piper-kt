@@ -65,7 +65,7 @@ spec:
             path: "/socket.io"
             backend:
               service:
-                name: multimedia-service-socket
+                name: multimedia-service
                 port:
                   number: 8082
 ---

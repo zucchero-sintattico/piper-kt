@@ -37,7 +37,7 @@ export class SessionControllerImpl
       const socket = io({
         transports: ["websocket"],
         auth: {
-          token: this.token,
+          token: this.userStore.username,
         },
       });
       socket.on("connect", () => {

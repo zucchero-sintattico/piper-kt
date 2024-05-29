@@ -39,7 +39,7 @@ open class ChannelEventsListener(
         val session = sessionService.createSession(CreateSession(server.members()))
         val channel = Channel(id = ChannelId(event.channelId), sessionId = session.id)
         server.addChannel(channel)
-        serverRepository.save(server)
+        serverRepository.update(server)
     }
 
     private fun onChannelDeleted(event: ChannelDeletedEvent) {
@@ -50,6 +50,6 @@ open class ChannelEventsListener(
         val channel = server.getChannelById(ChannelId(event.channelId))
         sessionService.deleteSession(DeleteSession(channel.sessionId))
         server.removeChannelById(ChannelId(event.channelId))
-        serverRepository.save(server)
+        serverRepository.update(server)
     }
 }
