@@ -15,7 +15,7 @@ microservice_list=("friendships-service" "users-service" "servers-service" "mult
 for microservice in "${microservice_list[@]}"
 do
   helm install $microservice kubernetes/helm-chart/piper-chart --values $microservice/helm-values/micronaut-values.yaml
-  helm install $microservice kubernetes/helm-chart/mongo-for-operator --namespace piper-kt\
+  helm install "${microservice}-mongo" kubernetes/helm-chart/mongo-for-operator --namespace piper-kt\
       --values $microservice/helm-values/mongo-values.yaml
 done
 

@@ -23,7 +23,7 @@ friendshipsServicePaths:
 multimediaServicePaths:
   - /users/[a-zA-Z0-9]+/session
   - /sessions/[a-zA-Z0-9]+/users
-  - /servers/[a-zA-Z0-9]+/channels/[a-zA-Z0-9]+/session
+  - /servers/[a-zA-Z0-9]/channels/[a-zA-Z0-9]/session
 
 serversServicePaths:
   - /servers
