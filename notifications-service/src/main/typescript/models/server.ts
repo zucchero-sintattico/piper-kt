@@ -17,13 +17,18 @@ ChannelSchema.set("toJSON", {
 });
 
 export interface Server {
-  id: string;
+  serverId: string;
   owner: string;
   participants: string[];
   channels: Channel[];
 }
 
 export const ServerSchema = new Schema<Server>({
+  serverId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   owner: {
     type: String,
     required: true,
