@@ -29,6 +29,7 @@ const WebRtcConfiguration: RTCConfiguration = {
 export class SessionHandlerImpl implements SessionHandler {
   private sessionId: string;
   private socket: Socket;
+  private clientUsername: string;
 
   private myStream?: MediaStream;
   private onUserJoin?: UserJoinCallback;
@@ -36,9 +37,10 @@ export class SessionHandlerImpl implements SessionHandler {
 
   private peers: Record<string, RTCPeerConnection> = {};
 
-  constructor(socket: Socket, sessionid: string) {
+  constructor(socket: Socket, sessionid: string, clientUsername: string) {
     this.socket = socket;
     this.sessionId = sessionid;
+    this.clientUsername = clientUsername;
   }
 
   start(
@@ -60,53 +62,49 @@ export class SessionHandlerImpl implements SessionHandler {
   }
 
   private setupProtocolListener() {
-    this.socket.on("user-join", (data) => {
+    this.socket.on("user-join", async (data) => {
       try {
-        const userId = data.userId as string;
-        this.onUserConnected(userId);
+        const userId = data["userId"] as string;
+        await this.onUserConnected(userId);
       } catch (e) {
         console.error(e);
       }
     });
-    this.socket.on("user-left", (data) => {
+    this.socket.on("user-left", async (data) => {
       try {
-        const username = data.userId as string;
-        this.onUserDisconnected(username);
+        const username = data["userId"] as string;
+        await this.onUserDisconnected(username);
       } catch (e) {
         console.error(e);
       }
     });
-    this.socket.on("offer-received", (data) => {
+    this.socket.on("offer-received", async (data) => {
       try {
-        const from = data.from as string;
-        const to = data.to as string;
-        const offer = data.offer as RTCSessionDescriptionInit;
-
-        this.onOffer(offer, from);
+        const from = data["from"] as string;
+        const offer = data["offer"] as RTCSessionDescriptionInit;
+        await this.onOffer(offer, from);
       } catch (e) {
         console.error(e);
       }
     });
-    this.socket.on(
-      "answer-received",
-      (answer: RTCSessionDescriptionInit, from: string) => {
-        try {
-          this.onAnswer(answer, from);
-        } catch (e) {
-          console.error(e);
-        }
+    this.socket.on("answer-received", async (data) => {
+      try {
+        const answer = data["answer"] as RTCSessionDescriptionInit;
+        const from = data["from"] as string;
+        await this.onAnswer(answer, from);
+      } catch (e) {
+        console.error(e);
       }
-    );
-    this.socket.on(
-      "candidate-received",
-      (candidate: RTCIceCandidate, from: string) => {
-        try {
-          this.onIceCandidate(candidate, from);
-        } catch (e) {
-          console.error(e);
-        }
+    });
+    this.socket.on("candidate-received", async (data) => {
+      try {
+        const candidate = data["candidate"] as RTCIceCandidate;
+        const from = data["from"] as string;
+        await this.onIceCandidate(candidate, from);
+      } catch (e) {
+        console.error(e);
       }
-    );
+    });
   }
 
   private async onUserConnected(username: string) {
@@ -126,12 +124,20 @@ export class SessionHandlerImpl implements SessionHandler {
     await this.peers[username].setLocalDescription(offer);
 
     console.log("[SessionHandler] Sending offer to:", username);
-    this.socket.emit("offer", offer, username);
+    this.socket.emit("offer", {
+      offer: offer,
+      to: username,
+      from: this.clientUsername,
+    });
 
     this.peers[username].onicecandidate = (event) => {
       if (event.candidate) {
         console.log("[SessionHandler] Sending ice candidate to:", username);
-        this.socket.emit("candidate", event.candidate, username);
+        this.socket.emit("candidate", {
+          candidate: event.candidate,
+          to: username,
+          from: this.clientUsername,
+        });
       }
     };
   }
@@ -152,7 +158,11 @@ export class SessionHandlerImpl implements SessionHandler {
     this.peers[from].onicecandidate = (event) => {
       if (event.candidate) {
         console.log("[SessionHandler] Sending ice candidate to:", from);
-        this.socket.emit("candidate", event.candidate, from);
+        this.socket.emit("candidate", {
+          candidate: event.candidate,
+          to: from,
+          from: this.clientUsername,
+        });
       }
     };
     this.myStream!.getTracks().forEach((track) => {
@@ -162,7 +172,11 @@ export class SessionHandlerImpl implements SessionHandler {
     const answer = await this.peers[from].createAnswer();
     await this.peers[from].setLocalDescription(answer);
     console.log("[SessionHandler] Sending answer to:", from);
-    this.socket.emit("answer", answer, from);
+    this.socket.emit("answer", {
+      answer: answer,
+      to: from,
+      from: this.clientUsername,
+    });
   }
 
   private async onAnswer(answer: RTCSessionDescriptionInit, from: string) {
