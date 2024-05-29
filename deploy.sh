@@ -27,12 +27,15 @@ kubectl apply -f kubernetes/notifications.yml --namespace piper-kt
 kubectl apply -f kubernetes/frontend.yml --namespace piper-kt
 
 helm install nginx-ingress-controller kubernetes/helm-chart/piper-ingress --namespace piper-kt
-sleep 5
+
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/aws/deploy.yaml
-sleep 60
+
 kubectl get pods -n piper-kt
 kubectl get deploy -n piper-kt
 kubectl get svc -n piper-kt
+
+kubectl wait pod -l app.kubernetes.io/component=controller --for=condition=Ready -n ingress-nginx
+
 kubectl port-forward svc/ingress-nginx-controller 8080:80 -n ingress-nginx
 
 
