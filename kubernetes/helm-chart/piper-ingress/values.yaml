@@ -1,35 +1,56 @@
 usersServicePaths:
-  - /users/[a-zA-Z0-9]
-  - /whoami
-  - /profile
-  - /description
-  - /photo
-  - /auth/register
-  - /auth/login
-  - /oauth/access_token
+  - url: /users/[a-zA-Z0-9-]+
+    type: ImplementationSpecific
+  - url: /whoami
+    type: Prefix
+  - url: /profile
+    type: Prefix
+  - url: /description
+    type: Prefix
+  - url: /photo
+    type: Prefix
+  - url: /auth/register
+    type: Prefix
+  - url: /auth/login
+    type: Prefix
+  - url: /oauth/access_token
+    type: Prefix
 
 notificationsServicePaths:
-  - /notification
-  - /users/[a-zA-Z0-9]+/status
+  - url: /notification
+    type: Prefix
+  - url: /users/[a-zA-Z0-9-]+/status
+    type: ImplementationSpecific
 
 friendshipsServicePaths:
-  - /friends
-  - /friends/requests
-  - /friends/requests/accept
-  - /friends/requests/decline
-  - /friends/requests/send
-  - /users/[a-zA-Z0-9]+/messages
+  - url: /friends
+    type: Prefix
+  - url: /friends/requests
+    type: Prefix
+  - url: /friends/requests/accept
+    type: Prefix
+  - url: /friends/requests/decline
+    type: Prefix
+  - url: /friends/requests/send
+    type: Prefix
+  - url: /users/[a-zA-Z0-9-]+/messages
+    type: ImplementationSpecific
 
 multimediaServicePaths:
-  - /users/[a-zA-Z0-9]+/session
-  - /sessions/[a-zA-Z0-9]+/users
-  - /servers/[a-zA-Z0-9]/channels/[a-zA-Z0-9]/session
+  - url: /servers/[a-zA-Z0-9-]+/channels/[a-zA-Z0-9-]+/session
+    type: ImplementationSpecific
+  - url: /users/[a-zA-Z0-9-]+/session
+    type: ImplementationSpecific
+  - url: /sessions/[a-zA-Z0-9-]+/users
+    type: ImplementationSpecific
+
 
 serversServicePaths:
-  - /servers
-  - /servers/[a-zA-Z0-9]
-  - /servers/[a-zA-Z0-9]+/channels
-  - /servers/[a-zA-Z0-9]+/channels/[a-zA-Z0-9]
-  - /servers/[a-zA-Z0-9]+/channels/[a-zA-Z0-9]+/messages
-  - /servers/[a-zA-Z0-9]+/users
-  - /servers/[a-zA-Z0-9]+/users/[a-zA-Z0-9]
+  - url: /servers
+    type: Prefix
+  - url: /servers/[a-zA-Z0-9-]+/channels/[a-zA-Z0-9-]+/messages
+    type: ImplementationSpecific
+  - url: /servers/[a-zA-Z0-9-]+/users
+    type: ImplementationSpecific
+  - url: /servers/[a-zA-Z0-9-]+/users/[a-zA-Z0-9-]+
+    type: ImplementationSpecific

@@ -17,8 +17,8 @@ spec:
       http:
         paths:
           {{- range $i, $path := .Values.notificationsServicePaths }}
-          - pathType: ImplementationSpecific
-            path: "{{ $path }}"
+          - pathType: {{ $path.type }}
+            path: {{ $path.url }}
             backend:
               service:
                 name: notifications-service
@@ -26,8 +26,8 @@ spec:
                   number: 8080
           {{- end }}
           {{- range $i, $path := .Values.usersServicePaths }}
-          - pathType: ImplementationSpecific
-            path: "{{ $path }}"
+          - pathType: {{ $path.type }}
+            path: {{ $path.url }}
             backend:
               service:
                 name: users-service
@@ -35,8 +35,8 @@ spec:
                   number: 8080
           {{- end }}
           {{- range $i, $path := .Values.friendshipsServicePaths }}
-          - pathType: ImplementationSpecific
-            path: "{{ $path }}"
+          - pathType: {{ $path.type }}
+            path: {{ $path.url }}
             backend:
               service:
                 name: friendships-service
@@ -44,8 +44,8 @@ spec:
                   number: 8080
           {{- end }}
           {{- range $i, $path := .Values.multimediaServicePaths }}
-          - pathType: ImplementationSpecific
-            path: "{{ $path }}"
+          - pathType: {{ $path.type }}
+            path: {{ $path.url }}
             backend:
               service:
                 name: multimedia-service
@@ -53,8 +53,8 @@ spec:
                   number: 8080
           {{- end }}
           {{- range $i, $path := .Values.serversServicePaths }}
-          - pathType: ImplementationSpecific
-            path: "{{ $path }}"
+          - pathType: {{ $path.type }}
+            path: {{ $path.url }}
             backend:
               service:
                 name: servers-service
