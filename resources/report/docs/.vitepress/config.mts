@@ -45,6 +45,11 @@ const config = defineConfig({
             ]
           },
         ]
+      },
+      {
+        items: [
+          { text: 'Benchmark', link: '/07-benchmarking/07-01-benchmark', },
+        ]
       }
     ],
 
