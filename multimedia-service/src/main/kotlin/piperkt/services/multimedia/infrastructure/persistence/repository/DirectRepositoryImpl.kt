@@ -6,9 +6,11 @@ import piperkt.services.multimedia.domain.direct.DirectId
 import piperkt.services.multimedia.domain.direct.DirectRepository
 import piperkt.services.multimedia.domain.user.Username
 import piperkt.services.multimedia.infrastructure.Utils.asNullable
-import piperkt.services.multimedia.infrastructure.persistence.model.DirectEntity
 import piperkt.services.multimedia.infrastructure.persistence.model.DirectEntityRepository
+import piperkt.services.multimedia.presentation.DirectMapper.toDomain
+import piperkt.services.multimedia.presentation.DirectMapper.toEntity
 
+/** Repository implementation for [Direct] */
 @Singleton
 class DirectRepositoryImpl(private val directEntityRepository: DirectEntityRepository) :
     DirectRepository {
@@ -21,7 +23,7 @@ class DirectRepositoryImpl(private val directEntityRepository: DirectEntityRepos
     }
 
     override fun save(entity: Direct) {
-        directEntityRepository.save(DirectEntity.fromDomain(entity))
+        directEntityRepository.save(entity.toEntity())
     }
 
     override fun deleteById(id: DirectId): Direct? {
@@ -31,7 +33,7 @@ class DirectRepositoryImpl(private val directEntityRepository: DirectEntityRepos
     }
 
     override fun update(entity: Direct) {
-        directEntityRepository.update(DirectEntity.fromDomain(entity))
+        directEntityRepository.update(entity.toEntity())
     }
 
     override fun deleteAll() {

@@ -7,9 +7,9 @@ import jakarta.annotation.PostConstruct
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.application.session.SessionService.Command.JoinSession
 import piperkt.services.multimedia.application.session.SessionService.Command.LeaveSession
+import piperkt.services.multimedia.configuration.SocketIOConfiguration
 import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.domain.user.Username
-import piperkt.services.multimedia.infrastructure.implementation.SocketIOConfiguration
 import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolEvent.*
 import piperkt.services.multimedia.interfaces.websockets.MultimediaProtocolMessage.UserJoined
 
@@ -83,14 +83,14 @@ open class MultimediaSocketIOServer(
         this.disconnect()
     }
 
-    fun onConnect(client: SocketIOClient) {
+    private fun onConnect(client: SocketIOClient) {
 
         val username = client.getUsername() ?: return client.notAuthenticated()
         clients[username] = client
         println("User $username connected")
     }
 
-    fun onDisconnect(client: SocketIOClient) {
+    private fun onDisconnect(client: SocketIOClient) {
         val username = client.getUsername() ?: return client.notAuthenticated()
         clients.remove(username)
         println("User $username disconnected")
@@ -103,7 +103,7 @@ open class MultimediaSocketIOServer(
         }
     }
 
-    fun onJoin(
+    private fun onJoin(
         client: SocketIOClient,
         joinMessage: MultimediaProtocolMessage.JoinMessage,
     ) {
@@ -117,7 +117,7 @@ open class MultimediaSocketIOServer(
         println("User $username joined session $sessionId")
     }
 
-    fun onOffer(
+    private fun onOffer(
         offerMessage: MultimediaProtocolMessage.OfferMessage,
     ) {
         val to = offerMessage.to
@@ -126,7 +126,7 @@ open class MultimediaSocketIOServer(
         toClient.sendEvent(OFFER_RECEIVED.event, offerMessage)
     }
 
-    fun onAnswer(
+    private fun onAnswer(
         answerMessage: MultimediaProtocolMessage.AnswerMessage,
     ) {
         val to = answerMessage.to
@@ -135,7 +135,7 @@ open class MultimediaSocketIOServer(
         toClient.sendEvent(ANSWER_RECEIVED.event, answerMessage)
     }
 
-    fun onIceCandidate(
+    private fun onIceCandidate(
         iceCandidateMessage: MultimediaProtocolMessage.IceCandidateMessage,
     ) {
         val to = iceCandidateMessage.to

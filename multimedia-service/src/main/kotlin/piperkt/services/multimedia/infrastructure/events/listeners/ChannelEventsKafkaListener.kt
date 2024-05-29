@@ -6,6 +6,11 @@ import piperkt.events.ChannelCreatedEvent
 import piperkt.events.ChannelDeletedEvent
 import piperkt.services.multimedia.application.server.ChannelEventsListener
 
+/**
+ * Listens to channel events from Kafka.
+ *
+ * @param channelEventsListener The listener to delegate the events to.
+ */
 @KafkaListener
 class ChannelEventsKafkaListener(private val channelEventsListener: ChannelEventsListener) {
     @Topic(ChannelCreatedEvent.TOPIC)

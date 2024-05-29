@@ -9,6 +9,10 @@ import piperkt.services.multimedia.domain.direct.DirectId
 import piperkt.services.multimedia.domain.direct.DirectRepository
 import piperkt.services.multimedia.domain.user.Username
 
+/**
+ * Listens for events related to direct messages and updates the direct message repository
+ * accordingly.
+ */
 open class DirectEventsListener(
     private val directRepository: DirectRepository,
     private val sessionService: SessionService,

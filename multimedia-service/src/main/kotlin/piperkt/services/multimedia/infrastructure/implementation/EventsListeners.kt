@@ -8,6 +8,7 @@ import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.domain.direct.DirectRepository
 import piperkt.services.multimedia.domain.server.ServerRepository
 
+/** Instantiates the event listeners. */
 object EventsListeners {
     @Singleton
     class ServerEventListenerService(

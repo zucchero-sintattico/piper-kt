@@ -9,6 +9,11 @@ import piperkt.events.ServerUserKickedEvent
 import piperkt.events.ServerUserRemovedEvent
 import piperkt.services.multimedia.application.server.ServerEventsListener
 
+/**
+ * Listens to server events from Kafka.
+ *
+ * @param serverEventsListener The listener to delegate the events to.
+ */
 @KafkaListener
 class ServerEventsKafkaListener(private val serverEventsListener: ServerEventsListener) {
     @Topic(ServerCreatedEvent.TOPIC)

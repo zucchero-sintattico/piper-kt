@@ -1,8 +1,9 @@
-package piperkt.services.multimedia.infrastructure.implementation
+package piperkt.services.multimedia.configuration
 
 import io.micronaut.context.annotation.ConfigurationProperties
 import kotlin.random.Random
 
+/** Configuration for the Socket.IO server. */
 @ConfigurationProperties("socketio")
 class SocketIOConfiguration {
     var port: Int = Random.nextInt(MIN_RANDOM_PORT, MAX_RANDOM_PORT)
