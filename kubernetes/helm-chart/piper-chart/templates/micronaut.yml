@@ -20,25 +20,26 @@ spec:
         release: {{ .Release.Name }}
         heritage: {{ .Release.Service }}
     spec:
-      serviceAccountName: micronaut-service # <1>
+      serviceAccountName: micronaut-service
       containers:
         - name: {{.Values.serviceName}}
           image: zuccherosintattico/piperkt-{{.Values.serviceName}}:test
-          imagePullPolicy: Always # <3>
+          imagePullPolicy: Always
           ports:
-            {{- range .Values.containersPorts }}
-            - containerPort: {{.containerPort}}
-            {{- end }}
+          {{- range .Values.containersPorts }}
+            - name: {{.name}}
+              containerPort: {{.containerPort}} 
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /health/readiness
-              port: {{.Values.port}}
+              port: http
             initialDelaySeconds: 5
             timeoutSeconds: 3
           livenessProbe:
             httpGet:
               path: /health/liveness
-              port: {{.Values.port}}
+              port: http
             initialDelaySeconds: 5
             timeoutSeconds: 3
             failureThreshold: 10
