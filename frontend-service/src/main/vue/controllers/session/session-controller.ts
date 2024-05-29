@@ -6,6 +6,7 @@ import {
   GetDirectSessionIdApi,
   GetUsersInSession,
 } from "@api/multimedia/session";
+import { useUserStore } from "@/stores/user";
 
 export interface SessionController {
   getUsersInSession(sessionId: string): Promise<string[]>;
@@ -24,6 +25,7 @@ export class SessionControllerImpl
   implements SessionController
 {
   private token: string;
+  private userStore = useUserStore();
 
   constructor(token: string) {
     super();
@@ -71,7 +73,7 @@ export class SessionControllerImpl
   ): Promise<SessionHandler> {
     const socket = await this.createSocket();
     const sessionId = await this.getChannelSessionId(serverId, channelId);
-    return new SessionHandlerImpl(socket, sessionId);
+    return new SessionHandlerImpl(socket, sessionId, this.userStore.username);
   }
 
   async getDirectSessionId(username: string): Promise<string> {
@@ -88,7 +90,7 @@ export class SessionControllerImpl
   async joinDirectSession(username: string): Promise<SessionHandler> {
     const socket = await this.createSocket();
     const sessionId = await this.getDirectSessionId(username);
-    return new SessionHandlerImpl(socket, sessionId);
+    return new SessionHandlerImpl(socket, sessionId, this.userStore.username);
   }
 
   async getUsersInSession(sessionId: string): Promise<string[]> {

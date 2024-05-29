@@ -71,6 +71,8 @@ open class MultimediaSocketIOServer(
     }
 
     private fun SocketIOClient.getUsername(): String? {
+        println("Handshake data: ${this.handshakeData}")
+        println("Headers: ${this.handshakeData.httpHeaders}")
         val token = this.handshakeData.httpHeaders.get("authToken")
         return token
     }
