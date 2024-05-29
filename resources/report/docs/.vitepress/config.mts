@@ -20,7 +20,17 @@ const config = defineConfig({
           { text: 'Introduction', link: '/01-introduction', },
           { text: 'Requirements', link: '/02-requirements', },
           { text: 'Design', link: '/03-design', },
-          { text: 'Implementation', link: '/04-implementation', },
+        ]
+      },
+      {
+        items: [
+          {
+            text: 'Implementation', link: "/04-implementation/04-00-index", collapsed: true,
+            items: [
+              { text: 'Microservices', link: '/04-implementation/04-01-implementation', },
+              { text: 'Multiplatform', link: '/04-implementation/04-02-multiplatform', },
+            ]
+          },
         ]
       },
       {
