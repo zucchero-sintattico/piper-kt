@@ -155,3 +155,36 @@ plugins {
 
 This plugin add gradle lifecycle tasks like `build` and `check` to the Typescript project, in order to easy integrate typescript projects (notifications, frontend) into build flow.
 
+### Additional tasks
+
+The [*Micronaut Gradle Plugin*](https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/) used in micronaut subprojects, adds support for docker image context creation, docker file, and other related things.
+
+In order to Build the Docker image are created similar tasks for non micronaut projects, each one with specific steps given the different build flow.
+
+In particular the tasks are `buildLayers` and `dockerfile`.
+
+Here a example:
+
+```kotlin
+tasks.named("buildLayers") {
+    doLast {
+        copy {
+            from("build/dist")
+            into("build/docker/main/dist")
+        }
+        copy {
+            from("node_modules")
+            into("build/docker/main/node_modules")
+        }
+    }
+}
+
+tasks.register("dockerfile") {
+    doLast {
+        copy {
+            from("Dockerfile")
+            into("build/docker/main")
+        }
+    }
+}
+```
