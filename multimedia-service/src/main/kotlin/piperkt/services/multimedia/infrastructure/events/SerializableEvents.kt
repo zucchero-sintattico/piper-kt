@@ -18,6 +18,10 @@ import piperkt.events.ServerUserRemovedEvent
 import piperkt.events.SessionCreatedEvent
 import piperkt.events.SessionDeletedEvent
 
+/**
+ * This object is used to import all the events that can be serialized. This is necessary to avoid
+ * reflection issues when serializing and deserializing events.
+ */
 @SerdeImport(ChannelCreatedEvent::class)
 @SerdeImport(ChannelDeletedEvent::class)
 @SerdeImport(ChannelUpdatedEvent::class)

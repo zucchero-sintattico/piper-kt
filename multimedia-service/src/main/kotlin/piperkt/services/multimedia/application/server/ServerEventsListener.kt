@@ -2,7 +2,13 @@ package piperkt.services.multimedia.application.server
 
 import piperkt.common.events.EventListener
 import piperkt.common.utils.orThrow
-import piperkt.events.*
+import piperkt.events.ServerCreatedEvent
+import piperkt.events.ServerDeletedEvent
+import piperkt.events.ServerEvent
+import piperkt.events.ServerUpdatedEvent
+import piperkt.events.ServerUserAddedEvent
+import piperkt.events.ServerUserKickedEvent
+import piperkt.events.ServerUserRemovedEvent
 import piperkt.services.multimedia.application.session.SessionService
 import piperkt.services.multimedia.application.session.SessionService.Command.AddAllowedUser
 import piperkt.services.multimedia.application.session.SessionService.Command.RemoveAllowedUser
@@ -12,6 +18,7 @@ import piperkt.services.multimedia.domain.server.ServerId
 import piperkt.services.multimedia.domain.server.ServerRepository
 import piperkt.services.multimedia.domain.user.Username
 
+/** Listens for events related to servers and updates the server repository accordingly. */
 open class ServerEventsListener(
     private val serverRepository: ServerRepository,
     private val sessionService: SessionService,

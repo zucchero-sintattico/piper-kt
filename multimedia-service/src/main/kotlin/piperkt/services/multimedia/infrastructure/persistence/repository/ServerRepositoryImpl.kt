@@ -5,9 +5,11 @@ import piperkt.services.multimedia.domain.server.Server
 import piperkt.services.multimedia.domain.server.ServerId
 import piperkt.services.multimedia.domain.server.ServerRepository
 import piperkt.services.multimedia.infrastructure.Utils.asNullable
-import piperkt.services.multimedia.infrastructure.persistence.model.ServerEntity
 import piperkt.services.multimedia.infrastructure.persistence.model.ServerEntityRepository
+import piperkt.services.multimedia.presentation.ServerMapper.toDomain
+import piperkt.services.multimedia.presentation.ServerMapper.toEntity
 
+/** Repository implementation for [Server] */
 @Singleton
 class ServerRepositoryImpl(private val serverEntityRepository: ServerEntityRepository) :
     ServerRepository {
@@ -16,7 +18,7 @@ class ServerRepositoryImpl(private val serverEntityRepository: ServerEntityRepos
     }
 
     override fun save(entity: Server) {
-        serverEntityRepository.save(ServerEntity.fromDomain(entity))
+        serverEntityRepository.save(entity.toEntity())
     }
 
     override fun deleteById(id: ServerId): Server? {
@@ -26,7 +28,7 @@ class ServerRepositoryImpl(private val serverEntityRepository: ServerEntityRepos
     }
 
     override fun update(entity: Server) {
-        serverEntityRepository.update(ServerEntity.fromDomain(entity))
+        serverEntityRepository.update(entity.toEntity())
     }
 
     override fun deleteAll() {

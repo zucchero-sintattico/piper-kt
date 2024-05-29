@@ -21,6 +21,7 @@ import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.domain.session.SessionRepository
 import piperkt.services.multimedia.domain.user.Username
 
+/** Service for managing sessions. */
 open class SessionService(
     private val sessionRepository: SessionRepository,
     private val serverRepository: ServerRepository,
@@ -62,7 +63,7 @@ open class SessionService(
     private fun updateSession(id: SessionId, update: Session.() -> Unit) {
         val session = getSession(id)
         session.update()
-        sessionRepository.save(session)
+        sessionRepository.update(session)
     }
 
     fun addAllowedUser(command: Command.AddAllowedUser) {

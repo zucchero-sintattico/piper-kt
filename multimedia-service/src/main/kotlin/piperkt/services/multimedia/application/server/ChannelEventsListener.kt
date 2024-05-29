@@ -16,6 +16,7 @@ import piperkt.services.multimedia.domain.server.ServerErrors
 import piperkt.services.multimedia.domain.server.ServerId
 import piperkt.services.multimedia.domain.server.ServerRepository
 
+/** Listens for events related to channels and updates the server repository accordingly. */
 open class ChannelEventsListener(
     private val serverRepository: ServerRepository,
     private val sessionService: SessionService,

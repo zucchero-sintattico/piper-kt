@@ -5,21 +5,20 @@ import piperkt.services.multimedia.domain.session.Session
 import piperkt.services.multimedia.domain.session.SessionId
 import piperkt.services.multimedia.domain.session.SessionRepository
 import piperkt.services.multimedia.infrastructure.Utils.asNullable
-import piperkt.services.multimedia.infrastructure.persistence.model.SessionEntity
 import piperkt.services.multimedia.infrastructure.persistence.model.SessionEntityRepository
+import piperkt.services.multimedia.presentation.SessionMapper.toDomain
+import piperkt.services.multimedia.presentation.SessionMapper.toEntity
 
+/** Repository implementation for [Session] */
 @Singleton
 class SessionRepositoryImpl(private val sessionEntityRepository: SessionEntityRepository) :
     SessionRepository {
     override fun findById(id: SessionId): Session? {
-        println(
-            "SessionRepositoryImpl.findById(${id.value}): ${sessionEntityRepository.findById(id.value)}"
-        )
         return sessionEntityRepository.findById(id.value).asNullable()?.toDomain()
     }
 
     override fun save(entity: Session) {
-        sessionEntityRepository.save(SessionEntity.fromDomain(entity))
+        sessionEntityRepository.save(entity.toEntity())
     }
 
     override fun deleteById(id: SessionId): Session? {
@@ -29,7 +28,7 @@ class SessionRepositoryImpl(private val sessionEntityRepository: SessionEntityRe
     }
 
     override fun update(entity: Session) {
-        sessionEntityRepository.update(SessionEntity.fromDomain(entity))
+        sessionEntityRepository.update(entity.toEntity())
     }
 
     override fun deleteAll() {
