@@ -5,7 +5,8 @@ import piperkt.common.events.EventPublisher
 import kotlin.js.JsExport
 
 /** User domain event. */
-@JsExport sealed interface UserEvent : DomainEvent
+@JsExport
+sealed interface UserEvent : DomainEvent
 
 /**
  * User created event.
@@ -14,7 +15,8 @@ import kotlin.js.JsExport
  * @param description The description of the user.
  * @param profilePicture The profile picture url of the user.
  */
-@JsExport data class UserCreatedEvent(
+@JsExport
+data class UserCreatedEvent(
     val username: String,
     val email: String? = null,
     val description: String? = null,
@@ -32,7 +34,8 @@ import kotlin.js.JsExport
  * @param description The description of the user.
  * @param profilePicture The profile picture of the user.
  */
-@JsExport data class UserUpdatedEvent(
+@JsExport
+data class UserUpdatedEvent(
     val username: String,
     val email: String? = null,
     val description: String? = null,
@@ -43,25 +46,49 @@ import kotlin.js.JsExport
     }
 }
 
-@JsExport data class UserLoggedInEvent(val username: String) : UserEvent {
+/**
+ * User logged in event.
+ *
+ * @param username The username of the user.
+ */
+@JsExport
+data class UserLoggedInEvent(val username: String) : UserEvent {
     companion object {
         const val TOPIC = "user-logged-in"
     }
 }
 
-@JsExport data class UserLoggedOutEvent(val username: String) : UserEvent {
+/**
+ * User logged out event.
+ *
+ * @param username The username of the user.
+ */
+@JsExport
+data class UserLoggedOutEvent(val username: String) : UserEvent {
     companion object {
         const val TOPIC = "user-logged-out"
     }
 }
 
-@JsExport data class UserOnlineEvent(val username: String) : UserEvent {
+/**
+ * User online event.
+ *
+ * @param username The username of the user.
+ */
+@JsExport
+data class UserOnlineEvent(val username: String) : UserEvent {
     companion object {
         const val TOPIC = "user-online"
     }
 }
 
-@JsExport data class UserOfflineEvent(val username: String) : UserEvent {
+/**
+ * User offline event.
+ *
+ * @param username The username of the user.
+ */
+@JsExport
+data class UserOfflineEvent(val username: String) : UserEvent {
     companion object {
         const val TOPIC = "user-offline"
     }

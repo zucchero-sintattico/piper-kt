@@ -1,5 +1,10 @@
 package architecture
 
+/**
+ * Base class for Clean architecture tests.
+ *
+ * @param prefix The prefix of the package names.
+ */
 abstract class CleanArchitectureSpec(prefix: String) : ArchitectureSpec(prefix) {
     private val domainLayer = assertLayer("domain")
     private val applicationLayer = assertLayer("application")

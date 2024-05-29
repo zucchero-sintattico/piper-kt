@@ -4,39 +4,80 @@ import piperkt.common.events.DomainEvent
 import piperkt.common.events.EventPublisher
 import kotlin.js.JsExport
 
-@JsExport sealed interface ServerEvent : DomainEvent
+@JsExport
+sealed interface ServerEvent : DomainEvent
 
-@JsExport data class ServerCreatedEvent(val serverId: String, val owner: String) : ServerEvent {
+/**
+ * Server created event.
+ *
+ * @param serverId The id of the server.
+ * @param owner The owner of the server.
+ */
+@JsExport
+data class ServerCreatedEvent(val serverId: String, val owner: String) : ServerEvent {
     companion object {
         const val TOPIC = "server-created"
     }
 }
 
-@JsExport data class ServerUpdatedEvent(val serverId: String) : ServerEvent {
+/**
+ * Server updated event.
+ *
+ * @param serverId The id of the server.
+ */
+@JsExport
+data class ServerUpdatedEvent(val serverId: String) : ServerEvent {
     companion object {
         const val TOPIC = "server-updated"
     }
 }
 
-@JsExport data class ServerUserAddedEvent(val serverId: String, val username: String) : ServerEvent {
+/**
+ * Server user added event.
+ *
+ * @param serverId The id of the server.
+ * @param username The username of the user.
+ */
+@JsExport
+data class ServerUserAddedEvent(val serverId: String, val username: String) : ServerEvent {
     companion object {
         const val TOPIC = "server-user-added"
     }
 }
 
-@JsExport data class ServerUserRemovedEvent(val serverId: String, val username: String) : ServerEvent {
+/**
+ * Server user removed event.
+ *
+ * @param serverId The id of the server.
+ * @param username The username of the user.
+ */
+@JsExport
+data class ServerUserRemovedEvent(val serverId: String, val username: String) : ServerEvent {
     companion object {
         const val TOPIC = "server-user-removed"
     }
 }
 
-@JsExport data class ServerUserKickedEvent(val serverId: String, val username: String) : ServerEvent {
+/**
+ * Server user kicked event.
+ *
+ * @param serverId The id of the server.
+ * @param username The username of the user.
+ */
+@JsExport
+data class ServerUserKickedEvent(val serverId: String, val username: String) : ServerEvent {
     companion object {
         const val TOPIC = "server-user-kicked"
     }
 }
 
-@JsExport data class ServerDeletedEvent(val serverId: String) : ServerEvent {
+/**
+ * Server deleted event.
+ *
+ * @param serverId The id of the server.
+ */
+@JsExport
+data class ServerDeletedEvent(val serverId: String) : ServerEvent {
     companion object {
         const val TOPIC = "server-deleted"
     }

@@ -19,8 +19,8 @@ import io.swagger.v3.oas.annotations.info.Info
                 )
         )
 )
-object Api
+object Application
 
-fun main(args: Array<String>) {
+fun main(vararg args: String) {
     run(*args)
 }
