@@ -71,18 +71,29 @@ class MultimediaSocketIOServerTest(@Inject private val objectMapper: JsonMapper)
             janeClient.emit(JOIN.event, message.toJson())
         }
 
+        val offer = RTCSessionDescription(type = "offer", sdp = "sdp")
+
         test("should allow client to offer") {
-            val message = OfferMessage(johnId.value, janeId.value, "offer")
+            val message = OfferMessage(johnId.value, janeId.value, offer)
             johnClient.emit(OFFER.event, message.toJson())
         }
 
+        val answer = RTCSessionDescription(type = "answer", sdp = "sdp")
+
         test("should allow client to answer") {
-            val message = AnswerMessage(janeId.value, johnId.value, "answer")
+            val message = AnswerMessage(janeId.value, johnId.value, answer)
             janeClient.emit(ANSWER.event, message.toJson())
         }
 
+        val candidate =
+            RTCIceCandidate(
+                candidate = "candidate",
+                sdpMid = "sdpMid",
+                usernameFragment = "usernameFragment",
+                sdpMLineIndex = 1
+            )
         test("should allow client to send ice candidate") {
-            val message = IceCandidateMessage(johnId.value, janeId.value, "candidate")
+            val message = IceCandidateMessage(johnId.value, janeId.value, candidate)
             johnClient.emit(ICE_CANDIDATE.event, message.toJson())
         }
     })

@@ -2,11 +2,13 @@ package piperkt.services.multimedia.interfaces.websockets
 
 import io.micronaut.serde.annotation.Serdeable
 
+@Serdeable
 data class RTCSessionDescription(
     val sdp: String?,
     val type: String?,
 )
 
+@Serdeable
 data class RTCIceCandidate(
     val candidate: String?,
     val sdpMid: String?,
@@ -30,7 +32,7 @@ sealed interface MultimediaProtocolMessage {
     data class IceCandidateMessage(
         val from: String,
         val to: String,
-        val candidate: RTCIceCandidate
+        val candidate: RTCIceCandidate,
     ) : MultimediaProtocolMessage
 
     @Serdeable data class UserJoined(val userId: String) : MultimediaProtocolMessage
