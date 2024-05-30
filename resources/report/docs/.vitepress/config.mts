@@ -18,8 +18,17 @@ const config = defineConfig({
       {
         items: [
           { text: 'Introduction', link: '/01-introduction', },
-          { text: 'Requirements', link: '/02-requirements', },
           { text: 'Design', link: '/03-design', },
+        ]
+      },
+      {
+        items: [
+          {
+            text: 'Requirements', collapsed: true,
+            items: [
+              { text: 'Business', link: '/02-requirements/02-01-business', },
+            ]
+          },
         ]
       },
       {
