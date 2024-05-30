@@ -109,12 +109,17 @@ open class MultimediaSocketIOServer(
         client: SocketIOClient,
         joinMessage: MultimediaProtocolMessage.JoinMessage,
     ) {
+        println("User ${client.getUsername()} trying to join session ${joinMessage.sessionId}")
         val username = client.getUsername()
         val sessionId = joinMessage.sessionId
         clientToSessionId[username] = sessionId
+        println("Trying to serialize UserJoined")
         val serialized = objectMapper.toJson(UserJoined(username))
+        println("Serialized UserJoined: $serialized")
         roomOf(sessionId).sendEvent(USER_JOIN.event, serialized)
+        println("User $username joined session $sessionId, event sent to room")
         client.joinRoom(sessionId)
+        println("User $username joined room")
         sessionService.joinSession(JoinSession(SessionId(sessionId), Username(username)))
         println("User $username joined session $sessionId")
     }
@@ -123,26 +128,31 @@ open class MultimediaSocketIOServer(
         offerMessage: MultimediaProtocolMessage.OfferMessage,
     ) {
         val to = offerMessage.to
-        println("User ${offerMessage.from} sent offer to $to")
+        println("User ${offerMessage.from} sent offer to $to: ${offerMessage.offer}")
         val toClient = clients[to] ?: return
         toClient.sendEvent(OFFER_RECEIVED.event, offerMessage)
+        println("Offer sent to $to")
     }
 
     private fun onAnswer(
         answerMessage: MultimediaProtocolMessage.AnswerMessage,
     ) {
         val to = answerMessage.to
-        println("User ${answerMessage.from} sent answer to $to")
+        println("User ${answerMessage.from} sent answer to $to: ${answerMessage.answer}")
         val toClient = clients[to] ?: return
         toClient.sendEvent(ANSWER_RECEIVED.event, answerMessage)
+        println("Answer sent to $to")
     }
 
     private fun onIceCandidate(
         iceCandidateMessage: MultimediaProtocolMessage.IceCandidateMessage,
     ) {
         val to = iceCandidateMessage.to
-        println("User ${iceCandidateMessage.from} sent ice candidate to $to")
+        println(
+            "User ${iceCandidateMessage.from} sent ice candidate to $to: ${iceCandidateMessage.candidate}"
+        )
         val toClient = clients[to] ?: return
         toClient.sendEvent(ICE_CANDIDATE_RECEIVED.event, iceCandidateMessage)
+        println("Ice candidate sent to $to")
     }
 }
