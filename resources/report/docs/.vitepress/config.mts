@@ -26,7 +26,9 @@ const config = defineConfig({
           {
             text: 'Requirements', collapsed: true,
             items: [
-              { text: 'Business', link: '/02-requirements/02-01-business', },
+              { text: 'Business requirements', link: '/02-requirements/02-01-business', },
+              { text: 'Functional requirements', link: '/02-requirements/02-02-functional', },
+              { text: 'Non functional requirements', link: '/02-requirements/02-03-non-functional', },
             ]
           },
         ]
