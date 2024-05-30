@@ -1,7 +1,9 @@
 # Deployment Overview
-The deployment process is managed by a shell script named `deploy.sh`. This script is responsible for applying the Kubernetes configuration files to the Kubernetes cluster. The configuration files define the desired state of the cluster, including which applications to run, network settings, and storage options.
+
+The deployment process is managed by a shell script named `deploy.sh`. This script is responsible for applying the Kubernetes configuration files to the Kubernetes cluster.
 
 ## Dependencies
+
 The deployment process relies on several dependencies:
 
 1. **Kubernetes Cluster**: A running Kubernetes cluster is required. This can be a local development cluster (like minikube or kind).
@@ -10,45 +12,55 @@ The deployment process relies on several dependencies:
 
 3. **Helm**: Helm, the package manager for Kubernetes, is used to manage the deployment of certain components, such as MongoDB and Strimzi Kafka Operator.
 
-4. **Configuration Files**: The `kubernetes/` directory should contain all the necessary Kubernetes configuration files. These files may define Deployments, Services, Persistent Volumes, ConfigMaps, and other Kubernetes resources.
-
 ## Operator Deployment
 
-Con operatore si intende un software che estende le funzionalità di Kubernetes, permettendo di definire nuovi tipi di risorse personalizzate. Queste risorse personalizzate possono essere utilizzate per definire le risorse necessarie per l'applicazione, come ad esempio un cluster Kafka o un'istanza di MongoDB.
+By operator, we mean software that extends the functionalities of Kubernetes, allowing the definition of new custom resource types. These custom resources can be used to define the necessary resources for the application.
 
-Sono stati utilizzati i seguenti operatori per la gestione delle risorse:
-- **Strimzi Kafka Operator**: per la gestione di Kafka. Operator Helm chart [here](https://github.com/strimzi/strimzi-kafka-operator/tree/main/helm-charts/helm3/strimzi-kafka-operator).
-- **MongoDB Operator**: per la gestione di MongoDB. Operator Helm chart [here](https://github.com/mongodb/helm-charts/tree/6ddf86b1b00cdd807840de36fc97b91466ee6981/charts/community-operator).
+The following operators have been used for resource management:
 
+- **Strimzi Kafka Operator**: for managing Kafka. Operator Helm chart [here](https://github.com/strimzi/strimzi-kafka-operator/tree/main/helm-charts/helm3/strimzi-kafka-operator).
+- **MongoDB Operator**: for managing MongoDB. Operator Helm chart [here](https://github.com/mongodb/helm-charts/tree/6ddf86b1b00cdd807840de36fc97b91466ee6981/charts/community-operator).
+
+![Operator Deployment](public/schema-Operator.drawio.svg)
 
 ## Ingress Controller
-Per la gestione del traffico in ingresso è stato utilizzato l'Ingress Controller di NGINX. Questo componente è stato installato tramite Helm. L'Ingress Controller è stato configurato per gestire il traffico in ingresso verso i servizi esposti dall'applicazione. Ingess Controller Helm chart [here](https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx).
 
-## Risorse
-Le risorse necessarie all'applicazione sono state definite tramite file di configurazione Kubernetes. Dopo varie prove, è stato costatato che per far girare il sistema in maniera fluida senza considerare repliche, è necessario avere almeno 32GB di RAM a disposizione.
+For managing incoming traffic,has been used the NGINX Ingress Controller. This component was installed using Helm. The Ingress Controller is configured to handle incoming traffic to the services exposed by the application. Ingress Controller Helm chart [here](https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx).
 
-## Dipendenze tra i componenti
-I vari pod tra di loro sono dipeendenti, per esempio i vari microservizi micronaut non possono inviare messaggi senza che Kafka sia in esecuzione. Per il funzionamento di kubenetes però non è necessario che i pods siano avviati seguqndo quest'ordine, Kubernetes si occupa di avviare i pods in maniera indipendente e di riavviarli in caso di crash. In questo modo il deploy è più semplice e resistente a crash dei vari componenti come descritto nella [documentaizone](https://kubernetes.io/docs/concepts/overview/).
+## Resources
 
-## Deploy
-Per effettuare il deploy dell'applicazione è necessario eseguire i seguenti passaggi:
+The resources needed for the application have been defined through Kubernetes configuration files. After various tests, it was found that to run the system smoothly without considering replicas, at least 32GB of RAM is required.
 
-### Prerequisiti
-1. Installare `kubectl` per interagire con il cluster Kubernetes.
-2. Installare `helm`.
-3. Assicurarsi che il cluster Kubernetes sia in esecuzione. Per esempio se si utilizza minikube, eseguire il comando `minikube start --cpus 8 --memory 32000`.
+## Dependencies between Components
 
-### Lanciare il deploy
-1. clone the repository con il comando `git clone https://github.com/zucchero-sintattico/piper-kt.git`
-2. spostarsi nella cartella `cd piper-kt`
-3. eseguire il comando `./deploy.sh` per avviare il processo di deploy.
+The various pods are dependent on each other; for example, the various Micronaut microservices cannot send messages without Kafka. However, for Kubernetes, is not necessary that the pods starting in this order; Kubernetes handles the startup of pods independently and restarts them in case of crashes. This makes the deployment simpler and more resilient to component crashes as described in the [documentation](https://kubernetes.io/docs/concepts/overview/).
 
-Il processo di deploy può richiedere diversi minuti a seconda delle prestazioni del cluster e della connessione internet.
-Alla fine del processo, l'applicazione sarà disponibile all'indirizzo `http://localhost:8080`.
+## Structure
 
-Se il processo di deploy andra a buon fine, sarà possibile vedere i seguenti pod in esecuzione con il comando `kubectl get pods -n piper-kt`:
+![Services Structure](public/schema-Global%20Structure%20Services.drawio.svg)
 
-``` 
+## Deployment Steps
+
+To deploy the application, follow these steps:
+
+### Prerequisites
+
+1. Install `kubectl` to interact with the Kubernetes cluster.
+2. Install `helm`.
+3. Ensure that the Kubernetes cluster is running. For example, if using minikube, run the command `minikube start --cpus 8 --memory 32000`.
+
+### Launch the Deployment
+
+1. Clone the repository with the command `git clone https://github.com/zucchero-sintattico/piper-kt.git`
+2. Navigate to the folder `cd piper-kt`
+3. Run the command `./deploy.sh` to start the deployment process.
+
+The deployment process may take several minutes depending on the cluster's performance and internet connection.
+At the end of the process, the application will be available at `http://localhost:8080`.
+
+If the deployment process is successful, you should see the following pods running with the command `kubectl get pods -n piper-kt`:
+
+```Shell
 NAME                                        READY   STATUS     RESTARTS    AGE
 cluster-broker-0                            1/1     Running    ...         ...
 cluster-controller-1                        1/1     Running    ...         ...
@@ -68,9 +80,8 @@ users-mongo-0                               1/2     Running    ...         ...
 users-service-xxx                           1/1     Running    ...         ...
 ```
 
+Other useful commands to monitor the cluster status are:
 
-Altri comandi utili per monitorare lo stato del cluster sono:
-- `kubectl get pods -n piper-kt` per vedere i pod in esecuzione.
-- `kubectl get services -n piper-kt` per vedere i servizi esposti.
-- `kubectl describe ingress` per vedere le configurazioni di ingress.
-
+- `kubectl get pods -n piper-kt` to see the running pods.
+- `kubectl get services -n piper-kt` to see the exposed services.
+- `kubectl describe ingress` to see the ingress configurations.
