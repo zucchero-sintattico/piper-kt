@@ -40,6 +40,7 @@ const config = defineConfig({
             items: [
               { text: 'Microservices', link: '/04-implementation/04-01-implementation', },
               { text: 'Multiplatform', link: '/04-implementation/04-02-multiplatform', },
+              { text: 'Experiments', link: '/04-implementation/04-03-experiments', },
             ]
           },
         ]
