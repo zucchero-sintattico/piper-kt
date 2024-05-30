@@ -1,19 +1,5 @@
 # Implementation
 
-## Gradle Project Hierarchy
-
-TODO: Talk about build logic
-
-### Kotlin base
-
-### Kotlin Multiplatform
-
-### Non Micronaut Project
-
-### Micronaut Base
-
-### Micronaut Full
-
 ## Microservices Implementation
 
 ### Domain Level

@@ -132,6 +132,28 @@ plugins {
 }
 ```
 
+### Actual configuration
+
+The shared build logic is defined in the `build-logic` project, and applied in the `settings.gradle.kts` file of the project.
+
+Here the conventions plugins with hierarchy:
+
+```mermaid
+graph TD
+    KC[kotlin-conventions]
+    KB[kotlin-jvm] -->|extends| KC
+    MB[micronaut-base] -->|extends| KB
+    MF[micronaut-full] -->|extends| MB
+    KMP[kotlin-multiplatform] -->|extends| KC
+    NMP[non-micronaut-project]
+```
+- `kotlin-conventions`: define a common conventions for Kotlin projects configuration such as formatting.
+- `kotlin-jvm`: define a basic Kotlin *JVM* project configuration, extending with testing framework.
+- `micronaut-base`: define a basic Micronaut project configuration, with Micronaut plugin, and some common dependencies.
+- `micronaut-full`: add some additional dependencies and configurations to `micronaut-base`, commonly used in project's modules.
+- `kotlin-multiplatform`: define a basic Kotlin *Multiplatform* project configuration, with formatting, linting, and testing framework.
+- `non-micronaut-project`: here are defined tasks, used during the build process, for projects that are not based on Micronaut.
+
 ## Typescript Gradle Plugin
 
 Some sub projects are written in Typescript, so, for a didactic purpose, it's been create a Gradle plugin to manage the Typescript build.
