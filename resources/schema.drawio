@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-05-30T09:29:37.435Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15" etag="0ZgEno6njokV_HuT9ALm" version="24.4.10" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2024-05-30T09:58:00.751Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15" etag="nXE5aP8Rqoh2p_hRAkSy" version="24.4.10" type="github" pages="2">
   <diagram name="Packages" id="Kdx6LkfQ9gAR5vzQSLro">
     <mxGraphModel dx="701" dy="430" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -74,7 +74,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="bgms755lfvjANmWSMPIe" name="Business Requirements">
-    <mxGraphModel dx="39" dy="1038" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="-638" dy="623" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -82,7 +82,7 @@
           <mxGeometry x="2075.75" y="1720" width="213.5" height="290" as="geometry" />
         </mxCell>
         <mxCell id="dKAffLGj6Cgi2eWVaMyo-2" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="2722.25" y="1520" width="213.5" height="220" as="geometry" />
+          <mxGeometry x="2722.25" y="1520" width="213.5" height="300" as="geometry" />
         </mxCell>
         <mxCell id="dKAffLGj6Cgi2eWVaMyo-3" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="2052.25" y="1407.5" width="213.5" height="220" as="geometry" />
@@ -473,6 +473,15 @@
         </mxCell>
         <mxCell id="dKAffLGj6Cgi2eWVaMyo-107" value="Signup" style="ellipse;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
           <mxGeometry x="2088" y="340" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="dKAffLGj6Cgi2eWVaMyo-108" value="Leave the server" style="ellipse;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="2759" y="1730" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="dKAffLGj6Cgi2eWVaMyo-109" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="dKAffLGj6Cgi2eWVaMyo-108">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2669" y="1674.71" as="sourcePoint" />
+            <mxPoint x="2759" y="1674.71" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
