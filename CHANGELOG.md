@@ -1,3 +1,32 @@
+## [8.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v7.6.0...v8.0.0) (2024-05-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* **multimedia:** completed integration
+
+### Features
+
+* **helm:** add servicePorts configuration to helm values files for consistency and better management of service ports across microservices ([eca975b](https://github.com/zucchero-sintattico/piper-kt/commit/eca975bd49e26f02c39b3d8fdce73adbb2abf7d1))
+* **kube:** add undeploy script ([8504dc4](https://github.com/zucchero-sintattico/piper-kt/commit/8504dc44177db823ae1f0ac4dc52516cf7228926))
+* **kubernetes:** add resource limits and requests for CPU and memory in frontend and notifications services to optimize resource allocation and improve performance ([fb0ab19](https://github.com/zucchero-sintattico/piper-kt/commit/fb0ab194791abeb824f32ea7da56ed3bd9ec5dc3))
+* **multimedia:** added serializers for events ([c1a1df8](https://github.com/zucchero-sintattico/piper-kt/commit/c1a1df8d204a187a7e86385e1a431c2514389839))
+* **multimedia:** completed integration ([4229f63](https://github.com/zucchero-sintattico/piper-kt/commit/4229f633ba6e128d088a666c586ff5ea54ae6bf0))
+
+
+### Bug Fixes
+
+* **helm-chart:** using port naming for health ([ab4fafe](https://github.com/zucchero-sintattico/piper-kt/commit/ab4fafe7520ef16debd8a11fbfaf508426dcfa94))
+* **kubernetes-ingress:** adjusted regex ([53ad49e](https://github.com/zucchero-sintattico/piper-kt/commit/53ad49ef679c1970e20180b828079dde14d924bc))
+* **kubernetes:** adjusted deploy script ([96750c7](https://github.com/zucchero-sintattico/piper-kt/commit/96750c781f332b003d38db57e131ec8a543a8860))
+* **multimedia-kubernetes:** fixed path in kubernetes and token retrieve in multimedia service ([715b96c](https://github.com/zucchero-sintattico/piper-kt/commit/715b96c58908414b05c26642e7a43e8099ae2965))
+* **multimedia:** adjusted kafka client ([79af307](https://github.com/zucchero-sintattico/piper-kt/commit/79af3075b09b9f4ba4dbdb751a137988c36751ca))
+* **multimedia:** adjusted socket service with eager initialization ([63ec86a](https://github.com/zucchero-sintattico/piper-kt/commit/63ec86a7086c0070a4e47b5fd0177f02f1da21e9))
+* **multimedia:** adjusted socketio port ([ac236ce](https://github.com/zucchero-sintattico/piper-kt/commit/ac236ce10b639220854016a7782492df200a948f))
+* **multimedia:** fixed architecture test and error ([7ab8e4d](https://github.com/zucchero-sintattico/piper-kt/commit/7ab8e4d70f553c4388fb7a400001120f4c539c1b))
+* **multimedia:** fixed tests ([dfcb10d](https://github.com/zucchero-sintattico/piper-kt/commit/dfcb10d40f61503a7d91b06cfc4b4abdcb4e4e52))
+* **notifications:** servers id cannot be used as MongoId ([c09a23a](https://github.com/zucchero-sintattico/piper-kt/commit/c09a23a78266d4d1936b665f549b12a0b1e15936))
+
 ## [7.6.0](https://github.com/zucchero-sintattico/piper-kt/compare/v7.5.1...v7.6.0) (2024-05-25)
 
 
