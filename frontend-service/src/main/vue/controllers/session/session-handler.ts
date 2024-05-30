@@ -16,12 +16,27 @@ export interface SessionHandler {
 const WebRtcConfiguration: RTCConfiguration = {
   iceServers: [
     {
-      urls: "stun:localhost:3478",
+      urls: "stun:stun.relay.metered.ca:80",
     },
     {
-      urls: "turn:localhost:5349",
-      username: "coturn",
-      credential: "coturn-password",
+      urls: "turn:standard.relay.metered.ca:80",
+      username: "a11c5588067f957f8ac7c961",
+      credential: "+XRUMIx/UlxBHGZK",
+    },
+    {
+      urls: "turn:standard.relay.metered.ca:80?transport=tcp",
+      username: "a11c5588067f957f8ac7c961",
+      credential: "+XRUMIx/UlxBHGZK",
+    },
+    {
+      urls: "turn:standard.relay.metered.ca:443",
+      username: "a11c5588067f957f8ac7c961",
+      credential: "+XRUMIx/UlxBHGZK",
+    },
+    {
+      urls: "turns:standard.relay.metered.ca:443?transport=tcp",
+      username: "a11c5588067f957f8ac7c961",
+      credential: "+XRUMIx/UlxBHGZK",
     },
   ],
 };
@@ -64,7 +79,9 @@ export class SessionHandlerImpl implements SessionHandler {
   private setupProtocolListener() {
     this.socket.on("user-join", async (data) => {
       try {
-        const userId = data["userId"] as string;
+        console.log("[SessionHandler] User joined:", data);
+        const parsed = JSON.parse(data);
+        const userId = parsed["userId"] as string;
         await this.onUserConnected(userId);
       } catch (e) {
         console.error(e);
@@ -72,7 +89,9 @@ export class SessionHandlerImpl implements SessionHandler {
     });
     this.socket.on("user-left", async (data) => {
       try {
-        const username = data["userId"] as string;
+        console.log("[SessionHandler] User left:", data);
+        const parsed = JSON.parse(data);
+        const username = parsed["userId"] as string;
         await this.onUserDisconnected(username);
       } catch (e) {
         console.error(e);
@@ -80,8 +99,9 @@ export class SessionHandlerImpl implements SessionHandler {
     });
     this.socket.on("offer-received", async (data) => {
       try {
-        const from = data["from"] as string;
+        console.log("[SessionHandler] Received offer:", data);
         const offer = data["offer"] as RTCSessionDescriptionInit;
+        const from = data["from"] as string;
         await this.onOffer(offer, from);
       } catch (e) {
         console.error(e);
@@ -89,6 +109,7 @@ export class SessionHandlerImpl implements SessionHandler {
     });
     this.socket.on("answer-received", async (data) => {
       try {
+        console.log("[SessionHandler] Received answer:", data);
         const answer = data["answer"] as RTCSessionDescriptionInit;
         const from = data["from"] as string;
         await this.onAnswer(answer, from);
@@ -98,6 +119,7 @@ export class SessionHandlerImpl implements SessionHandler {
     });
     this.socket.on("candidate-received", async (data) => {
       try {
+        console.log("[SessionHandler] Received ice candidate:", data);
         const candidate = data["candidate"] as RTCIceCandidate;
         const from = data["from"] as string;
         await this.onIceCandidate(candidate, from);
@@ -125,7 +147,10 @@ export class SessionHandlerImpl implements SessionHandler {
 
     console.log("[SessionHandler] Sending offer to:", username);
     this.socket.emit("offer", {
-      offer: offer,
+      offer: JSON.stringify({
+        type: offer.type,
+        sdp: offer.sdp,
+      }),
       to: username,
       from: this.clientUsername,
     });
@@ -134,7 +159,7 @@ export class SessionHandlerImpl implements SessionHandler {
       if (event.candidate) {
         console.log("[SessionHandler] Sending ice candidate to:", username);
         this.socket.emit("candidate", {
-          candidate: event.candidate,
+          candidate: JSON.stringify(event.candidate),
           to: username,
           from: this.clientUsername,
         });
@@ -159,7 +184,7 @@ export class SessionHandlerImpl implements SessionHandler {
       if (event.candidate) {
         console.log("[SessionHandler] Sending ice candidate to:", from);
         this.socket.emit("candidate", {
-          candidate: event.candidate,
+          candidate: JSON.stringify(event.candidate),
           to: from,
           from: this.clientUsername,
         });
@@ -173,7 +198,10 @@ export class SessionHandlerImpl implements SessionHandler {
     await this.peers[from].setLocalDescription(answer);
     console.log("[SessionHandler] Sending answer to:", from);
     this.socket.emit("answer", {
-      answer: answer,
+      answer: JSON.stringify({
+        type: answer.type,
+        sdp: answer.sdp,
+      }),
       to: from,
       from: this.clientUsername,
     });

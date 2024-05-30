@@ -15,7 +15,12 @@ import piperkt.services.multimedia.presentation.DirectMapper.toEntity
 class DirectRepositoryImpl(private val directEntityRepository: DirectEntityRepository) :
     DirectRepository {
     override fun findByUsers(users: Set<Username>): Direct? {
-        return directEntityRepository.findByUsers(users.map { it.value }.toSet())?.toDomain()
+        val first = directEntityRepository.findByUsers(users.map { it.value }.toSet())?.toDomain()
+        val second =
+            directEntityRepository
+                .findByUsers(users.map { it.value }.reversed().toSet())
+                ?.toDomain()
+        return first ?: second
     }
 
     override fun findById(id: DirectId): Direct? {
