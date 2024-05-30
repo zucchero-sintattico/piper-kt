@@ -1,6 +1,5 @@
 plugins {
-    id("kotlin-base")
-    id("org.jetbrains.kotlin.jvm")
+    id("kotlin-jvm")
     id("org.jetbrains.kotlin.plugin.allopen")
     id("com.google.devtools.ksp")
     id("com.github.johnrengelman.shadow")

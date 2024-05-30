@@ -1,5 +1,5 @@
 plugins {
-    id("kotlin-base")
+    id("kotlin-jvm")
     id("java-test-fixtures")
 }
 
