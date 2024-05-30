@@ -17,7 +17,8 @@ const config = defineConfig({
     sidebar: [
       {
         items: [
-          { text: 'Introduction', link: '/01-introduction', },
+          { text: 'Introduction', link: '/01-introduction/01-01-introduction', },
+          { text: 'Knowledge Crunching', link: '/01-introduction/01-02-knowledge-crunching', },
           { text: 'Design', link: '/03-design', },
         ]
       },
