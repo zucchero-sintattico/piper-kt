@@ -59,6 +59,7 @@ const config = defineConfig({
       },
       {
         items: [
+          { text: 'Deployment', link: '/06-deploy', },
           { text: 'Benchmark', link: '/07-benchmarking/07-01-benchmark', },
         ]
       }
