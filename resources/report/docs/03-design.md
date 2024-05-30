@@ -1,5 +1,13 @@
 # Design
 
+## Clean Architecture
+
+TODO: Add content
+
+## Framework on the edge
+
+TODO: Add content
+
 ## Microservices Design
 
 As mentioned in the previous sections, the development of the business logic was guided from the outset, by the principles of clean architecture.

@@ -1,5 +1,19 @@
 # Implementation
 
+## Gradle Project Hierarchy
+
+TODO: Talk about build logic
+
+### Kotlin base
+
+### Kotlin Multiplatform
+
+### Non Micronaut Project
+
+### Micronaut Base
+
+### Micronaut Full
+
 ## Microservices Implementation
 
 ### Domain Level
@@ -119,7 +133,6 @@ In this level, we have the http controllers, which are responsible for receiving
 
 Every controller has its own Api, which is composed of the request and response data classes, and each controller methods is defined for a specific endpoint.
 
-
 ```kotlin
 // Example of Server http controller API
 @Secured(SecurityRule.IS_AUTHENTICATED)
@@ -170,7 +183,6 @@ Regarding error handling, as you can notice, we are using the `getOrThrow()` met
 
 Thanks to Micronaut Framework, we can easily define a specific error handler once, and then it will be used for all the controllers in the application.
 
-
 ```kotlin
 @Produces
 @Singleton
@@ -196,14 +208,13 @@ class ServerNotFound :
 
 In this case, we defined a specific error handler for the `ServerNotFoundExceptionException`, which returns a `NOT_FOUND` (404) status code to the client.
 
-
 ## Testing
 
 ### Architecture Testing
 
 In order to enforce the architecture constraints, we have implemented some architecture tests, from the very beginning of the development phase.
 
-In these test, we check if the dependencies between the modules are correct, and if the modules are respecting the architecture constraints. 
+In these test, we check if the dependencies between the modules are correct, and if the modules are respecting the architecture constraints.
 The tests are defined in the `architecture-tests` submodule, where we can find the `ArchitectureSpec` abstract class, which contains some helper methods to define the architecture tests:
 
 ```kotlin
@@ -236,6 +247,7 @@ abstract class ArchitectureSpec(val prefix: String) : AnnotationSpec() {
 After this, we have defined two classes, `CleanArchitectureSpec`and `FrameworkIndependenceTest` that extend the `ArchitectureSpec` class, and define the architecture tests for a generic package.
 
 In the first one, we define the Clean Architecture constraints, where the domain layer doesn't depend on any other layer, the application layer depends on the domain layer, the interfaces layer depends on the application and domain layers as well as the interfaces layer:
+
 ```kotlin
 abstract class CleanArchitectureSpec(prefix: String) : ArchitectureSpec(prefix) {
     private val domainLayer = assertLayer("domain")
@@ -256,6 +268,7 @@ abstract class CleanArchitectureSpec(prefix: String) : ArchitectureSpec(prefix) 
 ```
 
 In the second one, we simply check if the domain layer and and the application layer don't depend on any framework:
+
 ```kotlin
 abstract class FrameworkIndependenceTest(prefix: String) : ArchitectureSpec(prefix) {
 
@@ -289,9 +302,9 @@ class FrameworkIndependenceMultimediaTest : FrameworkIndependenceTest(PREFIX)
 
 In each microservice, each layer is been tested with Unit / Integration tests.
 
-With regard to the the application layer, we have used the [Mockito](https://site.mockito.org/) library to mock the dependencies of the *services* like **repositories** and **event publishers**.
+With regard to the the application layer, we have used the [Mockito](https://site.mockito.org/) library to mock the dependencies of the _services_ like **repositories** and **event publishers**.
 
-Using this technique, we can test the *services* components in isolation, without the affect of the dependencies.
+Using this technique, we can test the _services_ components in isolation, without the affect of the dependencies.
 It also allows us to simulate, and then test, the services in different scenarios and edge cases, without the need of deploying the other components of the system.
 
 You can find an example in the following code snippet (from the Servers microservice):
