@@ -80,7 +80,7 @@ abstract class FrameworkIndependenceTest(prefix: String) : ArchitectureSpec(pref
 
 Each microservice submodule, simply extends these classes, passing them the package prefix.
 
-You can find an example in the following code snippet (Servers microservice):
+You can find an example in the following code snippet (`servers-service` microservice):
 
 ```kotlin
 const val PREFIX = "piperkt.services.servers"
