@@ -192,8 +192,6 @@ This simple implementations allowed us to test the services in a more realistic 
 This approach is based on data inside the repositories and the event publishers, and it's useful to test the services without mocking specific methods that are coupled with the implementation of the functionality in test.
 
 ```kotlin
-
-
 class UserServiceTest :
     UnitTest.FunSpec({
         val userRepository = InMemoryUserRepository()

@@ -126,7 +126,6 @@ It is an interface that represents a domain event.
 ### Event Listener
 
 ```kotlin
-
 interface EventListener<E : DomainEvent> {
     fun handle(event: E)
     operator fun invoke(event: E) = runCatching { handle(event) }

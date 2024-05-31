@@ -119,7 +119,7 @@ In the _repositories_ subpackage, we have the implementations of the repositorie
 
 With this approach we separate the domain representation from the db one, so that the domain layer is completely independent from the technology used for the persistence.
 
-````kotlin
+```kotlin
 // model/UserEntity.kt
 @MappedEntity
 data class UserEntity(
