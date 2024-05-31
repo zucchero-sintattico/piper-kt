@@ -18,6 +18,7 @@ You can find releases on the [GitHub Releases](https://github.com/zucchero-sinta
 ### Conventional Commits
 
 The project uses [**Conventional Commits**](https://www.conventionalcommits.org) for commit messages.
+
 #### Git Hooks
 
 To enforce the use of Conventional Commits, the project uses a Git hook that checks the commit message format before allowing the commit.
@@ -38,10 +39,12 @@ Every time someone tries to commit, the hook will check if the commit message fo
 
 ### Semantic Release
 
-In order to automate the release process, the project uses [**Semantic Release**](https://semantic-release.gitbook.io/semantic-release) plugin to automatically determine the next version number, 
+In order to automate the release process, the project uses [**Semantic Release**](https://semantic-release.gitbook.io/semantic-release) plugin to automatically determine the next version number,
 generate the changelog, and publish the release, whenever a new commit is pushed to the _main_ branch.
-Semantic Release uses the commit messages to determine the type of changes in the codebase. 
+Semantic Release uses the commit messages to determine the type of changes in the codebase.
 Following formalized conventions for commit messages (Conventional Commits), semantic-release automatically determines the next semantic version number.
+
+In this way the _main_ branch is the single source of truth for the project, and the release process is fully automated, ensuring that the releases are consistent and correctly versioned.
 
 ## Repository Management
 

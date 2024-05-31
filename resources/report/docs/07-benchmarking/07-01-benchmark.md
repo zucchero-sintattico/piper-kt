@@ -17,7 +17,7 @@ The scenario involves a client making HTTP requests to the server, where the Pip
 #### Hardware
 
 | Machine | O.S          | CPU                       | RAM  | Link        |
-|---------|--------------|---------------------------|------|-------------|
+| ------- | ------------ | ------------------------- | ---- | ----------- |
 | Client  | Ubuntu 22.04 | Intel Core i7-8700 6 core | 48GB | 1Gbps (LAN) |
 | Server  | macOS 14.5   | Apple M1 Pro              | 16GB | 1Gbps (LAN) |
 
@@ -43,4 +43,3 @@ $ wrk -t10 -c150 -d30s http://<server-ip>/auth/login -s ./post.lua
 - `-d30s`: 30 seconds of test
 
 ### Results
-
