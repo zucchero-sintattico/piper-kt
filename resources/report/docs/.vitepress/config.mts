@@ -9,6 +9,7 @@ const config = defineConfig({
     // ignore all localhost links
     /^https?:\/\/localhost/,
   ],
+  head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
