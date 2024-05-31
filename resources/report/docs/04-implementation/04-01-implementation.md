@@ -6,7 +6,7 @@
 
 The domain layer is the core of the application, it contains the entities, value objects, factories, aggregates, and repositories.
 Each microservice works directly with the **aggregates** (composed of entities and value objects), which serve as the entry points for the various operations, and are the minimum serializable unit then on the databases.
-You can find an example in the following code snippet (from the Servers-microservice):
+You can find an example in the following code snippet (from the `servers-service` microservice):
 
 ```kotlin
 // Channel Entity
