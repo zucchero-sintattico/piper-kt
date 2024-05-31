@@ -225,7 +225,7 @@ object UserEntityMapper {
 
 In this package, we simply defined the Kafka implementation of the event publishers, which are responsible for publishing the events to the Kafka topic.
 
-You can find an example in the following code snippet (from the Servers-microservice):
+You can find an example in the following code snippet (from the `servers-service` microservice):
 
 ```kotlin
 @KafkaClient
