@@ -1,6 +1,6 @@
 # Knowledge Crunching
 
-The knowledge crunching phase is the first step of the project, where the team members get to know each other and the project itself.
+The knowledge crunching phase is the first step of the project, where the team members get to know the domain related to the project itself.
 This phase is crucial for the success of the project, as it allows the team to understand the project's requirements and constraints, and to define the project's scope and goals.
 
 Our knowledge crunching session have been realized using [Event Storming](https://www.eventstorming.com) approach, using a collaborative board and post-it notes to identify the main components and interactions of the system.
