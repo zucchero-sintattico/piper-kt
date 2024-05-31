@@ -1,4 +1,4 @@
-package piperkt.services.friendships.interfaces.web.api.dto
+package piperkt.services.friendships.presentation
 
 import io.micronaut.serde.annotation.Serdeable
 import piperkt.services.friendships.domain.Message

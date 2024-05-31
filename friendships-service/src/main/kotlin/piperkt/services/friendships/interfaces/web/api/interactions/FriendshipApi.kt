@@ -1,7 +1,7 @@
 package piperkt.services.friendships.interfaces.web.api.interactions
 
 import io.micronaut.serde.annotation.Serdeable
-import piperkt.services.friendships.interfaces.web.api.dto.MessageDTO
+import piperkt.services.friendships.presentation.MessageDTO
 
 sealed interface FriendshipApi {
 
