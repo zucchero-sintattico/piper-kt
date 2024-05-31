@@ -1,8 +1,8 @@
 package piperkt.services.servers.interfaces.web.api.interactions
 
 import io.micronaut.serde.annotation.Serdeable
-import piperkt.services.servers.interfaces.web.api.dto.ChannelDTO
-import piperkt.services.servers.interfaces.web.api.dto.MessageDTO
+import piperkt.services.servers.presentation.ChannelDTO
+import piperkt.services.servers.presentation.MessageDTO
 
 sealed interface ChannelApi {
 

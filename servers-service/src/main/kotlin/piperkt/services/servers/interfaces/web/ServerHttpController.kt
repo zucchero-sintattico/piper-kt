@@ -1,23 +1,18 @@
 package piperkt.services.servers.interfaces.web
 
 import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Delete
-import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.Post
-import io.micronaut.http.annotation.Put
 import java.security.Principal
 import piperkt.services.servers.application.ServerService
 import piperkt.services.servers.application.api.command.ServerCommand
 import piperkt.services.servers.application.api.query.ServerQuery
 import piperkt.services.servers.domain.ServerId
 import piperkt.services.servers.interfaces.web.api.ServerHttpControllerApi
-import piperkt.services.servers.interfaces.web.api.dto.ServerDTO
 import piperkt.services.servers.interfaces.web.api.interactions.ServerApi
+import piperkt.services.servers.presentation.ServerDTO
 
-@Controller("/servers")
+@Controller
 class ServerHttpController(private val serverService: ServerService) : ServerHttpControllerApi {
 
-    @Post("/")
     override fun createServer(
         request: ServerApi.CreateServerApi.Request,
         principal: Principal,
@@ -35,7 +30,6 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
         return ServerApi.CreateServerApi.Response(serverId = response.serverId.value)
     }
 
-    @Get("/{serverId}/users")
     override fun getServerUsers(
         serverId: String,
         principal: Principal,
@@ -52,7 +46,6 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
         return ServerApi.GetServerUsersApi.Response(users = response.users)
     }
 
-    @Get("/")
     override fun getServersFromUser(
         principal: Principal,
     ): ServerApi.GetServersFromUserApi.Response {
@@ -67,7 +60,6 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
         )
     }
 
-    @Put("/{serverId}")
     override fun updateServer(
         serverId: String,
         request: ServerApi.UpdateServerApi.Request,
@@ -89,7 +81,6 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
         )
     }
 
-    @Delete("/{serverId}")
     override fun deleteServer(
         serverId: String,
         principal: Principal,
@@ -105,7 +96,6 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
         return ServerApi.DeleteServerApi.Response(serverId = serverId)
     }
 
-    @Post("/{serverId}/users")
     override fun addUserToServer(
         serverId: String,
         principal: Principal,
@@ -121,7 +111,6 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
         return ServerApi.AddUserToServerApi.Response(serverId = serverId, username = principal.name)
     }
 
-    @Delete("/{serverId}/users")
     override fun removeUserFromServer(
         serverId: String,
         principal: Principal,
@@ -140,7 +129,6 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
         )
     }
 
-    @Delete("/{serverId}/users/{username}")
     override fun kickUserFromServer(
         serverId: String,
         username: String,

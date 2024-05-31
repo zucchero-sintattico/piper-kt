@@ -1,4 +1,4 @@
-package piperkt.services.servers.interfaces.web.api.dto
+package piperkt.services.servers.presentation
 
 import io.micronaut.serde.annotation.Serdeable
 import piperkt.services.servers.domain.Channel
