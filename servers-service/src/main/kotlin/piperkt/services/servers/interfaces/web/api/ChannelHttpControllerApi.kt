@@ -1,7 +1,11 @@
 package piperkt.services.servers.interfaces.web.api
 
 import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Delete
+import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.Put
 import io.micronaut.http.annotation.QueryValue
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
@@ -20,6 +24,7 @@ interface ChannelHttpControllerApi {
         ApiResponse(responseCode = "403", description = "Forbidden"),
         ApiResponse(responseCode = "404", description = "Server not found"),
     )
+    @Post("/servers/{serverId}/channels")
     fun createChannel(
         @PathVariable serverId: String,
         @Body request: ChannelApi.CreateChannelApi.Request,
@@ -33,6 +38,7 @@ interface ChannelHttpControllerApi {
         ApiResponse(responseCode = "403", description = "Forbidden"),
         ApiResponse(responseCode = "404", description = "Channel not found"),
     )
+    @Put("/servers/{serverId}/channels/{channelId}")
     fun updateChannel(
         @PathVariable serverId: String,
         @PathVariable channelId: String,
@@ -47,6 +53,7 @@ interface ChannelHttpControllerApi {
         ApiResponse(responseCode = "403", description = "Forbidden"),
         ApiResponse(responseCode = "404", description = "Channel not found"),
     )
+    @Delete("/servers/{serverId}/channels/{channelId}")
     fun deleteChannel(
         @PathVariable serverId: String,
         @PathVariable channelId: String,
@@ -60,6 +67,7 @@ interface ChannelHttpControllerApi {
         ApiResponse(responseCode = "403", description = "Forbidden"),
         ApiResponse(responseCode = "404", description = "Server not found"),
     )
+    @Get("/servers/{serverId}/channels")
     fun getChannelsFromServer(
         @PathVariable serverId: String,
         principal: Principal
@@ -72,6 +80,7 @@ interface ChannelHttpControllerApi {
         ApiResponse(responseCode = "403", description = "Forbidden"),
         ApiResponse(responseCode = "404", description = "Channel not found"),
     )
+    @Get("/servers/{serverId}/channels/{channelId}/messages")
     fun getChannelMessages(
         @PathVariable serverId: String,
         @PathVariable channelId: String,
@@ -87,6 +96,7 @@ interface ChannelHttpControllerApi {
         ApiResponse(responseCode = "403", description = "Forbidden"),
         ApiResponse(responseCode = "404", description = "Channel not found"),
     )
+    @Post("/servers/{serverId}/channels/{channelId}/messages")
     fun sendMessageToChannel(
         @PathVariable serverId: String,
         @PathVariable channelId: String,

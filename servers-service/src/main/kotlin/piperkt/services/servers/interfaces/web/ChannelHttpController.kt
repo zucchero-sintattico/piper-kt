@@ -1,10 +1,6 @@
 package piperkt.services.servers.interfaces.web
 
 import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Delete
-import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.Post
-import io.micronaut.http.annotation.Put
 import java.security.Principal
 import piperkt.services.servers.application.ChannelService
 import piperkt.services.servers.application.api.command.ChannelCommand
@@ -12,13 +8,13 @@ import piperkt.services.servers.application.api.query.ChannelQuery
 import piperkt.services.servers.domain.ChannelId
 import piperkt.services.servers.domain.ServerId
 import piperkt.services.servers.interfaces.web.api.ChannelHttpControllerApi
-import piperkt.services.servers.interfaces.web.api.dto.ChannelDTO
-import piperkt.services.servers.interfaces.web.api.dto.MessageDTO
 import piperkt.services.servers.interfaces.web.api.interactions.ChannelApi
+import piperkt.services.servers.presentation.ChannelDTO
+import piperkt.services.servers.presentation.MessageDTO
 
-@Controller("/servers")
+@Controller
 class ChannelHttpController(private val channelService: ChannelService) : ChannelHttpControllerApi {
-    @Post("/{serverId}/channels")
+
     override fun createChannel(
         serverId: String,
         request: ChannelApi.CreateChannelApi.Request,
@@ -39,7 +35,6 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
         return ChannelApi.CreateChannelApi.Response(channelId = response.channelId.value)
     }
 
-    @Put("/{serverId}/channels/{channelId}")
     override fun updateChannel(
         serverId: String,
         channelId: String,
@@ -64,7 +59,6 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
         )
     }
 
-    @Delete("/{serverId}/channels/{channelId}")
     override fun deleteChannel(
         serverId: String,
         channelId: String,
@@ -83,7 +77,6 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
         return ChannelApi.DeleteChannelApi.Response(channelId = response.channelId.value)
     }
 
-    @Get("/{serverId}/channels")
     override fun getChannelsFromServer(
         serverId: String,
         principal: Principal,
@@ -102,7 +95,6 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
         )
     }
 
-    @Get("/{serverId}/channels/{channelId}/messages")
     override fun getChannelMessages(
         serverId: String,
         channelId: String,
@@ -127,7 +119,6 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
         )
     }
 
-    @Post("/{serverId}/channels/{channelId}/messages")
     override fun sendMessageToChannel(
         serverId: String,
         channelId: String,
