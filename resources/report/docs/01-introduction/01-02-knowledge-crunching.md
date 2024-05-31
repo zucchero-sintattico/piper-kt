@@ -9,6 +9,8 @@ The process is iterative and all steps are presented in the following sections.
 
 [Miro](https://miro.com/) platform has been used for the sessions.
 
+Here is the link to the board: [Event Storming](https://miro.com/app/board/uXjVNxQcEPE=/?share_link_id=846455153804)
+
 ## Event Storming
 
 ### Unstructured Exploration
