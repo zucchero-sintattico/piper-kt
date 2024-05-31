@@ -47,18 +47,44 @@ To deploy the application, follow these steps:
 
 1. Install `kubectl` to interact with the Kubernetes cluster.
 2. Install `helm`.
-3. Ensure that the Kubernetes cluster is running. For example, if using minikube, run the command `minikube start --cpus 8 --memory 32000`.
+3. Ensure that the Kubernetes cluster is running. For example, if using minikube, run the command 
+
+```bash
+$ minikube start --cpus 8 --memory 32g
+```
 
 ### Launch the Deployment
 
-1. Clone the repository with the command `git clone https://github.com/zucchero-sintattico/piper-kt.git`
-2. Navigate to the folder `cd piper-kt`
-3. Run the command `./deploy.sh` to start the deployment process.
+1. Clone the repository with the command
 
-The deployment process may take several minutes depending on the cluster's performance and internet connection.
-At the end of the process, the application will be available at `http://localhost:8080`.
+```bash
+$ git clone https://github.com/zucchero-sintattico/piper-kt.git
+```
 
-If the deployment process is successful, you should see the following pods running with the command `kubectl get pods -n piper-kt`:
+2. Navigate to the folder
+
+```bash
+$ cd piper-kt
+```
+
+3. Run the deploy command to start the deployment process.
+
+```bash
+$ ./deploy.sh
+```
+
+The deployment process may take several minutes depending on the cluster's performance and/or internet connection.
+At the end of the process, the application will be available at [http://localhost:8080](http://localhost:8080).
+
+> **Note**: If ingress-nginx-controller service takes too long to start, you can retry the port forwarding command with the following command:
+> ```bash
+> $ kubectl port-forward -n ingress-nginx svc/ingress-nginx-controller 8080:80
+
+If the deployment process is successful, you should see the following pods running with the command:
+
+```bash
+$ kubectl get pods -n piper-kt
+```
 
 ```Shell
 NAME                                        READY   STATUS     RESTARTS    AGE
