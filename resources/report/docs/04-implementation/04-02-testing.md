@@ -101,7 +101,7 @@ With regard to the the application layer, in some microservice, we have used the
 Using this technique, we can test the _services_ components in isolation, without the affect of the dependencies.
 It also allows us to simulate, and then test, the services in different scenarios and edge cases, without the need of deploying the other components of the system.
 
-You can find an example in the following code snippet (from the Servers microservice):
+You can find an example in the following code snippet (from the `servers-service` microservice):
 
 ```kotlin
 // Basic Server Service Test
