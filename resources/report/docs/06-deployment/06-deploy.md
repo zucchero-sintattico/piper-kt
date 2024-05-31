@@ -21,7 +21,7 @@ The following operators have been used for resource management:
 - **Strimzi Kafka Operator**: for managing Kafka. Operator Helm chart [here](https://github.com/strimzi/strimzi-kafka-operator/tree/main/helm-charts/helm3/strimzi-kafka-operator).
 - **MongoDB Operator**: for managing MongoDB. Operator Helm chart [here](https://github.com/mongodb/helm-charts/tree/6ddf86b1b00cdd807840de36fc97b91466ee6981/charts/community-operator).
 
-![Operator Deployment](public/schema-Operator.drawio.svg)
+![Operator Deployment](./img/schema-Operator.drawio.svg)
 
 ## Ingress Controller
 
@@ -37,7 +37,7 @@ The various pods are dependent on each other; for example, the various Micronaut
 
 ## Structure
 
-![Services Structure](public/schema-Global%20Structure%20Services.drawio.svg)
+![Services Structure](./img/schema-Global%20Structure%20Services.drawio.svg)
 
 ## Deployment Steps
 

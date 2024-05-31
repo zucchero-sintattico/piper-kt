@@ -5,6 +5,10 @@ import { withMermaid } from "vitepress-plugin-mermaid";
 const config = defineConfig({
   title: "PiperKt",
   description: "PiperKt report",
+  ignoreDeadLinks: [
+    // ignore all localhost links
+    /^https?:\/\/localhost/,
+  ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -71,7 +75,7 @@ const config = defineConfig({
       },
       {
         items: [
-          { text: 'Deployment', link: '/06-deploy', },
+          { text: 'Deployment', link: '/06-deployment/06-deploy', },
           { text: 'Benchmark', link: '/07-benchmarking/07-01-benchmark', },
         ]
       },
@@ -84,7 +88,7 @@ const config = defineConfig({
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/zucchero-sintattico/piper-kt' }
-    ]
+    ],
   }
 })
 
