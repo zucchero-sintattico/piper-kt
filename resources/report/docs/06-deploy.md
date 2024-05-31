@@ -86,7 +86,7 @@ If the deployment process is successful, you should see the following pods runni
 $ kubectl get pods -n piper-kt
 ```
 
-```Shell
+```bash
 NAME                                        READY   STATUS     RESTARTS    AGE
 cluster-broker-0                            1/1     Running    ...         ...
 cluster-controller-1                        1/1     Running    ...         ...
