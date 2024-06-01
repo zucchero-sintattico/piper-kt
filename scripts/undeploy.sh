@@ -1,31 +1,17 @@
 #!/bin/bash
 
-# Set the current context and namespace
-cd "$(dirname "$0")/.." || exit
+
+kubectl delete secrets sh.helm.release.v1.friendships-service-mongo.v1
+kubectl delete secrets sh.helm.release.v1.multimedia-service-mongo.v1
+kubectl delete secrets sh.helm.release.v1.servers-service-mongo.v1
+kubectl delete secrets sh.helm.release.v1.users-service-mongo.v1 
 
 # Delete Helm releases
-helm delete strimzi-cluster-operator
-helm delete community-operator
-helm delete nginx-ingress-controller --namespace nginx-ingress
-
-# Delete microservices and associated MongoDB charts
-microservice_list=("friendships-service" "users-service" "servers-service" "multimedia-service")
-for microservice in "${microservice_list[@]}"
-do
-  helm delete "$microservice"
-  helm delete "${microservice}-mongo"
-done
+helm ls --all --short | xargs -L1 helm uninstall
 
 # Delete resources
-kubectl delete -f kubernetes/auth.yml
-kubectl delete -f kubernetes/kafka.yml
-kubectl delete -f kubernetes/notifications.yml
-kubectl delete -f kubernetes/frontend.yml
-
-#wait for resources to be deleted
-kubectl wait --for=delete pods --all
+kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
 
 # Delete the namespace
 kubectl delete namespace piper-kt
 kubectl delete namespace ingress-nginx
-
