@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cd "$(dirname "$0")/.." || exit
-
 NAMESPACE="piper-kt"
 
 # Create namespace
@@ -52,7 +50,7 @@ helm install nginx-ingress-controller kubernetes/helm-chart/ingress-chart
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/aws/deploy.yaml
 
 # Wait for ingress-nginx controller pod to be ready
-kubectl wait pod -l app.kubernetes.io/component=controller --for=condition=Ready -n ingress-nginx
+kubectl wait pod -l app.kubernetes.io/component=controller --for=condition=Ready -n ingress-nginx --timeout=120s
 
 # Get pods, deployments, and services
 kubectl get pods
