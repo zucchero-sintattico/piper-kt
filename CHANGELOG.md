@@ -1,3 +1,10 @@
+## [8.1.0](https://github.com/zucchero-sintattico/piper-kt/compare/v8.0.0...v8.1.0) (2024-06-01)
+
+
+### Features
+
+* **undeploy:** update undeploy script to delete specific secrets and use helm uninstall ([d326b15](https://github.com/zucchero-sintattico/piper-kt/commit/d326b15701a6d10998c544e9090a8afa8afe23c3))
+
 ## [8.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v7.6.0...v8.0.0) (2024-05-30)
 
 
