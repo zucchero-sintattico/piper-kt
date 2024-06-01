@@ -2,11 +2,11 @@
 
 ## Microservices Implementation
 
-### Domain Level
+### Domain Layer
 
-The domain level is the core of the application, it contains the entities, value objects, factories, aggregates, and repositories.
+The domain layer is the core of the application, it contains the entities, value objects, factories, aggregates, and repositories.
 Each microservice works directly with the **aggregates** (composed of entities and value objects), which serve as the entry points for the various operations, and are the minimum serializable unit then on the databases.
-You can find an example in the following code snippet:
+You can find an example in the following code snippet (from the `servers-service` microservice):
 
 ```kotlin
 // Channel Entity
@@ -53,9 +53,9 @@ class Server(
 }
 ```
 
-### Application Level
+### Application Layer
 
-In this level, we have the **Services**, which are responsible for orchestrating the business logic.
+In this layer, we have the **Services**, which are responsible for orchestrating the business logic.
 They are the entry points for controllers and are responsible for validating input, executing domain operations, calling event publisher methods, and repositories for data persistence.
 
 Each Service, has its own Api and works with the concept of Requests and Responses, which are simple data classes that represent the input and output of the service methods.
@@ -107,15 +107,199 @@ open class ServerService(
 In this level, we also have declared the **Repositories** interfaces, which are then implemented in the infrastructure level.
 **TOFINISH**
 
-### Infrastructure Level
+### Infrastructure Layer
 
-In this level, we have the implementations of the repositories, event publishers, and other infrastructure components.
+In this layer, we have the implementations of the repositories, event publishers, and other infrastructure components.
 
-**TOFINISH**
+#### Persistence
 
-### Interfaces Level
+The persistence package contains the db model and the repositories implementations.
+In the _model_ subpackage, we have the db entities, which are the classes that represent the tables in the database and their respective repository.
+In the _repositories_ subpackage, we have the implementations of the repositories interfaces defined in the domain layer which use the db-entities repository to implement the operations
 
-In this level, we have the http controllers, which are responsible for receiving the requests from the clients, calling the services to execute the business logic, and returning the http responses to the client.
+With this approach we separate the domain representation from the db one, so that the domain layer is completely independent from the technology used for the persistence.
+
+```kotlin
+// model/UserEntity.kt
+@MappedEntity
+data class UserEntity(
+    @Id @GeneratedValue val id: String? = null,
+    val username: String,
+    val password: String,
+    val email: String? = null,
+    val description: String? = null,
+    val profilePicture: String? = null,
+    val refreshToken: String? = null,
+)
+
+@MongoRepository
+interface UserEntityRepository : GenericRepository<UserEntity, String> {
+
+    fun findAll(): List<UserEntity>
+
+    fun findByUsername(username: String): UserEntity?
+
+    fun findByRefreshToken(refreshToken: String): UserEntity?
+
+    fun deleteByUsername(username: String)
+
+    fun save(entity: UserEntity)
+
+    fun updateByUsername(username: String, entity: UserEntity)
+
+    fun deleteAll()
+}
+```
+
+```kotlin
+// repositories/UserRepositoryImpl.kt
+@Singleton
+class UserRepositoryImpl(private val userEntityRepository: UserEntityRepository) : UserRepository {
+    override fun findAll(): List<User> {
+        return userEntityRepository.findAll().map { it.toDomain() }
+    }
+
+    override fun findByUsername(username: String): User? {
+        return userEntityRepository.findByUsername(username)?.toDomain()
+    }
+
+    override fun findByRefreshToken(refreshToken: String): User? {
+        return userEntityRepository.findByRefreshToken(refreshToken)?.toDomain()
+    }
+
+    override fun findById(id: Username): User? {
+        return userEntityRepository.findByUsername(id.value)?.toDomain()
+    }
+
+    override fun save(entity: User) {
+        userEntityRepository.save(entity.toEntity())
+    }
+
+    override fun deleteById(id: Username): User? {
+        val user = findById(id)
+        userEntityRepository.deleteByUsername(id.value)
+        return user
+    }
+
+    override fun update(entity: User) {
+        val user = userEntityRepository.findByUsername(entity.username.value)
+        userEntityRepository.updateByUsername(user!!.username, entity.toEntity(user.id))
+    }
+
+    override fun deleteAll() {
+        userEntityRepository.deleteAll()
+    }
+}
+```
+
+This package also contain the mapping between the domain entities and the db entities, which is done through the `toDomain()` and `toEntity()` extension functions.
+
+```kotlin
+object UserEntityMapper {
+    /** Convert a user entity to a user. */
+    fun UserEntity.toDomain() =
+        User(
+            username = Username(username),
+            password = password,
+            email = email,
+            description = description,
+            profilePicture = profilePicture,
+            refreshToken = refreshToken
+        )
+
+    /** Convert a user to a user entity. */
+    fun User.toEntity(actualId: String? = null) =
+        UserEntity(
+            id = actualId,
+            username = username.value,
+            password = password,
+            email = email,
+            description = description,
+            profilePicture = profilePicture,
+            refreshToken = refreshToken
+        )
+}
+```
+
+#### Events
+
+In this package, we simply defined the Kafka implementation of the event publishers, which are responsible for publishing the events to the Kafka topic.
+
+You can find an example in the following code snippet (from the `servers-service` microservice):
+
+```kotlin
+@KafkaClient
+interface KafkaServerEventPublisher {
+
+    @Topic(ServerCreatedEvent.TOPIC) fun publish(event: ServerCreatedEvent)
+
+    @Topic(ServerDeletedEvent.TOPIC) fun publish(event: ServerDeletedEvent)
+
+    @Topic(ServerUpdatedEvent.TOPIC) fun publish(event: ServerUpdatedEvent)
+
+    @Topic(ServerUserAddedEvent.TOPIC) fun publish(event: ServerUserAddedEvent)
+
+    @Topic(ServerUserRemovedEvent.TOPIC) fun publish(event: ServerUserRemovedEvent)
+
+    @Topic(ServerUserKickedEvent.TOPIC) fun publish(event: ServerUserKickedEvent)
+}
+
+@Singleton
+class ServerEventPublisherImpl(private val kafkaServerEventPublisher: KafkaServerEventPublisher) :
+    ServerEventPublisher {
+    override fun publish(event: ServerEvent) {
+        when (event) {
+            is ServerCreatedEvent -> kafkaServerEventPublisher.publish(event)
+            is ServerDeletedEvent -> kafkaServerEventPublisher.publish(event)
+            is ServerUpdatedEvent -> kafkaServerEventPublisher.publish(event)
+            is ServerUserAddedEvent -> kafkaServerEventPublisher.publish(event)
+            is ServerUserRemovedEvent -> kafkaServerEventPublisher.publish(event)
+            is ServerUserKickedEvent -> kafkaServerEventPublisher.publish(event)
+        }
+    }
+}
+```
+
+#### Implementation
+
+This package contains the implementation of the services defined in the application layer, which use the @Singleton annotation to be managed by the Micronaut framework that allow to inject the dependencies where needed.
+It also contains the implementation of the event listeners that are defined in the application layer and are used to listen to the events published by the services and execute the necessary operations.
+
+```kotlin
+object Services {
+    @Singleton
+    class UserServiceImpl(userRepository: UserRepository, userEventPublisher: UserEventPublisher) :
+        UserService(userRepository, userEventPublisher)
+
+    @Singleton
+    class AuthServiceImpl(userRepository: UserRepository, userEventPublisher: UserEventPublisher) :
+        AuthService(userRepository, userEventPublisher)
+}
+
+object EventsListeners {
+    @Singleton
+    class ServerEventListenerService(
+        serverRepository: ServerRepository,
+        sessionService: SessionService
+    ) : ServerEventsListener(serverRepository, sessionService)
+
+    @Singleton
+    class DirectEventListenerService(
+        directRepository: DirectRepository,
+        sessionService: SessionService
+    ) : DirectEventsListener(directRepository, sessionService)
+
+    @Singleton
+    class ChannelEventListenerService(
+        serverRepository: ServerRepository,
+        sessionService: SessionService
+    ) : ChannelEventsListener(serverRepository, sessionService)
+}
+```
+
+### Interfaces Layer
+
+In this layer, we have the http controllers, which are responsible for receiving the requests from the clients, calling the services to execute the business logic, and returning the http responses to the client.
 
 Every controller has its own Api, which is composed of the request and response data classes, and each controller methods is defined for a specific endpoint.
 
@@ -130,6 +314,7 @@ interface ServerHttpControllerApi {
         ApiResponse(responseCode = "400", description = "Bad request"),
         ApiResponse(responseCode = "401", description = "Unauthorized"),
     )
+    @Post("/servers")
     fun createServer(
         @Body request: ServerApi.CreateServerApi.Request,
         principal: Principal
@@ -139,10 +324,9 @@ interface ServerHttpControllerApi {
 }
 
 // Http controller implementation
-@Controller("/servers")
+@Controller
 class ServerHttpController(private val serverService: ServerService) : ServerHttpControllerApi {
 
-    @Post("/")
     override fun createServer(
         request: ServerApi.CreateServerApi.Request,
         principal: Principal,
@@ -161,7 +345,7 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
     }
     // Other methods...
 }
-```
+````
 
 The controllers are very simple, they only call the services methods, and then return the responses to the client.
 
@@ -194,139 +378,44 @@ class ServerNotFound :
 
 In this case, we defined a specific error handler for the `ServerNotFoundExceptionException`, which returns a `NOT_FOUND` (404) status code to the client.
 
-## Testing
+### Presentation Layer
 
-### Architecture Testing
+In this layer, we have the mappers, which are responsible for converting the domain entities to the response data classes, and vice versa.
 
-In order to enforce the architecture constraints, we have implemented some architecture tests, from the very beginning of the development phase.
+### Configuration Layer
 
-In these test, we check if the dependencies between the modules are correct, and if the modules are respecting the architecture constraints.
-The tests are defined in the `architecture-tests` submodule, where we can find the `ArchitectureSpec` abstract class, which contains some helper methods to define the architecture tests:
+In this layer, we have the configuration files, which are used to configure the application using Micronaut properties.
 
 ```kotlin
-abstract class ArchitectureSpec(val prefix: String) : AnnotationSpec() {
+// Example of the SocketServer configuration
+@ConfigurationProperties("socketio")
+class SocketIOConfiguration {
+    var port: Int = Random.nextInt(MIN_RANDOM_PORT, MAX_RANDOM_PORT)
 
-    fun assertLayer(name: String): Layer {
-        return Layer(name, "$prefix.$name..")
-    }
-
-    fun assertArchitecture(block: DependencyRules.() -> Unit) {
-        Konsist.scopeFromProject().assertArchitecture { block() }
-    }
-
-    fun assertPackageDoesNotDependOnFrameworks(
-        packageName: String,
-        frameworks: List<String> = emptyList()
-    ) {
-        Konsist.scopeFromPackage("$prefix.$packageName..").files.forEach { file ->
-            val dependencies = file.imports.map { it.name }
-            val forbidden =
-                dependencies.filter { dependency ->
-                    frameworks.any { framework -> dependency.startsWith(framework) }
-                }
-            forbidden shouldBe emptyList()
-        }
+    companion object {
+        const val MIN_RANDOM_PORT = 10000
+        const val MAX_RANDOM_PORT = 20000
     }
 }
 ```
 
-After this, we have defined two classes, `CleanArchitectureSpec`and `FrameworkIndependenceTest` that extend the `ArchitectureSpec` class, and define the architecture tests for a generic package.
-
-In the first one, we define the Clean Architecture constraints, where the domain layer doesn't depend on any other layer, the application layer depends on the domain layer, the interfaces layer depends on the application and domain layers as well as the interfaces layer:
+This allow to define the configuration in a single place, and then inject the configuration properties where needed, as in the following example:
 
 ```kotlin
-abstract class CleanArchitectureSpec(prefix: String) : ArchitectureSpec(prefix) {
-    private val domainLayer = assertLayer("domain")
-    private val applicationLayer = assertLayer("application")
-    private val interfacesLayer = assertLayer("interfaces")
-    private val infrastructureLayer = assertLayer("infrastructure")
-
-    @Test
-    fun `architecture is Clean`() {
-        assertArchitecture {
-            domainLayer.dependsOnNothing()
-            applicationLayer.dependsOn(domainLayer)
-            interfacesLayer.dependsOn(applicationLayer, domainLayer)
-            infrastructureLayer.dependsOn(applicationLayer, domainLayer)
-        }
-    }
-}
+open class MultimediaSocketIOServer(
+    private val sessionService: SessionService,
+    private val objectMapper: JsonMapper,
+    val configuration: SocketIOConfiguration,
+)
 ```
 
-In the second one, we simply check if the domain layer and and the application layer don't depend on any framework:
+Using this approach, we can easily change the configuration of the application without affecting the rest of the code, just by modifiying the configuration file that Micronaut will automatically parse and create the configuration beans ready to be injected.
 
-```kotlin
-abstract class FrameworkIndependenceTest(prefix: String) : ArchitectureSpec(prefix) {
-
-    private val frameworks = listOf("io.micronaut", "jakarta")
-
-    @Test
-    fun `domain layer doesn't depend on frameworks`() {
-        assertPackageDoesNotDependOnFrameworks("domain", frameworks)
-    }
-
-    @Test
-    fun `application layer doesn't depend on frameworks`() {
-        assertPackageDoesNotDependOnFrameworks("application", frameworks)
-    }
-}
-```
-
-Each microservice submodule, simply extends these classes, passing them the package prefix.
-
-You can find an example in the following code snippet (Servers microservice):
-
-```kotlin
-const val PREFIX = "piperkt.services.servers"
-
-class CleanArchitectureMultimediaTest : CleanArchitectureSpec(PREFIX)
-
-class FrameworkIndependenceMultimediaTest : FrameworkIndependenceTest(PREFIX)
-```
-
-### Mocking and Stubbing
-
-In each microservice, each layer is been tested with Unit / Integration tests.
-
-With regard to the the application layer, we have used the [Mockito](https://site.mockito.org/) library to mock the dependencies of the _services_ like **repositories** and **event publishers**.
-
-Using this technique, we can test the _services_ components in isolation, without the affect of the dependencies.
-It also allows us to simulate, and then test, the services in different scenarios and edge cases, without the need of deploying the other components of the system.
-
-You can find an example in the following code snippet (from the Servers microservice):
-
-```kotlin
-// Basic Server Service Test
-open class BasicServerServiceTest : UnitTest() {
-    // Mocks
-    val serverRepository = mock<ServerRepository>()
-    val eventPublisher = mock<ServerEventPublisher>()
-    val serverService = ServerService(serverRepository, eventPublisher)
-}
-
-// Actual Server Service command operations test class
-class ServerServiceCommandTest : BasicServerServiceTest() {
-
-    @BeforeEach
-    fun setUp() {
-        reset(serverRepository, eventPublisher)
-    }
-
-    @Test
-    fun `should not allow to update a server if is not the admin`() {
-        // Mocks of the repository return value
-        whenever(serverRepository.findById(any())).thenReturn(simpleServer)
-        serverService.updateServer(
-            ServerCommand.UpdateServer.Request(
-                simpleServerId,
-                "serverName",
-                "serverDescription",
-                "member"
-            )
-        ) shouldBe Result.failure(ServerServiceException.UserNotHasPermissionsException())
-        // Verify if the event publisher was not called
-        verifyNoInteractions(eventPublisher)
-    }
-    // Other tests...
-}
+```yaml
+application:
+  name: 'Piperkt Users Service'
+  version: '1.0.0'
+---
+socketio:
+  port: 8082
 ```

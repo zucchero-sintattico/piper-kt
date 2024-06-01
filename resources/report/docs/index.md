@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: Report
-      link: /01-introduction
+      link: /01-introduction/01-01-introduction
 
 features:
   - title: "Microservices & DDD"
