@@ -1,18 +1,6 @@
 # Deployment Overview
 
-The deployment process is managed by a shell script named `deploy.sh`. This script is responsible for applying the Kubernetes configuration files to the Kubernetes cluster.
-
-## Dependencies
-
-The deployment process relies on several dependencies:
-
-1. **Kubernetes Cluster**: A running Kubernetes cluster is required, such as a local development cluster (like Minikube or Kind).
-2. **kubectl**: The `kubectl` command-line tool must be installed and configured to interact with the Kubernetes cluster. This tool is used by the `deploy.sh` script to apply the configuration files.
-3. **Helm**: Helm, the package manager for Kubernetes, is used to manage the deployment of certain components, such as MongoDB and the Strimzi Kafka Operator.
-
-### Why Helm?
-
-Helm is a package manager for Kubernetes that allows the definition of complex applications using a templating system. This enables the definition of reusable components and the installation of multiple components that share the same configuration with different values.
+To deploy the application, we use Kubernetes, a container orchestration platform that automates the deployment, scaling, and management of containerized applications
 
 ## Namespace
 
@@ -27,13 +15,9 @@ Operators extend the functionalities of Kubernetes, allowing the definition of n
 
 ![Operator Deployment](public/schema-Operator.jpg)
 
-## Ingress Controller
+## NGINX Ingress Controller
 
-The NGINX Ingress Controller manages incoming traffic and was installed using Helm. It is configured to handle incoming traffic to the services exposed by the application. Ingress Controller Helm chart [here](https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx).
-
-## Resources
-
-The resources needed for the application have been defined through Kubernetes configuration files. After various tests, it was found that to run the system smoothly without considering replicas, at least 32GB of RAM is required.
+The NGINX Ingress Controller manages traffic and was installed using Helm. It is configured to handle traffic to the services exposed by the application. Ingress Controller Helm chart [here](https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx).
 
 ## Dependencies between Components
 
@@ -41,21 +25,27 @@ The various pods are interdependent; for example, the Micronaut microservices ca
 
 ## Structure
 
+The piper-kt namespace contains all the services of the application.Each application component is a containerized microservice, managed and potentially scalable by Kubernetes.
+The Kubernetes-based architecture described allows each component to scale independently, improve system resiliency, and facilitate maintenance and upgrading of individual services.
 ![Services Structure](public/schema-Global%20Structure%20Services.jpg)
-
-## Continuous Integration e Continuous Deployment (CI/CD)
-
-All the image are available on Docker Hub. The CI/CD pipeline is managed by GitHub Actions. The pipeline is triggered by a push on the main branch. The pipeline builds the Docker images and pushes them to Docker Hub. All image are deployed [here](https://hub.docker.com/u/zuccherosintattico).
 
 ## Deployment Steps
 
-To deploy the application, follow these steps:
+### Resources
+
+For the system to run smoothly and efficiently, the virtual machine must have at least 8 CPUs and 32 GB of RAM. This is to ensure that all services are running and kubenertes does not decide to delete some pods due to lack of resources. The system will also start up with fewer resources, but some pods may not keep the running state, causing malfunctions.
 
 ### Prerequisites
 
-1. Install `kubectl` to interact with the Kubernetes cluster.
-2. Install `helm`.
-3. Ensure that the Kubernetes cluster is running. For example, if using Minikube, run the command `minikube start --cpus 8 --memory 32000`.
+The deployment process relies on several dependencies:
+
+- **Kubernetes Cluster**: A running Kubernetes cluster is required, such as a local development cluster (like Minikube or Kind). If using Minikube, run the command `minikube start --cpus 8 --memory 32000`.
+- **kubectl**: The `kubectl` command-line tool must be installed and configured to interact with the Kubernetes cluster.[here](https://kubernetes.io/docs/tasks/tools/).
+- **Helm**: Helm, the package manager for Kubernetes, is used to manage the deployment of certain components, such as MongoDB and the Strimzi Kafka Operator. Installation instructions can be found [here](https://helm.sh/docs/intro/install/).
+
+### Why Helm?
+
+Helm is a package manager for Kubernetes that allows the definition of complex applications using a templating system. This the installation of multiple components that share the same configuration with different values.
 
 ### Launch the Deployment
 
