@@ -13,7 +13,7 @@ Operators extend the functionalities of Kubernetes, allowing the definition of n
 - **Strimzi Kafka Operator**: essential for managing Kafka instances on Kubernetes. Using Helm for deployment, we can configure Kafka with ease, managing complex clusters without having to write detailed configurations.  Helm chart [here](https://github.com/strimzi/strimzi-kafka-operator/tree/main/helm-charts/helm3/strimzi-kafka-operator).
 - **MongoDB Operator**: ensures that MongoDB instances are always available and properly configured, while also managing failover and replication to ensure high availability and resilience. Helm chart [here](https://github.com/mongodb/helm-charts/tree/6ddf86b1b00cdd807840de36fc97b91466ee6981/charts/community-operator).
 
-![Operator Deployment](public/schema-Operator.jpg)
+![Operator Deployment](img/schema-Operator.jpg)
 
 ## NGINX Ingress Controller
 
@@ -25,9 +25,11 @@ The various pods are interdependent; for example, the Micronaut microservices ca
 
 ## Structure
 
-The piper-kt namespace contains all the services of the application.Each application component is a containerized microservice, managed and potentially scalable by Kubernetes.
+Each application component is a containerized microservice, managed and potentially scalable by Kubernetes.
 The Kubernetes-based architecture described allows each component to scale independently, improve system resiliency, and facilitate maintenance and upgrading of individual services.
-![Services Structure](public/schema-Global%20Structure%20Services.jpg)
+![Microservices Structure](img/schema-deploy.jpg)
+The piper-kt namespace contains all the services of the application. The only point of access to the application is the NGINX Ingress Controller, which routes traffic to the various services. From outside is impossible to access to kafka, mongodb, or any other service directly.
+![Global Structure](img/schema-Global%20Structure%20Services.jpg)
 
 ## Deployment Steps
 
@@ -39,7 +41,12 @@ For the system to run smoothly and efficiently, the virtual machine must have at
 
 The deployment process relies on several dependencies:
 
-- **Kubernetes Cluster**: A running Kubernetes cluster is required, such as a local development cluster (like Minikube or Kind). If using Minikube, run the command `minikube start --cpus 8 --memory 32000`.
+- **Kubernetes Cluster**: A running Kubernetes cluster is required, such as a local development cluster (like Minikube or Kind). If using Minikube, run the command 
+
+```bash
+minikube start --cpus 8 --memory 32000
+```
+
 - **kubectl**: The `kubectl` command-line tool must be installed and configured to interact with the Kubernetes cluster.[here](https://kubernetes.io/docs/tasks/tools/).
 - **Helm**: Helm, the package manager for Kubernetes, is used to manage the deployment of certain components, such as MongoDB and the Strimzi Kafka Operator. Installation instructions can be found [here](https://helm.sh/docs/intro/install/).
 
@@ -49,9 +56,23 @@ Helm is a package manager for Kubernetes that allows the definition of complex a
 
 ### Launch the Deployment
 
-1. Clone the repository with the command `git clone https://github.com/zucchero-sintattico/piper-kt.git`.
-2. Navigate to the folder `cd piper-kt`.
-3. Run the command `./scripts/deploy.sh` to start the deployment process.
+1. Clone the repository with the command
+
+    ```bash
+    git clone https://github.com/zucchero-sintattico/piper-kt.git
+    ```
+
+2. Navigate to the folder
+
+    ```bash
+    cd piper-kt
+    ```
+
+3. Run the deploy command to start the deployment process.
+
+    ```bash
+    ./scripts/deploy.sh
+    ```
 
 The deployment process may take several minutes depending on the cluster's performance and internet connection. At the end of the process, the application will be available at `http://localhost:8080`.
 

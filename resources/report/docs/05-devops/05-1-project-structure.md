@@ -20,73 +20,6 @@ Subprojects are the following ones:
 - `servers-service (jvm)`: contains the servers microservice.
 - `users-service (jvm)`: contains the users microservice.
 
-## Dependencies declaration
-
-In order to collect all the dependencies in a single place, the project uses the `Version Catalog`.
-You can find the file in `gradle/libs.versions.toml`.
-
-This method allows to declare dependencies in `build.gradle.kts` files using the following syntax:
-
-```kotlin
-dependencies {
-    implementation(libs.kotlin)
-    implementation(libs.micronaut)
-    ...
-}
-```
-
-> **Note**: Many library version are not specified in the file (e.g. **Micronaut** sub dependencies), because they are managed by the framework itself, using the [`bom` (Bill-Of-Materials)](https://micronaut-projects.github.io/micronaut-platform/latest/guide/) feature.
-
-Unfortunately, the `Version Catalog` is not injected in `build-logic` and plugin must be in class path if they are applied from a `convention plugin`.
-Here the proposed workarounds:
-
-- Add the `Version Catalog` to the `build-logic` project:
-```kotlin
-// build-logic/settings.gradle.kts
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("libs") {
-            from(files("../gradle/libs.versions.toml"))
-        }
-    }
-}
-```
-
-- Adding plugins as dependencies in the `build-logic` project:
-```kotlin
-// build-logic/build.gradle.kts
-fun Provider<PluginDependency>.asDependency(): Provider<String> =
-    this.map { "${it.pluginId}:${it.pluginId}.gradle.plugin:${it.version}" }
-
-dependencies {
-    implementation(libs.plugins.detekt.asDependency())
-    implementation(libs.plugins.kotlin.asDependency())
-    ...
-}
-```
-
-- Adding plugins in `convention plugin` with name, without version (it takes the version from project dependencies):
-```kotlin
-// build-logic/src/main/kotlin/kotlin-base.gradle.kts
-plugins {
-    kotlin("jvm")
-    id("io.gitlab.arturbosch.detekt")
-}
-```
-
-- Create the `Version Catalog` in the `convention plugin` project:
-```kotlin
-val catalog: VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
-
-fun VersionCatalog.getLibrary(name: String): Provider<MinimalExternalModuleDependency> =
-    findLibrary(name).get()
-
-dependencies {
-    testImplementation(catalog.getLibrary("konsist"))
-    testImplementation(catalog.getLibrary("kotest"))
-}
-```
-
 ## Shared build logic
 
 Shared build logic is achieved using [shared gradle conventions plugins](https://docs.gradle.org/current/samples/sample_sharing_convention_plugins_with_build_logic.html).
@@ -153,6 +86,74 @@ graph TD
 - `micronaut-full`: add some additional dependencies and configurations to `micronaut-base`, commonly used in project's modules.
 - `kotlin-multiplatform`: define a basic Kotlin *Multiplatform* project configuration, with formatting, linting, and testing framework.
 - `non-micronaut-project`: here are defined tasks, used during the build process, for projects that are not based on Micronaut.
+
+## Dependencies declaration
+
+In order to collect all the dependencies in a single place, the project uses the `Version Catalog`.
+You can find the file in `gradle/libs.versions.toml`.
+
+This method allows to declare dependencies in `build.gradle.kts` files using the following syntax:
+
+```kotlin
+dependencies {
+    implementation(libs.kotlin)
+    implementation(libs.micronaut)
+    ...
+}
+```
+
+> **Note**: Many library version are not specified in the file (e.g. **Micronaut** sub dependencies), because they are managed by the framework itself, using the [`bom` (Bill-Of-Materials)](https://micronaut-projects.github.io/micronaut-platform/latest/guide/) feature.
+
+Unfortunately, the `Version Catalog` is not injected into the `build-logic` and plugins must be in class path if they are applied from a `convention plugin`.
+
+Here the proposed workarounds:
+
+- Add the `Version Catalog` to the `build-logic` project:
+```kotlin
+// build-logic/settings.gradle.kts
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("libs") {
+            from(files("../gradle/libs.versions.toml"))
+        }
+    }
+}
+```
+
+- Adding plugins as dependencies in the `build-logic` project:
+```kotlin
+// build-logic/build.gradle.kts
+fun Provider<PluginDependency>.asDependency(): Provider<String> =
+    this.map { "${it.pluginId}:${it.pluginId}.gradle.plugin:${it.version}" }
+
+dependencies {
+    implementation(libs.plugins.detekt.asDependency())
+    implementation(libs.plugins.kotlin.asDependency())
+    ...
+}
+```
+
+- Adding plugins in `convention plugin` with name, without version (it takes the version from project dependencies):
+```kotlin
+// build-logic/src/main/kotlin/kotlin-base.gradle.kts
+plugins {
+    kotlin("jvm")
+    id("io.gitlab.arturbosch.detekt")
+}
+```
+
+- Create the `Version Catalog` in the `convention plugin` project:
+```kotlin
+val catalog: VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+fun VersionCatalog.getLibrary(name: String): Provider<MinimalExternalModuleDependency> =
+    findLibrary(name).get()
+
+dependencies {
+    testImplementation(catalog.getLibrary("konsist"))
+    testImplementation(catalog.getLibrary("kotest"))
+}
+```
 
 ## Typescript Gradle Plugin
 

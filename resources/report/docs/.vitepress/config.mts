@@ -5,6 +5,11 @@ import { withMermaid } from "vitepress-plugin-mermaid";
 const config = defineConfig({
   title: "PiperKt",
   description: "PiperKt report",
+  ignoreDeadLinks: [
+    // ignore all localhost links
+    /^https?:\/\/localhost/,
+  ],
+  head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -19,7 +24,6 @@ const config = defineConfig({
         items: [
           { text: 'Introduction', link: '/01-introduction/01-01-introduction', },
           { text: 'Knowledge Crunching', link: '/01-introduction/01-02-knowledge-crunching', },
-          { text: 'Design', link: '/03-design', },
         ]
       },
       {
@@ -37,11 +41,22 @@ const config = defineConfig({
       {
         items: [
           {
+            text: 'Design', collapsed: true,
+            items: [
+              { text: 'Architecture', link: '/03-design/03-architecture', },
+            ]
+          },
+        ]
+      },
+      {
+        items: [
+          {
             text: 'Implementation', link: "/04-implementation/04-00-index", collapsed: true,
             items: [
               { text: 'Microservices', link: '/04-implementation/04-01-implementation', },
-              { text: 'Multiplatform', link: '/04-implementation/04-02-multiplatform', },
-              { text: 'Experiments', link: '/04-implementation/04-03-experiments', },
+              { text: 'Testing', link: '/04-implementation/04-02-testing', },
+              { text: 'Multiplatform', link: '/04-implementation/04-03-multiplatform', },
+              { text: 'Experiments', link: '/04-implementation/04-04-experiments', },
             ]
           },
         ]
@@ -61,15 +76,20 @@ const config = defineConfig({
       },
       {
         items: [
-          { text: 'Deployment', link: '/06-deploy', },
+          { text: 'Deployment', link: '/06-deployment/06-deploy', },
           { text: 'Benchmark', link: '/07-benchmarking/07-01-benchmark', },
         ]
-      }
+      },
+      {
+        items: [
+          { text: 'Conclusions', link: '/08-conclusions/08-00-conclusions', },
+        ]
+      },
     ],
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/zucchero-sintattico/piper-kt' }
-    ]
+    ],
   }
 })
 
