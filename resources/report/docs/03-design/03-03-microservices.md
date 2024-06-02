@@ -1,8 +1,6 @@
 # Microservices
 
-## Users Microservices
-
-The `Users` bounded context is responsible for managing the users, their profiles and authentication.
+## Users Microservice
 
 ### Inbound Events
 
@@ -17,13 +15,7 @@ The `Users` bounded context emits the following outbound events:
 - `UserLoggedIn`: emitted when a user is authenticated.
 - `UserLoggedOut`: emitted when a user logs out.
 
-## Friendships Bounded Context
-
-The `Friendships` bounded context is responsible for managing the friendships between users and their messages.
-
-### Subdomain
-
-TODO: Photo of the subdomain.
+## Friendships Microservice
 
 ### Inbound Events
 
@@ -38,13 +30,7 @@ The `Friendships` bounded context emits the following outbound events:
 - `FriendshipRejected`: emitted when a user rejects a friend request.
 - `NewMessageInFriendship`: emitted when a new message is sent in a friendship.
 
-## Servers Bounded Context
-
-The `Servers` bounded context is responsible for managing the servers and channels, including the messages sent in the channels.
-
-### Subdomain
-
-TODO: Photo of the subdomain.
+## Servers Microservice
 
 ### Inbound Events
 
@@ -65,13 +51,7 @@ The `Servers` bounded context emits the following outbound events:
 - `ServerUserRemoved`: emitted when a user is removed from a server.
 - `ServerUserKicked`: emitted when a user is kicked from a server.
 
-## Multimedia Bounded Context
-
-The `Multimedia` bounded context is responsible for managing multimedia sessions used to make video/audio calls.
-
-### Subdomain
-
-TODO: Photo of the subdomain.
+## Multimedia Microservice
 
 ### Inbound Events
 
@@ -105,3 +85,11 @@ The `Multimedia` bounded context emits the following outbound events:
 - `AllowedUserRemoved`: emitted when a user is removed from a multimedia session.
 - `ParticipantJoined`: emitted when a user joins a multimedia session.
 - `ParticipantLeft`: emitted when a user leaves a multimedia session.
+
+## Notifications Microservice
+
+### Inbound Events
+
+### Outbound Events
+
+## Frontend Microservice
