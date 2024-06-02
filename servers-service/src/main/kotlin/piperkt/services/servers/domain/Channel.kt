@@ -7,7 +7,7 @@ enum class ChannelType {
     MULTIMEDIA
 }
 
-data class Channel(
+class Channel(
     override val id: ChannelId = ChannelId(),
     var name: String,
     val type: ChannelType,
@@ -17,5 +17,21 @@ data class Channel(
 
     fun addMessage(message: Message) {
         messages.add(message)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Channel) return false
+        if (!super.equals(other)) return false
+
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + id.hashCode()
+        return result
     }
 }
