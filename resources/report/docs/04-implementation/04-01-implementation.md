@@ -73,7 +73,7 @@ sealed interface ServerCommand {
 }
 ```
 
-The error handling is done through the Result class, which is a simple wrapper that can contain a success value or a failure value. In the case of a failure, the Result contains an ad-hoc exception that represents the error.
+The error handling is done through the **Result** class, which is a simple wrapper that can contain a success value or a failure value. In the case of a failure, the Result contains an ad-hoc exception that represents the error.
 
 ```kotlin
 // Example of Server service delete operation
@@ -345,7 +345,7 @@ class ServerHttpController(private val serverService: ServerService) : ServerHtt
     }
     // Other methods...
 }
-````
+```
 
 The controllers are very simple, they only call the services methods, and then return the responses to the client.
 

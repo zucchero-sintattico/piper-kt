@@ -106,7 +106,7 @@ You can find an example in the following code snippet (from the `servers-service
 ```kotlin
 // Basic Server Service Test
 open class BasicServerServiceTest : UnitTest() {
-    // Mocks
+    // Mocks declaration
     val serverRepository = mock<ServerRepository>()
     val eventPublisher = mock<ServerEventPublisher>()
     val serverService = ServerService(serverRepository, eventPublisher)
