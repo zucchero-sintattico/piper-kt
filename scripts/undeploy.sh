@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+kubectl delete secrets sh.helm.release.v1.notifications-service-mongo.v1 
 kubectl delete secrets sh.helm.release.v1.friendships-service-mongo.v1
 kubectl delete secrets sh.helm.release.v1.multimedia-service-mongo.v1
 kubectl delete secrets sh.helm.release.v1.servers-service-mongo.v1

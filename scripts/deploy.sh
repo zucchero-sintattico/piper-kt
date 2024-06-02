@@ -36,7 +36,7 @@ do
 done
 
 # Install notifications-service
-helm install notifications-service kubernetes/helm-chart/mongo-for-operator \
+helm install notifications-service-mongo kubernetes/helm-chart/mongo-chart \
     --values notifications-service/helm-values/mongo-values.yaml
 
 # Apply notifications.yml and frontend.yml
