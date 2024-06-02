@@ -90,12 +90,9 @@ class CleanArchitectureMultimediaTest : CleanArchitectureSpec(PREFIX)
 class FrameworkIndependenceMultimediaTest : FrameworkIndependenceTest(PREFIX)
 ```
 
-### Mocking and Stubbing
+### Mockito
 
 In each microservice, each layer is been tested with Unit / Integration tests.
-
-## Mockito
-
 With regard to the the application layer, in some microservice, we have used the [Mockito](https://site.mockito.org/) library to mock the dependencies of the _services_ like **repositories** and **event publishers**.
 
 Using this technique, we can test the _services_ components in isolation, without the affect of the dependencies.
