@@ -27,7 +27,7 @@ Each microservice has two main types of interactions, in order handle communicat
 - **External communication**: interactions with the outside world (e.g. client requests), which are handled by the API Gateway and redirected to the appropriate microservice.
 - **Internal communication**: interactions between microservices, which are handled by the Event Broker.
 
-![Interactions](./img/interactions.jpg)
+![Interactions](./img/gateway-broker-microservice.jpg)
 
 ## Proposed Architecture
 
