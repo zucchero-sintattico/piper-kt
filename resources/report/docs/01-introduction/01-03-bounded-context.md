@@ -1,8 +1,4 @@
-# Domain
-
-![Domain](./img/domain-full.jpg)
-
-![Bounded Contexts](./img/bounded-context-map.jpg)
+# Bounded Context
 
 ## Users Bounded Context
 
