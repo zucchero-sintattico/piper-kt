@@ -1,9 +1,10 @@
 package piperkt.services.friendships.domain.factory
 
+import piperkt.common.ddd.Factory
 import piperkt.services.friendships.domain.Friendship
 import piperkt.services.friendships.domain.Message
 
-object FriendshipFactory {
+object FriendshipFactory : Factory<Friendship> {
 
     fun createFriendship(
         firstUser: String,
