@@ -1,6 +1,12 @@
 # Domain
 
+The complete domain model is shown in the following image:
+
 ![Domain](./img/domain-full.jpg)
+
+## Bounded Contexts
+
+The system is divided into the following bounded contexts, according to the identified pivotal points:
 
 ![Bounded Contexts](./img/bounded-context-map.jpg)
 
