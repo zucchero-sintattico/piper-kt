@@ -23,7 +23,7 @@ spec:
       serviceAccountName: micronaut-service
       containers:
         - name: {{.Values.serviceName}}
-          image: zuccherosintattico/piperkt-{{.Values.serviceName}}:test
+          image: zuccherosintattico/piperkt-{{.Values.serviceName}}
           imagePullPolicy: Always
           ports:
           {{- range .Values.containersPorts }}
