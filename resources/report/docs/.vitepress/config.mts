@@ -43,7 +43,10 @@ const config = defineConfig({
           {
             text: 'Design', collapsed: true, link: "/03-design/03-00-glossary",
             items: [
-              { text: 'Architecture', link: '/03-design/03-architecture', },
+              { text: 'Knowledge Crunching', link: '/03-design/03-01-knowledge-crunching', },
+              { text: 'Domain', link: '/03-design/03-02-domain', },
+              { text: 'Architecture', link: '/03-design/03-03-architecture', },
+              { text: 'Microservices', link: '/03-design/03-04-microservices', },
             ]
           },
         ]

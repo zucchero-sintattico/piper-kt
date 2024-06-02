@@ -80,7 +80,7 @@ abstract class FrameworkIndependenceTest(prefix: String) : ArchitectureSpec(pref
 
 Each microservice submodule, simply extends these classes, passing them the package prefix.
 
-You can find an example in the following code snippet (`servers-service` microservice):
+You can find an example in the following code snippet (from `servers-service` microservice):
 
 ```kotlin
 const val PREFIX = "piperkt.services.servers"
@@ -91,10 +91,10 @@ class FrameworkIndependenceMultimediaTest : FrameworkIndependenceTest(PREFIX)
 ```
 
 
-### Testing Hierarchy
+### Unit and Integration Testing
 
 In order to test the microservices, we have defined a hierarchy of tests, that split unit tests from integration tests.
-To execute integration tests, we have used the MicronautTest annotation, that allows us to start the Micronaut application context, and to test the services in a more realistic scenario, because it also use testcontainers to start the database and the broker.
+To execute integration tests, we have used the MicronautTest annotation, that allows us to start the Micronaut application context, powered by the dependency injection, and to test the services in a more realistic scenario, because it also use _testcontainers_ to start the database and the broker.
 
 ```kotlin
 sealed interface UnitTest {
@@ -105,13 +105,76 @@ sealed interface UnitTest {
 }
 
 sealed interface IntegrationTest {
-    @MicronautTest(rollback = true, transactionMode = TransactionMode.SINGLE_TRANSACTION)
+    @MicronautTest
     open class AnnotationSpec : io.kotest.core.spec.style.AnnotationSpec()
 
-    @MicronautTest(rollback = true, transactionMode = TransactionMode.SINGLE_TRANSACTION)
+    @MicronautTest
     open class FunSpec(body: io.kotest.core.spec.style.FunSpec.() -> Unit = {}) :
         io.kotest.core.spec.style.FunSpec(body)
 }
+```
+
+This allow us to define the tests in a more structured way, and to separate the unit tests from the integration tests, as shown in the following code snippet:
+
+```kotlin
+// Unit Test
+class AuthServiceTest :
+    UnitTest.FunSpec({
+        val userRepository = InMemoryUserRepository()
+        val userEventPublisher = MockedUserEventPublisher()
+        val authService = AuthService(userRepository, userEventPublisher)
+
+        ...
+
+        beforeEach { ... }
+
+        test("...") {
+            ...
+        }
+
+        ...
+    })
+```
+
+```kotlin
+// Integration Test
+@Client("/")
+interface ProfileControllerClient {
+
+    @Put("profile/description")
+    fun updateDescription(
+        @Header(HttpHeaders.AUTHORIZATION) authorization: String,
+        @Body request: ProfileApi.UpdateDescriptionRequest,
+    ): UserDTO
+
+    @Put("profile/photo")
+    fun updateProfilePicture(
+        @Header(HttpHeaders.AUTHORIZATION) authorization: String,
+        @Body request: ProfileApi.UpdateProfilePictureRequest,
+    ): UserDTO
+}
+
+class ProfileControllerTest(
+    private val profileControllerClient: ProfileControllerClient,
+) :
+    IntegrationTest.FunSpec({
+        lateinit var user: User
+
+        beforeEach { user = ... }
+
+        afterEach { ... }
+
+        test("updateDescription") {
+            val response =
+                profileControllerClient.updateDescription(
+                    TestUtils.authOf(user.username.value),
+                    ProfileApi.UpdateDescriptionRequest("description")
+                )
+            response shouldBe UserFactory.copy(user) { description = "description" }.toDTO()
+        }
+
+    })
+
 ```
 
 ### Mockito

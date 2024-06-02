@@ -18,8 +18,8 @@ The scenario involves a client making HTTP requests to the server, where the Pip
 
 | Machine | O.S          | CPU                       | RAM  | Link        |
 | ------- | ------------ | ------------------------- | ---- | ----------- |
-| Client  | Ubuntu 22.04 | Intel Core i7-8700 6 core | 48GB | 1Gbps (LAN) |
-| Server  | macOS 14.5   | Apple M1 Pro              | 16GB | 1Gbps (LAN) |
+| Server  | Ubuntu 22.04 | Intel Core i7-8700 6 core | 48GB | 1Gbps (LAN) |
+| Client  | macOS 14.5   | Apple M1 Pro              | 16GB | 1Gbps (LAN) |
 
 The Kubernetes cluster is running on a single-node Minikube instance, with the following configuration:
 

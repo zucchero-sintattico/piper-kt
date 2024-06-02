@@ -21,7 +21,7 @@ The NGINX Ingress Controller manages traffic and was installed using Helm. It is
 
 ## Dependencies between Components
 
-The various pods are interdependent; for example, the Micronaut microservices cannot send messages without Kafka. However, Kubernetes does not require that pods start in a specific order; it handles the startup of pods independently and restarts them in case of crashes. This simplifies deployment and enhances resilience to component failures as described in the [documentation](https://kubernetes.io/docs/concepts/overview/).
+The various pods are interdependent; for example, the microservices cannot send messages without Kafka. However, Kubernetes does not require that pods start in a specific order; it handles the startup of pods independently and restarts them in case of crashes. This simplifies deployment and enhances resilience to component failures as described in the [documentation](https://kubernetes.io/docs/concepts/overview/).
 
 ## Structure
 

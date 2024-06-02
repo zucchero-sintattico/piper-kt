@@ -10,13 +10,14 @@ You can find an example in the following code snippet (from the `servers-service
 
 ```kotlin
 // Channel Entity
-data class Channel(
+class Channel(
     override val id: ChannelId = ChannelId(),
     var name: String,
     val type: ChannelType,
     var description: String,
     val messages: MutableList<Message> = mutableListOf(),
 ) : Entity<ChannelId>(id) {
+    // equals, hashCode, ...
 
     fun addMessage(message: Message) {
         messages.add(message)
@@ -31,6 +32,9 @@ class Server(
     var users: MutableList<String> = mutableListOf(owner),
     var channels: MutableList<Channel> = mutableListOf(),
 ) : AggregateRoot<ServerId>(id) {
+
+    // equals, hashCode, ...
+
     fun addUser(username: String) {
         this.users.add(username)
     }
@@ -105,7 +109,7 @@ open class ServerService(
 ```
 
 In this level, we also have declared the **Repositories** interfaces, which are then implemented in the infrastructure level.
-**TOFINISH**
+This allows us to keep the application layer completely independent from the technology used for the persistence or the event publishing and to easily switch the implementation if needed.
 
 ### Infrastructure Layer
 
@@ -380,7 +384,27 @@ In this case, we defined a specific error handler for the `ServerNotFoundExcepti
 
 ### Presentation Layer
 
-In this layer, we have the mappers, which are responsible for converting the domain entities to the response data classes, and vice versa.
+In this layer, we have the mappers, which are responsible for converting the domain entities to the DTOs, if presents, and vice versa.
+It also define mappers from db-entities to domain entities and vice versa.
+
+```kotlin
+/** Mapper for [Session] and [SessionEntity] */
+object SessionMapper {
+    fun Session.toEntity() =
+        SessionEntity(
+            id = id.value,
+            allowedUsers = allowedUsers().map { it.value },
+            participants = participants().map { it.value }
+        )
+
+    fun SessionEntity.toDomain() =
+        SessionFactory.create(
+            SessionId(id),
+            allowedUsers.map { Username(it) }.toSet(),
+            participants.map { Username(it) }.toSet()
+        )
+}
+```
 
 ### Configuration Layer
 
@@ -419,3 +443,36 @@ application:
 socketio:
   port: 8082
 ```
+
+## Notes on Notifications
+
+Persistent communications between backend and client have been implemented using [Socket.io](https://socket.io) library from `notifications-service`.
+
+### User Online
+
+A user, when connecting to the system, must be considered **online** and must be enabled to receive notifications.
+
+Given these assumptions, a connection is established between the server and the authenticated client via Socket.IO.
+It was decided to collapse, within this socket, the two responsibilities:
+
+- Allow the server to send notifications to clients.
+- As long as the socket is open, the client is **considered online**.
+
+#### Notes on Scalability
+
+Since the microservice maintains a state, horizontal scalability may not be obvious.
+Considerations made in order to enable horizontal scalability without running into inconsistencies are analyzed below.
+
+##### User establishes connection
+
+When a user makes a request toward the notification service, it establishes a socket to a specific replica. This replica will be the one that will maintain the persistent connection toward the user. It also takes care of updating the status (online/offline) in the database shared with the other replicas.
+
+##### New event for a user
+
+When a new event is generated in the system and a user, it must be notified. The broker will broadcast the event to all copies of the service, but it is only the replica that maintains the persistent connection that will send the appropriate notification to the client.
+
+##### Requesting the status of a user
+
+When any user requests the status of another user, any replica can fulfill this request since the status is saved in the shared database.
+
+![Notifications Service](./img/notifications-note.jpg)
