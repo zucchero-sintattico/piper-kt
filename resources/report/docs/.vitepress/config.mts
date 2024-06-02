@@ -41,7 +41,7 @@ const config = defineConfig({
       {
         items: [
           {
-            text: 'Design', collapsed: true,
+            text: 'Design', collapsed: true, link: "/03-design/03-00-glossary",
             items: [
               { text: 'Architecture', link: '/03-design/03-architecture', },
             ]

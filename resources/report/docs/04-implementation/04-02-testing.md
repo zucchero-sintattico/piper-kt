@@ -90,6 +90,30 @@ class CleanArchitectureMultimediaTest : CleanArchitectureSpec(PREFIX)
 class FrameworkIndependenceMultimediaTest : FrameworkIndependenceTest(PREFIX)
 ```
 
+
+### Testing Hierarchy
+
+In order to test the microservices, we have defined a hierarchy of tests, that split unit tests from integration tests.
+To execute integration tests, we have used the MicronautTest annotation, that allows us to start the Micronaut application context, and to test the services in a more realistic scenario, because it also use testcontainers to start the database and the broker.
+
+```kotlin
+sealed interface UnitTest {
+    open class AnnotationSpec : io.kotest.core.spec.style.AnnotationSpec()
+
+    open class FunSpec(body: io.kotest.core.spec.style.FunSpec.() -> Unit = {}) :
+        io.kotest.core.spec.style.FunSpec(body)
+}
+
+sealed interface IntegrationTest {
+    @MicronautTest(rollback = true, transactionMode = TransactionMode.SINGLE_TRANSACTION)
+    open class AnnotationSpec : io.kotest.core.spec.style.AnnotationSpec()
+
+    @MicronautTest(rollback = true, transactionMode = TransactionMode.SINGLE_TRANSACTION)
+    open class FunSpec(body: io.kotest.core.spec.style.FunSpec.() -> Unit = {}) :
+        io.kotest.core.spec.style.FunSpec(body)
+}
+```
+
 ### Mockito
 
 In each microservice, each layer is been tested with Unit / Integration tests.
