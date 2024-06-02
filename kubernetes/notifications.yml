@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: notifications-service
-          image: zuccherosintattico/piperkt-notifications-service:test
+          image: zuccherosintattico/piperkt-notifications-service
           env:
             - name: MONGO_URI
               value: "mongodb://notifications-mongo:password@notifications-mongo-svc.piper-kt.svc.cluster.local:27017/admin?authSource=admin&authMechanism=SCRAM-SHA-256&directConnection=true"
