@@ -32,8 +32,6 @@
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-- [Usage](#usage)
-- [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
@@ -45,17 +43,18 @@
 
 ### Built With
 
-- [Node.js](https://nodejs.org/en/)
+- [Kotlin](https://kotlinlang.org/)
+  - [Micronaut](https://micronaut.io/)
 
+- [Node.js](https://nodejs.org/en/)
   - [TypeScript](https://www.typescriptlang.org/)
   - [Express](https://expressjs.com/)
   - [Socket.io](https://socket.io/)
   - [Mongoose](https://mongoosejs.com/)
-  - [Amqplib](https://www.npmjs.com/package/amqplib)
   - [Vue.js](https://vuejs.org/)
 
 - [MongoDB](https://www.mongodb.com/)
-- [RabbitMQ](https://www.rabbitmq.com/)
+- [Kafka](https://kafka.apache.org/)
 
 <!-- GETTING STARTED -->
 
@@ -63,41 +62,35 @@
 
 To get a local copy up and running follow these simple steps.
 
+For advanced details, check the [documentation](https://zucchero-sintattico.github.io/piper-kt/report/).
+
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/en/)
-- [Docker](https://www.docker.com/)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/)
+- [Helm](https://helm.sh)
+- a Kubernetes cluster (e.g. [Minikube](https://minikube.sigs.k8s.io/docs/))
 
 ### Installation
 
-1. **Clone the Repository:**
+1. Clone the repository with the command
 
-   ```sh
-   $ git clone https://github.com/zucchero-sintattico/piperchat.git
-   ```
+```bash
+$ git clone https://github.com/zucchero-sintattico/piper-kt.git
+```
 
-2. **Install Dependencies:**
+2. Navigate to the folder
 
-   ```sh
-   $ npm i
-   ```
+```bash
+$ cd piper-kt
+```
 
-3. **Copy Environment Variables:**
+3. Run the deploy command to start the deployment process.
 
-   ```sh
-   $ cp .env.template .env
-   ```
+```bash
+$ ./scripts/deploy.sh
+```
 
-4. **Deploy the Architecture (including Image Build):**
-
-   ```sh
-   $ ./cleanDeploy.sh
-   ```
-
-5. **Subsequent Deployments (Preserving Volumes and Images):**
-   ```sh
-   $ ./deploy.sh
-   ```
+Visit [localhost:8080](http://localhost:8080) to see the application running.
 
 <!-- CONTRIBUTING -->
 
