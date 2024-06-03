@@ -7,7 +7,7 @@ import piperkt.services.friendships.application.api.command.FriendshipCommand
 import piperkt.services.friendships.application.api.query.FriendshipQuery
 import piperkt.services.friendships.interfaces.web.api.FriendshipHttpApi
 import piperkt.services.friendships.interfaces.web.api.interactions.FriendshipApi
-import piperkt.services.friendships.presentation.MessageDTO
+import piperkt.services.friendships.presentation.DirectMessageDTO
 
 @Controller
 class FriendshipHttpController(private val friendshipService: FriendshipService) :
@@ -101,7 +101,7 @@ class FriendshipHttpController(private val friendshipService: FriendshipService)
                 )
                 .getOrThrow()
         return FriendshipApi.GetFriendshipMessages.Response(
-            messages = response.messages.map { MessageDTO.fromDomain(it) }
+            messages = response.directMessages.map { DirectMessageDTO.fromDomain(it) }
         )
     }
 

@@ -18,7 +18,7 @@ data class FriendshipEntity(
             FriendshipEntity(
                 id = friendship.id.value,
                 users = friendship.users,
-                messages = friendship.messages.map { MessageEntity.fromDomain(it) }
+                messages = friendship.directMessages.map { MessageEntity.fromDomain(it) }
             )
     }
 }
@@ -27,7 +27,7 @@ fun FriendshipEntity.toDomain() =
     Friendship(
         id = FriendshipId(id),
         users = users,
-        messages = messages.map { it.toDomain() }.toMutableList()
+        directMessages = messages.map { it.toDomain() }.toMutableList()
     )
 
 @MongoRepository

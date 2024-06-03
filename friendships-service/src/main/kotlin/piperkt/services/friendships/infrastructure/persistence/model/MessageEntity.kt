@@ -3,7 +3,7 @@ package piperkt.services.friendships.infrastructure.persistence.model
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import java.time.Instant
-import piperkt.services.friendships.domain.Message
+import piperkt.services.friendships.domain.DirectMessage
 import piperkt.services.friendships.domain.factory.MessageFactory
 
 @MappedEntity
@@ -14,12 +14,12 @@ data class MessageEntity(
     val timestamp: String = Instant.now().toString()
 ) {
     companion object {
-        fun fromDomain(message: Message) =
+        fun fromDomain(directMessage: DirectMessage) =
             MessageEntity(
-                id = message.id.value,
-                content = message.content,
-                sender = message.sender,
-                timestamp = message.timestamp.toString()
+                id = directMessage.id.value,
+                content = directMessage.content,
+                sender = directMessage.sender,
+                timestamp = directMessage.timestamp.toString()
             )
     }
 }

@@ -1,7 +1,7 @@
 package piperkt.services.friendships.interfaces.web.api.interactions
 
 import io.micronaut.serde.annotation.Serdeable
-import piperkt.services.friendships.presentation.MessageDTO
+import piperkt.services.friendships.presentation.DirectMessageDTO
 
 sealed interface FriendshipApi {
 
@@ -39,7 +39,8 @@ sealed interface FriendshipApi {
     }
 
     sealed interface GetFriendshipMessages : FriendshipApi {
-        @Serdeable data class Response(val messages: List<MessageDTO>) : GetFriendshipMessages
+        @Serdeable
+        data class Response(val messages: List<DirectMessageDTO>) : GetFriendshipMessages
     }
 
     sealed interface GetFriendshipRequests : FriendshipApi {
