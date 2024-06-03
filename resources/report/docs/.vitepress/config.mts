@@ -28,7 +28,7 @@ const config = defineConfig({
       {
         items: [
           {
-            text: 'Requirements', collapsed: true,
+            text: 'Requirements', collapsed: false,
             items: [
               { text: 'Business requirements', link: '/02-requirements/02-01-business', },
               { text: 'Functional requirements', link: '/02-requirements/02-02-functional', },
@@ -40,7 +40,7 @@ const config = defineConfig({
       {
         items: [
           {
-            text: 'Design', collapsed: true, link: "/03-design/03-00-glossary",
+            text: 'Design', collapsed: false, link: "/03-design/03-00-glossary",
             items: [
               { text: 'Knowledge Crunching', link: '/03-design/03-01-knowledge-crunching', },
               { text: 'Domain', link: '/03-design/03-02-domain', },
@@ -53,7 +53,7 @@ const config = defineConfig({
       {
         items: [
           {
-            text: 'Implementation', link: "/04-implementation/04-00-index", collapsed: true,
+            text: 'Implementation', link: "/04-implementation/04-00-index", collapsed: false,
             items: [
               { text: 'Microservices', link: '/04-implementation/04-01-implementation', },
               { text: 'Testing', link: '/04-implementation/04-02-testing', },
@@ -66,7 +66,7 @@ const config = defineConfig({
       {
         items: [
           {
-            text: 'DevOps', link: "/05-devops/05-00-devops", collapsed: true,
+            text: 'DevOps', link: "/05-devops/05-00-devops", collapsed: false,
             items: [
               { text: 'Project Structure', link: '/05-devops/05-1-project-structure', },
               { text: 'VCS & Repo', link: '/05-devops/05-2-version-control', },
