@@ -27,4 +27,7 @@ Another problem that slowed down the performance of the application is probably 
 
 ## Acknowledgements
 
+We would like to thank our professor, Dr. Fabio Casati, for his guidance and support throughout the project. We would also like to thank our teaching assistant, Dr. Marco Comuzzi, for his help and support during the project.
+
 ## References
+

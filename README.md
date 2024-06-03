@@ -39,24 +39,70 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## About The Project
+# About the Project
 
-### Built With
+## Built With
 
-- [Kotlin](https://kotlinlang.org/)
-  - [Micronaut](https://micronaut.io/)
+### Infrastructure
 
-- [Node.js](https://nodejs.org/en/)
-  - [TypeScript](https://www.typescriptlang.org/)
-  - [Express](https://expressjs.com/)
-  - [Socket.io](https://socket.io/)
-  - [Mongoose](https://mongoosejs.com/)
-  - [Vue.js](https://vuejs.org/)
-
-- [MongoDB](https://www.mongodb.com/)
+- [Kubernetes](https://kubernetes.io/)
+- [Helm](https://helm.sh/)
+- [Docker](https://www.docker.com/)
 - [Kafka](https://kafka.apache.org/)
 
-<!-- GETTING STARTED -->
+### Kotlin Microservices
+
+- [Kotlin](https://kotlinlang.org/)
+- [Micronaut](https://micronaut.io/)
+- [MongoDB](https://www.mongodb.com/)
+- [JWT](https://jwt.io/)
+- [Kotest](https://kotest.io/)
+- [Konsist](https://docs.konsist.lemonappdev.com/)
+- [Mockito](https://site.mockito.org/)
+- [Dokka](https://kotlin.github.io/dokka/)
+- [Kover](https://github.com/Kotlin/kotlinx-kover)
+- [Testcontainers](https://www.testcontainers.org/)
+
+### Integrated Microservices
+
+- [NodeJS](https://nodejs.org/en/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Express](https://expressjs.com/)
+- [Mongoose](https://mongoosejs.com/)
+
+### Frontend
+
+- [Vue.js](https://vuejs.org/)
+- [Pinia](https://pinia.esm.dev/)
+- [Quasar](https://quasar.dev/)
+
+### Communication
+
+- [Socket.io](https://socket.io/)
+- [Axios](https://axios-http.com/)
+- [WebRTC](https://webrtc.org/)
+
+### Api Documentation
+
+- [Swagger](https://swagger.io/)
+
+### Code Quality
+
+- [Spotless](https://github.com/diffplug/spotless)
+- [Detekt](https://detekt.github.io/detekt/)
+- [Ktfmt](https://github.com/facebook/ktfmt)
+
+### Versioning
+
+- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+- [Semantic Versioning](https://semver.org/)
+- [Semantic Release](https://semantic-release.gitbook.io/semantic-release/)
+
+### CI/CD
+
+- [GitHub Actions](https://github.com/features/actions)
+- [Docker Hub](https://hub.docker.com/)
+- [Gradle](https://gradle.org/)
 
 ## Getting Started
 
