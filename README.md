@@ -32,8 +32,6 @@
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-- [Usage](#usage)
-- [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
@@ -41,63 +39,104 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## About The Project
+# About the Project
 
-### Built With
+## Built With
 
-- [Node.js](https://nodejs.org/en/)
+### Infrastructure
 
-  - [TypeScript](https://www.typescriptlang.org/)
-  - [Express](https://expressjs.com/)
-  - [Socket.io](https://socket.io/)
-  - [Mongoose](https://mongoosejs.com/)
-  - [Amqplib](https://www.npmjs.com/package/amqplib)
-  - [Vue.js](https://vuejs.org/)
+- [Kubernetes](https://kubernetes.io/)
+- [Helm](https://helm.sh/)
+- [Docker](https://www.docker.com/)
+- [Kafka](https://kafka.apache.org/)
 
+### Kotlin Microservices
+
+- [Kotlin](https://kotlinlang.org/)
+- [Micronaut](https://micronaut.io/)
 - [MongoDB](https://www.mongodb.com/)
-- [RabbitMQ](https://www.rabbitmq.com/)
+- [JWT](https://jwt.io/)
+- [Kotest](https://kotest.io/)
+- [Konsist](https://docs.konsist.lemonappdev.com/)
+- [Mockito](https://site.mockito.org/)
+- [Dokka](https://kotlin.github.io/dokka/)
+- [Kover](https://github.com/Kotlin/kotlinx-kover)
+- [Testcontainers](https://www.testcontainers.org/)
 
-<!-- GETTING STARTED -->
+### Integrated Microservices
+
+- [NodeJS](https://nodejs.org/en/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Express](https://expressjs.com/)
+- [Mongoose](https://mongoosejs.com/)
+
+### Frontend
+
+- [Vue.js](https://vuejs.org/)
+- [Pinia](https://pinia.esm.dev/)
+- [Quasar](https://quasar.dev/)
+
+### Communication
+
+- [Socket.io](https://socket.io/)
+- [Axios](https://axios-http.com/)
+- [WebRTC](https://webrtc.org/)
+
+### Api Documentation
+
+- [Swagger](https://swagger.io/)
+
+### Code Quality
+
+- [Spotless](https://github.com/diffplug/spotless)
+- [Detekt](https://detekt.github.io/detekt/)
+- [Ktfmt](https://github.com/facebook/ktfmt)
+
+### Versioning
+
+- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+- [Semantic Versioning](https://semver.org/)
+- [Semantic Release](https://semantic-release.gitbook.io/semantic-release/)
+
+### CI/CD
+
+- [GitHub Actions](https://github.com/features/actions)
+- [Docker Hub](https://hub.docker.com/)
+- [Gradle](https://gradle.org/)
 
 ## Getting Started
 
 To get a local copy up and running follow these simple steps.
 
+For advanced details, check the [documentation](https://zucchero-sintattico.github.io/piper-kt/report/).
+
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/en/)
-- [Docker](https://www.docker.com/)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/)
+- [Helm](https://helm.sh)
+- a Kubernetes cluster (e.g. [Minikube](https://minikube.sigs.k8s.io/docs/))
 
 ### Installation
 
-1. **Clone the Repository:**
+1. Clone the repository with the command
 
-   ```sh
-   $ git clone https://github.com/zucchero-sintattico/piperchat.git
-   ```
+```bash
+$ git clone https://github.com/zucchero-sintattico/piper-kt.git
+```
 
-2. **Install Dependencies:**
+2. Navigate to the folder
 
-   ```sh
-   $ npm i
-   ```
+```bash
+$ cd piper-kt
+```
 
-3. **Copy Environment Variables:**
+3. Run the deploy command to start the deployment process.
 
-   ```sh
-   $ cp .env.template .env
-   ```
+```bash
+$ ./scripts/deploy.sh
+```
 
-4. **Deploy the Architecture (including Image Build):**
-
-   ```sh
-   $ ./cleanDeploy.sh
-   ```
-
-5. **Subsequent Deployments (Preserving Volumes and Images):**
-   ```sh
-   $ ./deploy.sh
-   ```
+Visit [localhost:8080](http://localhost:8080) to see the application running.
 
 <!-- CONTRIBUTING -->
 

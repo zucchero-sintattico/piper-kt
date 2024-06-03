@@ -1,0 +1,200 @@
+Test with 1 replicas
+Test 0
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    13.49ms   56.33ms   1.97s    99.46%
+    Req/Sec     0.85k   588.85     1.72k    54.02%
+  175466 requests in 1.00m, 57.84MB read
+  Socket errors: connect 0, read 19, write 0, timeout 562
+  Non-2xx or 3xx responses: 174860
+Requests/sec:   2919.68
+Transfer/sec:      0.96MB
+Test 1
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    13.71ms   59.96ms   1.98s    99.53%
+    Req/Sec   826.17    588.08     1.79k    53.44%
+  173870 requests in 1.00m, 57.32MB read
+  Socket errors: connect 0, read 15, write 0, timeout 583
+  Non-2xx or 3xx responses: 173247
+Requests/sec:   2892.92
+Transfer/sec:      0.95MB
+Test 2
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    13.64ms   56.78ms   1.87s    99.51%
+    Req/Sec   827.75    594.81     1.76k    53.93%
+  172625 requests in 1.00m, 56.91MB read
+  Socket errors: connect 0, read 14, write 0, timeout 576
+  Non-2xx or 3xx responses: 172004
+Requests/sec:   2872.26
+Transfer/sec:      0.95MB
+
+Test with 2 replicas
+Test 0
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    16.01ms   66.87ms   1.99s    99.00%
+    Req/Sec   335.36    474.87     1.56k    77.98%
+  48427 requests in 1.00m, 16.12MB read
+  Socket errors: connect 0, read 16, write 0, timeout 841
+  Non-2xx or 3xx responses: 47359
+Requests/sec:    805.86
+Transfer/sec:    274.77KB
+Test 1
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    15.12ms   79.68ms   2.00s    99.05%
+    Req/Sec   139.40    258.32     1.14k    84.33%
+  18507 requests in 1.00m, 6.29MB read
+  Socket errors: connect 0, read 18, write 0, timeout 886
+  Non-2xx or 3xx responses: 17407
+Requests/sec:    308.07
+Transfer/sec:    107.16KB
+Test 2
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    19.01ms   82.01ms   2.00s    98.83%
+    Req/Sec   203.83    328.89     1.24k    80.51%
+  28991 requests in 1.00m, 9.75MB read
+  Socket errors: connect 0, read 18, write 0, timeout 918
+  Non-2xx or 3xx responses: 27823
+Requests/sec:    482.52
+Transfer/sec:    166.14KB
+
+Test with 3 replicas
+Test 0
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    31.65ms  156.14ms   2.00s    97.41%
+    Req/Sec   163.28    352.17     1.70k    85.77%
+  25717 requests in 1.00m, 8.72MB read
+  Socket errors: connect 0, read 17, write 0, timeout 1097
+  Non-2xx or 3xx responses: 24270
+Requests/sec:    427.83
+Transfer/sec:    148.56KB
+Test 1
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   291.86ms  407.38ms   1.96s    89.36%
+    Req/Sec     6.45      5.49    40.00     86.68%
+  2077 requests in 1.00m, 1.06MB read
+  Socket errors: connect 0, read 17, write 0, timeout 1391
+Requests/sec:     34.56
+Transfer/sec:     17.99KB
+Test 2
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    36.41ms  163.77ms   2.00s    97.06%
+    Req/Sec   293.89    493.21     1.78k    79.74%
+  67645 requests in 1.00m, 22.62MB read
+  Socket errors: connect 0, read 5, write 0, timeout 1760
+  Non-2xx or 3xx responses: 65625
+Requests/sec:   1125.56
+Transfer/sec:    385.39KB
+
+Test with 4 replicas
+Test 0
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   781.72ms  688.46ms   2.00s    61.48%
+    Req/Sec     8.16      6.50    49.00     76.68%
+  3100 requests in 1.00m, 1.58MB read
+  Socket errors: connect 0, read 13, write 0, timeout 1376
+Requests/sec:     51.58
+Transfer/sec:     26.85KB
+Test 1
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.16s   571.00ms   2.00s    59.44%
+    Req/Sec     7.70      5.65    30.00     75.48%
+  3351 requests in 1.00m, 1.70MB read
+  Socket errors: connect 0, read 11, write 0, timeout 1756
+Requests/sec:     55.79
+Transfer/sec:     29.04KB
+Test 2
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   992.67ms  640.02ms   2.00s    50.34%
+    Req/Sec     7.89      5.86    39.00     75.02%
+  3489 requests in 1.00m, 1.77MB read
+  Socket errors: connect 0, read 14, write 0, timeout 2011
+Requests/sec:     58.04
+Transfer/sec:     30.21KB
+
+Test with 6 replicas
+Test 0
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   890.52ms  568.33ms   2.00s    57.04%
+    Req/Sec    10.68      7.23    50.00     66.98%
+  5182 requests in 1.00m, 2.63MB read
+  Socket errors: connect 0, read 13, write 0, timeout 1630
+Requests/sec:     86.21
+Transfer/sec:     44.87KB
+Test 1
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.10s   507.22ms   2.00s    60.14%
+    Req/Sec    10.57      6.82    50.00     70.43%
+  5374 requests in 1.00m, 2.73MB read
+  Socket errors: connect 0, read 19, write 0, timeout 1606
+Requests/sec:     89.41
+Transfer/sec:     46.54KB
+Test 2
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.18s   481.64ms   2.00s    64.31%
+    Req/Sec    10.80      7.16    50.00     68.42%
+  5401 requests in 1.00m, 2.75MB read
+  Socket errors: connect 0, read 19, write 0, timeout 1534
+Requests/sec:     89.86
+Transfer/sec:     46.77KB
+
+Test with 10 replicas
+Test 0
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   747.89ms  547.03ms   2.00s    63.23%
+    Req/Sec    14.54      9.07    69.00     73.76%
+  7822 requests in 1.00m, 3.98MB read
+  Socket errors: connect 0, read 19, write 0, timeout 1420
+Requests/sec:    130.16
+Transfer/sec:     67.75KB
+Test 1
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   775.56ms  476.01ms   2.00s    64.17%
+    Req/Sec    14.96      9.20    69.00     75.45%
+  8274 requests in 1.00m, 4.21MB read
+  Socket errors: connect 0, read 18, write 0, timeout 1095
+Requests/sec:    137.64
+Transfer/sec:     71.64KB
+Test 2
+Running 1m test @ http://localhost:10000/auth/login
+  10 threads and 150 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   918.28ms  476.07ms   2.00s    62.72%
+    Req/Sec    15.21      9.21    60.00     75.56%
+  8357 requests in 1.00m, 4.25MB read
+  Socket errors: connect 0, read 15, write 0, timeout 773
+Requests/sec:    139.04
+Transfer/sec:     72.37KB
+
