@@ -33,7 +33,3 @@ The collaboration between different teams for the development of individual micr
 Furthermore, the importance of evaluating software quality in terms of functionality, reliability, and performance provided us with a comprehensive overview of the challenges and opportunities in implementing a complex communication platform like Piper-kt.
 Another challenge was the integration of previously developed microservices, which allow us to experiment and gain confidence in approaching real-world problems.
 Furthermore we also find out the challenges of rewriting the microservices using different technologies and language, allowing us to rethink about the domain model and the overall structure, giving the project a big upgrade of the quality level.
-
-
-## References
-
