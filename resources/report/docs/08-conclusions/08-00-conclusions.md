@@ -27,7 +27,13 @@ Another problem that slowed down the performance of the application is probably 
 
 ## Acknowledgements
 
-We would like to thank our professor, Dr. Fabio Casati, for his guidance and support throughout the project. We would also like to thank our teaching assistant, Dr. Marco Comuzzi, for his help and support during the project.
+
+During the development of Piper-kt, we gained a deep understanding of microservices architecture and the associated challenges. We learned how to balance crucial aspects such as security, scalability, and usability in a real-time communication project.
+The collaboration between different teams for the development of individual microservices and the management of communication between them through an event broker expanded our knowledge of best practices in distributed systems development.
+Furthermore, the importance of evaluating software quality in terms of functionality, reliability, and performance provided us with a comprehensive overview of the challenges and opportunities in implementing a complex communication platform like Piper-kt.
+Another challenge was the integration of previously developed microservices, which allow us to experiment and gain confidence in approaching real-world problems.
+Furthermore we also find out the challenges of rewriting the microservices using different technologies and language, allowing us to rethink about the domain model and the overall structure, giving the project a big upgrade of the quality level.
+
 
 ## References
 
