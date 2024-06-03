@@ -1,6 +1,6 @@
 # Architecture Design
 
-## Microservices Architecture
+## Microservices Architecture
 
 The architecture of the system is based on the microservices architecture pattern, in order to brake down the entire complexity into smaller parts, with high cohesion, but loosely coupled.
 In addition, each microservice, if necessary, has a database, which it can access exclusively.

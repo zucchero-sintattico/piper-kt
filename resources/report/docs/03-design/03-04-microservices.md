@@ -56,7 +56,9 @@ Microservice responsible for managing servers and channels, including:
 
 - CRUD operations on servers
 - CRUD operations on channels
+- Join/Leave/Kick users from server
 - Sending and retrieving messages in channels
+
 
 ### Inbound Events
 
@@ -148,6 +150,4 @@ The `Notifications` bounded context emits the following outbound events:
 
 ### Behavior
 
-Microservice responsible for serving the frontend of the application, including:
-
-- Static files
+Microservice responsible for serving the frontend of the application.

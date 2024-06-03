@@ -196,35 +196,6 @@ class UserRepositoryImpl(private val userEntityRepository: UserEntityRepository)
 }
 ```
 
-This package also contain the mapping between the domain entities and the db entities, which is done through the `toDomain()` and `toEntity()` extension functions.
-
-```kotlin
-object UserEntityMapper {
-    /** Convert a user entity to a user. */
-    fun UserEntity.toDomain() =
-        User(
-            username = Username(username),
-            password = password,
-            email = email,
-            description = description,
-            profilePicture = profilePicture,
-            refreshToken = refreshToken
-        )
-
-    /** Convert a user to a user entity. */
-    fun User.toEntity(actualId: String? = null) =
-        UserEntity(
-            id = actualId,
-            username = username.value,
-            password = password,
-            email = email,
-            description = description,
-            profilePicture = profilePicture,
-            refreshToken = refreshToken
-        )
-}
-```
-
 #### Events
 
 In this package, we simply defined the Kafka implementation of the event publishers, which are responsible for publishing the events to the Kafka topic.
@@ -463,7 +434,7 @@ It was decided to collapse, within this socket, the two responsibilities:
 Since the microservice maintains a state, horizontal scalability may not be obvious.
 Considerations made in order to enable horizontal scalability without running into inconsistencies are analyzed below.
 
-##### User establishes connection
+##### User establishes connection
 
 When a user makes a request toward the notification service, it establishes a socket to a specific replica. This replica will be the one that will maintain the persistent connection toward the user. It also takes care of updating the status (online/offline) in the database shared with the other replicas.
 

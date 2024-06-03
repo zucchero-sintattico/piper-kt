@@ -10,7 +10,6 @@ Domain glossary for discord clone
 | User               | A person who uses the system and it's registered          |
 | User Profile       | Information about a user                                  |
 | Message            | A piece of text sent by a user                            |
-| Session            | A video chat session between allowed users                |
 | Friend             | A user who is added to another user's friend list         |
 | Friendship         | A pair of users who have added each other as friends      |
 | Friend Request     | A request to add a user as a friend, sent by another user |
@@ -25,7 +24,7 @@ Domain glossary for discord clone
 | Message Channel    | A channel used for text chat                              |
 | Channel Message    | A message sent in a message channel                       |
 | Multimedia Channel | A channel used for video chat                             |
-| Multimedia Session | A session dedicated to a multimedia channel               |
+| Multimedia Session | A session dedicated to a multimedia channel or a Direct   |
 
 ## Actions
 
@@ -51,7 +50,7 @@ Domain glossary for discord clone
 | Term                     | Definition                                                       |
 | ------------------------ | ---------------------------------------------------------------- |
 | Sending a direct message | The action performed by a user to send a message to another user |
-| Joining a direct session | The action performed by a user to enter a direct session         |
+| Joining a direct session | The action performed by a user to enter a multimedia session related to a direct       |
 
 ### Servers
 
@@ -70,7 +69,7 @@ Domain glossary for discord clone
 | ---------------------------- | ------------------------------------------------------------ |
 | Creating a channel           | The action performed by a user to create a channel           |
 | Deleting a channel           | The action performed by a user to delete a channel           |
-| Joining a multimedia session | The action performed by a user to enter a multimedia session |
+| Joining a multimedia session | The action performed by a user to enter a session related to a multimedia channel |
 | Changing channel settings    | The action performed by a user to change channel settings    |
 
 ### Sessions
