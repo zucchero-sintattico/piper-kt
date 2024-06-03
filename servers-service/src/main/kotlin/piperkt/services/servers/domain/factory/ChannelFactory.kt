@@ -3,8 +3,8 @@ package piperkt.services.servers.domain.factory
 import piperkt.common.ddd.Factory
 import piperkt.services.servers.domain.Channel
 import piperkt.services.servers.domain.ChannelId
+import piperkt.services.servers.domain.ChannelMessage
 import piperkt.services.servers.domain.ChannelType
-import piperkt.services.servers.domain.Message
 
 object ChannelFactory : Factory<Channel> {
 
@@ -12,14 +12,14 @@ object ChannelFactory : Factory<Channel> {
         name: String,
         description: String,
         id: String = ChannelId().value,
-        messages: MutableList<Message> = mutableListOf(),
+        channelMessages: MutableList<ChannelMessage> = mutableListOf(),
     ): Channel {
         return Channel(
             name = name,
             type = ChannelType.TEXT,
             description = description,
             id = ChannelId(id),
-            messages = messages
+            channelMessages = channelMessages
         )
     }
 
@@ -41,10 +41,10 @@ object ChannelFactory : Factory<Channel> {
         description: String,
         type: String,
         id: String = ChannelId().value,
-        messages: MutableList<Message> = mutableListOf(),
+        channelMessages: MutableList<ChannelMessage> = mutableListOf(),
     ): Channel {
         if (ChannelType.valueOf(type) == ChannelType.TEXT) {
-            return createMessageChannel(name, description, id, messages)
+            return createMessageChannel(name, description, id, channelMessages)
         }
         return createMultimediaChannel(name, description, id)
     }

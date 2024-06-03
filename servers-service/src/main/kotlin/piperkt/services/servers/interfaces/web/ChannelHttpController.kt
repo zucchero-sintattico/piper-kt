@@ -10,7 +10,7 @@ import piperkt.services.servers.domain.ServerId
 import piperkt.services.servers.interfaces.web.api.ChannelHttpControllerApi
 import piperkt.services.servers.interfaces.web.api.interactions.ChannelApi
 import piperkt.services.servers.presentation.ChannelDTO
-import piperkt.services.servers.presentation.MessageDTO
+import piperkt.services.servers.presentation.ChannelMessageDTO
 
 @Controller
 class ChannelHttpController(private val channelService: ChannelService) : ChannelHttpControllerApi {
@@ -115,7 +115,7 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
                 )
                 .getOrThrow()
         return ChannelApi.GetChannelMessagesApi.Response(
-            messages = response.messages.map { MessageDTO.fromDomain(it) }
+            messages = response.channelMessages.map { ChannelMessageDTO.fromDomain(it) }
         )
     }
 
@@ -137,10 +137,10 @@ class ChannelHttpController(private val channelService: ChannelService) : Channe
                 )
                 .getOrThrow()
         return ChannelApi.SendMessageToChannelApi.Response(
-            channelId = response.messageId.value,
+            channelId = response.channelMessageId.value,
             message =
-                MessageDTO(
-                    id = response.messageId.value,
+                ChannelMessageDTO(
+                    id = response.channelMessageId.value,
                     content = request.content,
                     sender = principal.name,
                 )

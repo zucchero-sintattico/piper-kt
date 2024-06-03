@@ -7,8 +7,8 @@ import piperkt.services.servers.application.ChannelService
 import piperkt.services.servers.application.ServerRepository
 import piperkt.services.servers.domain.Channel
 import piperkt.services.servers.domain.ChannelId
-import piperkt.services.servers.domain.Message
-import piperkt.services.servers.domain.MessageId
+import piperkt.services.servers.domain.ChannelMessage
+import piperkt.services.servers.domain.ChannelMessageId
 import piperkt.services.servers.domain.Server
 import piperkt.services.servers.domain.ServerId
 import piperkt.services.servers.domain.factory.ChannelFactory
@@ -23,9 +23,9 @@ open class BasicChannelServiceTest : UnitTest() {
 
     protected lateinit var simpleServerId: ServerId
     protected lateinit var simpleChannelId: ChannelId
-    private lateinit var simpleMessageId: MessageId
+    private lateinit var simpleChannelMessageId: ChannelMessageId
     protected lateinit var simpleServer: Server
-    protected lateinit var simpleMessage: Message
+    protected lateinit var simpleChannelMessage: ChannelMessage
     private lateinit var simpleChannel: Channel
     protected lateinit var simpleServerWithChannel: Server
 
@@ -33,7 +33,7 @@ open class BasicChannelServiceTest : UnitTest() {
     fun setup() {
         simpleServerId = ServerId("0")
         simpleChannelId = ChannelId("0")
-        simpleMessageId = MessageId("0")
+        simpleChannelMessageId = ChannelMessageId("0")
         simpleServer =
             ServerFactory.createServer(
                 name = "serverName",
@@ -41,11 +41,11 @@ open class BasicChannelServiceTest : UnitTest() {
                 owner = "owner",
                 id = simpleServerId.value
             )
-        simpleMessage =
+        simpleChannelMessage =
             MessageFactory.createMessage(
                 content = "content",
                 sender = "sender",
-                id = simpleMessageId.value
+                id = simpleChannelMessageId.value
             )
         simpleChannel =
             ChannelFactory.createFromType(
@@ -53,7 +53,7 @@ open class BasicChannelServiceTest : UnitTest() {
                 description = "channelDescription",
                 type = "TEXT",
                 id = simpleChannelId.value,
-                messages = mutableListOf(simpleMessage)
+                channelMessages = mutableListOf(simpleChannelMessage)
             )
         simpleServerWithChannel =
             ServerFactory.createServer(

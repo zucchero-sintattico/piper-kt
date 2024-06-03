@@ -3,7 +3,7 @@ package piperkt.services.servers.infrastructure.persistence.model
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import java.time.Instant
-import piperkt.services.servers.domain.Message
+import piperkt.services.servers.domain.ChannelMessage
 import piperkt.services.servers.domain.factory.MessageFactory
 
 @MappedEntity
@@ -22,12 +22,12 @@ data class MessageEntity(
         )
 
     companion object {
-        fun fromDomain(message: Message) =
+        fun fromDomain(channelMessage: ChannelMessage) =
             MessageEntity(
-                id = message.id.value,
-                content = message.content,
-                sender = message.sender,
-                timestamp = message.timestamp.toString()
+                id = channelMessage.id.value,
+                content = channelMessage.content,
+                sender = channelMessage.sender,
+                timestamp = channelMessage.timestamp.toString()
             )
     }
 }

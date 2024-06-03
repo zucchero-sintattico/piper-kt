@@ -135,9 +135,9 @@ open class ChannelService(
         }
         return Result.success(
             ChannelQuery.GetMessagesFromChannelId.Response(
-                channel.messages.subList(
-                    request.from.coerceAtMost(channel.messages.size),
-                    (request.from + request.limit).coerceAtMost(channel.messages.size)
+                channel.channelMessages.subList(
+                    request.from.coerceAtMost(channel.channelMessages.size),
+                    (request.from + request.limit).coerceAtMost(channel.channelMessages.size)
                 )
             )
         )

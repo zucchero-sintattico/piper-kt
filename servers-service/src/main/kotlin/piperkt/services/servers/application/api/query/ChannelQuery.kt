@@ -3,7 +3,7 @@ package piperkt.services.servers.application.api.query
 import piperkt.services.servers.application.api.ServiceRequest
 import piperkt.services.servers.domain.Channel
 import piperkt.services.servers.domain.ChannelId
-import piperkt.services.servers.domain.Message
+import piperkt.services.servers.domain.ChannelMessage
 import piperkt.services.servers.domain.ServerId
 
 sealed interface ChannelQuery {
@@ -16,7 +16,7 @@ sealed interface ChannelQuery {
             override val requestFrom: String,
         ) : GetMessagesFromChannelId, ServiceRequest
 
-        data class Response(val messages: List<Message>) : GetMessagesFromChannelId
+        data class Response(val channelMessages: List<ChannelMessage>) : GetMessagesFromChannelId
     }
 
     sealed interface GetChannelByServerId : ChannelQuery {

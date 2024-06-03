@@ -2,21 +2,21 @@ package piperkt.services.servers.domain.factory
 
 import java.time.Instant
 import piperkt.common.ddd.Factory
-import piperkt.services.servers.domain.Message
-import piperkt.services.servers.domain.MessageId
+import piperkt.services.servers.domain.ChannelMessage
+import piperkt.services.servers.domain.ChannelMessageId
 
-object MessageFactory : Factory<Message> {
+object MessageFactory : Factory<ChannelMessage> {
 
     fun createMessage(
         content: String,
         sender: String,
         timeStamp: String = Instant.now().toString(),
-        id: String = MessageId().value,
+        id: String = ChannelMessageId().value,
     ) =
-        Message(
+        ChannelMessage(
             sender = sender,
             content = content,
             timestamp = Instant.parse(timeStamp),
-            id = MessageId(id)
+            id = ChannelMessageId(id)
         )
 }

@@ -2,7 +2,7 @@ package piperkt.services.servers.interfaces.web.api.interactions
 
 import io.micronaut.serde.annotation.Serdeable
 import piperkt.services.servers.presentation.ChannelDTO
-import piperkt.services.servers.presentation.MessageDTO
+import piperkt.services.servers.presentation.ChannelMessageDTO
 
 sealed interface ChannelApi {
 
@@ -35,7 +35,8 @@ sealed interface ChannelApi {
     sealed interface GetChannelMessagesApi : ChannelApi {
 
         // Don't need a body for this request
-        @Serdeable data class Response(val messages: List<MessageDTO>) : GetChannelMessagesApi
+        @Serdeable
+        data class Response(val messages: List<ChannelMessageDTO>) : GetChannelMessagesApi
     }
 
     sealed interface SendMessageToChannelApi : ChannelApi {
@@ -43,7 +44,7 @@ sealed interface ChannelApi {
         @Serdeable data class Request(val content: String) : SendMessageToChannelApi
 
         @Serdeable
-        data class Response(val channelId: String, val message: MessageDTO) :
+        data class Response(val channelId: String, val message: ChannelMessageDTO) :
             SendMessageToChannelApi
     }
 }
