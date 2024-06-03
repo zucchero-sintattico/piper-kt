@@ -2,21 +2,21 @@ package piperkt.services.friendships.domain.factory
 
 import java.time.Instant
 import piperkt.common.ddd.Factory
-import piperkt.services.friendships.domain.Message
-import piperkt.services.friendships.domain.MessageId
+import piperkt.services.friendships.domain.DirectMessage
+import piperkt.services.friendships.domain.DirectMessageId
 
-object MessageFactory : Factory<Message> {
+object MessageFactory : Factory<DirectMessage> {
 
     fun createMessage(
         content: String,
         sender: String,
         timeStamp: String = Instant.now().toString(),
-        id: String = MessageId().value,
+        id: String = DirectMessageId().value,
     ) =
-        Message(
+        DirectMessage(
             sender = sender,
             content = content,
             timestamp = Instant.parse(timeStamp),
-            id = MessageId(id)
+            id = DirectMessageId(id)
         )
 }
