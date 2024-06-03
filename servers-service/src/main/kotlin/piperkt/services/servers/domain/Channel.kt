@@ -12,11 +12,11 @@ class Channel(
     var name: String,
     val type: ChannelType,
     var description: String,
-    val messages: MutableList<Message> = mutableListOf(),
+    val channelMessages: MutableList<ChannelMessage> = mutableListOf(),
 ) : Entity<ChannelId>(id) {
 
-    fun addMessage(message: Message) {
-        messages.add(message)
+    fun addMessage(channelMessage: ChannelMessage) {
+        channelMessages.add(channelMessage)
     }
 
     override fun equals(other: Any?): Boolean {

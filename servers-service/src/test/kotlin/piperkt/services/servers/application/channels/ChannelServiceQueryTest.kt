@@ -16,7 +16,7 @@ class ChannelServiceQueryTest : BasicChannelServiceTest() {
 
     @Test
     fun `should get messages from channel if user is in server`() {
-        val fakeMessages = listOf(simpleMessage)
+        val fakeMessages = listOf(simpleChannelMessage)
         whenever(serverRepository.isUserInServer(any(), any())).thenReturn(true)
         whenever(serverRepository.findById(any())).thenReturn(simpleServerWithChannel)
         val response =
@@ -29,10 +29,10 @@ class ChannelServiceQueryTest : BasicChannelServiceTest() {
                     "requestFrom"
                 )
             )
-        println(response.getOrNull()?.messages)
+        println(response.getOrNull()?.channelMessages)
         response shouldBe
             Result.success(ChannelQuery.GetMessagesFromChannelId.Response(fakeMessages))
-        response.getOrNull()?.messages shouldBe fakeMessages
+        response.getOrNull()?.channelMessages shouldBe fakeMessages
     }
 
     @Test

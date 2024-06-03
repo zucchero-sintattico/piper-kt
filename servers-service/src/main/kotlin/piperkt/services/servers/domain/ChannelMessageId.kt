@@ -2,4 +2,4 @@ package piperkt.services.servers.domain
 
 import piperkt.common.ddd.UUIDEntityId
 
-class MessageId(value: String = newId()) : UUIDEntityId(value)
+class ChannelMessageId(value: String = newId()) : UUIDEntityId(value)

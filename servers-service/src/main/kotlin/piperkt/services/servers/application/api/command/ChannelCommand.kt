@@ -2,7 +2,7 @@ package piperkt.services.servers.application.api.command
 
 import piperkt.services.servers.application.api.ServiceRequest
 import piperkt.services.servers.domain.ChannelId
-import piperkt.services.servers.domain.MessageId
+import piperkt.services.servers.domain.ChannelMessageId
 import piperkt.services.servers.domain.ServerId
 
 sealed interface ChannelCommand {
@@ -53,6 +53,6 @@ sealed interface ChannelCommand {
             override val requestFrom: String,
         ) : AddMessageInChannel, ServiceRequest
 
-        data class Response(val messageId: MessageId) : AddMessageInChannel
+        data class Response(val channelMessageId: ChannelMessageId) : AddMessageInChannel
     }
 }

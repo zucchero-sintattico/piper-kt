@@ -10,7 +10,7 @@ data class ChannelDTO(
     val name: String,
     val type: String,
     var description: String,
-    val messages: MutableList<MessageDTO> = mutableListOf()
+    val messages: MutableList<ChannelMessageDTO> = mutableListOf()
 ) {
     fun toDomain(): Channel {
         return Channel(name = name, type = ChannelType.valueOf(type), description = description)
@@ -23,7 +23,8 @@ data class ChannelDTO(
                 name = channel.name,
                 type = channel.type.toString(),
                 description = channel.description,
-                messages = channel.messages.map { MessageDTO.fromDomain(it) }.toMutableList()
+                messages =
+                    channel.channelMessages.map { ChannelMessageDTO.fromDomain(it) }.toMutableList()
             )
         }
     }

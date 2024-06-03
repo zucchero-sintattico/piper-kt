@@ -186,7 +186,7 @@ class ChannelServiceCommandTest : BasicChannelServiceTest() {
                 MessageInChannelEvent(
                     serverId = simpleServerId.value,
                     channelId = simpleChannelId.value,
-                    messageId = response.getOrThrow().messageId.value,
+                    messageId = response.getOrThrow().channelMessageId.value,
                     content = "content",
                     sender = "sender"
                 )

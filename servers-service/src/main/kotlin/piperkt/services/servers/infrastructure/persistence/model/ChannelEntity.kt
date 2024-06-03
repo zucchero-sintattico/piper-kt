@@ -19,7 +19,7 @@ data class ChannelEntity(
             name = name,
             type = channelType,
             description = description,
-            messages = messages.map { it.toDomain() }.toMutableList()
+            channelMessages = messages.map { it.toDomain() }.toMutableList()
         )
 
     companion object {
@@ -29,7 +29,7 @@ data class ChannelEntity(
                 name = channel.name,
                 description = channel.description,
                 channelType = channel.type.name,
-                messages = channel.messages.map { MessageEntity.fromDomain(it) }
+                messages = channel.channelMessages.map { MessageEntity.fromDomain(it) }
             )
     }
 }

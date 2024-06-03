@@ -13,6 +13,6 @@ class ChannelTest : UnitTest() {
     fun `should add message to channel`() {
         val message = MessageFactory.createMessage("content", "sender")
         simpleChannel.addMessage(message)
-        simpleChannel.messages.size shouldBe 1
+        simpleChannel.channelMessages.size shouldBe 1
     }
 }

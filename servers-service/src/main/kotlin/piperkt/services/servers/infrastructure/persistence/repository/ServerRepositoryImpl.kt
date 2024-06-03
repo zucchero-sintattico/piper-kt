@@ -46,7 +46,7 @@ class ServerRepositoryImpl(private val serverModelRepository: ServerModelReposit
                     name = it.name,
                     description = it.description,
                     channelType = it.type.toString(),
-                    messages = it.messages.map(MessageEntity::fromDomain)
+                    messages = it.channelMessages.map(MessageEntity::fromDomain)
                 )
             }
         serverModelRepository.update(

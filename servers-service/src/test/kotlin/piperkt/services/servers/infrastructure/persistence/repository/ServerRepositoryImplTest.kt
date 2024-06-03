@@ -117,10 +117,10 @@ class ServerRepositoryImplTest(private val serverRepository: ServerRepository) :
         serverRepository.update(server)
         serverRepository.findById(server.id)?.let {
             it.channels.size shouldBe 1
-            it.channels[0].messages.size shouldBe 1
-            it.channels[0].messages[0].id shouldBe message.id
-            it.channels[0].messages[0].sender shouldBe "sender"
-            it.channels[0].messages[0].content shouldBe "content"
+            it.channels[0].channelMessages.size shouldBe 1
+            it.channels[0].channelMessages[0].id shouldBe message.id
+            it.channels[0].channelMessages[0].sender shouldBe "sender"
+            it.channels[0].channelMessages[0].content shouldBe "content"
         }
     }
 }
