@@ -1,3 +1,10 @@
+## [8.1.1](https://github.com/zucchero-sintattico/piper-kt/compare/v8.1.0...v8.1.1) (2024-06-03)
+
+
+### Bug Fixes
+
+* **deploy:** rename helm deployment ([f8bd277](https://github.com/zucchero-sintattico/piper-kt/commit/f8bd2779382804bef910906e378d2a2e6bad3bf0))
+
 ## [8.1.0](https://github.com/zucchero-sintattico/piper-kt/compare/v8.0.0...v8.1.0) (2024-06-01)
 
 
