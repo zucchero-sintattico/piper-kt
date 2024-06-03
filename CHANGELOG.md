@@ -1,3 +1,10 @@
+## [8.2.0](https://github.com/zucchero-sintattico/piper-kt/compare/v8.1.1...v8.2.0) (2024-06-03)
+
+
+### Features
+
+* **report:** completed! 🚀 ([aa20796](https://github.com/zucchero-sintattico/piper-kt/commit/aa207968dfed0de45889d5ef0fa0941c83040d21))
+
 ## [8.1.1](https://github.com/zucchero-sintattico/piper-kt/compare/v8.1.0...v8.1.1) (2024-06-03)
 
 
