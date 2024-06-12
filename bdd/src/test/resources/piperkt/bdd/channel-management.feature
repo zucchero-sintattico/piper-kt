@@ -1,11 +1,23 @@
 Feature: Channel Management
+  Scenario: Admin creates a new channel
+    Given I am logged in as an admin
+    When I create a new channel
+    Then the channel should be available for users
 
-  Scenario: User creates a text channel
-    Given the user is the owner of a server
-    When the user creates a new text channel named "TextChannel"
-    Then the channel "TextChannel" should be created successfully
+  Scenario: Admin removes a channel
+    Given I am logged in as an admin
+    And I am on the channel management page
+    When I remove a channel
+    Then the channel should no longer be accessible
 
   Scenario: User sends a message in a text channel
-    Given the user is part of a server with a text channel named "TextChannel"
-    When the user sends a message in "TextChannel"
-    Then all channel members should receive a notification
+    Given I am logged in as a user
+    And I am in a text channel
+    When I send a message
+    Then other users in the channel should receive a notification
+
+  Scenario: User accesses a multimedia channel
+    Given I am logged in as a user
+    And I am in a multimedia channel
+    When I join the channel
+    Then I should be able to access the multimedia content

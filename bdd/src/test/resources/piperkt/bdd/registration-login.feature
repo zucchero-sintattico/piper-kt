@@ -1,11 +1,13 @@
-Feature: Registration and Authentication
+Feature: User Registration and Authentication
+  Scenario: User registers to the system
+    Given I am on the registration page
+    When I fill in the registration form with valid data
+    And I submit the form
+    Then I should see a confirmation message
+    And I should be able to log in with the new account
 
-  Scenario: User successfully registers
-    Given the user is not registered in the system
-    When the user completes the registration process with username "user1" and password "password123"
-    Then the user should be authenticated in the system
-
-  Scenario: User successfully logs in
-    Given the user is registered in the system
-    When the user logs in with username "user1" and password "password123"
-    Then the user should be authenticated in the system
+  Scenario: User logs in to the system
+    Given I am on the login page
+    When I fill in the login form with valid credentials
+    And I submit the form
+    Then I should be logged into the system

@@ -1,11 +1,22 @@
 Feature: Server Management
-
   Scenario: User creates a new server
-    Given an authenticated user in the system
-    When the user creates a new server with the name "MyServer"
-    Then the server "MyServer" should be created successfully
+    Given I am logged in as a user
+    When I create a new server
+    Then the server should be created and I should be the admin
 
-  Scenario: User joins an existing server
-    Given the user is authenticated in the system
-    When the user joins the existing server "ExistingServer"
-    Then the user should be part of the "ExistingServer"
+  Scenario: User enters an existing server
+    Given I am logged in as a user
+    When I join an existing server
+    Then I should be able to access the server's resources
+
+  Scenario: Admin removes a member from the server
+    Given I am logged in as an admin
+    And I am on the server management page
+    When I remove a member from the server
+    Then the member should no longer have access to the server
+
+  Scenario: Admin modifies server settings
+    Given I am logged in as an admin
+    And I am on the server settings page
+    When I modify the server settings
+    Then the changes should be saved
