@@ -2,7 +2,7 @@ package piperkt.services.friendships.infrastructure.persistence.repository
 
 import base.IntegrationTest
 import io.kotest.matchers.shouldBe
-import piperkt.services.friendships.application.FriendshipRepository
+import piperkt.services.friendships.domain.FriendshipRepository
 import piperkt.services.friendships.domain.factory.FriendshipFactory
 import piperkt.services.friendships.domain.factory.MessageFactory
 

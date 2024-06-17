@@ -5,7 +5,7 @@ import io.kotest.matchers.shouldBe
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import org.junit.jupiter.api.assertThrows
-import piperkt.services.servers.application.ServerRepository
+import piperkt.services.servers.domain.ServerRepository
 import piperkt.services.servers.interfaces.web.api.interactions.ServerApi
 import piperkt.services.servers.interfaces.web.authOf
 

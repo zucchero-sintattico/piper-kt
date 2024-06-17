@@ -5,8 +5,8 @@ import io.kotest.matchers.shouldBe
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import org.junit.jupiter.api.assertThrows
-import piperkt.services.friendships.application.FriendshipRepository
 import piperkt.services.friendships.application.FriendshipRequestRepository
+import piperkt.services.friendships.domain.FriendshipRepository
 import piperkt.services.friendships.interfaces.web.api.interactions.FriendshipApi
 
 class FriendshipHttpControllerTest(

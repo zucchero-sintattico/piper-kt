@@ -4,13 +4,13 @@ import base.UnitTest
 import org.mockito.kotlin.mock
 import piperkt.events.ChannelEventPublisher
 import piperkt.services.servers.application.ChannelService
-import piperkt.services.servers.application.ServerRepository
 import piperkt.services.servers.domain.Channel
 import piperkt.services.servers.domain.ChannelId
 import piperkt.services.servers.domain.ChannelMessage
 import piperkt.services.servers.domain.ChannelMessageId
 import piperkt.services.servers.domain.Server
 import piperkt.services.servers.domain.ServerId
+import piperkt.services.servers.domain.ServerRepository
 import piperkt.services.servers.domain.factory.ChannelFactory
 import piperkt.services.servers.domain.factory.MessageFactory
 import piperkt.services.servers.domain.factory.ServerFactory

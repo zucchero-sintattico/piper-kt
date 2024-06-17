@@ -5,6 +5,7 @@ import piperkt.services.friendships.application.api.FriendshipsApi
 import piperkt.services.friendships.application.api.command.FriendshipCommand
 import piperkt.services.friendships.application.api.query.FriendshipQuery
 import piperkt.services.friendships.application.exceptions.FriendshipServiceException
+import piperkt.services.friendships.domain.FriendshipRepository
 import piperkt.services.friendships.domain.factory.FriendshipRequestFactory
 import piperkt.services.friendships.domain.factory.MessageFactory
 import piperkt.services.friendships.domain.toFriendship
