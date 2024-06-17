@@ -8,12 +8,12 @@ export class NewMessageInFriendshipMessage extends piperkt.events
 
 // TODO
 export class UserJoinedDirectCallMessage {
-  static topic = "direct";
+  static topic = "directs";
   static type = "NewMessageInFriendshipEvent";
 }
 
 // TODO
 export class UserLeftDirectCallMessage {
-  static topic = "direct";
+  static topic = "directs";
   static type = "NewMessageInFriendshipEvent";
 }

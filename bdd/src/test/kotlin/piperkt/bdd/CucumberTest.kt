@@ -11,4 +11,4 @@ import org.junit.platform.suite.api.Suite
 @SelectPackages("piperkt.bdd")
 @ConfigurationParameter(key = Constants.PLUGIN_PROPERTY_NAME, value = "pretty")
 @ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "piperkt.bdd")
-class RunCucumberTest
+class CucumberTest

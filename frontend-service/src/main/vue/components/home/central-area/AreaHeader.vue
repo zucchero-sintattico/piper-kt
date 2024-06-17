@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useAppStore } from '@/stores/app'
+import {computed, ref} from 'vue'
+import {useAppStore} from '@/stores/app'
 import ChannelMenu from '@/components/home/left-bar/menu/ChannelMenu.vue'
 
 const appStore = useAppStore()
@@ -8,7 +8,7 @@ const channelSettingMenuActive = ref(false)
 
 /**
  * Returns the title of the conversation
- * (either the username of the direct conversation
+ * (either the username of the directs conversation
  * or the name of the channel)
  */
 const title = computed(() => {
@@ -40,30 +40,30 @@ function handleCallButtonClick() {
         {{ title }}
       </q-toolbar-title>
       <q-btn
-        v-if="appStore.selectedChannel != null"
-        icon="info"
-        flat
-        round
-        @click="channelSettingMenuActive = true"
+          v-if="appStore.selectedChannel != null"
+          icon="info"
+          flat
+          round
+          @click="channelSettingMenuActive = true"
       />
       <q-btn
-        v-if="isDirect && !appStore.inDirectCall"
-        icon="video_call"
-        flat
-        round
-        dense
-        @click="handleCallButtonClick"
+          v-if="isDirect && !appStore.inDirectCall"
+          icon="video_call"
+          flat
+          round
+          dense
+          @click="handleCallButtonClick"
       />
       <q-btn
-        v-if="isDirect && appStore.inDirectCall"
-        icon="chat"
-        flat
-        round
-        dense
-        @click="handleCallButtonClick"
+          v-if="isDirect && appStore.inDirectCall"
+          icon="chat"
+          flat
+          round
+          dense
+          @click="handleCallButtonClick"
       />
     </q-toolbar>
   </q-header>
 
-  <ChannelMenu v-model:active="channelSettingMenuActive" />
+  <ChannelMenu v-model:active="channelSettingMenuActive"/>
 </template>

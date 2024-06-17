@@ -30,13 +30,16 @@ export module GetDirectMessagesApi {
       content: string;
       timestamp: Date;
     }
+
     export class Success extends Response {
       statusCode = 200;
       message = "Messages retrieved successfully";
+
       constructor(public messages: Message[]) {
         super();
       }
     }
+
     export type Type = Success;
   }
   export module Errors {
@@ -44,6 +47,7 @@ export module GetDirectMessagesApi {
       statusCode = 404;
       message = "Direct not found" as const;
     }
+
     export type Type = DirectNotFound;
   }
   export type Response = Responses.Type | Errors.Type;
@@ -73,6 +77,7 @@ export module SendDirectMessageApi {
       statusCode = 200;
       message = "Message sent successfully";
     }
+
     export type Type = Success;
   }
   export module Errors {
@@ -80,10 +85,12 @@ export module SendDirectMessageApi {
       statusCode = 404;
       message = "Direct not found" as const;
     }
+
     export class CannotSendDirectMessageToYourself extends ErrorResponse {
       statusCode = 400;
-      message = "Cannot send direct message to yourself" as const;
+      message = "Cannot send directs message to yourself" as const;
     }
+
     export type Type = DirectNotFound | CannotSendDirectMessageToYourself;
   }
   export type Response = Responses.Type | Errors.Type;

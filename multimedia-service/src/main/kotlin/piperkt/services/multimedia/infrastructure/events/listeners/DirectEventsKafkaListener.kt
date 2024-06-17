@@ -6,7 +6,7 @@ import piperkt.events.FriendshipRequestAcceptedEvent
 import piperkt.services.multimedia.application.direct.DirectEventsListener
 
 /**
- * Listens to direct events from Kafka.
+ * Listens to directs events from Kafka.
  *
  * @param directEventsListener The listener to delegate the events to.
  */

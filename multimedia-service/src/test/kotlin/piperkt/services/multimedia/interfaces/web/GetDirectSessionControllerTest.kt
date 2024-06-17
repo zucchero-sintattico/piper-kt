@@ -49,12 +49,12 @@ class GetDirectSessionControllerTest(
             sessionRepository.deleteAll()
         }
 
-        test("get direct session") {
+        test("get directs session") {
             val response = client.get(authOf(john().username), jane().username)
             response.body().sessionId shouldBe session.id.value
         }
 
-        test("get direct session with invalid user") {
+        test("get directs session with invalid user") {
             val response = client.get(authOf(john().username), "invalid")
             response.status shouldBe HttpStatus.NOT_FOUND
         }
