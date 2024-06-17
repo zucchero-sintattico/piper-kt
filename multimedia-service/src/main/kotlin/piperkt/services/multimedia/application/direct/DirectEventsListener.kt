@@ -10,7 +10,7 @@ import piperkt.services.multimedia.domain.direct.DirectRepository
 import piperkt.services.multimedia.domain.user.Username
 
 /**
- * Listens for events related to direct messages and updates the direct message repository
+ * Listens for events related to directs messages and updates the directs message repository
  * accordingly.
  */
 open class DirectEventsListener(

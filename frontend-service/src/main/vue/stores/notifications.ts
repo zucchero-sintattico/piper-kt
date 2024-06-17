@@ -27,7 +27,7 @@ export const useNotificationStore = defineStore("notification", () => {
   }
 
   function addMessageOnDirect(message: DirectMessage) {
-    console.log("[NotificationStore] Adding message on direct", message);
+    console.log("[NotificationStore] Adding message on directs", message);
     newMessagesOnDirect.value.push(message);
   }
 
