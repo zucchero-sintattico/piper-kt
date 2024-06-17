@@ -2,9 +2,9 @@ package piperkt.services.friendships.infrastructure.persistence.repository
 
 import io.micronaut.context.annotation.Primary
 import jakarta.inject.Singleton
-import piperkt.services.friendships.application.FriendshipRepository
 import piperkt.services.friendships.domain.Friendship
 import piperkt.services.friendships.domain.FriendshipId
+import piperkt.services.friendships.domain.FriendshipRepository
 import piperkt.services.friendships.infrastructure.persistence.model.FriendshipEntity
 import piperkt.services.friendships.infrastructure.persistence.model.FriendshipModelRepository
 import piperkt.services.friendships.infrastructure.persistence.model.toDomain

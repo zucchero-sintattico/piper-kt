@@ -2,8 +2,8 @@ package piperkt.services.servers.infrastructure.persistence.repository
 
 import base.IntegrationTest
 import io.kotest.matchers.shouldBe
-import piperkt.services.servers.application.ServerRepository
 import piperkt.services.servers.domain.ChannelType
+import piperkt.services.servers.domain.ServerRepository
 import piperkt.services.servers.domain.factory.ChannelFactory
 import piperkt.services.servers.domain.factory.MessageFactory
 import piperkt.services.servers.domain.factory.ServerFactory

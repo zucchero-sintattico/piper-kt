@@ -5,6 +5,7 @@ import org.mockito.Mockito.reset
 import org.mockito.kotlin.mock
 import piperkt.events.FriendshipEventPublisher
 import piperkt.services.friendships.domain.Friendship
+import piperkt.services.friendships.domain.FriendshipRepository
 import piperkt.services.friendships.domain.FriendshipRequest
 import piperkt.services.friendships.domain.factory.FriendshipRequestFactory
 import piperkt.services.friendships.domain.toFriendship

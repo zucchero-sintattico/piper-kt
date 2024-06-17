@@ -5,6 +5,7 @@ import piperkt.services.servers.application.api.ServerServiceApi
 import piperkt.services.servers.application.api.command.ServerCommand
 import piperkt.services.servers.application.api.query.ServerQuery
 import piperkt.services.servers.application.exceptions.ServerServiceException
+import piperkt.services.servers.domain.ServerRepository
 import piperkt.services.servers.domain.factory.ServerFactory
 
 open class ServerService(
