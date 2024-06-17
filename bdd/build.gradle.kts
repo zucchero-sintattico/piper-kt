@@ -17,5 +17,7 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
     systemProperty("cucumber.junit-platform.naming-strategy", "long")
+    onlyIf {
+        project.hasProperty("bdd")
+    }
 }
-
