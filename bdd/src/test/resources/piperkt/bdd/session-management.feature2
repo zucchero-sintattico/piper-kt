@@ -1,0 +1,25 @@
+Feature: Session Management
+  Scenario: User get direct session
+    Given I am logged in as a user
+    And I have a friend
+    When I try to get a direct session with my friend
+    Then I should retrieve it
+
+  Scenario: User get a multimedia channel session
+    Given I am logged in as a user
+    And I am in server with a multimedia channel
+    When I try to get a multimedia channel session
+    Then I should retrieve it
+
+  Scenario: User join a session
+    Given I am logged in as a user
+    And I have a session to join
+    And I try to join the session
+    Then I should be in the session
+
+   Scenario: User leave a session
+    Given I am logged in as a user
+    And I have a session to leave
+    And I try to leave the session
+    Then I should not be in the session
+

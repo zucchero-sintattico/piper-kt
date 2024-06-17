@@ -9,6 +9,7 @@ Feature: Channel Management
     And I am on the channel management page
     When I remove a channel
     Then the channel should no longer be accessible
+    
 
   Scenario: User sends a message in a text channel
     Given I am logged in as a user
