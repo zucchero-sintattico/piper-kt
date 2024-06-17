@@ -153,8 +153,7 @@ jobs:
         run: |
           ./gradlew buildOpenApiSite --parallel
           cp -r ./build/openapi-site ${{ env.TMP_SITE }}/openapi
-      #      - name: Copy features report
-      #        run: cp -r ./build/reports/tests/test ${{ env.TMP_SITE }}features
+          cp -r ./resources/bdd-report ${{ env.TMP_SITE }}/bdd
       - name: Install Node
         uses: actions/setup-node@v4
         with:
