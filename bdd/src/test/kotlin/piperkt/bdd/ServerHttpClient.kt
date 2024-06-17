@@ -1,17 +1,6 @@
 package piperkt.bdd
 
-import io.micronaut.http.HttpHeaders
-import io.micronaut.http.HttpResponse
-import io.micronaut.http.annotation.Body
-import io.micronaut.http.annotation.Delete
-import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.Header
-import io.micronaut.http.annotation.PathVariable
-import io.micronaut.http.annotation.Post
-import io.micronaut.http.annotation.Put
-import io.micronaut.http.client.annotation.Client
-import piperkt.services.servers.interfaces.web.api.interactions.ServerApi
-
+/*
 @Client("/servers")
 interface ServerHttpClient {
 
@@ -64,3 +53,4 @@ interface ServerHttpClient {
         @Header(HttpHeaders.AUTHORIZATION) authorization: String = authOf("user")
     ): HttpResponse<ServerApi.KickUserFromServerApi.Response>
 }
+*/
