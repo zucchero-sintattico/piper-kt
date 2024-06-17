@@ -1,3 +1,10 @@
+## [8.3.0](https://github.com/zucchero-sintattico/piper-kt/compare/v8.2.0...v8.3.0) (2024-06-17)
+
+
+### Features
+
+* add grafana and prom script for kube cluster ([6d2100f](https://github.com/zucchero-sintattico/piper-kt/commit/6d2100fd3188c0fc6c987466997d7ec7a1ee097d))
+
 ## [8.2.0](https://github.com/zucchero-sintattico/piper-kt/compare/v8.1.1...v8.2.0) (2024-06-03)
 
 
