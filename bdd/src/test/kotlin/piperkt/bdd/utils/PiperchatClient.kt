@@ -2,8 +2,11 @@ package piperkt.bdd.utils
 
 import io.micronaut.security.authentication.UsernamePasswordCredentials
 import io.micronaut.security.token.render.BearerAccessRefreshToken
+import io.micronaut.serde.annotation.Serdeable
 import java.util.*
 import piperkt.services.friendships.interfaces.web.api.interactions.FriendshipApi
+import piperkt.services.servers.domain.ChannelType
+import piperkt.services.servers.interfaces.web.api.interactions.ChannelApi
 import piperkt.services.servers.interfaces.web.api.interactions.ServerApi
 import piperkt.services.users.interfaces.web.api.RegisterApi
 import piperkt.services.users.presentation.user.UserDTO
@@ -49,43 +52,89 @@ open class PiperchatClient : AbstractHttpClient() {
 
     fun getCreatedServerId(): String = createdServerId!!
 
-    fun createServer(serverName: String, serverDescription: String) {
+    fun createServer() {
         createdServerId =
-            POST("/servers", ServerApi.CreateServerApi.Request(serverName, serverDescription))
+            POST<ServerApi.CreateServerApi.Response>(
+                    "/servers",
+                    ServerApi.CreateServerApi.Request(randomUsername(), randomUsername()),
+                    userToken
+                )
+                .serverId
+    }
+
+    fun joinServer(serverId: String) {
+        POST<ServerApi.AddUserToServerApi.Response>(
+            "/servers/${serverId}/users",
+            Empty(),
+            userToken
+        )
     }
 
     fun myServers(): ServerApi.GetServersFromUserApi.Response {
-        return GET("/servers")
+        return GET("/servers", userToken)
     }
 
+    private var createdChannelId: String? = null
+
+    fun getCreatedChannelId(): String = createdChannelId!!
+
+    fun createChannel() {
+        createdChannelId =
+            POST<ChannelApi.CreateChannelApi.Response>(
+                    "/servers/${createdServerId}/channels",
+                    ChannelApi.CreateChannelApi.Request(
+                        randomUsername(),
+                        randomUsername(),
+                        ChannelType.TEXT.toString()
+                    ),
+                    userToken
+                )
+                .channelId
+    }
+
+    @Serdeable class Empty
+
     fun sendFriendRequest(receiver: String) {
-        POST<Unit>("/friends/request/send", FriendshipApi.SendFriendshipRequest.Request(receiver))
+        POST<Empty>(
+            "/friends/requests/send",
+            FriendshipApi.SendFriendshipRequest.Request(receiver),
+            userToken
+        )
     }
 
     fun acceptFriendRequest(sender: String) {
-        POST<Unit>("/friends/request/accept", FriendshipApi.AcceptFriendshipRequest.Request(sender))
+        POST<Empty>(
+            "/friends/requests/accept",
+            FriendshipApi.AcceptFriendshipRequest.Request(sender),
+            userToken
+        )
     }
 
     fun rejectFriendRequest(sender: String) {
-        POST<Unit>(
-            "/friends/request/reject",
-            FriendshipApi.DeclineFriendshipRequest.Request(sender)
+        POST<Empty>(
+            "/friends/requests/decline",
+            FriendshipApi.DeclineFriendshipRequest.Request(sender),
+            userToken
         )
     }
 
     fun getFriendRequests(): FriendshipApi.GetFriendshipRequests.Response {
-        return GET("/friends/request")
+        return GET("/friends/requests", userToken)
     }
 
     fun getFriends(): FriendshipApi.GetFriendships.Response {
-        return GET("/friends")
+        return GET("/friends", userToken)
     }
 
     fun sendMessageToFriend(friend: String, message: String) {
-        POST<Unit>("/users/${friend}/messages", FriendshipApi.SendMessage.Request(message))
+        POST<Empty>(
+            "/users/${friend}/messages",
+            FriendshipApi.SendMessage.Request(message),
+            userToken
+        )
     }
 
     fun getMessagesFromFriend(friend: String): FriendshipApi.GetFriendshipMessages.Response {
-        return GET("/users/${friend}/messages")
+        return GET("/users/${friend}/messages?from=0&limit=10", userToken)
     }
 }
