@@ -17,14 +17,12 @@ class FriendshipsSteps {
 
     @Given("I am a logged user")
     fun iAmALoggedUser() {
-        userClient.registerRandomUser()
-        userClient.login()
+        userClient.registerAndLogin()
     }
 
     @And("another user exists")
     fun anotherUserExists() {
-        friendClient.registerRandomUser()
-        friendClient.login()
+        friendClient.registerAndLogin()
     }
 
     @When("I send a friend request to the other user")
