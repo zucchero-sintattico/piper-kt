@@ -38,19 +38,6 @@ class ServersSteps {
         client.createServer()
     }
 
-    @When("I create a new channel in a server")
-    fun iCreateANewChannelInAServer() {
-        client.createChannel()
-    }
-
-    @Then("I should be able to access the channel")
-    fun iShouldBeAbleToAccessTheChannel() {
-        val response = client.myServers()
-        val server = response.servers.find { it.id == client.getCreatedServerId() }
-        val channel = server!!.channels.find { it.id == client.getCreatedChannelId() }
-        channel shouldNotBe null
-    }
-
     @And("another user has a server")
     fun anotherUserHasAServer() {
         otherClient.registerAndLogin()

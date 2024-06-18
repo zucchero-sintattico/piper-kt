@@ -36,4 +36,11 @@ abstract class AbstractHttpClient {
             .exchange(HttpRequest.PUT(path, body).bearerAuth(token?.accessToken), T::class.java)
             .body()
     }
+
+    inline fun <reified T> DELETE(path: String, token: BearerAccessRefreshToken? = null): T {
+        return httpClient
+            .toBlocking()
+            .exchange(HttpRequest.DELETE<T>(path).bearerAuth(token?.accessToken), T::class.java)
+            .body()
+    }
 }
