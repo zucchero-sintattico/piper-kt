@@ -9,7 +9,9 @@ dependencies {
     testImplementation(libs.bundles.cucumberJunit)
     testImplementation(libs.junit.platform)
     testImplementation(libs.kotest)
-    // testImplementation(project(":servers-service"))
+    testImplementation(project(":users-service"))
+    testImplementation(project(":servers-service"))
+    testImplementation(project(":friendships-service"))
 }
 
 
