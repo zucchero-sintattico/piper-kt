@@ -19,7 +19,7 @@ class UserManagementSteps {
 
     @When("I make a REGISTER request with valid credentials")
     fun iMakeAREGISTERRequestWithValidCredentials() {
-        client.registerRandomUser()
+        client.register()
     }
 
     @Then("I should be registered to the system")
@@ -29,7 +29,7 @@ class UserManagementSteps {
 
     @Given("I am registered")
     fun iAmRegistered() {
-        client.registerRandomUser()
+        client.register()
     }
 
     @When("I make a LOGIN request with valid credentials")

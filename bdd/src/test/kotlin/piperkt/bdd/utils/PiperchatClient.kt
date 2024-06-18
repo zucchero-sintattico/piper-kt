@@ -14,7 +14,7 @@ open class PiperchatClient : AbstractHttpClient() {
     private var user: UserDTO? = null
     private var userToken: BearerAccessRefreshToken? = null
 
-    fun registerRandomUser() {
+    fun register() {
         user =
             POST(
                 "/auth/register",
@@ -24,6 +24,11 @@ open class PiperchatClient : AbstractHttpClient() {
 
     fun login() {
         userToken = POST("/auth/login", UsernamePasswordCredentials(user!!.username, "password"))
+    }
+
+    fun registerAndLogin() {
+        register()
+        login()
     }
 
     fun getUsername(): String = user!!.username

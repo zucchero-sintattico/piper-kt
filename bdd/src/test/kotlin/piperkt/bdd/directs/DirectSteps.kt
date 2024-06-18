@@ -16,15 +16,13 @@ class DirectSteps {
     val friendClient = PiperchatClient()
 
     @Given("I am logged user")
-    fun iAmLoggedUserWithAFriend() {
-        userClient.registerRandomUser()
-        userClient.login()
+    fun iAmLoggedUser() {
+        userClient.registerAndLogin()
     }
 
     @And("I have a friend")
     fun iHaveAFriend() {
-        friendClient.registerRandomUser()
-        friendClient.login()
+        friendClient.registerAndLogin()
         friendClient.sendFriendRequest(userClient.getUsername())
         userClient.acceptFriendRequest(friendClient.getUsername())
     }

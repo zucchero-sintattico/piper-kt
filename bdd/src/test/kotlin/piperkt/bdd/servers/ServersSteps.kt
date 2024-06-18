@@ -15,8 +15,7 @@ class ServersSteps {
 
     @Given("I am the logged user")
     fun iAmALoggedUser() {
-        client.registerRandomUser()
-        client.login()
+        client.registerAndLogin()
     }
 
     @When("I create a new server")
