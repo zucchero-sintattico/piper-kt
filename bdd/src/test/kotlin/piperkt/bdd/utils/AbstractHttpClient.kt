@@ -11,7 +11,7 @@ abstract class AbstractHttpClient {
     inline fun <reified T> POST(
         path: String,
         body: Any,
-        token: BearerAccessRefreshToken? = null
+        token: BearerAccessRefreshToken? = null,
     ): T {
         return httpClient
             .toBlocking()
@@ -29,7 +29,7 @@ abstract class AbstractHttpClient {
     inline fun <reified T> PUT(
         path: String,
         body: Any,
-        token: BearerAccessRefreshToken? = null
+        token: BearerAccessRefreshToken? = null,
     ): T {
         return httpClient
             .toBlocking()
