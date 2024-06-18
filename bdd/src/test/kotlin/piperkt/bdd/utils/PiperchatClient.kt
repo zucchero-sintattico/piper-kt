@@ -74,6 +74,10 @@ open class PiperchatClient : AbstractHttpClient() {
         return GET("/servers", userToken)
     }
 
+    fun deleteChannel(serverId: String, channelId: String): ChannelApi.DeleteChannelApi.Response {
+        return DELETE("/servers/${serverId}/channels/${channelId}", userToken)
+    }
+
     private var createdChannelId: String? = null
 
     fun getCreatedChannelId(): String = createdChannelId!!
@@ -90,6 +94,14 @@ open class PiperchatClient : AbstractHttpClient() {
                     userToken
                 )
                 .channelId
+    }
+
+    fun sendMessageInChannel(serverId: String, channelId: String, message: String) {
+        POST<ChannelApi.SendMessageToChannelApi.Response>(
+            "/servers/${serverId}/channels/${channelId}/messages",
+            ChannelApi.SendMessageToChannelApi.Request(message),
+            userToken
+        )
     }
 
     @Serdeable class Empty
