@@ -10,6 +10,9 @@
     1. Ability of **horizontal scalability** to handle increasing operational load.
 3. **Reliability & Continuity**:
     1. Restore the parts of the system that were affected by a failure.
+4. **Observability**:
+    1. Monitoring of system performance.
+    2. Graphical representation of system performance.
 
 ## Structural:
 
