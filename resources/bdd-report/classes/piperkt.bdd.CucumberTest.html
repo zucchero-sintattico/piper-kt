@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - CucumberTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>CucumberTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/piperkt.bdd.html">piperkt.bdd</a> &gt; CucumberTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">11</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">7.507s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">Channel Management - Admin creates a channel in a server</td>
+<td class="success">2.969s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Channel Management - Admin removes a channel</td>
+<td class="success">0.376s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Channel Management - User sends a message in a text channel</td>
+<td class="success">0.348s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Friendship System - User accepts a friend request</td>
+<td class="success">0.612s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Friendship System - User rejects a friend request</td>
+<td class="success">0.665s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Friendship System - User sends a friend request</td>
+<td class="success">0.519s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Interactions with Friends - User sends a message to a friend</td>
+<td class="success">0.705s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Server Management - User creates a new server</td>
+<td class="success">0.318s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Server Management - User join a server</td>
+<td class="success">0.647s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">User Registration and Authentication - User logs in to the system</td>
+<td class="success">0.236s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">User Registration and Authentication - User registers to the system</td>
+<td class="success">0.112s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>
+Scenario: Admin creates a channel in a server ?[90m# piperkt/bdd/channel-management.feature:2?[0m
+17:44:08,727 |-INFO in ch.qos.logback.classic.LoggerContext[default] - This is logback-classic version 1.5.6
+17:44:08,729 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7d340c83 - No custom configurators were discovered as a service.
+17:44:08,729 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7d340c83 - Trying to configure with ch.qos.logback.classic.joran.SerializedModelConfigurator
+17:44:08,730 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7d340c83 - Constructed configurator of type class ch.qos.logback.classic.joran.SerializedModelConfigurator
+17:44:08,731 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.scmo]
+17:44:08,731 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.scmo]
+17:44:08,733 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7d340c83 - ch.qos.logback.classic.joran.SerializedModelConfigurator.configure() call lasted 1 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+17:44:08,733 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7d340c83 - Trying to configure with ch.qos.logback.classic.util.DefaultJoranConfigurator
+17:44:08,734 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7d340c83 - Constructed configurator of type class ch.qos.logback.classic.util.DefaultJoranConfigurator
+17:44:08,734 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+17:44:08,735 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [jar:file:/Users/alessandromazzoli/Desktop/piper-kt/users-service/build/libs/users-service.jar!/logback.xml]
+17:44:08,735 |-WARN in ch.qos.logback.classic.util.DefaultJoranConfigurator@688b081a - Resource [logback.xml] occurs multiple times on the classpath.
+17:44:08,735 |-WARN in ch.qos.logback.classic.util.DefaultJoranConfigurator@688b081a - Resource [logback.xml] occurs at [jar:file:/Users/alessandromazzoli/Desktop/piper-kt/friendships-service/build/libs/friendships-service.jar!/logback.xml]
+17:44:08,735 |-WARN in ch.qos.logback.classic.util.DefaultJoranConfigurator@688b081a - Resource [logback.xml] occurs at [jar:file:/Users/alessandromazzoli/Desktop/piper-kt/servers-service/build/libs/servers-service.jar!/logback.xml]
+17:44:08,735 |-WARN in ch.qos.logback.classic.util.DefaultJoranConfigurator@688b081a - Resource [logback.xml] occurs at [jar:file:/Users/alessandromazzoli/Desktop/piper-kt/users-service/build/libs/users-service.jar!/logback.xml]
+17:44:08,740 |-INFO in ch.qos.logback.core.joran.spi.ConfigurationWatchList@7a2ba1dd - URL [jar:file:/Users/alessandromazzoli/Desktop/piper-kt/users-service/build/libs/users-service.jar!/logback.xml] is not of type file
+17:44:08,797 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [STDOUT]
+17:44:08,797 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+17:44:08,803 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+17:44:08,829 |-INFO in ch.qos.logback.classic.model.processor.RootLoggerModelHandler - Setting level of ROOT logger to INFO
+17:44:08,830 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [STDOUT] to Logger[ROOT]
+17:44:08,832 |-INFO in ch.qos.logback.core.model.processor.DefaultProcessor@7a05815c - End of configuration.
+17:44:08,835 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@2788ca8b - Registering current configuration as safe fallback point
+17:44:08,836 |-INFO in ch.qos.logback.classic.util.ContextInitializer@7d340c83 - ch.qos.logback.classic.util.DefaultJoranConfigurator.configure() call lasted 102 milliseconds. ExecutionStatus=DO_NOT_INVOKE_NEXT_IF_ANY
+
+?[36m17:44:09.150?[0;39m ?[1;30m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[35mi.m.s.ObjectMappers$ObjectMapperContext$1?[0;39m - Established active environments: [test]
+  ?[32mGiven ?[0m?[32mI am an authenticated user?[0m            ?[90m# void piperkt.bdd.channels.ChannelsSteps.iAmAnAuthenticatedUser()?[0m
+  ?[32mAnd ?[0m?[32mI have created a server?[0m                 ?[90m# void piperkt.bdd.channels.ChannelsSteps.iHaveAServer()?[0m
+  ?[32mWhen ?[0m?[32mI create a new channel in a server?[0m     ?[90m# void piperkt.bdd.channels.ChannelsSteps.iCreateANewChannelInAServer()?[0m
+  ?[32mThen ?[0m?[32mI should be able to access the channel?[0m ?[90m# void piperkt.bdd.channels.ChannelsSteps.iShouldBeAbleToAccessTheChannel()?[0m
+
+Scenario: Admin removes a channel                    ?[90m# piperkt/bdd/channel-management.feature:8?[0m
+  ?[32mGiven ?[0m?[32mI am an authenticated user?[0m                   ?[90m# void piperkt.bdd.channels.ChannelsSteps.iAmAnAuthenticatedUser()?[0m
+  ?[32mAnd ?[0m?[32mI have created a server?[0m                        ?[90m# void piperkt.bdd.channels.ChannelsSteps.iHaveAServer()?[0m
+  ?[32mAnd ?[0m?[32mthere is a channel in the server?[0m               ?[90m# void piperkt.bdd.channels.ChannelsSteps.thereIsAChannelInTheServer()?[0m
+  ?[32mWhen ?[0m?[32mI remove the channel?[0m                          ?[90m# void piperkt.bdd.channels.ChannelsSteps.iRemoveTheChannel()?[0m
+  ?[32mThen ?[0m?[32mthe channel should be removed from the server?[0m ?[90m# void piperkt.bdd.channels.ChannelsSteps.theChannelShouldBeRemovedFromTheServer()?[0m
+
+Scenario: User sends a message in a text channel      ?[90m# piperkt/bdd/channel-management.feature:15?[0m
+  ?[32mGiven ?[0m?[32mI am an authenticated user?[0m                    ?[90m# void piperkt.bdd.channels.ChannelsSteps.iAmAnAuthenticatedUser()?[0m
+  ?[32mAnd ?[0m?[32mI have created a server?[0m                         ?[90m# void piperkt.bdd.channels.ChannelsSteps.iHaveAServer()?[0m
+  ?[32mAnd ?[0m?[32mthere is a text channel in the server?[0m           ?[90m# void piperkt.bdd.channels.ChannelsSteps.thereIsATextChannelInTheServer()?[0m
+  ?[32mWhen ?[0m?[32mI send a message in a text channel?[0m             ?[90m# void piperkt.bdd.channels.ChannelsSteps.iSendAMessage()?[0m
+  ?[32mThen ?[0m?[32mthe message should be displayed in the channel?[0m ?[90m# void piperkt.bdd.channels.ChannelsSteps.theMessageShouldBeDisplayedInTheChannel()?[0m
+
+Scenario: User sends a message to a friend   ?[90m# piperkt/bdd/direct.feature:3?[0m
+  ?[32mGiven ?[0m?[32mI am logged user?[0m                     ?[90m# void piperkt.bdd.directs.DirectSteps.iAmLoggedUser()?[0m
+  ?[32mAnd ?[0m?[32mI have a friend?[0m                        ?[90m# void piperkt.bdd.directs.DirectSteps.iHaveAFriend()?[0m
+  ?[32mWhen ?[0m?[32mI send a message to the friend?[0m        ?[90m# void piperkt.bdd.directs.DirectSteps.iSendAMessageToTheFriend()?[0m
+  ?[32mThen ?[0m?[32mthe friend should receive the message?[0m ?[90m# void piperkt.bdd.directs.DirectSteps.theFriendShouldReceiveTheMessage()?[0m
+
+Scenario: User sends a friend request                      ?[90m# piperkt/bdd/friendship.feature:3?[0m
+  ?[32mGiven ?[0m?[32mI am a logged user?[0m                                 ?[90m# void piperkt.bdd.friendship.FriendshipsSteps.iAmALoggedUser()?[0m
+  ?[32mAnd ?[0m?[32manother user exists?[0m                                  ?[90m# void piperkt.bdd.friendship.FriendshipsSteps.anotherUserExists()?[0m
+  ?[32mWhen ?[0m?[32mI send a friend request to the other user?[0m           ?[90m# void piperkt.bdd.friendship.FriendshipsSteps.iSendAFriendRequestToTheOtherUser()?[0m
+  ?[32mThen ?[0m?[32mthe other user should have a pending friend request?[0m ?[90m# void piperkt.bdd.friendship.FriendshipsSteps.theOtherUserShouldHaveAPendingFriendRequest()?[0m
+
+Scenario: User accepts a friend request                   ?[90m# piperkt/bdd/friendship.feature:9?[0m
+  ?[32mGiven ?[0m?[32mI am a logged user?[0m                                ?[90m# void piperkt.bdd.friendship.FriendshipsSteps.iAmALoggedUser()?[0m
+  ?[32mAnd ?[0m?[32manother user exists?[0m                                 ?[90m# void piperkt.bdd.friendship.FriendshipsSteps.anotherUserExists()?[0m
+  ?[32mAnd ?[0m?[32mI have a pending friend request from the other user?[0m ?[90m# void piperkt.bdd.friendship.FriendshipsSteps.iHaveAPendingFriendRequest()?[0m
+  ?[32mWhen ?[0m?[32mI accept the friend request?[0m                        ?[90m# void piperkt.bdd.friendship.FriendshipsSteps.iAcceptTheFriendRequest()?[0m
+  ?[32mThen ?[0m?[32mthe other user should be added to my friend list?[0m   ?[90m# void piperkt.bdd.friendship.FriendshipsSteps.theOtherUserShouldBeAddedToMyFriendList()?[0m
+
+Scenario: User rejects a friend request                     ?[90m# piperkt/bdd/friendship.feature:16?[0m
+  ?[32mGiven ?[0m?[32mI am a logged user?[0m                                  ?[90m# void piperkt.bdd.friendship.FriendshipsSteps.iAmALoggedUser()?[0m
+  ?[32mAnd ?[0m?[32manother user exists?[0m                                   ?[90m# void piperkt.bdd.friendship.FriendshipsSteps.anotherUserExists()?[0m
+  ?[32mAnd ?[0m?[32mI have a pending friend request from the other user?[0m   ?[90m# void piperkt.bdd.friendship.FriendshipsSteps.iHaveAPendingFriendRequest()?[0m
+  ?[32mWhen ?[0m?[32mI reject the friend request?[0m                          ?[90m# void piperkt.bdd.friendship.FriendshipsSteps.iRejectTheFriendRequest()?[0m
+  ?[32mThen ?[0m?[32mthe other user should not be added to my friend list?[0m ?[90m# void piperkt.bdd.friendship.FriendshipsSteps.theOtherUserShouldNotBeAddedToMyFriendList()?[0m
+
+Scenario: User creates a new server                   ?[90m# piperkt/bdd/servers.feature:3?[0m
+  ?[32mGiven ?[0m?[32mI am the logged user?[0m                          ?[90m# void piperkt.bdd.servers.ServersSteps.iAmALoggedUser()?[0m
+  ?[32mWhen ?[0m?[32mI create a new server?[0m                          ?[90m# void piperkt.bdd.servers.ServersSteps.iCreateANewServer()?[0m
+  ?[32mThen ?[0m?[32mI should be able to access the server as owner?[0m ?[90m# void piperkt.bdd.servers.ServersSteps.iShouldBeAbleToAccessTheServer()?[0m
+
+Scenario: User join a server                           ?[90m# piperkt/bdd/servers.feature:8?[0m
+  ?[32mGiven ?[0m?[32mI am the logged user?[0m                           ?[90m# void piperkt.bdd.servers.ServersSteps.iAmALoggedUser()?[0m
+  ?[32mAnd ?[0m?[32manother user has a server?[0m                        ?[90m# void piperkt.bdd.servers.ServersSteps.anotherUserHasAServer()?[0m
+  ?[32mWhen ?[0m?[32mI join the server?[0m                               ?[90m# void piperkt.bdd.servers.ServersSteps.iJoinTheServer()?[0m
+  ?[32mThen ?[0m?[32mI should be able to access the server as member?[0m ?[90m# void piperkt.bdd.servers.ServersSteps.iShouldBeAbleToAccessTheServerAsMember()?[0m
+
+Scenario: User registers to the system                  ?[90m# piperkt/bdd/users.feature:3?[0m
+  ?[32mGiven ?[0m?[32mI am not logged in?[0m                              ?[90m# void piperkt.bdd.users.UserManagementSteps.iAmNotLoggedIn()?[0m
+  ?[32mWhen ?[0m?[32mI make a REGISTER request with valid credentials?[0m ?[90m# void piperkt.bdd.users.UserManagementSteps.iMakeAREGISTERRequestWithValidCredentials()?[0m
+  ?[32mThen ?[0m?[32mI should be registered to the system?[0m             ?[90m# void piperkt.bdd.users.UserManagementSteps.iShouldBeRegisteredToTheSystem()?[0m
+
+Scenario: User logs in to the system                 ?[90m# piperkt/bdd/users.feature:8?[0m
+  ?[32mGiven ?[0m?[32mI am registered?[0m                              ?[90m# void piperkt.bdd.users.UserManagementSteps.iAmRegistered()?[0m
+  ?[32mAnd ?[0m?[32mI am not logged in?[0m                             ?[90m# void piperkt.bdd.users.UserManagementSteps.iAmNotLoggedIn()?[0m
+  ?[32mWhen ?[0m?[32mI make a LOGIN request with valid credentials?[0m ?[90m# void piperkt.bdd.users.UserManagementSteps.iMakeALOGINRequestWithValidCredentials()?[0m
+  ?[32mThen ?[0m?[32mI should be logged in to the system?[0m           ?[90m# void piperkt.bdd.users.UserManagementSteps.iShouldBeLoggedInToTheSystem()?[0m
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.8</a> at Jun 21, 2024, 5:44:16 PM</p>
+</div>
+</div>
+</body>
+</html>
