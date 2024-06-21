@@ -1,4 +1,6 @@
-# Non Functional Requirements
+# Non Functional Property
+
+Non Functional Property (or Quality attributes) of a software system are constraint on the manner in which the system implements and delivers its functionality.
 
 ## Operational:
 
