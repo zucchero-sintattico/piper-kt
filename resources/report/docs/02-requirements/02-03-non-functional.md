@@ -2,6 +2,8 @@
 
 Non Functional Property (or Quality attributes) of a software system are constraint on the manner in which the system implements and delivers its functionality.
 
+In our case, we have identified the following non-functional properties:
+
 ## Operational:
 
 1. **Availability**
