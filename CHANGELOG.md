@@ -1,3 +1,22 @@
+## [8.4.0](https://github.com/zucchero-sintattico/piper-kt/compare/v8.3.0...v8.4.0) (2024-06-21)
+
+
+### Features
+
+* add bdd static results in ci ([c579343](https://github.com/zucchero-sintattico/piper-kt/commit/c5793437e8a0b104af9021b81699b4d1ed8f37b9))
+* **bdd:** added bdd tests for joining a server ([5030ad4](https://github.com/zucchero-sintattico/piper-kt/commit/5030ad48166a181bb5445c1bd70e76658e7aa93e))
+* **bdd:** implemented acceptance tests for channel management ([f14dddf](https://github.com/zucchero-sintattico/piper-kt/commit/f14dddf15b1013cfc221c8deb0db616b8419341f))
+* **bdd:** integrated micronaut-full plugin ([45a892d](https://github.com/zucchero-sintattico/piper-kt/commit/45a892d5b3a12d8edaf17ef35fe34c98cb81f87f))
+* monitoring part ([19fdb59](https://github.com/zucchero-sintattico/piper-kt/commit/19fdb59b969921045f14fe9519f4a7d8f69dce70))
+* skip bdd tests with property ([8ef0452](https://github.com/zucchero-sintattico/piper-kt/commit/8ef04529a2927987fd421a795b12424b32c3aec1))
+
+
+### Bug Fixes
+
+* **bdd:** add missing deps and correct package name ([d02cd94](https://github.com/zucchero-sintattico/piper-kt/commit/d02cd94df99d07584bee25753c7407b04a371080))
+* broken report link ([3e36ef0](https://github.com/zucchero-sintattico/piper-kt/commit/3e36ef039a717246657acf1955098b5b289a754e))
+* move quality attributes to non functional page ([e510adb](https://github.com/zucchero-sintattico/piper-kt/commit/e510adb0a2166679a80d3e2027908e2b7729ade1))
+
 ## [8.3.0](https://github.com/zucchero-sintattico/piper-kt/compare/v8.2.0...v8.3.0) (2024-06-17)
 
 
