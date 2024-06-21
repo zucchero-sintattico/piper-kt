@@ -60,6 +60,7 @@ const config = defineConfig({
               { text: 'Testing', link: '/04-implementation/04-02-testing', },
               { text: 'Multiplatform', link: '/04-implementation/04-03-multiplatform', },
               { text: 'Experiments', link: '/04-implementation/04-04-experiments', },
+              { text: 'Monitoring', link: '/04-implementation/04-05-monitoring', },
             ]
           },
         ]

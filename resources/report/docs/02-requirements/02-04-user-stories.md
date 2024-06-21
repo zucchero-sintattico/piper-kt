@@ -1,4 +1,4 @@
-# User Stories and Quality Attributes Scenarios
+# User Stories
 
 ## User Stories
 
