@@ -1,7 +1,7 @@
-asyncapi: '2.5.0'
+asyncapi: "2.5.0"
 info:
   title: Piperchat Events API
-  version: '1.0.0'
+  version: "1.0.0"
   description: API for events related to user actions, friendships, servers, channels, messages, and sessions.
 
 channels:
@@ -13,7 +13,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/UserCreatedEvent'
+          $ref: "#/components/schemas/UserCreatedEvent"
   user-updated:
     subscribe:
       summary: User Updated Event
@@ -22,7 +22,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/UserUpdatedEvent'
+          $ref: "#/components/schemas/UserUpdatedEvent"
   user-logged-in:
     subscribe:
       summary: User Logged In Event
@@ -31,7 +31,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/UserLoggedInEvent'
+          $ref: "#/components/schemas/UserLoggedInEvent"
   user-logged-out:
     subscribe:
       summary: User Logged Out Event
@@ -40,7 +40,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/UserLoggedOutEvent'
+          $ref: "#/components/schemas/UserLoggedOutEvent"
   user-online:
     subscribe:
       summary: User Online Event
@@ -49,7 +49,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/UserOnlineEvent'
+          $ref: "#/components/schemas/UserOnlineEvent"
   user-offline:
     subscribe:
       summary: User Offline Event
@@ -58,7 +58,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/UserOfflineEvent'
+          $ref: "#/components/schemas/UserOfflineEvent"
   channel-created:
     subscribe:
       summary: Channel Created Event
@@ -67,7 +67,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/ChannelCreatedEvent'
+          $ref: "#/components/schemas/ChannelCreatedEvent"
   channel-updated:
     subscribe:
       summary: Channel Updated Event
@@ -76,7 +76,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/ChannelUpdatedEvent'
+          $ref: "#/components/schemas/ChannelUpdatedEvent"
   channel-deleted:
     subscribe:
       summary: Channel Deleted Event
@@ -85,7 +85,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/ChannelDeletedEvent'
+          $ref: "#/components/schemas/ChannelDeletedEvent"
   message-in-channel:
     subscribe:
       summary: Message In Channel Event
@@ -94,7 +94,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/MessageInChannelEvent'
+          $ref: "#/components/schemas/MessageInChannelEvent"
   friendship-request-sent:
     subscribe:
       summary: Friendship Request Sent Event
@@ -103,7 +103,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/FriendshipRequestSentEvent'
+          $ref: "#/components/schemas/FriendshipRequestSentEvent"
   friendship-request-accepted:
     subscribe:
       summary: Friendship Request Accepted Event
@@ -112,7 +112,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/FriendshipRequestAcceptedEvent'
+          $ref: "#/components/schemas/FriendshipRequestAcceptedEvent"
   friendship-request-rejected:
     subscribe:
       summary: Friendship Request Rejected Event
@@ -121,7 +121,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/FriendshipRequestRejectedEvent'
+          $ref: "#/components/schemas/FriendshipRequestRejectedEvent"
   new-message-in-friendship:
     subscribe:
       summary: New Message In Friendship Event
@@ -130,7 +130,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/NewMessageInFriendshipEvent'
+          $ref: "#/components/schemas/NewMessageInFriendshipEvent"
   server-created:
     subscribe:
       summary: Server Created Event
@@ -139,7 +139,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/ServerCreatedEvent'
+          $ref: "#/components/schemas/ServerCreatedEvent"
   server-updated:
     subscribe:
       summary: Server Updated Event
@@ -148,7 +148,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/ServerUpdatedEvent'
+          $ref: "#/components/schemas/ServerUpdatedEvent"
   server-user-added:
     subscribe:
       summary: Server User Added Event
@@ -157,7 +157,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/ServerUserAddedEvent'
+          $ref: "#/components/schemas/ServerUserAddedEvent"
   server-user-removed:
     subscribe:
       summary: Server User Removed Event
@@ -166,7 +166,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/ServerUserRemovedEvent'
+          $ref: "#/components/schemas/ServerUserRemovedEvent"
   server-user-kicked:
     subscribe:
       summary: Server User Kicked Event
@@ -175,7 +175,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/ServerUserKickedEvent'
+          $ref: "#/components/schemas/ServerUserKickedEvent"
   server-deleted:
     subscribe:
       summary: Server Deleted Event
@@ -184,7 +184,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/ServerDeletedEvent'
+          $ref: "#/components/schemas/ServerDeletedEvent"
   session-created:
     subscribe:
       summary: Session Created Event
@@ -193,7 +193,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/SessionCreatedEvent'
+          $ref: "#/components/schemas/SessionCreatedEvent"
   session-deleted:
     subscribe:
       summary: Session Deleted Event
@@ -202,7 +202,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/SessionDeletedEvent'
+          $ref: "#/components/schemas/SessionDeletedEvent"
   allowed-user-added:
     subscribe:
       summary: Allowed User Added Event
@@ -211,7 +211,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/AllowedUserAddedEvent'
+          $ref: "#/components/schemas/AllowedUserAddedEvent"
   allowed-user-removed:
     subscribe:
       summary: Allowed User Removed Event
@@ -220,7 +220,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/AllowedUserRemovedEvent'
+          $ref: "#/components/schemas/AllowedUserRemovedEvent"
   participant-joined:
     subscribe:
       summary: Participant Joined Event
@@ -229,7 +229,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/ParticipantJoinedEvent'
+          $ref: "#/components/schemas/ParticipantJoinedEvent"
   participant-left:
     subscribe:
       summary: Participant Left Event
@@ -238,7 +238,7 @@ channels:
       message:
         contentType: application/json
         payload:
-          $ref: '#/components/schemas/ParticipantLeftEvent'
+          $ref: "#/components/schemas/ParticipantLeftEvent"
 
 components:
   schemas:
