@@ -14,7 +14,7 @@ const config = defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Report', link: '/01-introduction' },
+      { text: 'Report', link: '/01-introduction/01-01-introduction' },
     ],
 
     outline: "deep",
