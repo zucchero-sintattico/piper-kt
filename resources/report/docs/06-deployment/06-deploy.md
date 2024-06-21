@@ -54,6 +54,25 @@ minikube start --cpus 8 --memory 32000
 
 Helm is a package manager for Kubernetes that allows the definition of complex applications using a templating system. This the installation of multiple components that share the same configuration with different values.
 
+### Quality Attributes Ensured by Kubernetes
+
+Several key quality attributes essential for robust, scalable, and manageable applications are guaranteed by Kubernetes.
+
+#### Scalability
+
+Kubernetes has a number of mechanisms to ensure high availability and resilience:
+
+- Pod Restart: It maintains the availability of failed containers by automatically restarting them.
+
+- ReplicaSets: A specified number of pod replicas are always kept up.
+
+- Node Health Monitoring: This monitors node health and reschedules pods from failed nodes to healthy ones.
+
+#### Resource Efficiency
+
+Kubernetes intelligently schedules and manages resources so as to minimize resource wastage. Resource Requests and Limits: Containers can have minimum (‘requests’) values below which they will not operate functionally or maximums (‘limits’) above which they will be forced to abort.
+
+
 ### Launch the Deployment
 
 1. Clone the repository with the command
