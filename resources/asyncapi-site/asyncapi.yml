@@ -1,0 +1,512 @@
+asyncapi: '2.5.0'
+info:
+  title: Piperchat Events API
+  version: '1.0.0'
+  description: API for events related to user actions, friendships, servers, channels, messages, and sessions.
+
+channels:
+  user-created:
+    subscribe:
+      summary: User Created Event
+      description: Event triggered when a new user is created.
+      operationId: onUserCreated
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/UserCreatedEvent'
+  user-updated:
+    subscribe:
+      summary: User Updated Event
+      description: Event triggered when a user is updated.
+      operationId: onUserUpdated
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/UserUpdatedEvent'
+  user-logged-in:
+    subscribe:
+      summary: User Logged In Event
+      description: Event triggered when a user logs in.
+      operationId: onUserLoggedIn
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/UserLoggedInEvent'
+  user-logged-out:
+    subscribe:
+      summary: User Logged Out Event
+      description: Event triggered when a user logs out.
+      operationId: onUserLoggedOut
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/UserLoggedOutEvent'
+  user-online:
+    subscribe:
+      summary: User Online Event
+      description: Event triggered when a user comes online.
+      operationId: onUserOnline
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/UserOnlineEvent'
+  user-offline:
+    subscribe:
+      summary: User Offline Event
+      description: Event triggered when a user goes offline.
+      operationId: onUserOffline
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/UserOfflineEvent'
+  channel-created:
+    subscribe:
+      summary: Channel Created Event
+      description: Event triggered when a channel is created.
+      operationId: onChannelCreated
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/ChannelCreatedEvent'
+  channel-updated:
+    subscribe:
+      summary: Channel Updated Event
+      description: Event triggered when a channel is updated.
+      operationId: onChannelUpdated
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/ChannelUpdatedEvent'
+  channel-deleted:
+    subscribe:
+      summary: Channel Deleted Event
+      description: Event triggered when a channel is deleted.
+      operationId: onChannelDeleted
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/ChannelDeletedEvent'
+  message-in-channel:
+    subscribe:
+      summary: Message In Channel Event
+      description: Event triggered when a message is sent in a channel.
+      operationId: onMessageInChannel
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/MessageInChannelEvent'
+  friendship-request-sent:
+    subscribe:
+      summary: Friendship Request Sent Event
+      description: Event triggered when a friendship request is sent.
+      operationId: onFriendshipRequestSent
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/FriendshipRequestSentEvent'
+  friendship-request-accepted:
+    subscribe:
+      summary: Friendship Request Accepted Event
+      description: Event triggered when a friendship request is accepted.
+      operationId: onFriendshipRequestAccepted
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/FriendshipRequestAcceptedEvent'
+  friendship-request-rejected:
+    subscribe:
+      summary: Friendship Request Rejected Event
+      description: Event triggered when a friendship request is rejected.
+      operationId: onFriendshipRequestRejected
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/FriendshipRequestRejectedEvent'
+  new-message-in-friendship:
+    subscribe:
+      summary: New Message In Friendship Event
+      description: Event triggered when a new message is sent in a friendship.
+      operationId: onNewMessageInFriendship
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/NewMessageInFriendshipEvent'
+  server-created:
+    subscribe:
+      summary: Server Created Event
+      description: Event triggered when a server is created.
+      operationId: onServerCreated
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/ServerCreatedEvent'
+  server-updated:
+    subscribe:
+      summary: Server Updated Event
+      description: Event triggered when a server is updated.
+      operationId: onServerUpdated
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/ServerUpdatedEvent'
+  server-user-added:
+    subscribe:
+      summary: Server User Added Event
+      description: Event triggered when a user is added to a server.
+      operationId: onServerUserAdded
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/ServerUserAddedEvent'
+  server-user-removed:
+    subscribe:
+      summary: Server User Removed Event
+      description: Event triggered when a user is removed from a server.
+      operationId: onServerUserRemoved
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/ServerUserRemovedEvent'
+  server-user-kicked:
+    subscribe:
+      summary: Server User Kicked Event
+      description: Event triggered when a user is kicked from a server.
+      operationId: onServerUserKicked
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/ServerUserKickedEvent'
+  server-deleted:
+    subscribe:
+      summary: Server Deleted Event
+      description: Event triggered when a server is deleted.
+      operationId: onServerDeleted
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/ServerDeletedEvent'
+  session-created:
+    subscribe:
+      summary: Session Created Event
+      description: Event triggered when a session is created.
+      operationId: onSessionCreated
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/SessionCreatedEvent'
+  session-deleted:
+    subscribe:
+      summary: Session Deleted Event
+      description: Event triggered when a session is deleted.
+      operationId: onSessionDeleted
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/SessionDeletedEvent'
+  allowed-user-added:
+    subscribe:
+      summary: Allowed User Added Event
+      description: Event triggered when an allowed user is added to a session.
+      operationId: onAllowedUserAdded
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/AllowedUserAddedEvent'
+  allowed-user-removed:
+    subscribe:
+      summary: Allowed User Removed Event
+      description: Event triggered when an allowed user is removed from a session.
+      operationId: onAllowedUserRemoved
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/AllowedUserRemovedEvent'
+  participant-joined:
+    subscribe:
+      summary: Participant Joined Event
+      description: Event triggered when a participant joins a session.
+      operationId: onParticipantJoined
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/ParticipantJoinedEvent'
+  participant-left:
+    subscribe:
+      summary: Participant Left Event
+      description: Event triggered when a participant leaves a session.
+      operationId: onParticipantLeft
+      message:
+        contentType: application/json
+        payload:
+          $ref: '#/components/schemas/ParticipantLeftEvent'
+
+components:
+  schemas:
+    UserCreatedEvent:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        profilePicture:
+          type: string
+          nullable: true
+      required:
+        - username
+    UserUpdatedEvent:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        profilePicture:
+          type: string
+          nullable: true
+      required:
+        - username
+    UserLoggedInEvent:
+      type: object
+      properties:
+        username:
+          type: string
+      required:
+        - username
+    UserLoggedOutEvent:
+      type: object
+      properties:
+        username:
+          type: string
+      required:
+        - username
+    UserOnlineEvent:
+      type: object
+      properties:
+        username:
+          type: string
+      required:
+        - username
+    UserOfflineEvent:
+      type: object
+      properties:
+        username:
+          type: string
+      required:
+        - username
+    ChannelCreatedEvent:
+      type: object
+      properties:
+        serverId:
+          type: string
+        channelId:
+          type: string
+      required:
+        - serverId
+        - channelId
+    ChannelUpdatedEvent:
+      type: object
+      properties:
+        serverId:
+          type: string
+        channelId:
+          type: string
+      required:
+        - serverId
+        - channelId
+    ChannelDeletedEvent:
+      type: object
+      properties:
+        serverId:
+          type: string
+        channelId:
+          type: string
+      required:
+        - serverId
+        - channelId
+    MessageInChannelEvent:
+      type: object
+      properties:
+        serverId:
+          type: string
+        channelId:
+          type: string
+        messageId:
+          type: string
+        sender:
+          type: string
+        content:
+          type: string
+      required:
+        - serverId
+        - channelId
+        - messageId
+        - sender
+        - content
+    FriendshipRequestSentEvent:
+      type: object
+      properties:
+        fromUser:
+          type: string
+        toUser:
+          type: string
+      required:
+        - fromUser
+        - toUser
+    FriendshipRequestAcceptedEvent:
+      type: object
+      properties:
+        fromUser:
+          type: string
+        toUser:
+          type: string
+      required:
+        - fromUser
+        - toUser
+    FriendshipRequestRejectedEvent:
+      type: object
+      properties:
+        fromUser:
+          type: string
+        toUser:
+          type: string
+      required:
+        - fromUser
+        - toUser
+    NewMessageInFriendshipEvent:
+      type: object
+      properties:
+        fromUser:
+          type: string
+        toUser:
+          type: string
+        messageId:
+          type: string
+        content:
+          type: string
+      required:
+        - fromUser
+        - toUser
+        - messageId
+        - content
+    ServerCreatedEvent:
+      type: object
+      properties:
+        serverId:
+          type: string
+        owner:
+          type: string
+      required:
+        - serverId
+        - owner
+    ServerUpdatedEvent:
+      type: object
+      properties:
+        serverId:
+          type: string
+      required:
+        - serverId
+    ServerUserAddedEvent:
+      type: object
+      properties:
+        serverId:
+          type: string
+        username:
+          type: string
+      required:
+        - serverId
+        - username
+    ServerUserRemovedEvent:
+      type: object
+      properties:
+        serverId:
+          type: string
+        username:
+          type: string
+      required:
+        - serverId
+        - username
+    ServerUserKickedEvent:
+      type: object
+      properties:
+        serverId:
+          type: string
+        username:
+          type: string
+      required:
+        - serverId
+        - username
+    ServerDeletedEvent:
+      type: object
+      properties:
+        serverId:
+          type: string
+      required:
+        - serverId
+    SessionCreatedEvent:
+      type: object
+      properties:
+        sessionId:
+          type: string
+        allowedUsers:
+          type: array
+          items:
+            type: string
+      required:
+        - sessionId
+        - allowedUsers
+    SessionDeletedEvent:
+      type: object
+      properties:
+        sessionId:
+          type: string
+      required:
+        - sessionId
+    AllowedUserAddedEvent:
+      type: object
+      properties:
+        sessionId:
+          type: string
+        username:
+          type: string
+      required:
+        - sessionId
+        - username
+    AllowedUserRemovedEvent:
+      type: object
+      properties:
+        sessionId:
+          type: string
+        user:
+          type: string
+      required:
+        - sessionId
+        - user
+    ParticipantJoinedEvent:
+      type: object
+      properties:
+        sessionId:
+          type: string
+        user:
+          type: string
+      required:
+        - sessionId
+        - user
+    ParticipantLeftEvent:
+      type: object
+      properties:
+        sessionId:
+          type: string
+        user:
+          type: string
+      required:
+        - sessionId
+        - user
