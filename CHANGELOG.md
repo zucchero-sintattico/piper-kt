@@ -1,3 +1,10 @@
+## [9.1.1](https://github.com/zucchero-sintattico/piper-kt/compare/v9.1.0...v9.1.1) (2024-06-22)
+
+
+### Bug Fixes
+
+* **report:** change config.mts file in order to index user stories section correctly ([a6410eb](https://github.com/zucchero-sintattico/piper-kt/commit/a6410ebf1b1580e63b8d29f06a85da5321f6a376))
+
 ## [9.1.0](https://github.com/zucchero-sintattico/piper-kt/compare/v9.0.0...v9.1.0) (2024-06-22)
 
 
