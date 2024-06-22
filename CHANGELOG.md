@@ -1,3 +1,10 @@
+## [9.1.0](https://github.com/zucchero-sintattico/piper-kt/compare/v9.0.0...v9.1.0) (2024-06-22)
+
+
+### Features
+
+* added quality attributes garanteed by kubernetes ([606f39f](https://github.com/zucchero-sintattico/piper-kt/commit/606f39fd90506938716e6ea37aa5b8b3be1eba8b))
+
 ## [9.0.0](https://github.com/zucchero-sintattico/piper-kt/compare/v8.4.0...v9.0.0) (2024-06-21)
 
 
