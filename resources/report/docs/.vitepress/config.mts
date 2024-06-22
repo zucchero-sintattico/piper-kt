@@ -33,7 +33,7 @@ const config = defineConfig({
               { text: 'Business requirements', link: '/02-requirements/02-01-business', },
               { text: 'Functional requirements', link: '/02-requirements/02-02-functional', },
               { text: 'Non functional requirements', link: '/02-requirements/02-03-non-functional', },
-              { text: 'User Stories and QA Scenarios', link: '/02-requirements/02-04-us-and-qa-scenarios', },
+              { text: 'User Stories', link: '/02-requirements/02-04-user-stories', },
             ]
           },
         ]
