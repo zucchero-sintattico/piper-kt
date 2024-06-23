@@ -8,7 +8,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/zucchero-sintattico/piperchat">
+  <a href="https://github.com/zucchero-sintattico/piper-kt">
     <img src="./logo.jpeg" alt="Logo" width="256" height="256" />
   </a>
 
@@ -17,7 +17,7 @@
   <p align="center">
     Piper-kt
     <br />
-    <a href="https://github.com/zucchero-sintattico/piperchat"><strong>Explore the docs »</strong></a>
+    <a href="https://zucchero-sintattico.github.io/piper-kt/docs/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
   </p>
