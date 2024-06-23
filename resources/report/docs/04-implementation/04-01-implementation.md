@@ -108,8 +108,8 @@ open class ServerService(
 }
 ```
 
-In this level, we also have declared the **Repositories** interfaces, which are then implemented in the infrastructure level.
-This allows us to keep the application layer completely independent from the technology used for the persistence or the event publishing and to easily switch the implementation if needed.
+In this level, the services can see and work only with the repositories **interfaces**, which are then implemented in the infrastructure level.
+This allows us to keep the application layer completely independent of the technology used for the persistence or the event publishing and to easily switch the implementation if needed.
 
 ### Infrastructure Layer
 
