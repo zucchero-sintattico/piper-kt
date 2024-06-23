@@ -1,3 +1,10 @@
+## [9.1.4](https://github.com/zucchero-sintattico/piper-kt/compare/v9.1.3...v9.1.4) (2024-06-23)
+
+
+### Bug Fixes
+
+* **report:** change paragraph after refuse ([2e2dc11](https://github.com/zucchero-sintattico/piper-kt/commit/2e2dc1115db081fa256c3e32a1acd9f08e3f16b7))
+
 ## [9.1.3](https://github.com/zucchero-sintattico/piper-kt/compare/v9.1.2...v9.1.3) (2024-06-23)
 
 
