@@ -154,6 +154,7 @@ jobs:
           ./gradlew buildOpenApiSite --parallel
           cp -r ./build/openapi-site ${{ env.TMP_SITE }}/openapi
           cp -r ./resources/bdd-report ${{ env.TMP_SITE }}/bdd
+          cp -r ./resources/asyncapi-site ${{ env.TMP_SITE }}/asyncapi
       - name: Install Node
         uses: actions/setup-node@v4
         with:
