@@ -1,3 +1,10 @@
+## [9.1.2](https://github.com/zucchero-sintattico/piper-kt/compare/v9.1.1...v9.1.2) (2024-06-23)
+
+
+### Bug Fixes
+
+* asyncapi deploy ([bc498dc](https://github.com/zucchero-sintattico/piper-kt/commit/bc498dc304151aefbea7e9507e538f5f496b3feb))
+
 ## [9.1.1](https://github.com/zucchero-sintattico/piper-kt/compare/v9.1.0...v9.1.1) (2024-06-22)
 
 
