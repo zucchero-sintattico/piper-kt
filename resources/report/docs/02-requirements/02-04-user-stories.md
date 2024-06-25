@@ -73,3 +73,38 @@ In the following section, we present the user stories that describe the function
 
 2. **Microphone and Camera Control**
     - As a **user**, I want to turn on and off my microphone and camera, so that I can control my audio and video presence in a session.
+
+# Feature Specifications (BDD)
+
+Once the user stories are defined, the first thing that we did was proceeded to create some feature specifications that capture and describe the details of each user story. 
+
+To do this, we used the Behavior-Driven Development (BDD) approach, which focuses on defining the behavior of the system from the perspective of the end-users. The feature specifications are written in a structured format that includes the following sections, using the Gherkin syntax:
+
+- **Feature**: A high-level description of the feature or functionality.
+
+- **Scenario**: A specific use case or situation that describes the behavior of the system.
+
+- **Given**: The initial context or state of the system before the scenario starts.
+
+- **When**: The action or event that triggers the scenario.
+
+- **Then**: The expected outcome or result of the scenario.
+
+The feature specifications provide a detailed description of the expected behavior of the system based on the user stories. They serve as a reference for the development team to implement the features correctly and ensure that they meet the requirements of the end-users.
+
+You can find an example of a feature specification below:
+
+```gherkin
+Feature: User Registration and Authentication
+
+  Scenario: User registers to the system
+    Given I am not logged in
+    When I make a REGISTER request with valid credentials
+    Then I should be registered to the system
+
+  Scenario: User logs in to the system
+    Given I am registered
+    And I am not logged in
+    When I make a LOGIN request with valid credentials
+    Then I should be logged in to the system
+```
