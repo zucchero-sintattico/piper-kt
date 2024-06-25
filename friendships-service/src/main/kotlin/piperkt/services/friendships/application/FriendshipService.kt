@@ -104,7 +104,7 @@ open class FriendshipService(
         val friendship =
             friendshipRepository.findByMembers(request.requestFrom, request.friend)
                 ?: return Result.failure(FriendshipServiceException.FriendshipNotFoundException())
-        return Result.success(FriendshipQuery.GetMessages.Response(friendship.directMessages))
+        return Result.success(FriendshipQuery.GetMessages.Response(friendship.messages))
     }
 
     override fun getFriendshipRequests(

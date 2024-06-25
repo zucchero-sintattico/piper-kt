@@ -1,8 +1,8 @@
 package piperkt.services.friendships.presentation
 
 import io.micronaut.serde.annotation.Serdeable
-import piperkt.services.friendships.domain.DirectMessage
-import piperkt.services.friendships.domain.DirectMessageId
+import piperkt.services.friendships.domain.Message
+import piperkt.services.friendships.domain.MessageId
 
 @Serdeable
 data class DirectMessageDTO(
@@ -11,9 +11,9 @@ data class DirectMessageDTO(
     val content: String,
     val timestamp: String = java.time.Instant.now().toString(),
 ) {
-    fun toDomain(): DirectMessage {
-        return DirectMessage(
-            id = DirectMessageId(id),
+    fun toDomain(): Message {
+        return Message(
+            id = MessageId(id),
             sender = sender,
             content = content,
             timestamp = java.time.Instant.parse(timestamp)
@@ -21,12 +21,12 @@ data class DirectMessageDTO(
     }
 
     companion object {
-        fun fromDomain(directMessage: DirectMessage): DirectMessageDTO {
+        fun fromDomain(message: Message): DirectMessageDTO {
             return DirectMessageDTO(
-                id = directMessage.id.value,
-                sender = directMessage.sender,
-                content = directMessage.content,
-                timestamp = directMessage.timestamp.toString()
+                id = message.id.value,
+                sender = message.sender,
+                content = message.content,
+                timestamp = message.timestamp.toString()
             )
         }
     }

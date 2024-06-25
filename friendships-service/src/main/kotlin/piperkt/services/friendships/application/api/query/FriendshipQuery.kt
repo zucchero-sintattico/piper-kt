@@ -1,7 +1,7 @@
 package piperkt.services.friendships.application.api.query
 
 import piperkt.services.friendships.application.api.ServiceRequest
-import piperkt.services.friendships.domain.DirectMessage
+import piperkt.services.friendships.domain.Message
 
 sealed interface FriendshipQuery {
     sealed interface GetMessages : FriendshipQuery {
@@ -12,7 +12,7 @@ sealed interface FriendshipQuery {
             override val requestFrom: String
         ) : GetMessages, ServiceRequest
 
-        data class Response(val directMessages: List<DirectMessage>) : GetMessages
+        data class Response(val messages: List<Message>) : GetMessages
     }
 
     sealed interface GetFriendshipRequests : FriendshipQuery {

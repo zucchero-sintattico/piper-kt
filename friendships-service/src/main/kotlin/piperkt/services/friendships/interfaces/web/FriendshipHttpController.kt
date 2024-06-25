@@ -101,7 +101,7 @@ class FriendshipHttpController(private val friendshipService: FriendshipService)
                 )
                 .getOrThrow()
         return FriendshipApi.GetFriendshipMessages.Response(
-            messages = response.directMessages.map { DirectMessageDTO.fromDomain(it) }
+            messages = response.messages.map { DirectMessageDTO.fromDomain(it) }
         )
     }
 
