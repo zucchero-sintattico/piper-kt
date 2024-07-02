@@ -74,7 +74,8 @@ In the following section, we present the user stories that describe the function
 2. **Microphone and Camera Control**
     - As a **user**, I want to turn on and off my microphone and camera, so that I can control my audio and video presence in a session.
 
-# Feature Specifications (BDD)
+
+## Feature Specifications (BDD)
 
 Once the user stories are defined, the first thing that we did was proceeded to create some feature specifications that capture and describe the details of each user story. 
 
@@ -90,7 +91,8 @@ To do this, we used the Behavior-Driven Development (BDD) approach, which focuse
 
 - **Then**: The expected outcome or result of the scenario.
 
-The feature specifications provide a detailed description of the expected behavior of the system based on the user stories. They serve as a reference for the development team to implement the features correctly and ensure that they meet the requirements of the end-users.
+The feature specifications provide a detailed description of the expected behavior of the system based on the user stories.
+In this way, we were able to define some Acceptance Criteria that will be used to validate the implementation of the features, useful both for the development team and the stakeholders.
 
 You can find an example of a feature specification below:
 
