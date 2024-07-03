@@ -23,17 +23,18 @@ const config = defineConfig({
       {
         items: [
           { text: 'Introduction', link: '/01-introduction/01-01-introduction', },
+          { text: 'Deliverables', link: '/deliverables/d1-glossary', },
         ]
       },
       {
         items: [
           {
-            text: 'Requirements', collapsed: false,
+            text: 'Analysis', collapsed: false,
             items: [
-              { text: 'Business requirements', link: '/02-requirements/02-01-business', },
-              { text: 'Functional requirements', link: '/02-requirements/02-02-functional', },
-              { text: 'Non functional requirements', link: '/02-requirements/02-03-non-functional', },
-              { text: 'User Stories', link: '/02-requirements/02-04-user-stories', },
+              { text: 'Business requirements', link: '/02-analysis/02-01-business', },
+              { text: 'Functional requirements', link: '/02-analysis/02-02-functional', },
+              { text: 'Non functional requirements', link: '/02-analysis/02-03-non-functional', },
+              { text: 'User Stories', link: '/02-analysis/02-04-user-stories', },
             ]
           },
         ]
@@ -41,9 +42,9 @@ const config = defineConfig({
       {
         items: [
           {
-            text: 'Design', collapsed: false, link: "/03-design/03-00-glossary",
+            text: 'Design', collapsed: false,
             items: [
-              { text: 'Knowledge Crunching', link: '/03-design/03-01-knowledge-crunching', },
+              { text: 'Event Storming', link: '/03-design/03-01-event-storming', },
               { text: 'Domain', link: '/03-design/03-02-domain', },
               { text: 'Architecture', link: '/03-design/03-03-architecture', },
               { text: 'Microservices', link: '/03-design/03-04-microservices', },

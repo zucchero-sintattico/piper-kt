@@ -1,8 +1,10 @@
 # Glossary
 
-Domain glossary for discord clone
+The first step in the knowledge crunching phase is to define the ubiquitous language of the project.
+The ubiquitous language is a shared language that is used by all team members to discuss the domain of the project.
+To define the ubiquitous language, we identified the main terms and concepts related to the project and created a glossary that defines each term and its meaning.
 
-## Concepts
+## Global Concepts
 
 | Term               | Definition                                                |
 | ------------------ | --------------------------------------------------------- |
