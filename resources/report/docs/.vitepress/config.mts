@@ -23,7 +23,12 @@ const config = defineConfig({
       {
         items: [
           { text: 'Introduction', link: '/01-introduction/01-01-introduction', },
-          { text: 'Deliverables', link: '/deliverables/d1-glossary', },
+          { text: 'Deliverables', collapsed: false, 
+            items: [
+              { text: 'Glossary', link: '/deliverables/d1-glossary', },
+              { text: 'Domain Model', link: '/deliverables/d2-domain-model', },
+            ]
+          },
         ]
       },
       {
