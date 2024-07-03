@@ -6,10 +6,11 @@ To capture these business requirements, we used use case diagrams and textual de
 
 ## User Login/Signup
 
-A user, who accesses to Piper-kt service, should be able to:
+![Login/Signup](./img/business/01-login-signup.jpg)
 
 <!-- 1. Register a new account, which requires providing a username, email, and password.
 2. Access the service by authenticating with the username and password, using a previously registered account. -->
+A user, who accesses to Piper-kt service, should be able to:
 
 1. **Register a new account (Signup)**
     - **Actor**: User
@@ -51,9 +52,10 @@ A user, who accesses to Piper-kt service, should be able to:
 
 
 
-![Login/Signup](./img/business/01-login-signup.jpg)
 
 ## Authenticated User
+
+![Authenticated User](./img/business/02-auth-user.jpg)
 
 After performing authentication, a user acquires the ability to perform numerous actions, which cover different areas.
 The following use cases are identified for an authenticated user:
@@ -147,9 +149,10 @@ The following use cases are identified for an authenticated user:
     - reject requests received.
 - The user has the ability to create servers or participate to servers already created. -->
 
-![Authenticated User](./img/business/02-auth-user.jpg)
 
 ## Server Admin
+
+![Server Admin](./img/business/03-servers-admin.jpg)
 
 A user, after creating a server, becomes its **administrator**.
 This allows access to management features for it, among which the following can be highlighted:
@@ -227,9 +230,10 @@ This allows access to management features for it, among which the following can 
 - The administrator can create channels (text or multimedia).
 - The administrator can update or remove channels already created. -->
 
-![Server Admin](./img/business/03-servers-admin.jpg)
 
 ## Friends interaction
+
+![Friends Interaction](./img/business/04-friendship.jpg)
 
 Two users, after befriending each other, have the ability to interact with each other in the following ways:
 
@@ -259,9 +263,10 @@ Two users, after befriending each other, have the ability to interact with each 
 - Send messages within the chat between the two users.
 - Participate in the multimedia session. -->
 
-![Friends Interaction](./img/business/04-friendship.jpg)
 
 ## User in a Server
+
+![User in a Server](./img/business/05-user-in-server.jpg)
 
 A user participating in a server has the following abilities:
 
@@ -300,9 +305,10 @@ A user participating in a server has the following abilities:
             1. The system displays an error message.
             2. The user returns to step 2 and selects a different option.
 
-![User in a Server](./img/business/05-user-in-server.jpg)
 
 ## Multimedia Session
+
+![Multimedia Session](./img/business/06-session.jpg)
 
 A user in a multimedia session, either in a private one with a friend or in a channel, has the ability to: 
 
@@ -333,4 +339,3 @@ A user in a multimedia session, either in a private one with a friend or in a ch
         2. The system removes the user from the session.
         3. The system displays a success message.
 
-![Multimedia Session](./img/business/06-session.jpg)
