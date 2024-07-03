@@ -1,10 +1,12 @@
-# Non Functional Property
+# Non Functional Property / Quality Attributes
 
 Non Functional Property (or Quality attributes) of a software system are constraint on the manner in which the system implements and delivers its functionality.
 
 In our case, we have identified the following non-functional properties:
 
-## Operational:
+## Quality Attributes Overview
+
+### Operational Properties
 
 1. **Availability**
     1. Fault tolerance to ensure system availability.
@@ -18,7 +20,7 @@ In our case, we have identified the following non-functional properties:
     1. Monitoring of system performance.
     2. Graphical representation of system performance.
 
-## Structural:
+### Structural Properties
 
 1. **Extensibility**:
     1. Clearly defined architecture to allow the addition of new features.
@@ -31,10 +33,10 @@ In our case, we have identified the following non-functional properties:
     3. Integration testing.
     4. Acceptance testing.
 
-## Security:
+### Security Properties
 
 1. Authentication of users to verify their identity.
 2. Authorization of users to access resources according to established rules.
 3. Encryption to ensure confidentiality of user passwords.
 
-
+## Quality Attributes Scenarios

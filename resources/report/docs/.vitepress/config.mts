@@ -39,7 +39,6 @@ const config = defineConfig({
               { text: 'Business requirements', link: '/02-analysis/02-01-business', },
               { text: 'Functional requirements', link: '/02-analysis/02-02-functional', },
               { text: 'Non functional requirements', link: '/02-analysis/02-03-non-functional', },
-              { text: 'User Stories', link: '/02-analysis/02-04-user-stories', },
             ]
           },
         ]
