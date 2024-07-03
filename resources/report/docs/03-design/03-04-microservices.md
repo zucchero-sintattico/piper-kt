@@ -3,6 +3,7 @@
 When we designed the Microservices structure we have decided to use the **Clean Architecture** pattern, in order to separate the business logic from the technical details, making the system more maintainable, scalable and technology-agnostic.
 
 ## Clean Architecture Layers
+
 As mentioned before, the development of the business logic was guided from the outset, by the principles of clean architecture.
 Each microservice, was designed and developed in an efficient and technology-independent manner, the code was divided into the following layers:
 
@@ -15,6 +16,15 @@ Each microservice, was designed and developed in an efficient and technology-ind
 
 This approach allowed us to develop the business logic in a way that is independent of the technology used, and to be able to change it without affecting the rest of the application.
 
+Here a conceptual diagram of the Clean Architecture:
+
+![Clean Architecture](./img/microservice/clean-architecture.jpg)
+
+The Clean Architecture can be exploited delving into the layers that compose the system.
+
+Here a module view the layers that compose each microservice architecture:
+
+![Microservices Layers](./img/microservice/layered-architecture.jpg)
 
 ## Users Microservice
 

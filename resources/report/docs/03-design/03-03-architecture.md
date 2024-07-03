@@ -30,3 +30,21 @@ Each microservice has two main types of interactions, in order handle communicat
 Given the already discussed motivations, next diagram will show the proposed architecture for the system. For simplicity, the pub/sub connectors are merged together.
 
 ![Proposed Architecture](./img/architecture/proposed-architecture.jpg)
+
+## Module view
+
+The following diagram exploits the system modules, in order to give a static view of the system.
+
+Here the list of artifacts:
+
+- **Commons**: contains shared classes and interfaces, used by all the other modules.
+- **Architecture tests**: contains common tests for architecture components, in order to adhere to our static architecture rules.
+- **Events**: contains all the system events that are exchanged between modules.
+- **Frontend**: contains the frontend service.
+- **Friendships**: contains the friendships service.
+- **Multimedia**: contains the multimedia service.
+- **Notifications**: contains the notifications service.
+- **Servers**: contains the servers service.
+- **Users**: contains the users service.
+
+![Modules](./img/architecture/module-view.jpg)
