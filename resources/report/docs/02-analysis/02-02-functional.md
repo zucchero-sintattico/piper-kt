@@ -35,8 +35,9 @@
     2. Ability to turn on and off the microphone and camera.
 
 ## User Stories
+In order to capture and describe the functional requirements listed before, we have decided to use the User Stories approach.
 
-In the following section, we have defined the user stories that capture and describe the functional requirements of the application. These user stories are written from the perspective of the end-users and describe the features and functionalities that they expect from the application.
+These user stories are written from the perspective of the end-users and describe the features and functionalities that they expect from the application.
 
 ### Registration and Authentication
 
