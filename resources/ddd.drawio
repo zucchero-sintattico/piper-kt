@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-07-03T14:37:08.803Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="b7RTmgltotHGs9jYzYwA" version="24.4.14" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2024-07-03T15:13:14.529Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="wm952GwdNMzEEeb3BZ6_" version="24.4.14" type="github" pages="2">
   <diagram name="Bounded Contexts" id="tkQB1AEBgv_wcHBzLUIK">
-    <mxGraphModel dx="2981" dy="1251" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2644" dy="922" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -206,7 +206,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="XXIF6rostePzZx73aiUD" name="Context Map">
-    <mxGraphModel dx="2345" dy="360" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1630" dy="-338" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -220,7 +220,7 @@
           <mxGeometry x="270" y="1660" width="120" height="80" as="geometry" />
         </mxCell>
         <mxCell id="MoGF-TPe3hKLnXJdzKba-3" value="Server Events" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="MoGF-TPe3hKLnXJdzKba-5" target="MoGF-TPe3hKLnXJdzKba-6">
-          <mxGeometry relative="1" as="geometry">
+          <mxGeometry x="0.0012" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
