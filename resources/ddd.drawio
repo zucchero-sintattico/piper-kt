@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-07-04T13:52:13.013Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="8r_zPMRZZdD9nTkCMmsK" version="24.6.2" type="github" pages="4">
+<mxfile host="app.diagrams.net" modified="2024-07-04T14:35:41.278Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="hT8DebECZ0Up-Oj6T5GZ" version="24.6.2" type="github" pages="4">
   <diagram name="Bounded Contexts" id="tkQB1AEBgv_wcHBzLUIK">
     <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -1570,19 +1570,21 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="PqsN7Znx8mTtAU8hEAZu-87" value="«service»&lt;br&gt;&lt;b&gt;Friendship-Service&lt;/b&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;align=center;verticalAlign=top;" vertex="1" parent="1">
-          <mxGeometry x="-1360" y="300" width="124" height="40" as="geometry" />
+          <mxGeometry x="-1355.5" y="295" width="124" height="40" as="geometry" />
         </mxCell>
         <mxCell id="PqsN7Znx8mTtAU8hEAZu-89" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="-1119" y="310" width="10" height="10" as="geometry" />
         </mxCell>
-        <mxCell id="PqsN7Znx8mTtAU8hEAZu-90" value="" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=halfCircle;endFill=0;endSize=6;strokeWidth=1;sketch=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="PqsN7Znx8mTtAU8hEAZu-89" target="PqsN7Znx8mTtAU8hEAZu-92">
+        <mxCell id="PqsN7Znx8mTtAU8hEAZu-90" value="" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=halfCircle;endFill=0;endSize=6;strokeWidth=1;sketch=0;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-1204" y="315" as="sourcePoint" />
+            <mxPoint x="-1120" y="315" as="sourcePoint" />
+            <mxPoint x="-1170" y="315" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="PqsN7Znx8mTtAU8hEAZu-91" value="" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=oval;endFill=0;sketch=0;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;endSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="PqsN7Znx8mTtAU8hEAZu-87" target="PqsN7Znx8mTtAU8hEAZu-92">
+        <mxCell id="PqsN7Znx8mTtAU8hEAZu-91" value="" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=oval;endFill=0;sketch=0;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;endSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="PqsN7Znx8mTtAU8hEAZu-87">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-1223" y="317" as="sourcePoint" />
+            <mxPoint x="-1230" y="320" as="sourcePoint" />
+            <mxPoint x="-1170" y="315" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="PqsN7Znx8mTtAU8hEAZu-92" value="" style="ellipse;whiteSpace=wrap;html=1;align=center;aspect=fixed;fillColor=none;strokeColor=none;resizable=0;perimeter=centerPerimeter;rotatable=0;allowArrows=0;points=[];outlineConnect=1;" vertex="1" parent="1">
@@ -1608,7 +1610,7 @@
           <mxGeometry x="-1159" y="340" width="10" height="10" as="geometry" />
         </mxCell>
         <mxCell id="PqsN7Znx8mTtAU8hEAZu-99" value="«service»&lt;br&gt;&lt;b&gt;Users-Service&lt;/b&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;align=center;verticalAlign=top;" vertex="1" parent="1">
-          <mxGeometry x="-1360" y="350" width="124" height="40" as="geometry" />
+          <mxGeometry x="-1356" y="345" width="124" height="40" as="geometry" />
         </mxCell>
         <mxCell id="PqsN7Znx8mTtAU8hEAZu-100" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="-1119" y="360" width="10" height="10" as="geometry" />
@@ -1624,7 +1626,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="PqsN7Znx8mTtAU8hEAZu-103" value="" style="ellipse;whiteSpace=wrap;html=1;align=center;aspect=fixed;fillColor=none;strokeColor=none;resizable=0;perimeter=centerPerimeter;rotatable=0;allowArrows=0;points=[];outlineConnect=1;" vertex="1" parent="1">
-          <mxGeometry x="-1169" y="360" width="10" height="10" as="geometry" />
+          <mxGeometry x="-1175" y="360" width="10" height="10" as="geometry" />
         </mxCell>
         <mxCell id="PqsN7Znx8mTtAU8hEAZu-104" value="" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=halfCircle;endFill=0;endSize=6;strokeWidth=1;sketch=0;exitX=0;exitY=0.75;exitDx=0;exitDy=0;" edge="1" parent="1" target="PqsN7Znx8mTtAU8hEAZu-106" source="PqsN7Znx8mTtAU8hEAZu-70">
           <mxGeometry relative="1" as="geometry">
@@ -1645,7 +1647,7 @@
         <mxCell id="PqsN7Znx8mTtAU8hEAZu-110" value="Backend" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="-1209" y="250" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="PqsN7Znx8mTtAU8hEAZu-112" value="«client»&lt;div&gt;End Users&lt;/div&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;align=center;verticalAlign=top;" vertex="1" parent="1">
+        <mxCell id="PqsN7Znx8mTtAU8hEAZu-112" value="«client»&lt;div&gt;&lt;b&gt;End Users&lt;/b&gt;&lt;/div&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;align=center;verticalAlign=top;" vertex="1" parent="1">
           <mxGeometry x="-1020" y="490" width="124" height="40" as="geometry" />
         </mxCell>
         <mxCell id="PqsN7Znx8mTtAU8hEAZu-114" value="" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=halfCircle;endFill=0;endSize=6;strokeWidth=1;sketch=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" target="PqsN7Znx8mTtAU8hEAZu-116" source="PqsN7Znx8mTtAU8hEAZu-112">
