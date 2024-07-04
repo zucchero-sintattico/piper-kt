@@ -48,3 +48,15 @@ Here the list of artifacts:
 - **Users**: contains the users service.
 
 ![Modules](./img/architecture/module-view.jpg)
+
+## Deployment view
+
+The deployment view shows the physical architecture of the system, in order to give a clear view of how the system will be deployed.
+In order to design an abstract architecture, a **container-based** deployment is proposed, where each component is deployed in a container.
+This allow to have a more scalable and maintainable system, given the portable nature of containers, avoiding the need to fix hardware dependencies.
+
+Each container is composed by everything needed to correctly run the service, including the service itself and configuration file if needed.
+
+In addition, the frontend service brings together the **Web App** accompanied by a **Web Server**, in order to serve the frontend application.
+
+![Deployment View](./img/architecture/deployment-view.jpg)

@@ -52,6 +52,7 @@ const config = defineConfig({
               { text: 'Bounded Contexts', link: '/03-design/03-02-bounded-contexts', },
               { text: 'Architecture', link: '/03-design/03-03-architecture', },
               { text: 'Microservices', link: '/03-design/03-04-microservices', },
+              { text: 'Patterns', link: '/03-design/03-05-patterns', },
             ]
           },
         ]
