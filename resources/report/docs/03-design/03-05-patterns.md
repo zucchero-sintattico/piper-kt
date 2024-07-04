@@ -67,11 +67,20 @@ Services are shipped with a default configuration that can be overridden by envi
 
 The Health-check API pattern is used to provide a way for services to report their health status. This pattern is useful for monitoring the health of services and detecting issues before they become critical.
 
-Each service exposes an endpoint that returns its health status. 
+Each service exposes an endpoint that returns its health status and Deployment-level Health Checks are used to monitor the health of services and take action if needed.
+
+Two health checks types have been analyzed:
+
+- **Liveness**: to collect the service status. If it will fail for a certain amount of times, the service will be restarted.
+- **Readiness**: service temporarily unable to serve traffic should not to be restarted, but just slow down the requests to it.
 
 ### Log aggregation
 
-### Application Metrics?
+The Log Aggregation pattern is used to collect and store logs from services in a centralized location. This pattern allows to monitor the health of services, detect issues, and troubleshoot problems.
+
+### Application Metrics
+
+The Application Metrics pattern is used to collect and store metrics from service and deployment system. This pattern allows to monitor the performance of services, detect bottlenecks, and optimize the system.
 
 ---
 
