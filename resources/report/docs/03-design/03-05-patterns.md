@@ -10,7 +10,12 @@ The API Gateway pattern is used to provide a single entry point for all clients.
 
 ![API Gateway](./img/patterns/api-gateway.jpg)
 
-### Event Publish/Subscribe
+### Circuit Breaker
+
+The Circuit Breaker pattern is used to prevent cascading failures in a distributed system. It monitors the health of services and opens the circuit when a service is unavailable or slow, allowing requests to fail fast with a specific error message on what went wrong.
+This allows clients to handle failures gracefully and recover when the service becomes available again.
+
+### Event Publish/Subscribe
 
 The Event Publish/Subscribe pattern is used to decouple services by allowing them to communicate through events. This pattern is useful when services need to be notified of changes in other services without having to make direct calls to them.
 
@@ -25,6 +30,20 @@ The Service as Containers pattern is used to package services as containers. Thi
 ### Database per Service
 
 Each service has its own database, which is isolated from other services. This pattern allows services to be developed, deployed, and scaled independently of each other.
+
+### Service Discovery
+
+The Service Discovery pattern is used to dynamically discover services at runtime. This pattern allows services to find and communicate with each other without having to know their IP addresses or ports.
+
+The system uses a **Deployment-level Service Discovery** where services register themselves with a service registry when they start up and deregister when they shut down. The service registry is used by clients to discover services and make requests to them.
+A **DNS** resolver is used to resolve service names to IP addresses.
+It involves:
+- **Registration pattern** where services register themselves with a service registry when they start up and deregister when they shut down.
+- **Discovery pattern** where clients use the service registry to discover services and make requests to them.
+
+This pattern allows services to be deployed and scaled independently of each other, making it easier to manage and scale the system, allowing an automatic failover and load balancing.
+
+![Service Discovery](./img/patterns/server-side-service-discovery.png)
 
 ---
 
@@ -42,7 +61,7 @@ Each service exposes an endpoint that returns its health status.
 
 ---
 
-## Security Pattern
+## Security Pattern
 
 ### Access Token
 
