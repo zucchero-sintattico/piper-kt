@@ -15,9 +15,8 @@ To define the ubiquitous language, we identified the main terms and concepts rel
 | Friend             | A user who is added to another user's friend list         |
 | Friendship         | A pair of users who have added each other as friends      |
 | Friend Request     | A request to add a user as a friend, sent by another user |
-| Direct             | A chat between two users that are friends                 |
-| Direct Message     | A message sent in a direct                                |
-| Direct Session     | A session dedicated to a friendship                       |
+| Friendship Message     | A message sent in a friendship                                |
+| Friendship Session     | A session dedicated to a friendship                       |
 | Server             | A group of channels and members                           |
 | Server Profile     | Information about a server                                |
 | Owner              | The user who created a server                             |
@@ -46,13 +45,8 @@ To define the ubiquitous language, we identified the main terms and concepts rel
 | Sending a friend request   | The action performed by a user to send a friend request to another user     |
 | Accepting a friend request | The action performed by a user to accept a friend request from another user |
 | Rejecting a friend request | The action performed by a user to reject a friend request from another user |
-
-### Directs
-
-| Term                     | Definition                                                       |
-| ------------------------ | ---------------------------------------------------------------- |
-| Sending a direct message | The action performed by a user to send a message to another user |
-| Joining a direct session | The action performed by a user to enter a multimedia session related to a direct       |
+| Sending a friendship message | The action performed by a user to send a message to another user |
+| Joining a friendship session | The action performed by a user to enter a multimedia session related to a friendship       |
 
 ### Servers
 

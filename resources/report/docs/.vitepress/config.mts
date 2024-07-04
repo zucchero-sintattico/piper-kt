@@ -49,7 +49,7 @@ const config = defineConfig({
             text: 'Design', collapsed: false,
             items: [
               { text: 'Event Storming', link: '/03-design/03-01-event-storming', },
-              { text: 'Domain', link: '/03-design/03-02-domain', },
+              { text: 'Bounded Context', link: '/03-design/03-02-bounded-context', },
               { text: 'Architecture', link: '/03-design/03-03-architecture', },
               { text: 'Microservices', link: '/03-design/03-04-microservices', },
             ]
