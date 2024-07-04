@@ -32,6 +32,8 @@ The `Multimedia` bounded context is responsible for managing multimedia sessions
 
 ![Multimedia Context](./img/bc/ddd-bc-multimedia.jpg)
 
+----
+
 # Context Map
 
 Each bounded context is isolated, they communicate through events following the **Published Language** pattern. The following diagram shows the context map of the system.
