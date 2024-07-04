@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-07-04T13:17:04.112Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15" etag="sA7Uhq2T518Tvaszax7T" version="24.6.4" type="github" pages="3">
+<mxfile host="app.diagrams.net" modified="2024-07-04T13:18:18.465Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15" etag="ZKlxDRO8EtXlxiPkFXYb" version="24.6.4" type="github" pages="3">
   <diagram name="Bounded Contexts" id="tkQB1AEBgv_wcHBzLUIK">
     <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -426,7 +426,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="AqJFbQu42GaVkglu30o9" name="Architecture">
-    <mxGraphModel dx="3260" dy="566" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2336" pageHeight="1654" math="0" shadow="0">
+    <mxGraphModel dx="2952" dy="378" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2336" pageHeight="1654" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1259,14 +1259,14 @@
         <mxCell id="VOkAzR9zTyIHH_q10Dvh-295" value="Application" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1" vertex="1" parent="1">
           <mxGeometry x="820" y="965" width="80" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="VOkAzR9zTyIHH_q10Dvh-296" value="API" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1" vertex="1" parent="1">
-          <mxGeometry x="840" y="904" width="40" height="30" as="geometry" />
+        <mxCell id="VOkAzR9zTyIHH_q10Dvh-296" value="Interfaces" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="820" y="904" width="80" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="VOkAzR9zTyIHH_q10Dvh-297" value="Message" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1;rotation=90;" vertex="1" parent="1">
-          <mxGeometry x="710" y="1019.37" width="70" height="30" as="geometry" />
+        <mxCell id="VOkAzR9zTyIHH_q10Dvh-297" value="Events" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1;rotation=90;" vertex="1" parent="1">
+          <mxGeometry x="715" y="1019.37" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="VOkAzR9zTyIHH_q10Dvh-298" value="Storage" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1;rotation=-90;" vertex="1" parent="1">
-          <mxGeometry x="940" y="1020" width="70" height="30" as="geometry" />
+        <mxCell id="VOkAzR9zTyIHH_q10Dvh-298" value="Persistance" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1;rotation=-90;" vertex="1" parent="1">
+          <mxGeometry x="930" y="1020" width="90" height="30" as="geometry" />
         </mxCell>
         <mxCell id="VOkAzR9zTyIHH_q10Dvh-305" value="commons&lt;div&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;«&lt;i&gt;multiplatform&lt;/i&gt;»&lt;/span&gt;&lt;br style=&quot;font-weight: 400;&quot;&gt;&lt;/div&gt;" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;" vertex="1" parent="1">
           <mxGeometry x="1830" y="945" width="110" height="70" as="geometry" />
