@@ -14,9 +14,11 @@ In our case, we have identified the following non-functional properties:
     3. Possibility of redundancy of critical components to ensure system availability.
 2. **Scalability & Performance**:
     1. Ability of **horizontal scalability** to handle increasing operational load.
-3. **Reliability & Continuity**:
+3. **Deployability**:
+    1. Automated deployment of new software releases.
+4. **Reliability & Continuity**:
     1. Restore the parts of the system that were affected by a failure.
-4. **Observability**:
+5. **Observability**:
     1. Monitoring of system performance.
     2. Graphical representation of system performance.
 
@@ -60,6 +62,16 @@ Also for some of these non-functional property, we have identified some scenario
 - **Response Measure:** Service is restored within 10 seconds.
 - **Environment:** Normal runtime operations.
 - **Artifact:** Entire system.
+
+### Deployability Scenario
+
+#### Deployment Automation
+- **Stimulus:** A new software release is ready for deployment.
+- **Stimulus Source:** Development team.
+- **Response:** The system automatically deploys the new release to the production environment.
+- **Response Measure:** Deployment is completed within 30 minutes since the release is ready without manual intervention.
+- **Environment:** Production environment.
+- **Artifact:** Deployment system.
 
 ### Scalability and Performance Scenario
 
