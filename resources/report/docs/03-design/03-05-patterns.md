@@ -2,10 +2,6 @@
 
 In this section, we will discuss some of the common patterns that we used in our microservices architecture.
 
-## CQRS
-
-The Command Query Responsibility Segregation (CQRS) pattern is used to separate the read and write operations of a system. This pattern involves using different models for reading and writing data, allowing each model to be optimized for its specific use case.
-
 ## Communication Patterns
 
 ### Api Gateway
