@@ -26,6 +26,13 @@ Here a module view the layers that compose each microservice architecture:
 
 ![Microservices Layers](./img/microservice/layered-architecture.jpg)
 
+### Architecture Governance
+
+To ensure that the clean architecture constraints are respected during the development phase, we have defined a set of rules that must be followed by the developers.
+
+This rules will be represented by a list of architectural tests that will be executed during the CI/CD pipeline. 
+To see how the architectural tests are defined, please refer to the [Test-Implementation](../04-implementation/04-02-testing.md) section.
+
 ## Users Microservice
 
 ### Behavior
