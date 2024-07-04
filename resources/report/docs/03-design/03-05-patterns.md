@@ -2,6 +2,10 @@
 
 In this section, we will discuss some of the common patterns that we used in our microservices architecture.
 
+## CQRS
+
+The Command Query Responsibility Segregation (CQRS) pattern is used to separate the read and write operations of a system. This pattern involves using different models for reading and writing data, allowing each model to be optimized for its specific use case.
+
 ## Communication Patterns
 
 ### Api Gateway
@@ -44,6 +48,16 @@ It involves:
 This pattern allows services to be deployed and scaled independently of each other, making it easier to manage and scale the system, allowing an automatic failover and load balancing.
 
 ![Service Discovery](./img/patterns/server-side-service-discovery.png)
+
+### Configurable Service
+
+The Configurable Service pattern is used to configure services with all the necessary information at runtime.
+This pattern allows to create services that can be easily adapted to different environments and configurations without having to make changes to the code.
+Services are shipped with a default configuration that can be overridden by environment variables or configuration files during the deployment process, in a **push-based externalized configuration**.
+
+<div align="center">
+    <img src="./img/patterns/configuration-pattern.jpg" alt="Configurable Service">
+</div>
 
 ---
 
