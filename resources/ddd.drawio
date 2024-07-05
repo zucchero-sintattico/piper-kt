@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-07-05T09:38:37.327Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="37BO8uQZJ4dc427a5Ja3" version="24.6.4" type="github" pages="4">
+<mxfile host="app.diagrams.net" modified="2024-07-05T09:45:39.046Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="SC52shvmABhr6Zz9iVLA" version="24.6.4" type="github" pages="4">
   <diagram name="Bounded Contexts" id="tkQB1AEBgv_wcHBzLUIK">
     <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -1973,8 +1973,8 @@
             <mxPoint x="205" y="1245" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="iGQHyWb77Eqnci2tiJyf-8" value="sendFriendRequest()" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="170" y="1168.8899999999999" width="140" height="30" as="geometry" />
+        <mxCell id="iGQHyWb77Eqnci2tiJyf-8" value="createServer()" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="1168.8899999999999" width="100" height="30" as="geometry" />
         </mxCell>
         <mxCell id="iGQHyWb77Eqnci2tiJyf-9" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="iGQHyWb77Eqnci2tiJyf-10" target="iGQHyWb77Eqnci2tiJyf-29">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -1982,8 +1982,8 @@
             <mxPoint x="358" y="1269" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="iGQHyWb77Eqnci2tiJyf-10" value="acceptFriendRequest()" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="165" y="1220" width="150" height="30" as="geometry" />
+        <mxCell id="iGQHyWb77Eqnci2tiJyf-10" value="joinServer()" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="195" y="1220" width="90" height="30" as="geometry" />
         </mxCell>
         <mxCell id="iGQHyWb77Eqnci2tiJyf-11" value="listen" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="iGQHyWb77Eqnci2tiJyf-25" target="iGQHyWb77Eqnci2tiJyf-26">
           <mxGeometry x="-0.006" relative="1" as="geometry">
@@ -1999,21 +1999,18 @@
           <mxGeometry x="545" y="1205" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="iGQHyWb77Eqnci2tiJyf-14" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="-102.62" y="1107.5" width="226.38" height="275" as="geometry" />
+          <mxGeometry x="-102.07" y="1080" width="226.38" height="336.25" as="geometry" />
         </mxCell>
         <mxCell id="iGQHyWb77Eqnci2tiJyf-15" value="User Stories" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="-36.24000000000001" y="1107.5" width="90" height="30" as="geometry" />
+          <mxGeometry x="-35.69000000000001" y="1080" width="90" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="iGQHyWb77Eqnci2tiJyf-16" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1.003;exitY=0.502;exitDx=0;exitDy=0;exitPerimeter=0;entryX=-0.017;entryY=0.404;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="iGQHyWb77Eqnci2tiJyf-17">
+        <mxCell id="iGQHyWb77Eqnci2tiJyf-16" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1.003;exitY=0.502;exitDx=0;exitDy=0;exitPerimeter=0;entryX=-0.022;entryY=0.468;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="iGQHyWb77Eqnci2tiJyf-17" target="iGQHyWb77Eqnci2tiJyf-8">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="144.9999999999999" y="1183.5099999999998" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="iGQHyWb77Eqnci2tiJyf-17" value="&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;font-size: 9px;&quot;&gt;&lt;b&gt;Send Friend Request&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&amp;nbsp; &amp;nbsp;&lt;span style=&quot;background-color: initial; text-align: center;&quot;&gt;As a user,&lt;/span&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&amp;nbsp; &amp;nbsp; I want to send and receive messages with my friends,&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&amp;nbsp; &amp;nbsp; so that we can communicate through the application.&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;rounded=0;shadow=0;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="-124.43" y="1137.5" width="270" height="70" as="geometry" />
-        </mxCell>
-        <mxCell id="iGQHyWb77Eqnci2tiJyf-18" value="&lt;div style=&quot;font-size: 9px;&quot;&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;text-align: left; background-color: initial;&quot;&gt;&lt;b&gt;Accept Friend Request&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;As a user,&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;I want to accept friend requests,&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;so that I can manage my connections and&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;decide who I want to be friends with.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;rounded=0;shadow=0;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="-84.43" y="1217.5" width="190" height="70" as="geometry" />
+        <mxCell id="iGQHyWb77Eqnci2tiJyf-17" value="&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;font-size: 9px;&quot;&gt;&lt;div style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Create Server&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;As a user,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;I want to create a new server,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;so that I can have a dedicated space&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;for group interactions.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;rounded=0;shadow=0;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="-78.88000000000001" y="1107.5" width="180" height="70" as="geometry" />
         </mxCell>
         <mxCell id="iGQHyWb77Eqnci2tiJyf-19" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
           <mxGeometry x="355" y="1220" width="10" height="10" as="geometry" />
@@ -2042,25 +2039,24 @@
         <mxCell id="iGQHyWb77Eqnci2tiJyf-27" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
           <mxGeometry x="433" y="1240" width="10" height="10" as="geometry" />
         </mxCell>
-        <mxCell id="iGQHyWb77Eqnci2tiJyf-28" value="&lt;div style=&quot;font-size: 9px;&quot;&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;text-align: left; background-color: initial;&quot;&gt;&lt;b&gt;Reject Friend Request&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;As a user,&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;I want to reject friend requests,&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;so that I can manage my connections and&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;decide who I want to be friends with.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;rounded=0;shadow=0;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="-84.43" y="1297.5" width="190" height="70" as="geometry" />
-        </mxCell>
         <mxCell id="iGQHyWb77Eqnci2tiJyf-29" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
           <mxGeometry x="345" y="1240" width="10" height="10" as="geometry" />
         </mxCell>
-        <mxCell id="iGQHyWb77Eqnci2tiJyf-30" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.007;entryY=0.513;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="iGQHyWb77Eqnci2tiJyf-18">
+        <mxCell id="iGQHyWb77Eqnci2tiJyf-30" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.013;entryY=0.533;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1.005;exitY=0.46;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="iGQHyWb77Eqnci2tiJyf-38" target="iGQHyWb77Eqnci2tiJyf-10">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="143.42999999999995" y="1237.8900000000003" as="targetPoint" />
+            <mxPoint x="105.56999999999994" y="1242.0532891765768" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="iGQHyWb77Eqnci2tiJyf-31" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="iGQHyWb77Eqnci2tiJyf-32" target="iGQHyWb77Eqnci2tiJyf-20">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="iGQHyWb77Eqnci2tiJyf-32" value="acceptFriendRequest()" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;dashed=1;" vertex="1" parent="1">
+        <mxCell id="iGQHyWb77Eqnci2tiJyf-32" value="removeServerMember()" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;dashed=1;" vertex="1" parent="1">
           <mxGeometry x="165" y="1270" width="150" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="iGQHyWb77Eqnci2tiJyf-33" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.009;entryY=0.58;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.997;exitY=0.463;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="iGQHyWb77Eqnci2tiJyf-28">
+        <mxCell id="iGQHyWb77Eqnci2tiJyf-33" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.003;entryY=0.456;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1.009;exitY=0.481;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="iGQHyWb77Eqnci2tiJyf-39" target="iGQHyWb77Eqnci2tiJyf-32">
           <mxGeometry relative="1" as="geometry">
+            <mxPoint x="105" y="1329.91" as="sourcePoint" />
             <mxPoint x="141.02999999999986" y="1289.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -2074,6 +2070,27 @@
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="165.0000000000001" y="914.1800000000001" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="iGQHyWb77Eqnci2tiJyf-38" value="&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;font-size: 9px;&quot;&gt;&lt;div style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Join Server&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;As a user,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;I want to join an existing server,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;so that I can participate&amp;nbsp;in its activities&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;and discussions.&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;rounded=0;shadow=0;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="-78.88000000000001" y="1185.5" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="iGQHyWb77Eqnci2tiJyf-39" value="&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;font-size: 9px;&quot;&gt;&lt;div style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Remove Server Member&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;As a server admin,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;I want to remove members from the server,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;so that I can manage who has access&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;to the server.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;rounded=0;shadow=0;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="-88.88000000000001" y="1262.5" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="iGQHyWb77Eqnci2tiJyf-40" value="&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;font-size: 9px;&quot;&gt;&lt;div style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Modify Server Setting&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;As a server admin,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;I want to modify server settings,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;so that I can customize the server&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;rounded=0;shadow=0;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="-73.88000000000001" y="1342.5" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="iGQHyWb77Eqnci2tiJyf-44" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;exitX=1;exitY=0.472;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="iGQHyWb77Eqnci2tiJyf-41" target="iGQHyWb77Eqnci2tiJyf-43">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iGQHyWb77Eqnci2tiJyf-41" value="updateServer()" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="1318" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="iGQHyWb77Eqnci2tiJyf-42" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.008;entryY=0.6;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.999;exitY=0.472;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="iGQHyWb77Eqnci2tiJyf-40" target="iGQHyWb77Eqnci2tiJyf-41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iGQHyWb77Eqnci2tiJyf-43" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="366" y="1277" width="10" height="10" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
