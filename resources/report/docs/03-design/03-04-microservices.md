@@ -64,6 +64,8 @@ Microservice responsible for managing multimedia sessions used to make video/aud
 
 ## Notifications Microservice
 
+![Notifications Microservice](./img/microservice/notifications-service-api.jpg)
+
 This microservice, as mentioned before, is a "support" microservice, that is used to push notifications to the clients and keep them updated on the status of the system.
 
 ### Behavior
