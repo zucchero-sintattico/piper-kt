@@ -74,7 +74,7 @@ class FriendshipServiceFeatureTest : BasicFriendshipServiceTest() {
                 MessageFactory.createMessage(request.from, "Hello"),
                 MessageFactory.createMessage(request.to, "Hi")
             )
-        friendship.directMessages.addAll(fakeMessages)
+        friendship.messages.addAll(fakeMessages)
         whenever(mockedFriendshipRepository.findByMembers(any(), any())).thenReturn(friendship)
         service.getMessages(
             FriendshipQuery.GetMessages.Request(

@@ -51,12 +51,12 @@ class FriendshipRepositoryImplTest(private val friendshipRepository: FriendshipR
         val friendship = FriendshipFactory.createFriendship("alice", "bob")
         friendshipRepository.save(friendship)
         friendship.addMessage(
-            directMessage = MessageFactory.createMessage(sender = "alice", content = "Hello, Bob!")
+            message = MessageFactory.createMessage(sender = "alice", content = "Hello, Bob!")
         )
         friendshipRepository.update(friendship)
         friendshipRepository.findByMembers("alice", "bob")?.let {
-            it.directMessages.size shouldBe 1
-            it.directMessages[0].content shouldBe "Hello, Bob!"
+            it.messages.size shouldBe 1
+            it.messages[0].content shouldBe "Hello, Bob!"
         }
     }
 }

@@ -5,7 +5,7 @@ import piperkt.common.ddd.AggregateRoot
 class Friendship(
     id: FriendshipId = FriendshipId(),
     val users: Set<String> = mutableSetOf(),
-    val directMessages: MutableList<DirectMessage> = mutableListOf(),
+    val messages: MutableList<Message> = mutableListOf(),
 ) : AggregateRoot<FriendshipId>(id) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -13,7 +13,7 @@ class Friendship(
         if (!super.equals(other)) return false
 
         if (users != other.users) return false
-        if (directMessages != other.directMessages) return false
+        if (messages != other.messages) return false
 
         return true
     }
@@ -21,12 +21,12 @@ class Friendship(
     override fun hashCode(): Int {
         var result = super.hashCode()
         result = 31 * result + users.hashCode()
-        result = 31 * result + directMessages.hashCode()
+        result = 31 * result + messages.hashCode()
         return result
     }
 
-    fun addMessage(directMessage: DirectMessage) {
-        directMessages.add(directMessage)
+    fun addMessage(message: Message) {
+        messages.add(message)
     }
 }
 

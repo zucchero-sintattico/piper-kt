@@ -23,17 +23,10 @@ const config = defineConfig({
       {
         items: [
           { text: 'Introduction', link: '/01-introduction/01-01-introduction', },
-        ]
-      },
-      {
-        items: [
-          {
-            text: 'Requirements', collapsed: false,
+          { text: 'Deliverables', collapsed: false, 
             items: [
-              { text: 'Business requirements', link: '/02-requirements/02-01-business', },
-              { text: 'Functional requirements', link: '/02-requirements/02-02-functional', },
-              { text: 'Non functional requirements', link: '/02-requirements/02-03-non-functional', },
-              { text: 'User Stories', link: '/02-requirements/02-04-user-stories', },
+              { text: 'Glossary', link: '/deliverables/d1-glossary', },
+              { text: 'Domain Model', link: '/deliverables/d2-domain-model', },
             ]
           },
         ]
@@ -41,12 +34,25 @@ const config = defineConfig({
       {
         items: [
           {
-            text: 'Design', collapsed: false, link: "/03-design/03-00-glossary",
+            text: 'Analysis', collapsed: false,
             items: [
-              { text: 'Knowledge Crunching', link: '/03-design/03-01-knowledge-crunching', },
-              { text: 'Domain', link: '/03-design/03-02-domain', },
+              { text: 'Business requirements', link: '/02-analysis/02-01-business', },
+              { text: 'Functional requirements', link: '/02-analysis/02-02-functional', },
+              { text: 'Non functional requirements', link: '/02-analysis/02-03-non-functional', },
+            ]
+          },
+        ]
+      },
+      {
+        items: [
+          {
+            text: 'Design', collapsed: false,
+            items: [
+              { text: 'Event Storming', link: '/03-design/03-01-event-storming', },
+              { text: 'Bounded Contexts', link: '/03-design/03-02-bounded-contexts', },
               { text: 'Architecture', link: '/03-design/03-03-architecture', },
               { text: 'Microservices', link: '/03-design/03-04-microservices', },
+              { text: 'Patterns', link: '/03-design/03-05-patterns', },
             ]
           },
         ]
