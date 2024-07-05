@@ -191,4 +191,69 @@ Feature: User Registration and Authentication
     And I am not logged in
     When I make a LOGIN request with valid credentials
     Then I should be logged in to the system
+
+Feature: Channel Management
+
+  Scenario: Admin creates a channel in a server
+    Given I am an authenticated user
+    And I have created a server
+    When I create a new channel in a server
+    Then I should be able to access the channel
+
+  Scenario: Admin removes a channel
+    Given I am an authenticated user
+    And I have created a server
+    And there is a channel in the server
+    When I remove the channel
+    Then the channel should be removed from the server
+
+  Scenario: User sends a message in a text channel
+    Given I am an authenticated user
+    And I have created a server
+    And there is a text channel in the server
+    When I send a message in a text channel
+    Then the message should be displayed in the channel
+
+Feature: Server Management
+
+  Scenario: User creates a new server
+    Given I am the logged user
+    When I create a new server
+    Then I should be able to access the server as owner
+
+  Scenario: User join a server
+    Given I am the logged user
+    And another user has a server
+    When I join the server
+    Then I should be able to access the server as member
+
+Feature: Interactions with Friends
+
+  Scenario: User sends a message to a friend
+    Given I am logged user
+    And I have a friend
+    When I send a message to the friend
+    Then the friend should receive the message
+
+Feature: Friendship System
+
+  Scenario: User sends a friend request
+    Given I am a logged user
+    And another user exists
+    When I send a friend request to the other user
+    Then the other user should have a pending friend request
+
+  Scenario: User accepts a friend request
+    Given I am a logged user
+    And another user exists
+    And I have a pending friend request from the other user
+    When I accept the friend request
+    Then the other user should be added to my friend list
+
+  Scenario: User rejects a friend request
+    Given I am a logged user
+    And another user exists
+    And I have a pending friend request from the other user
+    When I reject the friend request
+    Then the other user should not be added to my friend list
 ```
