@@ -1,3 +1,11 @@
+## [9.3.0](https://github.com/zucchero-sintattico/piper-kt/compare/v9.2.0...v9.3.0) (2024-07-05)
+
+
+### Features
+
+* add last things ([9cc598f](https://github.com/zucchero-sintattico/piper-kt/commit/9cc598f5b5013862079b964fb7829c0fb4edfc78))
+* trigger deploy ([29e6517](https://github.com/zucchero-sintattico/piper-kt/commit/29e6517507f9fca2835c0ba86c2ae1f47d53d7ed))
+
 ## [9.2.0](https://github.com/zucchero-sintattico/piper-kt/compare/v9.1.4...v9.2.0) (2024-07-05)
 
 
