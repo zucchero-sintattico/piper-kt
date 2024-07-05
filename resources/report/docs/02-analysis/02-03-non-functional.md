@@ -147,7 +147,7 @@ Also for some of these non-functional property, we have identified some scenario
 #### Data Encryption
 - **Stimulus:** A user submits a password for login.
 - **Stimulus Source:** User login request.
-- **Response:** The system encrypts the password before transmission.
-- **Response Measure:** The password is encrypted using an advanced encryption algorithm (AES-256).
+- **Response:** The system encrypts the password before storing it.
+- **Response Measure:** The password is encrypted using an advanced encryption algorithm.
 - **Environment:** Normal runtime operations.
 - **Artifact:** Credential management system.
