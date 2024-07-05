@@ -16,7 +16,7 @@ You can find the graphical representation about this process applied to each mic
 
 Microservice responsible for user management and all user-related operations, including:
 
-- Creation of users in the system (Sign up)
+- Creation of users in the system (Register)
 - Authentication of users in the system (Login)
 - Changes to the profile of individual users in the system
 
@@ -63,6 +63,8 @@ Microservice responsible for managing multimedia sessions used to make video/aud
 - Managing audio and video streams
 
 ## Notifications Microservice
+
+This microservice, as mentioned before, is a "support" microservice, that is used to push notifications to the clients and keep them updated on the status of the system.
 
 ### Behavior
 
