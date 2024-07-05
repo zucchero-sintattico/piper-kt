@@ -185,3 +185,5 @@ Project Link: [https://github.com/zucchero-sintattico/piperchat](https://github.
 [license-shield]: https://img.shields.io/github/license/zucchero-sintattico/piper-kt.svg?style=flat-square
 [license-url]: https://github.com/zucchero-sintattico/piper-kt/blob/master/LICENSE.txt
 [product-screenshot]: images/screenshot.png
+
+Made with ❤️ in Italy
