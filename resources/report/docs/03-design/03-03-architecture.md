@@ -1,20 +1,29 @@
 # Architecture Design
 
+Once we identified the bounded contexts our domain, we can proceed with the design of the system architecture.
+
+We choose to design the architecture of the our system based on the microservices architecture pattern, in order to brake down the entire complexity into smaller parts, with high cohesion, but loosely coupled.
+
+Our choice was to map each bounded context to a microservice, in order to have a clear separation of concerns and to have a more maintainable and scalable system.
+The resulting microservices are:
+- `frontend-service`: responsible for serving the frontend application.
+- `multimedia-service`: responsible for managing sessions.
+- `servers-service`: responsible for managing servers and channels.
+- `users-service`: responsible for managing users, authentication and authorization.
+- `friendships-service`: responsible for managing friendships between users and their messages.
+- `notifications-service`: responsible for managing notifications directed to users.
+
+As you may notice, in the previous list, there are two more microservices, `notifications-service` and `frontend-service`, that are not directly related to the bounded contexts are necessary to provide a complete system.
+
 ## Component & Connector View
 
-The architecture of the system is based on the microservices architecture pattern, in order to brake down the entire complexity into smaller parts, with high cohesion, but loosely coupled.
-In addition, each microservice, if necessary, has a database, which it can access exclusively.
+In this section you can find the component and connector view of the system, in order to give a clear view of the run-time system components and how they interact with each other.
+
+### Database per Microservice
+Each microservice, if necessary, has a database, which it can access exclusively.
 
 ![Microservices Architecture](./img/architecture/microservice-db.jpg)
 
-Here is the list of microservices that compose the system:
-
-- `frontend-service`: responsible for serving the frontend application.
-- `friendships-service`: responsible for managing friendships between users and their messages.
-- `multimedia-service`: responsible for managing sessions.
-- `notifications-service`: responsible for managing notifications directed to users.
-- `servers-service`: responsible for managing servers and channels.
-- `users-service`: responsible for managing users, authentication and authorization.
 
 ### Interactions
 
