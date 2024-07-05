@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-07-05T09:37:46.784Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="Qr91qwJH5gkb6v2QsTTs" version="24.6.4" type="github" pages="4">
+<mxfile host="app.diagrams.net" modified="2024-07-05T09:38:37.327Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="37BO8uQZJ4dc427a5Ja3" version="24.6.4" type="github" pages="4">
   <diagram name="Bounded Contexts" id="tkQB1AEBgv_wcHBzLUIK">
     <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -1732,7 +1732,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="3fxWDmFdm_gYAhk-KYIW" name="API">
-    <mxGraphModel dx="1469" dy="604" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1540" dy="674" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1884,21 +1884,21 @@
           <mxGeometry x="545" y="815" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="1PKGgVeWlgAyHXWBAuQd-14" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="-80" y="715" width="226.38" height="345" as="geometry" />
+          <mxGeometry x="-83.88" y="682.5" width="226.38" height="345" as="geometry" />
         </mxCell>
         <mxCell id="1PKGgVeWlgAyHXWBAuQd-15" value="User Stories" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="-13.620000000000005" y="715" width="90" height="30" as="geometry" />
+          <mxGeometry x="-17.500000000000004" y="682.5" width="90" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="1PKGgVeWlgAyHXWBAuQd-16" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1.003;exitY=0.502;exitDx=0;exitDy=0;exitPerimeter=0;entryX=-0.017;entryY=0.404;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="1PKGgVeWlgAyHXWBAuQd-17" target="1PKGgVeWlgAyHXWBAuQd-8" edge="1">
+        <mxCell id="1PKGgVeWlgAyHXWBAuQd-16" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1.003;exitY=0.502;exitDx=0;exitDy=0;exitPerimeter=0;entryX=-0.003;entryY=0.467;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="1PKGgVeWlgAyHXWBAuQd-17" target="1PKGgVeWlgAyHXWBAuQd-8" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="155.65999999999985" y="793.4099999999999" as="targetPoint" />
+            <mxPoint x="164" y="759" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="1PKGgVeWlgAyHXWBAuQd-17" value="&lt;div style=&quot;font-size: 9px;&quot;&gt;&lt;div style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Send Friend Request&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &amp;nbsp; As a user,&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;&quot;&gt;&amp;nbsp; &amp;nbsp; I want to send friend requests to other users,&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&amp;nbsp; &amp;nbsp; so that I can connect with them and&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;add them to my friends list.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;rounded=0;shadow=0;dashed=1;" parent="1" vertex="1">
-          <mxGeometry x="-71.81" y="745" width="210" height="70" as="geometry" />
+          <mxGeometry x="-75.69" y="712.5" width="210" height="70" as="geometry" />
         </mxCell>
         <mxCell id="1PKGgVeWlgAyHXWBAuQd-18" value="&lt;div style=&quot;font-size: 9px;&quot;&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;text-align: left; background-color: initial;&quot;&gt;&lt;b&gt;Accept Friend Request&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;As a user,&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;I want to accept friend requests,&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;so that I can manage my connections and&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;decide who I want to be friends with.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;rounded=0;shadow=0;dashed=1;" parent="1" vertex="1">
-          <mxGeometry x="-61.81" y="825" width="190" height="70" as="geometry" />
+          <mxGeometry x="-65.69" y="792.5" width="190" height="70" as="geometry" />
         </mxCell>
         <mxCell id="1PKGgVeWlgAyHXWBAuQd-20" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="355" y="830" width="10" height="10" as="geometry" />
@@ -1928,14 +1928,14 @@
           <mxGeometry x="433" y="850" width="10" height="10" as="geometry" />
         </mxCell>
         <mxCell id="yvnGfF2UkgyDqXZXX_do-2" value="&lt;div style=&quot;font-size: 9px;&quot;&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;text-align: left; background-color: initial;&quot;&gt;&lt;b&gt;Reject Friend Request&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;As a user,&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;I want to reject friend requests,&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;so that I can manage my connections and&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;decide who I want to be friends with.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;rounded=0;shadow=0;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="-61.81" y="905" width="190" height="70" as="geometry" />
+          <mxGeometry x="-65.69" y="872.5" width="190" height="70" as="geometry" />
         </mxCell>
         <mxCell id="yvnGfF2UkgyDqXZXX_do-4" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
           <mxGeometry x="345" y="850" width="10" height="10" as="geometry" />
         </mxCell>
-        <mxCell id="yvnGfF2UkgyDqXZXX_do-5" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.007;entryY=0.513;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="1PKGgVeWlgAyHXWBAuQd-18" target="1PKGgVeWlgAyHXWBAuQd-10">
+        <mxCell id="yvnGfF2UkgyDqXZXX_do-5" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.006;entryY=0.51;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="1PKGgVeWlgAyHXWBAuQd-18" target="1PKGgVeWlgAyHXWBAuQd-10">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="154.4000000000001" y="844.6100000000001" as="targetPoint" />
+            <mxPoint x="162.16999999999996" y="812.8899999999999" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="yvnGfF2UkgyDqXZXX_do-8" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="yvnGfF2UkgyDqXZXX_do-7" target="1PKGgVeWlgAyHXWBAuQd-21">
@@ -1944,8 +1944,10 @@
         <mxCell id="yvnGfF2UkgyDqXZXX_do-7" value="acceptFriendRequest()" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;dashed=1;" vertex="1" parent="1">
           <mxGeometry x="165" y="880" width="150" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="yvnGfF2UkgyDqXZXX_do-9" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.009;entryY=0.58;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.997;exitY=0.463;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="yvnGfF2UkgyDqXZXX_do-2" target="yvnGfF2UkgyDqXZXX_do-7">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="yvnGfF2UkgyDqXZXX_do-9" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.015;entryY=0.476;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.997;exitY=0.463;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="yvnGfF2UkgyDqXZXX_do-2" target="yvnGfF2UkgyDqXZXX_do-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="159.76999999999987" y="864.8999999999999" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="iGQHyWb77Eqnci2tiJyf-1" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
           <mxGeometry x="325" y="1080" width="330" height="330" as="geometry" />
@@ -2063,13 +2065,15 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="iGQHyWb77Eqnci2tiJyf-35" value="&lt;div style=&quot;font-size: 9px;&quot;&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;text-align: left; background-color: initial;&quot;&gt;&lt;b&gt;Messaging Friends&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;As a user,&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;I want to send messages to my friends,&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;so that we can communicate&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;.&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;rounded=0;shadow=0;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="-56.81" y="990" width="180" height="60" as="geometry" />
+          <mxGeometry x="-60.690000000000005" y="957.5" width="180" height="60" as="geometry" />
         </mxCell>
         <mxCell id="iGQHyWb77Eqnci2tiJyf-36" value="sendFriendMessage()" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=default;fillColor=none;dashed=1;" vertex="1" parent="1">
           <mxGeometry x="170" y="930" width="140" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="iGQHyWb77Eqnci2tiJyf-37" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.008;entryY=0.556;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.997;exitY=0.459;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="iGQHyWb77Eqnci2tiJyf-35" target="iGQHyWb77Eqnci2tiJyf-36">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="iGQHyWb77Eqnci2tiJyf-37" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.008;entryY=0.441;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.997;exitY=0.459;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="iGQHyWb77Eqnci2tiJyf-35" target="iGQHyWb77Eqnci2tiJyf-36">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="165.0000000000001" y="914.1800000000001" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
