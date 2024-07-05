@@ -16,11 +16,6 @@ Maintainability and observability is improved as the API Gateway centralizes cro
 
 ![API Gateway](./img/patterns/api-gateway.jpg)
 
-### Circuit Breaker
-
-The Circuit Breaker pattern is used to prevent cascading failures in a distributed system. It monitors the health of services and opens the circuit when a service is unavailable or slow, allowing requests to fail fast with a specific error message on what went wrong.
-This allows clients to handle failures gracefully and recover when the service becomes available again.
-
 ### Event Publish/Subscribe
 
 The Event Publish/Subscribe pattern is used to decouple services by allowing them to communicate through events. This pattern is useful when services need to be notified of changes in other services without having to make direct calls to them.
@@ -31,6 +26,8 @@ It enforces flexibility, as the pattern supports a dynamic and extensible archit
 In terms of performance, the Publish-Subscribe pattern improves responsiveness by enabling asynchronous communication. Producers can publish events and continue their operations without waiting for consumers to process those events. This non-blocking interaction helps to maintain system performance even during high load periods.
 
 Reliability is enhanced through redundancy and fault tolerance. Events can be persisted and replayed in case of failures, ensuring that important information is not lost and that the system can recover gracefully from disruptions.
+
+![Event Publish/Subscribe](./img/patterns/pub-sub.jpg)
 
 ---
 
