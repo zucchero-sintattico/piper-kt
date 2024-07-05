@@ -1,3 +1,17 @@
+## [9.2.0](https://github.com/zucchero-sintattico/piper-kt/compare/v9.1.4...v9.2.0) (2024-07-05)
+
+
+### Features
+
+* circuit breaker and service discovery ([483347e](https://github.com/zucchero-sintattico/piper-kt/commit/483347ed915d788e0907651bded2fddc93468bc5))
+* component & connectors view ([dbf96e0](https://github.com/zucchero-sintattico/piper-kt/commit/dbf96e04c0c39c5769be6b718569a929d9b82af8))
+* configurable service & init CQRS ([bec0ebf](https://github.com/zucchero-sintattico/piper-kt/commit/bec0ebf6a706d3cfcb2b1508370a51031ccc4561))
+* discuss non functional properties for patterns ([27d8b15](https://github.com/zucchero-sintattico/piper-kt/commit/27d8b155b05e77c6304c6b5cc9d1664d62a144a8))
+* indent user stories and add quality attributes ([543b6f6](https://github.com/zucchero-sintattico/piper-kt/commit/543b6f699dc3976d49b1ba2d8244d48cde18b6a6))
+* module view ([193955c](https://github.com/zucchero-sintattico/piper-kt/commit/193955c6cd4048ceb821f0a465f1a85cdc7c9a4a))
+* module view & init patterns ([4cc1f34](https://github.com/zucchero-sintattico/piper-kt/commit/4cc1f34b48149f8f31f8716f32104cad0831c97b))
+* observability patterns ([baaf720](https://github.com/zucchero-sintattico/piper-kt/commit/baaf720dc227b05fc9a041da08b7e56d8369902f))
+
 ## [9.1.4](https://github.com/zucchero-sintattico/piper-kt/compare/v9.1.3...v9.1.4) (2024-06-23)
 
 
