@@ -76,7 +76,7 @@ These user stories are written from the perspective of the end-users and describ
 ### Interactions with Friends
 
 1. **Messaging Friends**\
-    As a **user**,\
+    As a **user with friends**,\
     I want to send and receive messages with my friends,\
     so that we can communicate through the application.
 
@@ -86,7 +86,7 @@ These user stories are written from the perspective of the end-users and describ
     so that I know when I have a new message from a friend.
 
 3. **Join Friend's Session**\
-    As a **user**,\
+    As a **user with friends**,\
     I want to join a session with a friend,\
     so that we can interact in real-time within the same session.
 
@@ -113,7 +113,7 @@ These user stories are written from the perspective of the end-users and describ
     so that I can customize the server to meet the needs of its members.
 
 ### Channel Management
-
+ 
 1. **Create Channels [Server Admin]**\
     As a **server admin**,\
     I want to create text or multimedia channels,\
@@ -125,31 +125,36 @@ These user stories are written from the perspective of the end-users and describ
     so that I can manage and declutter the server by removing unnecessary channels.
 
 3. **Text Channel Messaging**\
-    As a **user**,\
+    As a **server member**,\
     I want to send and receive messages in text channels,\
     so that I can communicate with others in the server.
 
 4. **Text Channel Message Notifications**\
-    As a **user**,\
+    As a **server member**,\
     I want to receive notifications for new messages in text channels,\
     so that I am aware of new conversations and updates.
 
 5. **Access Multimedia Channels**\
-    As a **user**,\
+    As a **server member**,\
     I want to access multimedia channels,\
     so that I can join and participate in multimedia sessions.
 
 ### Session Management
 
-1. **Communicate in Session**\
+1. **Join Session**
     As a **user**,\
-    I want to communicate with other participants in the same session,\
-    so that we can interact and collaborate in real-time.
+    I want to join multimedia session,\
+    so that I can start videochat.
+
+2. **Leave Session**
+    As a **session participant**,\
+    I want to leave multimedia session,\
+    so that I can stop videochat.
 
 2. **Microphone and Camera Control**\
-    As a **user**,\
-    I want to turn on and off my microphone and camera,\
-    so that I can control my audio and video presence in a session.
+    As a **session participant**, \
+    I want to manage my audio/video,\
+    so that I can control what others see.
 
 
 ## Feature Specifications (BDD)
