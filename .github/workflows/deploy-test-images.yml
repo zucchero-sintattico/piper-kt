@@ -23,7 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Produce Dockerfile for ${{ matrix.service }}
-        uses: DanySK/build-check-deploy-gradle-action@3.5.6
+        uses: DanySK/build-check-deploy-gradle-action@3.5.7
         with:
           should-run-codecov: false
           build-command: "./gradlew :${{ matrix.service }}:buildLayers && ./gradlew :${{ matrix.service }}:dockerfile"
