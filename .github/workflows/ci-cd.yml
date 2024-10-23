@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.1
+        uses: actions/checkout@v4.2.2
       - name: Build with Gradle
         uses: DanySK/build-check-deploy-gradle-action@3.5.11
         with:
@@ -41,7 +41,7 @@ jobs:
       cancel-in-progress: true
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.1
+        uses: actions/checkout@v4.2.2
       - uses: DanySK/build-check-deploy-gradle-action@3.5.11
         with:
           java-version: ${{ matrix.java-version }}
