@@ -25,7 +25,7 @@ mockito-kotlin = "5.4.0"
 cucumber-bom = { module = "io.cucumber:cucumber-bom", version.ref = "cucumber-bom" }
 cucumber-java = { module = "io.cucumber:cucumber-java" }
 cucumber-junit = { module = "io.cucumber:cucumber-junit-platform-engine" }
-jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version = "2.18.0" }
+jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version = "2.18.1" }
 jbcrypt = { module = "org.mindrot:jbcrypt", version = "0.4" }
 junit-platform = { module = "org.junit.platform:junit-platform-suite", version.ref = "junit-platform" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
