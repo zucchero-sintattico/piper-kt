@@ -30,7 +30,7 @@
     "@vitejs/plugin-vue-jsx": "^4.0.0",
     "@vue/eslint-config-prettier": "^10.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
-    "@vue/tsconfig": "^0.5.1",
+    "@vue/tsconfig": "^0.6.0",
     "eslint-plugin-vue": "^9.26.0",
     "npm-run-all2": "^7.0.0",
     "sass": "1.80.6",
