@@ -81,7 +81,7 @@ jobs:
           should-run-codecov: false
           check-command: "./gradlew koverXmlReport --parallel || ./gradlew koverXmlReport --parallel"
       - name: Push coverage report
-        uses: codecov/codecov-action@v5.2.0
+        uses: codecov/codecov-action@v5.3.0
         with:
           files: ./build/reports/kover/report.xml
           verbose: true
