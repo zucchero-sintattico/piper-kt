@@ -12,7 +12,7 @@
   "dependencies": {
     "@quasar/extras": "^1.16.11",
     "axios": "^1.6.8",
-    "pinia": "^2.1.7",
+    "pinia": "^3.0.0",
     "pinia-plugin-persistedstate": "^4.0.0",
     "quasar": "^2.16.3",
     "serve": "^14.2.3",
