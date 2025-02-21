@@ -3,7 +3,7 @@
 
 [versions]
 cucumber-bom = "7.21.1"
-detekt = "1.23.7"
+detekt = "1.23.8"
 dokka = "2.0.0"
 gitSemVer = "4.0.2"
 junit-platform = "1.11.4"
