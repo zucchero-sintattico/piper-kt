@@ -32,7 +32,7 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 kotlin-stdlibJdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
 kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
-logback = { module = "ch.qos.logback:logback-classic", version = "1.5.17" }
+logback = { module = "ch.qos.logback:logback-classic", version = "1.5.18" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
 micronaut-buildtools = { module = "io.micronaut.testresources:micronaut-test-resources-build-tools", version = "2.5.4"  }
 micronaut-data-mongodb = { module = "io.micronaut.data:micronaut-data-mongodb" }
