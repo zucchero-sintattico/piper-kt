@@ -2,7 +2,7 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-cucumber-bom = "7.21.1"
+cucumber-bom = "7.22.1"
 detekt = "1.23.8"
 dokka = "2.0.0"
 gitSemVer = "4.0.2"
