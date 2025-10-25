@@ -50,7 +50,7 @@ micronaut-security = { module = "io.micronaut.security:micronaut-security" }
 micronaut-serdeJackson = { module = "io.micronaut.serde:micronaut-serde-jackson" }
 micronaut-serdeProcessor = { module = "io.micronaut.serde:micronaut-serde-processor" }
 mongodb-driver-sync = { module = "org.mongodb:mongodb-driver-sync", version = "4.11.5" }
-reactor = { module = "io.projectreactor:reactor-core", version = "3.7.5" }
+reactor = { module = "io.projectreactor:reactor-core", version = "3.7.12" }
 snakeyaml = { module = "org.yaml:snakeyaml", version = "2.4" }
 socketio = { module = "io.socket:socket.io-client", version = "2.1.2" }
 socketio-netty = { module = "com.corundumstudio.socketio:netty-socketio", version = "2.0.13" }
