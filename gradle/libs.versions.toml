@@ -34,7 +34,7 @@ konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
 kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 logback = { module = "ch.qos.logback:logback-classic", version = "1.5.20" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
-micronaut-buildtools = { module = "io.micronaut.testresources:micronaut-test-resources-build-tools", version = "2.5.4"  }
+micronaut-buildtools = { module = "io.micronaut.testresources:micronaut-test-resources-build-tools", version = "2.6.2"  }
 micronaut-data-mongodb = { module = "io.micronaut.data:micronaut-data-mongodb" }
 micronaut-data-document-processor = { module = "io.micronaut.data:micronaut-data-document-processor" }
 micronaut-discovery-client = { module = "io.micronaut.kubernetes:micronaut-kubernetes-discovery-client"}
