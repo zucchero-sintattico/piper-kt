@@ -1,4 +1,4 @@
-FROM node:22.17.1-alpine
+FROM node:22.18.0-alpine
 WORKDIR /home/app
 COPY --link dist /home/app/dist
 COPY --link node_modules /home/app/node_modules
