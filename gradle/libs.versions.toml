@@ -68,7 +68,7 @@ micronaut-app = { id = "io.micronaut.application", version.ref = "micronaut" }
 micronaut-aot = { id = "io.micronaut.aot", version.ref = "micronaut" }
 micronaut-lib = { id = "io.micronaut.library", version.ref = "micronaut" }
 micronaut-test = { id = "io.micronaut.test-resources", version.ref = "micronaut" }
-npmPublish = { id = "dev.petuska.npm.publish", version = "3.4.2" }
+npmPublish = { id = "dev.petuska.npm.publish", version = "3.5.3" }
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 typescript = { id = "io.github.zucchero-sintattico.typescript-gradle-plugin", version = "4.3.5" }
